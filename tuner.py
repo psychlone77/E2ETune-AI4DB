@@ -35,7 +35,11 @@ from ConfigSpace.hyperparameters import CategoricalHyperparameter, \
 
 
 # tjk add
-from safe.subspace_adaptation import Safe
+# Make `safe` optional: import only if available, otherwise disable safety features.
+try:
+    from safe.subspace_adaptation import Safe  # type: ignore
+except Exception:
+    Safe = None  # type: ignore
 
 tpch_origin = {"max_wal_senders": 21, "autovacuum_max_workers": 126, "max_connections": 860, "wal_buffers": 86880, "shared_buffers": 1114632, "autovacuum_analyze_scale_factor": 78, "autovacuum_analyze_threshold": 1202647040, "autovacuum_naptime": 101527, "autovacuum_vacuum_cost_delay": 45, "autovacuum_vacuum_cost_limit": 1114, "autovacuum_vacuum_scale_factor": 31, "autovacuum_vacuum_threshold": 1280907392, "backend_flush_after": 172, "bgwriter_delay": 5313, "bgwriter_flush_after": 217, "bgwriter_lru_maxpages": 47, "bgwriter_lru_multiplier": 4, "checkpoint_completion_target": 1, "checkpoint_flush_after": 44, "checkpoint_timeout": 758, "commit_delay": 22825, "commit_siblings": 130, "cursor_tuple_fraction": 1, "deadlock_timeout": 885378880, "default_statistics_target": 5304, "effective_cache_size": 1581112576, "effective_io_concurrency": 556, "from_collapse_limit": 407846592, "geqo_effort": 3, "geqo_generations": 1279335040, "geqo_pool_size": 838207872, "geqo_seed": 0, "geqo_threshold": 1336191360, "join_collapse_limit": 1755487872, "maintenance_work_mem": 1634907776, "temp_buffers": 704544576, "temp_file_limit": -1, "vacuum_cost_delay": 46, "vacuum_cost_limit": 5084, "vacuum_cost_page_dirty": 6633, "vacuum_cost_page_hit": 6940, "vacuum_cost_page_miss": 9381, "wal_writer_delay": 4773, "work_mem": 716290752}
 
@@ -117,6 +121,12 @@ class tuner:
 
     # tjk add
     def init_safe(self):
+        """Initialize files and optional safety components.
+
+        This routine prepares sample files and evaluates default performance. If the
+        optional `safe` package (and its predictor pickle) is not available, the tuner
+        proceeds without safety models.
+        """
         # 清理上一次调优所临时保存的数据
         if os.path.exists(self.inner_metric_sample):
             with open(self.inner_metric_sample, 'r+') as f:
@@ -160,9 +170,21 @@ class tuner:
         print(knob_default)
         default_performance = self.stt.test_config(knob_default)
         print('default performance: {}'.format(default_performance))
-        self.pre_safe = Safe(default_performance, knob_default, default_performance, lb, ub, step)
-        with open('safe/predictor.pickle', 'rb') as f:
-            self.post_safe = pickle.load(f)
+        # Initialize safety models only if available
+        if Safe is not None:
+            try:
+                self.pre_safe = Safe(default_performance, knob_default, default_performance, lb, ub, step)
+                if os.path.exists('safe/predictor.pickle'):
+                    with open('safe/predictor.pickle', 'rb') as f:
+                        self.post_safe = pickle.load(f)
+                else:
+                    self.post_safe = None
+            except Exception as e:
+                # Safety is optional; log and continue without it
+                self.pre_safe = None
+                self.post_safe = None
+                if hasattr(self, 'logger') and self.logger:
+                    self.logger.warning(f"SAFE module unavailable or failed to init: {e}")
         for i in range(4):
             self.stt.test_config(knob_default)
         self.last_point = list(knob_default.values())

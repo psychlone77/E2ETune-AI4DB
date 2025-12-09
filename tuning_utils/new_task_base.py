@@ -1,7 +1,7 @@
 import psycopg2
 import time
 import re
-from schema_alter import *
+from tuning_utils.schema_alter import *
 import json
 
 

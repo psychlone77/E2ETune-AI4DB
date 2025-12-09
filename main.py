@@ -1,8 +1,8 @@
 import os
 import argparse
-# from controller import tune
+from controller import tune
 from config import parse_config
-# from surrogate.train_surrogate import train_surrogate
+from surrogate.train_surrogate import train_surrogate
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -29,7 +29,7 @@ if __name__ == '__main__':
         for workload in workloads:
             args['benchmark_config']['workload_path'] = cmd.workloadpath + workload
             try:
-                # tune(workload, cmd.host, args)
+                tune(workload, cmd.host, args)
                 print(f'tuning {workload}...')
             except Exception as e:
                 print(f'occur {e}')
@@ -39,7 +39,7 @@ if __name__ == '__main__':
             workload = workloads[idx]
             args['benchmark_config']['workload_path'] = cmd.workloadpath + workload
             try:
-                # tune(workload, cmd.host, args)
+                tune(workload, cmd.host, args)
                 print(f'tuning {workload}...')
             except Exception as e:
                 print(f'occur {e}')
@@ -54,7 +54,7 @@ if __name__ == '__main__':
             args['surrogate_config']['feature_path'] = f'SuperWG/feature/{cmd.database}.json'
             args['benchmark_config']['workload_path'] = 'SuperWG/res/gpt_workloads/' + workloads[idx]
             try:
-                # tune(workloads[idx], cmd.host, args)
+                tune(workloads[idx], cmd.host, args)
                 print(f'tuning {workloads[idx]} with surrogate...')
             except: continue
 
