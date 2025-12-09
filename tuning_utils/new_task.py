@@ -1,4 +1,4 @@
-from new_task_base import *
+from tuning_utils.new_task_base import *
 import threading
 from datetime import datetime
 

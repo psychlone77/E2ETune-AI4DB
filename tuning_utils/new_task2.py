@@ -1,4 +1,4 @@
-from new_task import *
+from tuning_utils.new_task import *
 
 
 class one_thread_given_queries(threading.Thread):

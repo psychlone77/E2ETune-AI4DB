@@ -100,6 +100,7 @@ def tune(workload, host, args):
             return 'nan'
         return float(tps), config
     
+    
     with open(args['tuning_config']['offline_sample'], 'r') as f:
         lines = f.readlines()
         default_performance = lines[0][lines[0].find("tps") + 6:]
@@ -115,6 +116,7 @@ def tune(workload, host, args):
             if best_tps < tps:
                 best_tps = tps
                 best_config = config
+    
     if args['benchmark_config']['tool'] != 'surrogate':
         delta = best_tps - max(all_default)
         print(all_default, delta)
