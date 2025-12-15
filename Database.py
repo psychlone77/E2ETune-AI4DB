@@ -1,291 +1,383 @@
-import paramiko
 import psycopg2
+import json
+import os
+import subprocess
+import time
+from typing import Dict, List, Any, Optional
+
 from knob_config.parse_knob_config import get_knobs
 
 
 class Database:
-    def __init__(self, config, path):
-        self.host = config['database_config']['host']
-        self.port = int(config['database_config']['port'])
-        self.database = config['database_config']['database']
-        self.user = config['database_config']['user']
-        self.password = config['database_config']['password']
-        self.data_path = config['database_config']['data_path']
-        self.knobs = get_knobs(path)
-        self.ssh = None
-        self.get_ssh(config)
+    """
+    PostgreSQL utility class without SSH.
+    - All parameters are sourced from `config['database_config']`.
+    - Supports configurable PostgreSQL version, cluster name, and data_path.
+    - Applies knob changes via ALTER SYSTEM and restarts via pg_ctlcluster.
+    """
 
-    def get_conn(self):
-        conn = psycopg2.connect(database=self.database,
-                                user=self.user,
-                                password=self.password,
-                                host=self.host,
-                                port=int(self.port))
-        return conn
-
-    def get_ssh(self, config):
-        if self.ssh is not None:
-            return self.ssh
-        self.ssh = paramiko.SSHClient()
-        self.ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        self.ssh.connect(hostname=config['ssh_config']['host'],
-                         port=int(config['ssh_config']['port']),
-                         username=config['ssh_config']['user'],
-                         password=config['ssh_config']['password']
-                         )
-        print("connect to the database host...")
-
-    def fetch_knob(self):
-        conn = self.get_conn()
-        knobs = {}
-        cursor = conn.cursor()
-        for knob in self.knobs:
-            sql = "SELECT name, setting FROM pg_settings WHERE name='{}'".format(knob)
-            cursor.execute(sql)
-            result = cursor.fetchall()
-            for s in result:
-                knobs[knob] = float(s[1])
-        cursor.close()
-        conn.close()
-        return knobs
-
-    def fetch_inner_metric(self):
-        state_list = []
-        conn = self.get_conn()
-        cursor = conn.cursor()
-
-        # ['cpu_useage','memory_useage','kB_rd/s','kB_wr/s','cache_hit_rate','concurrent_users','lock_wait_count','error_rate','logical_reads_per_second','physical_reads_per_second','active_session','transactions_per_second','rows_scanned_per_second','rows_updated_per_second','rows_deleted_per_second']
-        # cpu和内存占用率s
-        stdin, stdout, stderr = self.ssh.exec_command("top -b -n 1")
-        lines = stdout.readlines()
-        gaussdb_line = None
-        for line in lines:
-            if 'gaussdb' in line:
-                gaussdb_line = line
-                break
-        if gaussdb_line:
-            columes = gaussdb_line.split()
-            cpu_usage = columes[8]
-            state_list.append(cpu_usage)
-            mem_usage = columes[9]
-            state_list.append(mem_usage)
-        else:
-            print("gaussdb process not found in top output.")
-
-        # 每秒读取和写入的kB数，kB_rd/s,kB_wr/s
-        stdin, stdout, stderr = self.ssh.exec_command("pidstat -d")
-        lines = stdout.readlines()[1:]
-        gaussdb_line = None
-        for line in lines:
-            if 'gaussdb' in line:
-                gaussdb_line = line
-                break
-        if gaussdb_line:
-            columes = gaussdb_line.split()
-            kB_rd = columes[3]
-            state_list.append(kB_rd)
-            kB_wr = columes[4]
-            state_list.append(kB_wr)
-        else:
-            print("gaussdb process not found in pidstat")
-
-        # cache_hit_rate
-        cache_hit_rate_sql = "select blks_hit / (blks_read + blks_hit + 0.001) " \
-                             "from pg_stat_database " \
-                             "where datname = '{}';".format(self.database)
-
-        # 并发用户数量
-        concurrent_users = """
-        SELECT
-            count(DISTINCT usename)
-        AS
-            concurrent_users
-        FROM
-            pg_stat_activity
-        WHERE
-            state = 'active';
+    def __init__(self, config: Dict[str, Any], knob_config_path: str):
         """
+        Initialize Database from config dict.
 
-        # 锁等待次数
-        lock = """
-        SELECT
-            count(*) AS lock_wait_count
-        FROM
-            pg_stat_activity
-        WHERE waiting = true;
+        Expected config['database_config'] keys:
+          host: str
+          port: int or str
+          database: str
+          user: str
+          password: str
+          data_path: str (e.g., /var/lib/postgresql/12/main)
+          pg_version: str or int (e.g., "12", "14")
+          cluster_name: str (default "main")
         """
+        db_cfg = config.get('database_config', {})
+        self.host: str = db_cfg.get('host', 'localhost')
+        self.port: int = int(db_cfg.get('port', 5432))
+        self.database: str = db_cfg.get('database', 'postgres')
+        self.user: str = db_cfg.get('user', 'postgres')
+        self.password: str = db_cfg.get('password', '')
+        self.data_path: str = db_cfg.get('data_path', '')
+        self.pg_version: str = str(db_cfg.get('pg_version', '12'))
+        self.cluster_name: str = db_cfg.get('cluster_name', 'main')
 
-        # 错误率
-        error_rate = """
-        SELECT
-            (sum(xact_rollback) + sum(conflicts) + sum(deadlocks)) / (sum(xact_commit) + sum(xact_rollback) + sum(conflicts) + sum(deadlocks)) AS error_rate
-        FROM
-            pg_stat_database;
+        # Knob definitions (types, ranges, etc.) from your knob config
+        self.knobs: Dict[str, Dict[str, Any]] = get_knobs(knob_config_path)
+
+    def get_conn(self, max_retries: int = 3) -> psycopg2.extensions.connection:
         """
-
-        # 逻辑读/秒和物理读/秒
-        read = """
-        SELECT
-            logical_reads / (extract(epoch from now() - stats_reset)) AS logical_reads_per_second,
-            physical_reads / (extract(epoch from now() - stats_reset)) AS physical_reads_per_second
-        FROM (
-            SELECT
-                sum(tup_returned + tup_fetched) AS logical_reads,
-                sum(blks_read) AS physical_reads,
-                max(stats_reset) AS stats_reset
-            FROM
-                pg_stat_database
-            ) subquery;
+        Establish a PostgreSQL connection with simple retry logic.
+        If all retries fail, attempts to remove postgresql.auto.conf and tries once more.
         """
+        print(f"Connecting to PostgreSQL {self.host}:{self.port}, db={self.database}")
+        last_err: Optional[Exception] = None
 
-        # 活跃会话数量
-        active_session = """
-        SELECT
-            count(*) AS active_session
-        FROM
-            pg_stat_activity;
-        """
+        for attempt in range(max_retries):
+            try:
+                conn = psycopg2.connect(
+                    database=self.database,
+                    user=self.user,
+                    password=self.password,
+                    host=self.host,
+                    port=self.port,
+                    connect_timeout=10,
+                )
+                if attempt > 0:
+                    print(f"Connection successful on attempt {attempt + 1}")
+                return conn
+            except Exception as e:
+                last_err = e
+                print(f"Connection attempt {attempt + 1} failed: {e}")
+                if attempt < max_retries - 1:
+                    print(f"Retrying in 2 seconds... ({attempt + 2}/{max_retries})")
+                    time.sleep(2)
 
-        # 每秒提交的事务数
-        transactions_per_second = """
-        SELECT
-            total_commits / (extract(epoch from now() - max_stats_reset)) AS transactions_per_second
-        FROM (
-            SELECT
-            sum(xact_commit) AS total_commits,
-            max(stats_reset) AS max_stats_reset
-        FROM
-            pg_stat_database
-            ) subquery;
-        """
+        print(f"All {max_retries} attempts failed. Removing auto.conf and trying once more...")
+        self.remove_auto_conf()
 
-        # 扫描行、更新行和删除行
-        tup = """
-        SELECT
-            rows_scanned / (extract(epoch from now() - max_stats_reset)) AS rows_scanned_per_second,
-            rows_updated / (extract(epoch from now() - max_stats_reset)) AS rows_updated_per_second,
-             rows_deleted / (extract(epoch from now() - max_stats_reset)) AS rows_deleted_per_second
-        FROM (
-            SELECT
-            sum(tup_returned) AS rows_scanned,
-            sum(tup_updated) AS rows_updated,
-            sum(tup_deleted) AS rows_deleted,
-            max(stats_reset) AS max_stats_reset
-            FROM
-             pg_stat_database
-            ) subquery;
-        """
-
+        time.sleep(2)
         try:
-            cursor.execute(cache_hit_rate_sql)
-            result = cursor.fetchall()
-            for s in result:
-                state_list.append(float(s[0]))
-            # print('cache_hit_rate_sql: ', state_list)
+            print("Final connection attempt after removing auto.conf...")
+            conn = psycopg2.connect(
+                database=self.database,
+                user=self.user,
+                password=self.password,
+                host=self.host,
+                port=self.port,
+                connect_timeout=10,
+            )
+            print("Connection successful after removing auto.conf")
+            return conn
+        except Exception as e:
+            raise Exception(
+                f"Could not establish database connection after {max_retries + 1} attempts "
+                f"and auto.conf removal: {e}"
+            ) from last_err
 
-            # 并发用户数量
-            cursor.execute(concurrent_users)
-            result = cursor.fetchall()
-            state_list.append(float(result[0][0]))
-            # print('并发用户数量: ', state_list)
-
-            # 锁等待次数
-            # cursor.execute(lock)
-            # result = cursor.fetchall()
-            # state_list.append(float(result[0][0]))
-            # print('锁等待次数: ', state_list)
-
-            # 错误率
-            cursor.execute(error_rate)
-            result = cursor.fetchall()
-            state_list.append(float(result[0][0]))
-            # print('错误率: ', state_list)
-
-            # 逻辑读和物理读
-            cursor.execute(read)
-            result = cursor.fetchall()
-            # print(result)
-            for i in result[0]:
-                state_list.append(float(i))
-            # print('逻辑读和物理读: ', state_list)
-
-            # 活跃会话数
-            cursor.execute(active_session)
-            result = cursor.fetchall()
-            # print(result)
-            state_list.append(float(result[0][0]))
-            # print('活跃会话: ', state_list)
-
-            # 每秒提交的事务
-            cursor.execute(transactions_per_second)
-            result = cursor.fetchall()
-            # print(result)
-            state_list.append(float(result[0][0]))
-            # print('每秒提交事务: ', state_list)
-
-            # 扫描、更新、删除行
-            cursor.execute(tup)
-            result = cursor.fetchall()
-            for i in result[0]:
-                state_list.append(float(i))
-
+    def fetch_knob(self) -> Dict[str, float]:
+        """
+        Fetch current values for knobs listed in knob config using pg_settings.
+        Returns a dict: { knob_name: value_as_float }
+        """
+        conn = self.get_conn()
+        cursor = conn.cursor()
+        knobs: Dict[str, float] = {}
+        try:
+            for knob in self.knobs:
+                sql = "SELECT name, setting FROM pg_settings WHERE name = %s"
+                cursor.execute(sql, (knob,))
+                for name, setting in cursor.fetchall():
+                    try:
+                        knobs[name] = float(setting)
+                    except ValueError:
+                        # Non-numeric settings represented as float 0.0 for downstream compatibility
+                        knobs[name] = 0.0
+        finally:
             cursor.close()
             conn.close()
-        except Exception as error:
-            print(error)
-        for i in range(len(state_list)):
-            # print(i)
-            state_list[i] = float(state_list[i])
-        return state_list
+        return knobs
 
-    def change_knob(self, knobs):
-        flag = True
+    def extract_query_plans(self, workload_queries: List[str]) -> List[Dict[str, Any]]:
+        """
+        Extract JSON plans for a list of SQL queries using EXPLAIN (FORMAT JSON).
+        Returns a list of objects suitable for downstream processing.
+        """
         conn = self.get_conn()
         cursor = conn.cursor()
-        reset_sql = """
-        alter system set {}={};
-        """
-        for knob in knobs:
-            # enum (include on/off)
-            val = knobs[knob]
-            # integer
-            if self.knobs[knob]['type'] == 'integer':
-                val = int(val)
-            # real
-            elif self.knobs[knob]['type'] == 'real':
-                val = float(val)
-            try:
-                old_isolation_level = conn.isolation_level
-                conn.set_isolation_level(0)
-                cursor.execute(reset_sql.format(knob, val))
-                conn.set_isolation_level(old_isolation_level)
-            except Exception as error:
-                print(error)
-                flag = False
-            # _, stdout, stderr = self.ssh.exec_command('gs_guc set -c "{}={}" -D {}'.format(knob, val, self.data_path))
-            # info = stdout.read().decode('utf-8')
-            # err = stderr.read().decode('utf-8')
-            # if info.find("Success") == -1:
-            #     flag = False
-        _, stdout, stderr = self.ssh.exec_command(f'module load postgresql/12.2-gcc_13.1.0\npg_ctl stop -D {self.data_path}')
-        info = stdout.read().decode('utf-8')
-        # print(info)
-        # print(stderr.read().decode('utf-8'))
-        _, stdout, stderr = self.ssh.exec_command(f'module load postgresql/12.2-gcc_13.1.0\npg_ctl -D {self.data_path} -l logfile start')
-        info = stdout.read().decode('utf-8')
-        if 'server started' not in info:
-            print(stderr.read().decode('utf-8'))
-            flag = False
-        
-        _, stdout, stderr = self.ssh.exec_command(f'module load postgresql/12.2-gcc_13.1.0\npg_ctl reload -D {self.data_path}')
-        info = stdout.read().decode('utf-8')
-        if 'error' in info:
-            print(stderr.read().decode('utf-8'))
-            flag = False
+        plans: List[Dict[str, Any]] = []
 
-        if flag:
-            print('apply knobs successfully!')
-        
-        # _, stdout, stderr = self.ssh.exec_command('gs_om -t restart')
-        # info = stdout.read().decode('utf-8')
-        return flag
+        try:
+            for i, query in enumerate(workload_queries):
+                try:
+                    print(f"Explaining query {i + 1}/{len(workload_queries)}")
+                    cursor.execute(f"EXPLAIN (FORMAT JSON) {query}")
+                    row = cursor.fetchone()
+                    # EXPLAIN JSON result is a single JSON array; row[0] is that array
+                    plan_json = row[0][0]  # [{"Plan": {...}}] -> take first element
+                    plans.append({
+                        "Plan": plan_json,
+                        "query": query.strip(),
+                        "query_id": i,
+                    })
+                except Exception as e:
+                    print(f"Error explaining query {i + 1}: {e}")
+                    print(f"Query (truncated): {query[:100]}...")
+        finally:
+            cursor.close()
+            conn.close()
+
+        print(f"Extracted {len(plans)} query plans")
+        return plans
+
+    def save_workload_plans(self, workload_queries: List[str], workload_name: str) -> List[Dict[str, Any]]:
+        """
+        Extract and save workload query plans as JSON in ./query_plans/{workload_name}.json
+        """
+        plans = self.extract_query_plans(workload_queries)
+        if plans:
+            os.makedirs("query_plans", exist_ok=True)
+            output_file = os.path.join("query_plans", f"{workload_name}.json")
+            with open(output_file, 'w') as f:
+                json.dump(plans, f, indent=2)
+            print(f"Saved {len(plans)} plans to {output_file}")
+        else:
+            print("No plans to save")
+        return plans
+
+    def reset_inner_metrics(self) -> None:
+        """
+        Reset PostgreSQL internal statistics (pg_stat_*).
+        """
+        conn = self.get_conn()
+        cursor = conn.cursor()
+        try:
+            cursor.execute("SELECT pg_stat_reset();")
+            cursor.execute("SELECT pg_stat_reset_shared('bgwriter');")
+            conn.commit()
+            print("Internal metrics reset successfully")
+        except Exception as e:
+            print(f"Error resetting internal metrics: {e}")
+        finally:
+            cursor.close()
+            conn.close()
+
+    def fetch_inner_metrics(self) -> Dict[str, float]:
+        """
+        Fetch internal metrics from PostgreSQL as a flat dict of floats.
+        Includes database stats and IO estimates derived from block counters.
+        """
+        metrics: Dict[str, float] = {}
+        conn = self.get_conn()
+        cursor = conn.cursor()
+
+        try:
+            cursor.execute("""
+                SELECT 
+                    COALESCE(SUM(xact_commit), 0),
+                    COALESCE(SUM(xact_rollback), 0),
+                    COALESCE(SUM(blks_read), 0),
+                    COALESCE(SUM(blks_hit), 0),
+                    COALESCE(SUM(tup_returned), 0),
+                    COALESCE(SUM(tup_fetched), 0),
+                    COALESCE(SUM(tup_inserted), 0),
+                    COALESCE(SUM(conflicts), 0),
+                    COALESCE(SUM(tup_updated), 0),
+                    COALESCE(SUM(tup_deleted), 0)
+                FROM pg_stat_database 
+                WHERE datname = %s;
+            """, (self.database,))
+            d = cursor.fetchone()
+            metrics.update({
+                "xact_commit": float(d[0]),
+                "xact_rollback": float(d[1]),
+                "blks_read": float(d[2]),
+                "blks_hit": float(d[3]),
+                "tup_returned": float(d[4]),
+                "tup_fetched": float(d[5]),
+                "tup_inserted": float(d[6]),
+                "conflicts": float(d[7]),
+                "tup_updated": float(d[8]),
+                "tup_deleted": float(d[9]),
+            })
+
+            cursor.execute("""
+                SELECT COALESCE(SUM(
+                    COALESCE(heap_blks_read, 0) +
+                    COALESCE(idx_blks_read, 0) +
+                    COALESCE(toast_blks_read, 0) +
+                    COALESCE(tidx_blks_read, 0)
+                ), 0)
+                FROM pg_statio_all_tables;
+            """)
+            disk_read_count = float(cursor.fetchone()[0])
+
+            cursor.execute("""
+                SELECT buffers_checkpoint + buffers_clean + buffers_backend
+                FROM pg_stat_bgwriter;
+            """)
+            disk_write_count = float(cursor.fetchone()[0])
+
+            # 8KB per block
+            metrics["disk_read_count"] = disk_read_count
+            metrics["disk_write_count"] = disk_write_count
+            metrics["disk_read_bytes"] = disk_read_count * 8192.0
+            metrics["disk_write_bytes"] = disk_write_count * 8192.0
+
+            print(f"Fetched {len(metrics)} internal metrics")
+        except Exception as e:
+            print(f"Error fetching internal metrics: {e}")
+            metrics = {
+                "xact_commit": 0.0, "xact_rollback": 0.0, "blks_read": 0.0, "blks_hit": 0.0,
+                "tup_returned": 0.0, "tup_fetched": 0.0, "tup_inserted": 0.0, "conflicts": 0.0,
+                "tup_updated": 0.0, "tup_deleted": 0.0,
+                "disk_read_count": 0.0, "disk_write_count": 0.0,
+                "disk_read_bytes": 0.0, "disk_write_bytes": 0.0,
+            }
+        finally:
+            cursor.close()
+            conn.close()
+
+        return metrics
+
+    def change_knob(self, knobs: Dict[str, Any]) -> bool:
+        """
+        Apply knob changes using ALTER SYSTEM, then restart via pg_ctlcluster.
+
+        knobs: dict { knob_name: value }
+        Uses types from self.knobs to cast values (integer/real).
+        """
+        print("Applying knob changes...")
+        success = True
+        conn = self.get_conn()
+        cursor = conn.cursor()
+        conn.autocommit = True
+
+        try:
+            for knob, raw_val in knobs.items():
+                val = raw_val
+                kdef = self.knobs.get(knob, {})
+                if kdef.get('type') == 'integer':
+                    val = int(val)
+                elif kdef.get('type') == 'real':
+                    val = float(val)
+
+                try:
+                    cursor.execute(f"ALTER SYSTEM SET {knob} = %s;", (val,))
+                    print(f"Set {knob} = {val}")
+                except Exception as e:
+                    print(f"Error setting {knob} = {val}: {e}")
+                    success = False
+
+            if success:
+                print("Knobs applied. Restarting PostgreSQL cluster...")
+                restart_ok = self.restart_db()
+                if restart_ok:
+                    print("Database restarted successfully.")
+                else:
+                    print("Database restart failed.")
+                    success = False
+            else:
+                print("Some knobs failed to apply; skipping restart.")
+        except Exception as e:
+            print(f"Error applying knobs: {e}")
+            success = False
+        finally:
+            cursor.close()
+            conn.close()
+
+        return success
+
+    def restart_db(self, stop_timeout: int = 30, start_timeout: int = 30) -> bool:
+        """
+        Restart PostgreSQL using pg_ctlcluster with configured version and cluster name.
+        Returns True on success.
+        """
+        try:
+            print(f"Stopping PostgreSQL {self.pg_version}/{self.cluster_name}...")
+            subprocess.run(
+                ['sudo', 'pg_ctlcluster', str(self.pg_version), self.cluster_name, 'stop'],
+                check=True, timeout=stop_timeout
+            )
+            time.sleep(2)
+
+            print(f"Starting PostgreSQL {self.pg_version}/{self.cluster_name}...")
+            result = subprocess.run(
+                ['sudo', 'pg_ctlcluster', str(self.pg_version), self.cluster_name, 'start'],
+                capture_output=True, text=True, timeout=start_timeout
+            )
+
+            if result.returncode != 0:
+                print("Start failed. Removing auto.conf and retrying...")
+                self.remove_auto_conf()
+                time.sleep(1)
+                subprocess.run(
+                    ['sudo', 'pg_ctlcluster', str(self.pg_version), self.cluster_name, 'start'],
+                    check=True, timeout=start_timeout
+                )
+
+            return True
+        except Exception as e:
+            print(f"Failed to restart PostgreSQL: {e}")
+            return False
+
+    def remove_auto_conf(self) -> None:
+        """
+        Remove postgresql.auto.conf from the configured data_path (if present).
+        Useful when ALTER SYSTEM introduced a bad setting that prevents startup.
+        """
+        if not self.data_path:
+            print("data_path not set; cannot remove postgresql.auto.conf")
+            return
+
+        auto_conf_path = os.path.join(self.data_path, "postgresql.auto.conf")
+        try:
+            subprocess.run(['sudo', 'rm', '-f', auto_conf_path], check=True)
+            print(f"Removed {auto_conf_path} (if it existed).")
+        except subprocess.CalledProcessError as e:
+            print(f"Error removing {auto_conf_path}: {e}")
+
+    def run_workload_with_defaults(self, workload_file: str) -> None:
+        """
+        Execute a workload file using psql.
+        """
+        try:
+            print(f"Running workload from {workload_file}...")
+            conn = self.get_conn()
+            cursor = conn.cursor()
+            with open(workload_file, 'r') as f:
+                sql_commands = f.read()
+            cursor.execute(sql_commands)
+            conn.commit()
+            cursor.close()
+            conn.close()
+            print("Workload execution completed.")
+        except subprocess.CalledProcessError as e:
+            print(f"Error running workload: {e}")
+
+    def run_workload_with_config(self, workload_file: str, knobs: Dict[str, Any]) -> None:
+        """
+        Apply knobs, restart DB, and run workload file using psql.
+        """
+        if self.change_knob(knobs):
+            self.run_workload_with_defaults(workload_file)
+        else:
+            print("Knob change failed; skipping workload execution.")
