@@ -9,12 +9,42 @@ from smac.configspace import ConfigurationSpace
 from smac.runhistory.runhistory import RunHistory
 from smac.facade.smac_hpo_facade import SMAC4HPO
 from smac.scenario.scenario import Scenario
-from ConfigSpace.hyperparameters import UniformFloatHyperparameter, UniformIntegerHyperparameter
+from ConfigSpace.hyperparameters import UniformFloatHyperparameter, UniformIntegerHyperparameter, Constant
 
 from knob_config import parse_knob_config
 from Database import Database
-from workload_executor import workload_executor
+from stress_testing_tool import stress_testing_tool
 import utils
+
+class EarlyStopSignal(BaseException):
+    """Exception raised to stop SMAC optimization early."""
+    pass
+
+def run_tuning(args: Dict[str, Any], use_surrogate: bool = False) -> Dict[str, Any]:
+    """
+    Orchestrates one workload tuning pass:
+    - Performs a default run and logs internal metrics
+    - Runs SMAC to find the best configuration
+    """
+    logger = utils.get_logger(args['tuning_config']['log_path'])
+    workload_file = args['benchmark_config']['workload_path']
+    workload_name = os.path.basename(workload_file)
+    
+    logger.info(f"="*80)
+    logger.info(f"[Tuning] Starting tuning for workload: {workload_name}")
+    logger.info(f"[Tuning] Mode: {'SURROGATE MODEL' if use_surrogate else 'REAL EXECUTION'}")
+    logger.info(f"="*80)
+    
+    internal_metrics = default_run(workload_file, args)
+
+    tuner_instance = Tuner(args, workload_file, internal_metrics, use_surrogate=use_surrogate)
+    best_config = tuner_instance.tune()
+    
+    logger.info(f"[Tuning] Tuning complete for {workload_name}")
+    logger.info(f"[Tuning] Best configuration: {best_config}")
+    logger.info(f"="*80)
+    
+    return best_config
 
 
 def default_run(workload_file: str, args: Dict[str, Any]) -> Dict[str, float]:
@@ -23,35 +53,28 @@ def default_run(workload_file: str, args: Dict[str, Any]) -> Dict[str, float]:
     and collect internal metrics for training/logging.
     """
     logger = utils.get_logger(args['tuning_config']['log_path'])
+    workload_name = os.path.basename(workload_file)
+    
+    logger.info(f"[Default Run] [Workload: {workload_name}] Starting default configuration run")
     db = Database(config=args, knob_config_path=args['tuning_config']['knob_config'])
 
     # Remove potentially bad auto.conf, reset metrics, run workload with defaults
-    db.remove_auto_conf()
-    print("Resetting inner metrics...")
+    logger.info(f"[Default Run] Resetting database knobs and metrics to default values")
+    db.reset_db_knobs()
     db.reset_inner_metrics()
-    print(f"Running default workload: {workload_file} ...")
+    
+    logger.info(f"[Default Run] Running workload: {workload_file}")
     db.run_workload_with_defaults(workload_file)
 
     internal_metrics = db.fetch_inner_metrics()
-    print(f"Internal metrics collected: {internal_metrics}")
+    logger.info(f"[Default Run] Internal metrics collected: {len(internal_metrics)} metrics")
 
-    # Persist internal metrics in an organized directory structure
-    benchmark_name = args['benchmark_config']['benchmark']
-    if benchmark_name in ['tpcc', 'ycsb', 'smallbank', 'wikipedia', 'twitter']:
-        base_name = os.path.splitext(os.path.basename(workload_file))[0]
-        metrics_dir = f"internal_metrics/{benchmark_name}"
-        os.makedirs(metrics_dir, exist_ok=True)
-        metrics_file = f"{metrics_dir}/{base_name}_internal_metrics.json"
-    else:
-        metrics_file = f"internal_metrics/{workload_file.split('.wg')[0]}_internal_metrics.json"
+    metrics_file = f"internal_metrics/{args['benchmark_config']['workload_name'].split('.wg')[0]}_internal_metrics.json"
 
     os.makedirs(os.path.dirname(metrics_file), exist_ok=True)
     with open(metrics_file, "w") as f:
         json.dump(internal_metrics, f, indent=4)
-    print(f"Internal metrics saved to: {metrics_file}")
-
-    return internal_metrics
-
+        logger.info(f"[Default Run] Internal metrics saved to: {metrics_file}")
 
 class Tuner:
     """
@@ -65,38 +88,97 @@ class Tuner:
         self.logger = utils.get_logger(args['tuning_config']['log_path'])
         self.internal_metrics = internal_metrics
         self.use_surrogate = use_surrogate
+        self.workload_name = os.path.basename(workload_file)
 
-        # Executor handles running configs (real or surrogate)
-        self.executor = workload_executor(args, self.logger, "training_records.log", self.internal_metrics)
+        # Initialize database and stress testing tool
+        self.db = Database(config=args, knob_config_path=args['tuning_config']['knob_config'])
+        training_log = args['tuning_config'].get('training_records', 'logs/offline_sample/training_records.log')
+        self.stress_tester = stress_testing_tool(args, self.db, self.logger, records_log=training_log)
+        
+        self.logger.info(f"[Tuner Init] Initialized for workload: {self.workload_name}")
 
     def tune(self) -> Dict[str, Any]:
         return self._smac(self.workload_file)
 
     def _smac(self, workload_file: str) -> Dict[str, Any]:
+        iteration_counter = {'count': 0}
+        early_stop_state = {
+            'best_cost': float('inf'),  # SMAC minimizes, so track minimum cost
+            'iterations_without_improvement': 0,
+            'should_stop': False,
+        }
+        PLATEAU_ITERATIONS = 2
+        
         def objective_function(config) -> float:
             """
             SMAC objective function — returns negative performance (SMAC minimizes).
+            Implements early stopping when performance plateaus.
             """
+            # Check if we should stop early
+            if early_stop_state['should_stop']:
+                self.logger.info(f"[SMAC Early Stop] Returning cached best to skip remaining iterations")
+                raise EarlyStopSignal()
+            
+            iteration_counter['count'] += 1
+            iteration = iteration_counter['count']
+            
             config_dict = dict(config)
-            print(f"Evaluating configuration: {config_dict}")
-            perf = self.executor.run_config_surrogate(config_dict, workload_file) if self.use_surrogate \
-                else self.executor.run_config(config_dict, workload_file)
+            self.logger.info(f"[SMAC Iteration {iteration}] [Workload: {self.workload_name}] Evaluating configuration")
+            self.logger.debug(f"[SMAC Iteration {iteration}] Config: {config_dict}")
+            
+            perf = self.stress_tester.test_config(config_dict, iteration=iteration)
+            
             # SMAC minimizes, so use negative QPS/TPS (assuming higher is better)
             result = -perf if perf > 0 else perf
-            print(f"Performance (QPS/TPS): {perf} -> objective {result}")
+            self.logger.info(f"[SMAC Iteration {iteration}] Performance: {perf:.4f} -> Objective: {result:.4f}")
+            
+            # Early stopping logic: check if we're making progress
+            if result < early_stop_state['best_cost']:
+                # Calculate relative improvement
+                improvement = abs(result - early_stop_state['best_cost']) / (abs(early_stop_state['best_cost']) + 1e-10)
+                early_stop_state['best_cost'] = result
+                early_stop_state['iterations_without_improvement'] = 0
+                self.logger.info(f"[SMAC Early Stop] New best: {result:.4f} (improvement: {improvement*100:.2f}%)")
+
+            else:
+                # No improvement
+                early_stop_state['iterations_without_improvement'] += 1
+                self.logger.info(f"[SMAC Early Stop] No improvement, "
+                               f"plateau counter: {early_stop_state['iterations_without_improvement']}/{PLATEAU_ITERATIONS}")
+            
+            # Check if we should stop
+            if early_stop_state['iterations_without_improvement'] >= PLATEAU_ITERATIONS:
+                early_stop_state['should_stop'] = True
+                self.logger.info(f"[SMAC Early Stop] Performance plateaued after {PLATEAU_ITERATIONS} iterations. "
+                               f"Stopping optimization early at iteration {iteration}.")
+            
             return result
 
         # Build configuration space from knob definitions
         cs = ConfigurationSpace()
-        print("Initializing configuration space")
+        self.logger.info(f"[SMAC Setup] [Workload: {self.workload_name}] Initializing configuration space with {len(self.knobs_detail)} knobs")
         for name, detail in self.knobs_detail.items():
+            # CASE 1: FIXED VALUE (Constant)
+            if detail['min'] == detail['max']:
+                hp = Constant(name, detail['min'])
+                cs.add_hyperparameter(hp)
+                continue
+            # CASE 2: TUNABLE RANGE
             if detail['type'] == 'integer':
-                max_v = detail['max'] if detail['max'] != detail['min'] else detail['min'] + 1
-                hp = UniformIntegerHyperparameter(name, detail['min'], max_v, default_value=detail['default'])
+                hp = UniformIntegerHyperparameter(
+                    name, 
+                    lower=detail['min'], 
+                    upper=detail['max'], 
+                    default_value=detail['default']
+                )
             elif detail['type'] == 'float':
-                hp = UniformFloatHyperparameter(name, detail['min'], detail['max'], default_value=detail['default'])
+                hp = UniformFloatHyperparameter(
+                    name, 
+                    lower=detail['min'], 
+                    upper=detail['max'], 
+                    default_value=detail['default']
+                )
             else:
-                # Skip enums here; extend if needed with CategoricalHyperparameter
                 continue
             cs.add_hyperparameter(hp)
 
@@ -106,61 +188,90 @@ class Tuner:
         if workload_file.endswith('.xml'):
             save_workload = os.path.splitext(os.path.basename(workload_file))[0]
         else:
-            save_workload = workload_file.split('.wg')[0]
+            save_workload = self.args['benchmark_config']['workload_name'].split('.wg')[0]
 
         benchmark_name = self.args['benchmark_config']['benchmark']
         os.makedirs(f"./{benchmark_name}", exist_ok=True)
         os.makedirs(f"./models/{benchmark_name}", exist_ok=True)
         os.makedirs("smac_his", exist_ok=True)
 
+        runcount = int(self.args['tuning_config'].get('suggest_num', 100))
+        self.logger.info(f"[SMAC Setup] [Workload: {self.workload_name}] Configuring SMAC with {runcount} evaluations")
+        
         scenario = Scenario({
             "run_obj": "quality",
-            "runcount-limit": int(self.args['tuning_config'].get('suggest_num', 100)),
+            "runcount-limit": runcount,
             "cs": cs,
             "deterministic": "true",
-            "output_dir": f"./{benchmark_name}/{save_workload}_smac_output",
+            "output_dir": f"./{benchmark_name}/{save_workload}_smac_output",  
             "save_model": "true",
-            "local_results_path": f"./models/{benchmark_name}/{save_workload}"
+            "local_results_path": f"./models/{benchmark_name}/{save_workload}",
         })
+        
+        self.logger.info(f"[SMAC] [Workload: {self.workload_name}] Starting SMAC optimization")
 
-        smac = SMAC4HPO(scenario=scenario, rng=np.random.RandomState(42), tae_runner=objective_function, runhistory=runhistory)
-        incumbent = smac.optimize()
-        print("SMAC optimization finished")
-        print(f"Incumbent: {incumbent}")
+        ### Initialize SMAC4HPO facade
+        smac = SMAC4HPO(scenario=scenario, 
+                    rng=np.random.RandomState(42), 
+                    tae_runner=objective_function, 
+                    runhistory=runhistory
+                )
+        
+        try:
+            incumbent = smac.optimize()
+        except EarlyStopSignal:
+            self.logger.info(f"[SMAC] [Workload: {self.workload_name}] Caught EarlyStopSignal, ending optimization early")
+            incumbent = smac.solver.incumbent
+        
+        # Log whether optimization stopped early or ran to completion
+        if early_stop_state['should_stop']:
+            self.logger.info(f"[SMAC] [Workload: {self.workload_name}] Optimization stopped early due to performance plateau")
+            self.logger.info(f"[SMAC] [Workload: {self.workload_name}] Completed {iteration_counter['count']} iterations (limit: {runcount})")
+        else:
+            self.logger.info(f"[SMAC] [Workload: {self.workload_name}] Optimization completed all {runcount} iterations")
+        
+        self.logger.info(f"[SMAC] [Workload: {self.workload_name}] Best configuration: {dict(incumbent)}")
 
-        # Save runhistory for inspection
-        def runhistory_to_json(rh: RunHistory) -> str:
+        # Save best configuration to file
+        best_config_dict = dict(incumbent)
+        best_config_file = f"./{benchmark_name}/{save_workload}_smac_output/best_config.json"
+        with open(best_config_file, "w") as f:
+            json.dump({
+                "workload": save_workload,
+                "iterations": iteration_counter['count'],
+                "early_stopped": early_stop_state['should_stop'],
+                "best_cost": early_stop_state['best_cost'],
+                "configuration": best_config_dict
+            }, f, indent=4)
+        self.logger.info(f"[SMAC] [Workload: {self.workload_name}] Best configuration saved to: {best_config_file}")
+
+        def runhistory_to_json(runhistory_obj) -> str:
+            """Serialize a SMAC RunHistory to JSON."""
             data_to_save = {}
-            for run_key, run_value in rh.data.items():
-                config_id, instance_id, seed, budget = run_key
+            # RunHistory.data maps run_key -> RunValue
+            for run_key, run_value in runhistory_obj.data.items():
+                try:
+                    config_id, instance_id, seed, budget = run_key
+                except Exception:
+                    # Fallback if run_key is not a 4-tuple
+                    config_id = run_key
+                    instance_id = seed = budget = None
+
                 data_to_save[str(run_key)] = {
-                    "cost": run_value.cost,
-                    "time": run_value.time,
-                    "status": run_value.status.name,
-                    "additional_info": run_value.additional_info
+                    "cost": getattr(run_value, "cost", None),
+                    "time": getattr(run_value, "time", None),
+                    "status": getattr(getattr(run_value, "status", None), "name", str(getattr(run_value, "status", None))),
+                    "additional_info": getattr(run_value, "additional_info", None),
                 }
+
             return json.dumps(data_to_save, indent=4)
 
-        with open(f"smac_his/{save_workload}_smac.json", "w") as f:
+        history_file = f"smac_his/{save_workload}_smac.json"
+        with open(history_file, "w") as f:
             f.write(runhistory_to_json(smac.runhistory))
+        self.logger.info(f"[SMAC] [Workload: {self.workload_name}] Runhistory saved to: {history_file}")
 
         # Return best config as dict for downstream usage
         return dict(incumbent)
 
-
-def run_tuning(args: Dict[str, Any], use_surrogate: bool = False) -> Dict[str, Any]:
-    """
-    Orchestrates one workload tuning pass:
-    - Performs a default run and logs internal metrics
-    - Runs SMAC to find the best configuration
-    """
-    workload_file = args['benchmark_config']['workload_path']
-    internal_metrics = default_run(workload_file, args)
-    print(f"Starting tuning for workload: {workload_file}")
-    print("Using SURROGATE MODEL" if use_surrogate else "Using REAL EXECUTION")
-
-    tuner_instance = Tuner(args, workload_file, internal_metrics, use_surrogate=use_surrogate)
-    best_config = tuner_instance.tune()
-    print(f"Tuning complete for {workload_file}")
-    return best_config
 

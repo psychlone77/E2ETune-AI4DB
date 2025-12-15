@@ -17,10 +17,9 @@ class workload_executor:
     Returns a scalar performance metric (TPS/QPS). Higher is better.
     """
 
-    def __init__(self, args: Dict[str, Any], logger, record_file: str, internal_metrics: Optional[Dict[str, float]]):
+    def __init__(self, args: Dict[str, Any], logger, internal_metrics: Optional[Dict[str, float]]):
         self.args = args
         self.logger = logger
-        self.record_file = record_file
         self.internal_metrics = internal_metrics
         self.db = Database(config=args, knob_config_path=args['tuning_config']['knob_config'])
 
@@ -30,7 +29,7 @@ class workload_executor:
         Detects OLAP vs OLTP from benchmark_config.benchmark.
         """
         if config:
-            self.logger.info(f"Applying config: {config}")
+            self.logger.info(f"Applying config")
             ok = self.db.change_knob(config)
             if not ok:
                 self.logger.warning("Failed to apply some knobs; continuing with current settings")
@@ -73,12 +72,6 @@ class workload_executor:
         for q in queries:
             try:
                 cur.execute(q)
-                # optionally fetch to ensure execution, but most OLAP queries are SELECT
-                if q.strip().lower().startswith("select"):
-                    try:
-                        cur.fetchall()
-                    except Exception:
-                        pass
                 executed += 1
             except Exception as e:
                 self.logger.error(f"Query failed: {e}\nQuery: {q[:200]}")

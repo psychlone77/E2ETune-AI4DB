@@ -1,123 +1,220 @@
+"""
+Stress testing tool for evaluating database configurations under workload.
+Supports OLAP (dwg), OLTP (sysbench, tpcc), and surrogate model evaluation.
+"""
 import copy
 import os
-import sys
 import time
+import logging
+from typing import Dict, Any, Optional
+import json
+
 import numpy as np
-from tuning_utils.new_task2 import *
-from tuning_utils.surrogate import *
+
+from tuning_utils.multi_thread import multi_thread
+from tuning_utils.surrogate import Surrogate
 from knob_config import parse_knob_config
 
 
 class stress_testing_tool:
-    def __init__(self, config, db, logger, records_log):
+    """
+    Execute workloads under specific knob configurations and measure performance.
+    
+    Supports:
+    - OLAP workloads via multi-threaded query execution (dwg)
+    - OLTP benchmarks via sysbench and tpcc
+    - Surrogate model-based fast evaluation
+    """
+    
+    def __init__(self, config: Dict[str, Any], db, logger: logging.Logger, records_log: str):
+        """Initialize stress testing tool."""
         self.benchmark_config = config['benchmark_config']
         self.db = db
-        self.ssh_config = config['ssh_config']
-        self.sur_config = config['surrogate_config']
+        self.sur_config = config.get('surrogate_config', {})
         self.logger = logger
         self.records_log = records_log
-
-    def test_config(self, config):
-        temp_config = copy.deepcopy(config)
-
-        cur_state = []
-        if self.benchmark_config['tool'] != 'surrogate':
-            flag = self.db.change_knob(config)
-            cur_state = self.db.fetch_inner_metric()
-
-        log_file = sys.path[0] + '/log/{}.log'.format(int(time.time()))
-
-        if self.benchmark_config['tool'] == 'sysbench':
-            y = self.test_by_sysbench()
-        elif self.benchmark_config['tool'] == 'tpcc':
-            y = self.test_by_tpcc(log_file)
-        elif self.benchmark_config['tool'] == 'dwg':
-            y = self.test_by_dwg(self.benchmark_config['workload_path'], self.benchmark_config['log_path'])
-            y = y[0]
-        elif self.benchmark_config['tool'] == 'surrogate':
-            y = self.test_by_surrogate(cur_state, self.benchmark_config['workload_path'], self.sur_config, config)
-
-        f = open(self.records_log, 'a')
-        temp_config['tps'] = y
-        f.writelines(json.dumps(temp_config) + '\n')
-        f.close()
+        self.iteration_count = 0
         
-        if self.benchmark_config['tool'] != 'surrogate':
-            f = open('offline_sample/offline_sample.jsonl', 'a')
-            temp_config['y'] = [-y, 1/(-y)]
-            temp_config['inner_metrics'] = cur_state
-            temp_config['workload'] = self.benchmark_config['workload_path']
-            f.writelines(json.dumps(temp_config) + '\n')
-            f.close()
+        # Ensure directories exist
+        os.makedirs(os.path.dirname(self.records_log), exist_ok=True)
+        perf_record_dir = self.benchmark_config.get('performance_record_path', 'logs/performance_record')
+        os.makedirs(perf_record_dir, exist_ok=True)
 
-        workload = self.benchmark_config['workload_path'].split('/')[-1]
-        with open(f'performance_record/{workload}.txt', 'a') as w:
-            w.write("performance: {}\n".format(-y))
+    def test_config(self, config: Dict[str, Any], iteration: Optional[int] = None) -> float:
+        """Test a configuration and return performance metric."""
+        self.iteration_count += 1
+        if iteration is None:
+            iteration = self.iteration_count
+            
+        workload_name = os.path.basename(self.benchmark_config.get('workload_path', 'unknown'))
+        self.logger.info(f"[Iteration {iteration}] [Workload: {workload_name}] Testing configuration")
+        
+        temp_config = copy.deepcopy(config)
+        cur_state = []
+        tool = self.benchmark_config.get('tool', 'dwg')
+
+        # Apply knobs and fetch metrics
+        if tool != 'surrogate':
+            self.logger.info(f"[Iteration {iteration}] Applying knobs to database")
+            flag = self.db.change_knob(config)
+            if not flag:
+                self.logger.warning(f"[Iteration {iteration}] Some knobs failed to apply")
+            
+            self.logger.info(f"[Iteration {iteration}] Fetching internal metrics")
+            cur_state = self.db.fetch_inner_metrics()
+
+        # Execute workload
+        if tool == 'sysbench':
+            self.logger.info(f"[Iteration {iteration}] Running sysbench")
+            y = self._test_by_sysbench(iteration)
+        elif tool == 'tpcc':
+            log_file = f"logs/performance/tpcc_{int(time.time())}.log"
+            self.logger.info(f"[Iteration {iteration}] Running TPCC, log: {log_file}")
+            y = self._test_by_tpcc(log_file, iteration)
+        elif tool == 'dwg':
+            self.logger.info(f"[Iteration {iteration}] Running DWG OLAP workload")
+            y = self._test_by_dwg(
+                self.benchmark_config['workload_path'],
+                self.benchmark_config.get('log_path', 'logs/performance/workload_execution.log'),
+                iteration
+            )
+            y = y[0] if isinstance(y, (list, tuple)) else y
+        elif tool == 'surrogate':
+            self.logger.info(f"[Iteration {iteration}] Running surrogate model")
+            y = self._test_by_surrogate(cur_state, self.benchmark_config['workload_path'], 
+                                        self.sur_config, config, iteration)
+        else:
+            self.logger.error(f"[Iteration {iteration}] Unknown tool: {tool}")
+            return 0.0
+
+        self.logger.info(f"[Iteration {iteration}] Performance: {y:.4f}")
+
+        # Record to training log
+        temp_config['tps'] = y
+        temp_config['iteration'] = iteration
+        temp_config['workload'] = workload_name
+        with open(self.records_log, 'a') as f:
+            f.write(json.dumps(temp_config) + '\n')
+        
+        # Record to offline sample
+        if tool != 'surrogate':
+            offline_path = 'logs/offline_sample/offline_sample.jsonl'
+            os.makedirs(os.path.dirname(offline_path), exist_ok=True)
+            with open(offline_path, 'a') as f:
+                temp_config['y'] = [-y, 1/(-y)] if y != 0 else [0, 0]
+                temp_config['inner_metrics'] = cur_state
+                temp_config['workload'] = self.benchmark_config['workload_path']
+                f.write(json.dumps(temp_config) + '\n')
+
+        # Record to per-workload performance file
+        perf_dir = self.benchmark_config.get('performance_record_path', 'logs/performance_record')
+        perf_file = os.path.join(perf_dir, f"{workload_name}.txt")
+        with open(perf_file, 'a') as w:
+            w.write(f"[Iteration {iteration}] Performance: {y:.4f}\n")
 
         return y
 
-    # tjk modified
-    def test_by_sysbench(self):
-        command = 'sysbench --db-driver=pgsql --time={} --threads=100 --report-interval=1 --pgsql-host={} ' \
-                  '--pgsql-port={} --pgsql-user={} --pgsql-password={} --pgsql-db={} ' \
-                  '--tables={} --table_size={} {} --db-ps-mode=disable run'.format(
-            int(self.benchmark_config['time']) + 2,
-            self.db.host,
-            self.db.port,
-            self.db.user,
-            self.db.password,
-            self.db.database,
-            self.benchmark_config['tables'],
-            self.benchmark_config['table_size'],
-            self.benchmark_config['mode']
+    def _test_by_sysbench(self, iteration: int) -> float:
+        """Run sysbench OLTP benchmark."""
+        command = (
+            f"sysbench --db-driver=pgsql --time={int(self.benchmark_config.get('time', 20)) + 2} "
+            f"--threads=100 --report-interval=1 --pgsql-host={self.db.host} "
+            f"--pgsql-port={self.db.port} --pgsql-user={self.db.user} "
+            f"--pgsql-password={self.db.password} --pgsql-db={self.db.database} "
+            f"--tables={self.benchmark_config.get('tables', 50)} "
+            f"--table_size={self.benchmark_config.get('table_size', 1000000)} "
+            f"{self.benchmark_config.get('mode', 'oltp_read_only')} --db-ps-mode=disable run"
         )
-        # tjk add
+        
+        self.logger.info(f"[Iteration {iteration}] Executing sysbench")
         results = []
-        # _, out, _ = self.db.ssh.exec_command(command)
+        
+        try:
+            out = os.popen(command)
+            lines = out.readlines()
+            time_limit = int(self.benchmark_config.get('time', 20))
+            lines = lines[21:time_limit + 11]
+            
+            for line in lines:
+                if "tps" in line:
+                    content = line.split(" ")
+                    try:
+                        results.append(float(content[6]))
+                    except (IndexError, ValueError):
+                        continue
+            
+            if results:
+                avg_tps = np.array(results).mean()
+                self.logger.info(f"[Iteration {iteration}] Sysbench avg TPS: {avg_tps:.4f}")
+                return avg_tps
+            else:
+                self.logger.warning(f"[Iteration {iteration}] No TPS values from sysbench")
+                return 0.0
+        except Exception as e:
+            self.logger.error(f"[Iteration {iteration}] Sysbench failed: {e}")
+            return 0.0
 
-        out = os.popen(command)
-
-        lines = out.readlines()
-        lines = lines[21:int(self.benchmark_config['time']) + 11]
-        for line in lines:
-            if line.find("tps") == -1:
-                continue
-            content = line.split(" ")
-            results.append(float(content[6]))
-
-        return np.array(results).mean()
-
-    def test_by_tpcc(self, log_file):
-        command = '/usr/local/benchmarksql-5.0/run/runBenchmark.sh props.pg > {}'.format(log_file)
+    def _test_by_tpcc(self, log_file: str, iteration: int) -> float:
+        """Run BenchmarkSQL TPC-C."""
+        os.makedirs(os.path.dirname(log_file), exist_ok=True)
+        command = f'/usr/local/benchmarksql-5.0/run/runBenchmark.sh props.pg > {log_file}'
+        
+        self.logger.info(f"[Iteration {iteration}] Executing TPCC")
         state = os.system(command)
 
         if state == 0:
-            self.logger.info('tpcc running success')
+            self.logger.info(f"[Iteration {iteration}] TPCC completed")
         else:
-            self.logger.info('tpcc running error')
+            self.logger.error(f"[Iteration {iteration}] TPCC error (exit {state})")
 
-        with open(log_file) as f:
-            lines = f.readlines()
-        for line in lines:
-            if 'Measured tpmTOTAL' in line:
-                tps = float(line.split()[9])
+        try:
+            with open(log_file) as f:
+                lines = f.readlines()
+            for line in lines:
+                if 'Measured tpmTOTAL' in line:
+                    tps = float(line.split()[9])
+                    self.logger.info(f"[Iteration {iteration}] TPCC TPS: {tps:.4f}")
+                    return tps
+            
+            self.logger.warning(f"[Iteration {iteration}] Could not parse TPCC TPS")
+            return 0.0
+        except Exception as e:
+            self.logger.error(f"[Iteration {iteration}] Error reading TPCC log: {e}")
+            return 0.0
 
-        return tps
-
-    def test_by_dwg(self, workload_path, log_file):
-        mh = multi_thread(self.db, workload_path, int(self.benchmark_config['thread']), log_file)
+    def _test_by_dwg(self, workload_path: str, log_file: str, iteration: int) -> tuple:
+        """Execute OLAP workload via multi-threaded DWG."""
+        os.makedirs(os.path.dirname(log_file), exist_ok=True)
+        
+        thread_count = int(self.benchmark_config.get('thread', 1))
+        mh = multi_thread(self.db, workload_path, thread_count, log_file)
 
         mh.data_pre()
-        return mh.run()
+        
+        self.logger.info(f"[Iteration {iteration}] Running with {thread_count} thread(s)")
+        result = mh.run()
+        
+        self.logger.info(f"[Iteration {iteration}] DWG complete, result: {result}")
+        return result['throughput_qps']
     
-    def test_by_surrogate(self, inner_metrics, workload_path, sur_config, knobs):
+    def _test_by_surrogate(self, inner_metrics: list, workload_path: str, 
+                           sur_config: Dict[str, Any], knobs: Dict[str, Any], 
+                           iteration: int) -> float:
+        """Predict performance using surrogate model."""
+        self.logger.info(f"[Iteration {iteration}] Loading surrogate model")
         sg = Surrogate(sur_config, workload_path)
+        
         knob_detail = parse_knob_config.get_knobs('knob_config/knob_config.json')
         x = []
-        for i, key in enumerate(knob_detail.keys()):
+        
+        # Normalize knob values to [0, 1]
+        for key in knob_detail.keys():
             detail = knob_detail[key]
             if detail['max'] - detail['min'] != 0:
-                x.append((knobs[key] - detail['min']) / (detail['max'] - detail['min']))
-            else: continue
+                normalized = (knobs[key] - detail['min']) / (detail['max'] - detail['min'])
+                x.append(normalized)
 
-        return sg.run(inner_metrics, x)
+        self.logger.info(f"[Iteration {iteration}] Running surrogate prediction")
+        prediction = sg.run(inner_metrics, x)
+        self.logger.info(f"[Iteration {iteration}] Surrogate prediction: {prediction:.4f}")
+        return prediction
