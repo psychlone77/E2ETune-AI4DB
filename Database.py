@@ -6,6 +6,7 @@ import time
 from typing import Dict, List, Any, Optional
 
 from knob_config.parse_knob_config import get_knobs
+import utils
 
 
 class Database:
@@ -42,13 +43,14 @@ class Database:
 
         # Knob definitions (types, ranges, etc.) from your knob config
         self.knobs: Dict[str, Dict[str, Any]] = get_knobs(knob_config_path)
+        self.logger = utils.get_logger(config['tuning_config']['log_path'])
 
     def get_conn(self, max_retries: int = 3) -> psycopg2.extensions.connection:
         """
         Establish a PostgreSQL connection with simple retry logic.
         If all retries fail, attempts to remove postgresql.auto.conf and tries once more.
         """
-        print(f"Connecting to PostgreSQL {self.host}:{self.port}, db={self.database}")
+        self.logger.debug(f"Connecting to PostgreSQL {self.host}:{self.port}, db={self.database}")
         last_err: Optional[Exception] = None
 
         for attempt in range(max_retries):
@@ -62,21 +64,21 @@ class Database:
                     connect_timeout=10,
                 )
                 if attempt > 0:
-                    print(f"Connection successful on attempt {attempt + 1}")
+                    self.logger.info(f"Connection successful on attempt {attempt + 1}")
                 return conn
             except Exception as e:
                 last_err = e
-                print(f"Connection attempt {attempt + 1} failed: {e}")
+                self.logger.warning(f"Connection attempt {attempt + 1} failed: {e}")
                 if attempt < max_retries - 1:
-                    print(f"Retrying in 2 seconds... ({attempt + 2}/{max_retries})")
+                    self.logger.info(f"Retrying in 2 seconds... ({attempt + 2}/{max_retries})")
                     time.sleep(2)
 
-        print(f"All {max_retries} attempts failed. Removing auto.conf and trying once more...")
+        self.logger.warning(f"All {max_retries} attempts failed. Removing auto.conf and retrying...")
         self.remove_auto_conf()
 
         time.sleep(2)
         try:
-            print("Final connection attempt after removing auto.conf...")
+            self.logger.info("Final connection attempt after removing auto.conf")
             conn = psycopg2.connect(
                 database=self.database,
                 user=self.user,
@@ -85,9 +87,10 @@ class Database:
                 port=self.port,
                 connect_timeout=10,
             )
-            print("Connection successful after removing auto.conf")
+            self.logger.info("Connection successful after removing auto.conf")
             return conn
         except Exception as e:
+            self.logger.error(f"Connection failed after {max_retries + 1} attempts and auto.conf removal")
             raise Exception(
                 f"Could not establish database connection after {max_retries + 1} attempts "
                 f"and auto.conf removal: {e}"
@@ -128,7 +131,7 @@ class Database:
         try:
             for i, query in enumerate(workload_queries):
                 try:
-                    print(f"Explaining query {i + 1}/{len(workload_queries)}")
+                    self.logger.info(f"Explaining query {i + 1}/{len(workload_queries)}")
                     cursor.execute(f"EXPLAIN (FORMAT JSON) {query}")
                     row = cursor.fetchone()
                     # EXPLAIN JSON result is a single JSON array; row[0] is that array
@@ -139,8 +142,8 @@ class Database:
                         "query_id": i,
                     })
                 except Exception as e:
-                    print(f"Error explaining query {i + 1}: {e}")
-                    print(f"Query (truncated): {query[:100]}...")
+                    self.logger.error(f"Error explaining query {i + 1}: {e}")
+                    self.logger.debug(f"Query (truncated): {query[:100]}...")
         finally:
             cursor.close()
             conn.close()
@@ -381,3 +384,35 @@ class Database:
             self.run_workload_with_defaults(workload_file)
         else:
             print("Knob change failed; skipping workload execution.")
+
+
+    def reset_db_knobs(self) -> None:
+        """
+        Reset the database knobs to their default values.
+
+        This is a convenience module-level function moved here from resetDB.py
+        so other modules can reuse it directly. It mirrors the previous
+        standalone script behavior by accepting the same `args` dict.
+        """
+        conn = None
+
+        try:
+            conn = self.get_conn()
+            # ALTER SYSTEM cannot run inside a transaction block; enable autocommit
+            conn.autocommit = True
+            cur = conn.cursor()
+
+            # Simplest and safest: clear all overrides from postgresql.auto.conf
+            # This resets parameters back to their default/boot values.
+            cur.execute("ALTER SYSTEM RESET ALL;")
+
+            # Reload the configuration to apply changes immediately
+            cur.execute("SELECT pg_reload_conf();")
+            cur.close()
+            print("Database knobs have been reset to default values.")
+
+        except Exception as e:
+            print(f"An error occurred while resetting database knobs: {e}")
+        finally:
+            if conn is not None:
+                conn.close()
