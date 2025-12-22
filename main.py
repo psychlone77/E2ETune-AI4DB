@@ -5,7 +5,7 @@ from tuner import run_tuning
 from config import parse_config
 from surrogate.train_surrogate import train_surrogate
 import utils
-
+import logging
 
 if __name__ == '__main__':
     # Load configuration from config.ini
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     # Setup main logger
     main_log_path = f"logs/tuning/main_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
     logger = utils.get_logger(main_log_path, name='Main')
-    
+    print(logger)
     logger.info("="*100)
     logger.info("E2ETune: End-to-End Database Tuning System")
     logger.info("="*100)

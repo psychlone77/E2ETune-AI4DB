@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import sys
 import time
 import pandas as pd
 import re
@@ -8,40 +9,51 @@ import re
 
 def get_logger(path: str, name: str = "E2ETune") -> logging.Logger:
     """Return a logger configured to write to `path` and stdout.
-
-    This function is idempotent: repeated calls with the same `name`
-    won't add duplicate handlers.
+    
+    Force re-configuration to ensure INFO logs are shown.
     """
     # Ensure directory exists for file handler
     if path:
-        os.makedirs(os.path.dirname(path), exist_ok=True)
+        try:
+            os.makedirs(os.path.dirname(path), exist_ok=True)
+        except Exception:
+            pass
 
     logger = logging.getLogger(name)
+    
+    # Reset any global disable that might have been set by other libraries
+    logging.disable(logging.NOTSET)
+    
+    # Force the level to INFO
     logger.setLevel(logging.INFO)
-
-    # If already initialized, return existing logger to avoid duplicate handlers
-    if getattr(logger, "_e2etune_initialized", False):
-        return logger
+    
+    # Remove existing handlers to start fresh (avoids duplicates and bad configs)
+    if logger.hasHandlers():
+        logger.handlers.clear()
+        
+    # Prevent propagation to root logger
+    logger.propagate = False
 
     fmt = logging.Formatter('[%(asctime)s:%(filename)s#L%(lineno)d:%(levelname)s]: %(message)s')
 
     # File handler
     if path:
-        fh = logging.FileHandler(path)
-        fh.setLevel(logging.INFO)
-        fh.setFormatter(fmt)
-        logger.addHandler(fh)
+        try:
+            fh = logging.FileHandler(path, encoding='utf-8')
+            fh.setLevel(logging.INFO)
+            fh.setFormatter(fmt)
+            logger.addHandler(fh)
+            # Print to stdout to confirm file creation (debug aid)
+            print(f"Log file: {os.path.abspath(path)}")
+        except Exception as e:
+            print(f"Failed to create log file {path}: {e}")
 
-    # Console handler
-    ch = logging.StreamHandler()
+    # Console handler - explicitly use stdout
+    ch = logging.StreamHandler(sys.stdout)
     ch.setLevel(logging.INFO)
     ch.setFormatter(fmt)
     logger.addHandler(ch)
 
-    # Prevent propagation to root logger which can cause duplicate logs
-    logger.propagate = False
-
-    logger._e2etune_initialized = True
     return logger
 
 
