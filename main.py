@@ -53,35 +53,28 @@ if __name__ == '__main__':
     completed = utils.get_completed_workloads(perf_dir)
     if completed:
         logger.info(f"Found {len(completed)} completed workload records in: {perf_dir}")
-        # Filter out workloads whose basename or filename appears in completed set
-        orig_count = len(workloads)
-        workloads = [w for w in workloads 
-                    if (os.path.splitext(w)[0] not in completed 
-                        and w not in completed 
-                        and os.path.basename(w) not in completed)]
-        skipped = orig_count - len(workloads)
-        logger.info(f"Skipping {skipped} already-run workloads; {len(workloads)} remain to process")
 
-    # Determine workload subset to tune
+    # Determine workload subset to tune (don't filter by completed yet)
     if total_workloads < 10:
         workloads_to_tune = workloads
-        logger.info(f"Tuning all {len(workloads)} workloads")
+        logger.info(f"Processing all {len(workloads)} workloads")
     else:
         workloads_to_tune = workloads[:13]
-        logger.info(f"Tuning first 13 of {len(workloads)} remaining workloads")
-    
-    if not workloads_to_tune:
-        logger.info("No workloads to process. All workloads already completed or none found.")
-        logger.info("="*100)
-        logger.info("E2ETune session completed")
-        logger.info("="*100)
-        exit(0)
+        logger.info(f"Processing first 13 of {len(workloads)} workloads")
     
     # Tune workloads
     successful = 0
     failed = 0
+    skipped = 0
     
     for idx, workload in enumerate(workloads_to_tune, 1):
+        # Check if this workload is already completed
+        workload_id = os.path.splitext(workload)[0]
+        if workload_id in completed or workload in completed or os.path.basename(workload) in completed:
+            skipped += 1
+            logger.info(f"[Workload {idx}/{len(workloads_to_tune)}] Skipping already completed: {workload}")
+            continue
+        
         args['benchmark_config']['workload_path'] = os.path.join(workload_base_path, workload)
         args['benchmark_config']['workload_name'] = workload
         
@@ -111,8 +104,9 @@ if __name__ == '__main__':
     logger.info("="*100)
     logger.info("TUNING SUMMARY")
     logger.info("="*100)
-    logger.info(f"Total workloads to tune: {len(workloads_to_tune)}")
+    logger.info(f"Total workloads processed: {len(workloads_to_tune)}")
     logger.info(f"Successfully tuned: {successful}")
+    logger.info(f"Skipped (already completed): {skipped}")
     logger.info(f"Failed: {failed}")
     logger.info("="*100)
     logger.info("E2ETune session completed")
