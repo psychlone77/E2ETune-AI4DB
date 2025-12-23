@@ -351,8 +351,11 @@ class Tuner:
         runcount = int(self.args['tuning_config'].get('suggest_num', 100))
         self.logger.info(f"[HEBO Setup] [Workload: {self.workload_name}] Configuring HEBO with {runcount} evaluations")
         
-        # Initialize HEBO optimizer
-        hebo = HEBO(design_space)
+        # Initialize HEBO optimizer with increased model noise for numerical stability
+        # model_config can be passed to control GP behavior
+        hebo = HEBO(design_space, 
+                   rand_sample=max(10, runcount // 10),
+                   model_config={'noise_lb': 1e-2})  # Increased noise lower bound for stability
         
         # Open history file in JSONL format for writing iterations as they happen
         history_file = f"{output_dir}/runhistory.jsonl"
@@ -385,8 +388,8 @@ class Tuner:
                 perf = self.stress_tester.test_config(config_dict, iteration=iteration+1)
                 
                 # HEBO minimizes, so use negative QPS/TPS (assuming higher is better)
-                objective = -perf if perf > 0 else perf
-                self.logger.info(f"[HEBO Iteration {iteration+1}] Performance: {perf:.4f} -> Objective: {objective:.4f}")
+                objective = -float(np.log10(perf)) if perf > 0 else perf
+                self.logger.info(f"[HEBO Iteration {iteration+1}] Raw Perf: {perf:.4f} -> Log Objective: {objective:.4f}")
                 
                 # Observe the result (only include tunable parameters)
                 observation_dict = {k: v for k, v in config_dict.items() if k in [p['name'] for p in params]}
