@@ -295,12 +295,6 @@ class Tuner:
         Similar to SMAC but uses HEBO's Bayesian optimization.
         """
         iteration_counter = {'count': 0}
-        early_stop_state = {
-            'best_cost': float('inf'),
-            'iterations_without_improvement': 0,
-            'should_stop': False,
-        }
-        PLATEAU_ITERATIONS = int(self.args['tuning_config'].get('early_stop_plateau', 50))
         
         # Build HEBO design space from knob definitions
         params = []
@@ -354,22 +348,64 @@ class Tuner:
         # Initialize HEBO optimizer with increased model noise for numerical stability
         # model_config can be passed to control GP behavior
         hebo = HEBO(design_space, 
-                   rand_sample=max(10, runcount // 10),
-                   model_config={'noise_lb': 1e-2})  # Increased noise lower bound for stability
+            rand_sample=len(params)*2,
+            model_config={
+                "lr": 0.01,
+                "num_epochs": 100,
+                "verbose": False,
+                "noise_lb": 1e-3,  # Increased from 8e-4
+                "pred_likeli": False,
+            }
+        ) 
         
         # Open history file in JSONL format for writing iterations as they happen
         history_file = f"{output_dir}/runhistory.jsonl"
         best_config = None
         best_objective = float('inf')
-        
+
+        # EVALUATE DEFAULT CONFIGURATION FIRST (Iteration 0)
         self.logger.info(f"[HEBO] [Workload: {self.workload_name}] Starting HEBO optimization")
+
+        self.logger.info(f"[HEBO Iteration 0] [Workload: {self.workload_name}] Evaluating DEFAULT configuration")
+    
+        # Build default config with all knobs (including constants)
+        default_config = {name: detail['default'] for name, detail in self.knobs_detail.items()}
+        self.logger.debug(f"[HEBO Iteration 0] Default Config: {default_config}")
+        
+        # Evaluate default configuration
+        default_perf = self.stress_tester.test_config(default_config, iteration=0)
+        default_objective = -default_perf if default_perf > 0 else default_perf
+        self.logger.info(f"[HEBO Iteration 0] Default Perf: {default_perf:.4f} -> Objective: {default_objective:.4f}")
+        
+        # Extract only tunable parameters for HEBO observation
+        default_tunable = {k: v for k, v in default_config.items() if k in [p['name'] for p in params]}
+        default_df = pd.DataFrame([default_tunable])
+        default_objective_df = np.array([[default_objective]])
+        
+        # Feed default config to HEBO
+        hebo.observe(default_df, default_objective_df)
+        
+        # Initialize best with default
+        best_config = default_config.copy()
+        best_objective = default_objective
+        
+        # Write default to history
+        with open(history_file, 'w') as f:
+            json.dump({
+                'iteration': 0,
+                'config': default_config,
+                'cost': default_objective,
+                'performance': default_perf,
+                'note': 'DEFAULT_CONFIG'
+            }, f)
+            f.write('\n')
+        
+        self.logger.info(f"[HEBO Iteration 0] Default config set as baseline (objective: {default_objective:.4f})")
+
         
         try:
             for iteration in range(runcount):
-                if early_stop_state['should_stop']:
-                    self.logger.info(f"[HEBO Early Stop] Stopping at iteration {iteration}")
-                    break
-                
+
                 iteration_counter['count'] = iteration + 1
                 
                 # Get suggestion from HEBO
@@ -388,7 +424,7 @@ class Tuner:
                 perf = self.stress_tester.test_config(config_dict, iteration=iteration+1)
                 
                 # HEBO minimizes, so use negative QPS/TPS (assuming higher is better)
-                objective = -float(np.log10(perf)) if perf > 0 else perf
+                objective = -perf if perf > 0 else perf
                 self.logger.info(f"[HEBO Iteration {iteration+1}] Raw Perf: {perf:.4f} -> Log Objective: {objective:.4f}")
                 
                 # Observe the result (only include tunable parameters)
@@ -410,20 +446,7 @@ class Tuner:
                     improvement = abs(objective - best_objective) / (abs(best_objective) + 1e-10)
                     best_objective = objective
                     best_config = config_dict.copy()
-                    early_stop_state['best_cost'] = objective
-                    early_stop_state['iterations_without_improvement'] = 0
                     self.logger.info(f"[HEBO Early Stop] New best: {objective:.4f} (improvement: {improvement*100:.2f}%)")
-                else:
-                    early_stop_state['iterations_without_improvement'] += 1
-                    self.logger.info(f"[HEBO Early Stop] No improvement, "
-                                   f"plateau counter: {early_stop_state['iterations_without_improvement']}/{PLATEAU_ITERATIONS}")
-                
-                # Check early stopping
-                if early_stop_state['iterations_without_improvement'] >= PLATEAU_ITERATIONS:
-                    early_stop_state['should_stop'] = True
-                    self.logger.info(f"[HEBO Early Stop] Performance plateaued after {PLATEAU_ITERATIONS} iterations. "
-                                   f"Stopping optimization early at iteration {iteration+1}.")
-                    break
         
         except Exception as e:
             self.logger.error(f"[HEBO] Error during optimization: {e}")
@@ -431,11 +454,7 @@ class Tuner:
                 best_config = {name: detail['default'] for name, detail in self.knobs_detail.items()}
         
         # Log completion status
-        if early_stop_state['should_stop']:
-            self.logger.info(f"[HEBO] [Workload: {self.workload_name}] Optimization stopped early due to performance plateau")
-            self.logger.info(f"[HEBO] [Workload: {self.workload_name}] Completed {iteration_counter['count']} iterations (limit: {runcount})")
-        else:
-            self.logger.info(f"[HEBO] [Workload: {self.workload_name}] Optimization completed all {runcount} iterations")
+        self.logger.info(f"[HEBO] [Workload: {self.workload_name}] Optimization completed all {runcount} iterations")
         
         self.logger.info(f"[HEBO] [Workload: {self.workload_name}] Best configuration: {best_config}")
         
@@ -445,9 +464,8 @@ class Tuner:
             json.dump({
                 "workload": save_workload,
                 "iterations": iteration_counter['count'],
-                "early_stopped": early_stop_state['should_stop'],
-                "best_cost": early_stop_state['best_cost'],
-                "best_performance": -early_stop_state['best_cost'],
+                "best_cost": best_objective,
+                "best_performance": -best_objective,
                 "configuration": best_config
             }, f, indent=4)
         self.logger.info(f"[HEBO] [Workload: {self.workload_name}] Best configuration saved to: {best_config_file}")

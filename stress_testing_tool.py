@@ -77,7 +77,7 @@ class stress_testing_tool:
                 self.benchmark_config['workload_path'],
                 self.benchmark_config.get('log_path', 'logs/performance/workload_execution.log'),
                 iteration
-            )
+            )['throughput_qps']
             y = y[0] if isinstance(y, (list, tuple)) else y
         elif tool == 'surrogate':
             self.logger.info(f"[Iteration {iteration}] Running surrogate model")
@@ -195,7 +195,7 @@ class stress_testing_tool:
         result = mh.run()
         
         self.logger.info(f"[Iteration {iteration}] DWG complete, result: {result}")
-        return result['throughput_qps']
+        return result
     
     def _test_by_surrogate(self, inner_metrics: list, workload_path: str, 
                            sur_config: Dict[str, Any], knobs: Dict[str, Any], 
