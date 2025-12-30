@@ -1,5 +1,13 @@
 The source code for E2ETune
 
+## Useful Commands
+
+- Start PostgreSQL
+
+  ```
+  sudo systemctl start postgresql
+  ```
+
 ## Environment Installation
 
 1. Preparations: Python == 3.7
