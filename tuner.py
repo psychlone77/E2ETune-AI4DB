@@ -17,6 +17,7 @@ from hebo.optimizers.hebo import HEBO
 from knob_config import parse_knob_config
 from Database import Database
 from stress_testing_tool import stress_testing_tool
+from benchbase_runner import BenchBaseRunner
 import utils
 
 class EarlyStopSignal(BaseException):
@@ -68,7 +69,12 @@ def default_run(workload_file: str, args: Dict[str, Any]) -> Dict[str, float]:
     db.restart_db()
     
     logger.info(f"[Default Run] Running workload: {workload_file}")
-    db.run_workload_with_defaults(workload_file)
+    if args['benchmark_config'].get('tool', 'dwg') == 'benchbase':
+        benchbase_runner = BenchBaseRunner(args, logger=logger)
+        benchbase_runner.load_database(workload_file)
+        benchbase_runner.run_benchmark(workload_file, args['benchmark_config'].get('log_path', 'logs/performance/workload_execution.log'))
+    else:
+        db.run_workload_with_defaults(workload_file)
 
     internal_metrics = db.fetch_inner_metrics()
     logger.info(f"[Default Run] Internal metrics collected: {len(internal_metrics)} metrics")

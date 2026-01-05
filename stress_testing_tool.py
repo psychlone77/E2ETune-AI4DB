@@ -14,6 +14,7 @@ import numpy as np
 from tuning_utils.multi_thread import multi_thread
 from tuning_utils.surrogate import Surrogate
 from knob_config import parse_knob_config
+from benchbase_runner import BenchBaseRunner
 
 
 class stress_testing_tool:
@@ -28,6 +29,7 @@ class stress_testing_tool:
     
     def __init__(self, config: Dict[str, Any], db, logger: logging.Logger, records_log: str):
         """Initialize stress testing tool."""
+        self.args = config
         self.benchmark_config = config['benchmark_config']
         self.db = db
         self.sur_config = config.get('surrogate_config', {})
@@ -63,15 +65,7 @@ class stress_testing_tool:
             self.logger.info(f"[Iteration {iteration}] Fetching internal metrics")
             cur_state = self.db.fetch_inner_metrics()
 
-        # Execute workload
-        if tool == 'sysbench':
-            self.logger.info(f"[Iteration {iteration}] Running sysbench")
-            y = self._test_by_sysbench(iteration)
-        elif tool == 'tpcc':
-            log_file = f"logs/performance/tpcc_{int(time.time())}.log"
-            self.logger.info(f"[Iteration {iteration}] Running TPCC, log: {log_file}")
-            y = self._test_by_tpcc(log_file, iteration)
-        elif tool == 'dwg':
+        if tool == 'dwg':
             self.logger.info(f"[Iteration {iteration}] Running DWG OLAP workload")
             y = self._test_by_dwg(
                 self.benchmark_config['workload_path'],
@@ -79,6 +73,14 @@ class stress_testing_tool:
                 iteration
             )['throughput_qps']
             y = y[0] if isinstance(y, (list, tuple)) else y
+
+        elif tool == 'benchbase':
+            self.logger.info(f"[Iteration {iteration}] Running BenchBase benchmark")
+            y = self.test_by_benchbase(
+                self.benchmark_config['workload_path'],
+                self.benchmark_config.get('log_path', 'logs/performance/benchbase_execution.log')
+            )
+
         elif tool == 'surrogate':
             self.logger.info(f"[Iteration {iteration}] Running surrogate model")
             y = self._test_by_surrogate(cur_state, self.benchmark_config['workload_path'], 
@@ -113,74 +115,11 @@ class stress_testing_tool:
             w.write(f"[Iteration {iteration}] Performance: {y:.4f}\n")
 
         return y
-
-    def _test_by_sysbench(self, iteration: int) -> float:
-        """Run sysbench OLTP benchmark."""
-        command = (
-            f"sysbench --db-driver=pgsql --time={int(self.benchmark_config.get('time', 20)) + 2} "
-            f"--threads=100 --report-interval=1 --pgsql-host={self.db.host} "
-            f"--pgsql-port={self.db.port} --pgsql-user={self.db.user} "
-            f"--pgsql-password={self.db.password} --pgsql-db={self.db.database} "
-            f"--tables={self.benchmark_config.get('tables', 50)} "
-            f"--table_size={self.benchmark_config.get('table_size', 1000000)} "
-            f"{self.benchmark_config.get('mode', 'oltp_read_only')} --db-ps-mode=disable run"
-        )
-        
-        self.logger.info(f"[Iteration {iteration}] Executing sysbench")
-        results = []
-        
-        try:
-            out = os.popen(command)
-            lines = out.readlines()
-            time_limit = int(self.benchmark_config.get('time', 20))
-            lines = lines[21:time_limit + 11]
-            
-            for line in lines:
-                if "tps" in line:
-                    content = line.split(" ")
-                    try:
-                        results.append(float(content[6]))
-                    except (IndexError, ValueError):
-                        continue
-            
-            if results:
-                avg_tps = np.array(results).mean()
-                self.logger.info(f"[Iteration {iteration}] Sysbench avg TPS: {avg_tps:.4f}")
-                return avg_tps
-            else:
-                self.logger.warning(f"[Iteration {iteration}] No TPS values from sysbench")
-                return 0.0
-        except Exception as e:
-            self.logger.error(f"[Iteration {iteration}] Sysbench failed: {e}")
-            return 0.0
-
-    def _test_by_tpcc(self, log_file: str, iteration: int) -> float:
-        """Run BenchmarkSQL TPC-C."""
-        os.makedirs(os.path.dirname(log_file), exist_ok=True)
-        command = f'/usr/local/benchmarksql-5.0/run/runBenchmark.sh props.pg > {log_file}'
-        
-        self.logger.info(f"[Iteration {iteration}] Executing TPCC")
-        state = os.system(command)
-
-        if state == 0:
-            self.logger.info(f"[Iteration {iteration}] TPCC completed")
-        else:
-            self.logger.error(f"[Iteration {iteration}] TPCC error (exit {state})")
-
-        try:
-            with open(log_file) as f:
-                lines = f.readlines()
-            for line in lines:
-                if 'Measured tpmTOTAL' in line:
-                    tps = float(line.split()[9])
-                    self.logger.info(f"[Iteration {iteration}] TPCC TPS: {tps:.4f}")
-                    return tps
-            
-            self.logger.warning(f"[Iteration {iteration}] Could not parse TPCC TPS")
-            return 0.0
-        except Exception as e:
-            self.logger.error(f"[Iteration {iteration}] Error reading TPCC log: {e}")
-            return 0.0
+    
+    def test_by_benchbase(self, workload_path, log_file):
+        # Test the database performance using benchbase
+        benchbase_runner = BenchBaseRunner(self.args, self.logger)
+        return benchbase_runner.run_benchmark(workload_path, log_file)
 
     def _test_by_dwg(self, workload_path: str, log_file: str, iteration: int) -> tuple:
         """Execute OLAP workload via multi-threaded DWG."""

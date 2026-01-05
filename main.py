@@ -38,9 +38,14 @@ if __name__ == '__main__':
         logger.error(f"Workload path does not exist: {workload_base_path}")
         logger.error("Please check 'workload_path' in [benchmark_config] section of config.ini")
         exit(1)
-    
+
     all_files = os.listdir(workload_base_path)
-    workloads = [f for f in all_files if f.startswith(benchmark)]
+
+    if args['benchmark_config'].get('type', 'olap') == 'oltp':
+        workloads = [f for f in all_files if f.__contains__(benchmark) and f.endswith('.xml')]
+    else:
+        all_files = os.listdir(workload_base_path)
+        workloads = [f for f in all_files if f.startswith(benchmark) and f.endswith('.wg')]
     
     # Sort workloads in natural (numeric-aware) order, e.g. job_2.wg before job_10.wg
     workloads = utils.natural_sort(workloads)
