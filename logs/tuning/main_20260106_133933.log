@@ -1,0 +1,56 @@
+[2026-01-06 13:39:33,579:main.py#L25:INFO]: ====================================================================================================
+[2026-01-06 13:39:33,579:main.py#L26:INFO]: E2ETune: End-to-End Database Tuning System
+[2026-01-06 13:39:33,579:main.py#L27:INFO]: ====================================================================================================
+[2026-01-06 13:39:33,579:main.py#L28:INFO]: Configuration file: config/config.ini
+[2026-01-06 13:39:33,579:main.py#L29:INFO]: Host: localhost
+[2026-01-06 13:39:33,579:main.py#L30:INFO]: Database: tpcc
+[2026-01-06 13:39:33,579:main.py#L31:INFO]: Data Path: /var/lib/postgresql/12/main
+[2026-01-06 13:39:33,579:main.py#L32:INFO]: Benchmark: smallbank
+[2026-01-06 13:39:33,579:main.py#L33:INFO]: Workload Path: ./oltp_workloads/smallbank/
+[2026-01-06 13:39:33,579:main.py#L34:INFO]: ====================================================================================================
+[2026-01-06 13:39:33,581:main.py#L54:INFO]: Found 201 workloads matching prefix 'smallbank'
+[2026-01-06 13:39:33,581:main.py#L60:INFO]: Found 65 completed workload records in: logs/performance_record
+[2026-01-06 13:39:33,581:main.py#L68:INFO]: Processing first 13 of 201 workloads
+[2026-01-06 13:39:33,581:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-06 13:39:33,581:main.py#L88:INFO]: [Workload 1/13] Starting tuning for: sample_smallbank_config0.xml
+[2026-01-06 13:39:33,581:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-06 15:21:01,263:main.py#L94:INFO]: [Workload 1/13] Successfully completed tuning for: sample_smallbank_config0.xml
+[2026-01-06 15:21:01,264:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-06 15:21:01,264:main.py#L88:INFO]: [Workload 2/13] Starting tuning for: sample_smallbank_config1.xml
+[2026-01-06 15:21:01,264:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-06 17:02:22,833:main.py#L94:INFO]: [Workload 2/13] Successfully completed tuning for: sample_smallbank_config1.xml
+[2026-01-06 17:02:22,833:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-06 17:02:22,833:main.py#L88:INFO]: [Workload 3/13] Starting tuning for: sample_smallbank_config2.xml
+[2026-01-06 17:02:22,833:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-06 18:45:04,929:main.py#L94:INFO]: [Workload 3/13] Successfully completed tuning for: sample_smallbank_config2.xml
+[2026-01-06 18:45:04,929:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-06 18:45:04,929:main.py#L88:INFO]: [Workload 4/13] Starting tuning for: sample_smallbank_config3.xml
+[2026-01-06 18:45:04,930:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-06 20:23:27,663:main.py#L94:INFO]: [Workload 4/13] Successfully completed tuning for: sample_smallbank_config3.xml
+[2026-01-06 20:23:27,663:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-06 20:23:27,663:main.py#L88:INFO]: [Workload 5/13] Starting tuning for: sample_smallbank_config4.xml
+[2026-01-06 20:23:27,663:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-06 22:03:15,011:main.py#L94:INFO]: [Workload 5/13] Successfully completed tuning for: sample_smallbank_config4.xml
+[2026-01-06 22:03:15,011:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-06 22:03:15,011:main.py#L88:INFO]: [Workload 6/13] Starting tuning for: sample_smallbank_config5.xml
+[2026-01-06 22:03:15,011:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-06 23:43:41,430:main.py#L94:INFO]: [Workload 6/13] Successfully completed tuning for: sample_smallbank_config5.xml
+[2026-01-06 23:43:41,430:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-06 23:43:41,430:main.py#L88:INFO]: [Workload 7/13] Starting tuning for: sample_smallbank_config6.xml
+[2026-01-06 23:43:41,430:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-07 01:24:42,777:main.py#L94:INFO]: [Workload 7/13] Successfully completed tuning for: sample_smallbank_config6.xml
+[2026-01-07 01:24:42,777:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-07 01:24:42,777:main.py#L88:INFO]: [Workload 8/13] Starting tuning for: sample_smallbank_config7.xml
+[2026-01-07 01:24:42,777:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-07 03:04:44,687:main.py#L94:INFO]: [Workload 8/13] Successfully completed tuning for: sample_smallbank_config7.xml
+[2026-01-07 03:04:44,687:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-07 03:04:44,687:main.py#L88:INFO]: [Workload 9/13] Starting tuning for: sample_smallbank_config8.xml
+[2026-01-07 03:04:44,687:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-07 04:45:16,540:main.py#L94:INFO]: [Workload 9/13] Successfully completed tuning for: sample_smallbank_config8.xml
+[2026-01-07 04:45:16,540:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-07 04:45:16,540:main.py#L88:INFO]: [Workload 10/13] Starting tuning for: sample_smallbank_config9.xml
+[2026-01-07 04:45:16,540:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-07 06:26:36,456:main.py#L94:INFO]: [Workload 10/13] Successfully completed tuning for: sample_smallbank_config9.xml
+[2026-01-07 06:26:36,456:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-07 06:26:36,456:main.py#L88:INFO]: [Workload 11/13] Starting tuning for: sample_smallbank_config10.xml
+[2026-01-07 06:26:36,456:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------

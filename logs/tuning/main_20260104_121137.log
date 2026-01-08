@@ -1,0 +1,40 @@
+[2026-01-04 12:11:37,563:main.py#L25:INFO]: ====================================================================================================
+[2026-01-04 12:11:37,563:main.py#L26:INFO]: E2ETune: End-to-End Database Tuning System
+[2026-01-04 12:11:37,563:main.py#L27:INFO]: ====================================================================================================
+[2026-01-04 12:11:37,563:main.py#L28:INFO]: Configuration file: config/config.ini
+[2026-01-04 12:11:37,564:main.py#L29:INFO]: Host: localhost
+[2026-01-04 12:11:37,564:main.py#L30:INFO]: Database: tpcc
+[2026-01-04 12:11:37,564:main.py#L31:INFO]: Data Path: /var/lib/postgresql/12/main
+[2026-01-04 12:11:37,564:main.py#L32:INFO]: Benchmark: tpcc
+[2026-01-04 12:11:37,564:main.py#L33:INFO]: Workload Path: ./oltp_workloads/tpcc/
+[2026-01-04 12:11:37,564:main.py#L34:INFO]: ====================================================================================================
+[2026-01-04 12:11:37,565:main.py#L54:INFO]: Found 201 workloads matching prefix 'tpcc'
+[2026-01-04 12:11:37,566:main.py#L60:INFO]: Found 52 completed workload records in: logs/performance_record
+[2026-01-04 12:11:37,566:main.py#L68:INFO]: Processing first 13 of 201 workloads
+[2026-01-04 12:11:37,566:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-04 12:11:37,566:main.py#L88:INFO]: [Workload 1/13] Starting tuning for: sample_tpcc_config0.xml
+[2026-01-04 12:11:37,566:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-04 12:11:47,370:main.py#L98:ERROR]: [Workload 1/13] Error tuning sample_tpcc_config0.xml: local variable 'y' referenced before assignment
+Traceback (most recent call last):
+  File "/home/E2ETune-AI4DB/main.py", line 91, in <module>
+    run_tuning(args, False)
+  File "/home/E2ETune-AI4DB/tuner.py", line 45, in run_tuning
+    best_config = tuner_instance.tune()
+  File "/home/E2ETune-AI4DB/tuner.py", line 115, in tune
+    return self._hebo(self.workload_file)
+  File "/home/E2ETune-AI4DB/tuner.py", line 381, in _hebo
+    default_perf = self.stress_tester.test_config(default_config, iteration=0)
+  File "/home/E2ETune-AI4DB/stress_testing_tool.py", line 91, in test_config
+    self.logger.info(f"[Iteration {iteration}] Performance: {y:.4f}")
+UnboundLocalError: local variable 'y' referenced before assignment
+[2026-01-04 12:11:47,371:main.py#L102:ERROR]: Stopping due to error (large workload set)
+[2026-01-04 12:11:47,371:main.py#L109:INFO]: ====================================================================================================
+[2026-01-04 12:11:47,371:main.py#L110:INFO]: TUNING SUMMARY
+[2026-01-04 12:11:47,372:main.py#L111:INFO]: ====================================================================================================
+[2026-01-04 12:11:47,372:main.py#L112:INFO]: Total workloads processed: 13
+[2026-01-04 12:11:47,372:main.py#L113:INFO]: Successfully tuned: 0
+[2026-01-04 12:11:47,372:main.py#L114:INFO]: Skipped (already completed): 0
+[2026-01-04 12:11:47,372:main.py#L115:INFO]: Failed: 1
+[2026-01-04 12:11:47,372:main.py#L116:INFO]: ====================================================================================================
+[2026-01-04 12:11:47,372:main.py#L117:INFO]: E2ETune session completed
+[2026-01-04 12:11:47,372:main.py#L118:INFO]: ====================================================================================================

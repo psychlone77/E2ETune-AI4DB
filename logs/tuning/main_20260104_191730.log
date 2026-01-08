@@ -1,0 +1,69 @@
+[2026-01-04 19:17:30,455:main.py#L25:INFO]: ====================================================================================================
+[2026-01-04 19:17:30,455:main.py#L26:INFO]: E2ETune: End-to-End Database Tuning System
+[2026-01-04 19:17:30,455:main.py#L27:INFO]: ====================================================================================================
+[2026-01-04 19:17:30,455:main.py#L28:INFO]: Configuration file: config/config.ini
+[2026-01-04 19:17:30,455:main.py#L29:INFO]: Host: localhost
+[2026-01-04 19:17:30,455:main.py#L30:INFO]: Database: tpcc
+[2026-01-04 19:17:30,455:main.py#L31:INFO]: Data Path: /var/lib/postgresql/12/main
+[2026-01-04 19:17:30,455:main.py#L32:INFO]: Benchmark: tpcc
+[2026-01-04 19:17:30,455:main.py#L33:INFO]: Workload Path: ./oltp_workloads/tpcc/
+[2026-01-04 19:17:30,456:main.py#L34:INFO]: ====================================================================================================
+[2026-01-04 19:17:30,457:main.py#L54:INFO]: Found 201 workloads matching prefix 'tpcc'
+[2026-01-04 19:17:30,457:main.py#L60:INFO]: Found 54 completed workload records in: logs/performance_record
+[2026-01-04 19:17:30,457:main.py#L68:INFO]: Processing first 13 of 201 workloads
+[2026-01-04 19:17:30,457:main.py#L80:INFO]: [Workload 1/13] Skipping already completed: sample_tpcc_config0.xml
+[2026-01-04 19:17:30,458:main.py#L80:INFO]: [Workload 2/13] Skipping already completed: sample_tpcc_config1.xml
+[2026-01-04 19:17:30,458:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-04 19:17:30,458:main.py#L88:INFO]: [Workload 3/13] Starting tuning for: sample_tpcc_config2.xml
+[2026-01-04 19:17:30,458:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-04 21:36:49,508:main.py#L94:INFO]: [Workload 3/13] Successfully completed tuning for: sample_tpcc_config2.xml
+[2026-01-04 21:36:49,508:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-04 21:36:49,509:main.py#L88:INFO]: [Workload 4/13] Starting tuning for: sample_tpcc_config3.xml
+[2026-01-04 21:36:49,509:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-04 23:59:46,498:main.py#L94:INFO]: [Workload 4/13] Successfully completed tuning for: sample_tpcc_config3.xml
+[2026-01-04 23:59:46,498:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-04 23:59:46,498:main.py#L88:INFO]: [Workload 5/13] Starting tuning for: sample_tpcc_config4.xml
+[2026-01-04 23:59:46,498:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 02:22:45,200:main.py#L94:INFO]: [Workload 5/13] Successfully completed tuning for: sample_tpcc_config4.xml
+[2026-01-05 02:22:45,201:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 02:22:45,201:main.py#L88:INFO]: [Workload 6/13] Starting tuning for: sample_tpcc_config5.xml
+[2026-01-05 02:22:45,201:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 04:46:40,663:main.py#L94:INFO]: [Workload 6/13] Successfully completed tuning for: sample_tpcc_config5.xml
+[2026-01-05 04:46:40,663:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 04:46:40,663:main.py#L88:INFO]: [Workload 7/13] Starting tuning for: sample_tpcc_config6.xml
+[2026-01-05 04:46:40,663:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 07:11:36,294:main.py#L94:INFO]: [Workload 7/13] Successfully completed tuning for: sample_tpcc_config6.xml
+[2026-01-05 07:11:36,295:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 07:11:36,295:main.py#L88:INFO]: [Workload 8/13] Starting tuning for: sample_tpcc_config7.xml
+[2026-01-05 07:11:36,295:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 09:37:06,483:main.py#L94:INFO]: [Workload 8/13] Successfully completed tuning for: sample_tpcc_config7.xml
+[2026-01-05 09:37:06,484:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 09:37:06,484:main.py#L88:INFO]: [Workload 9/13] Starting tuning for: sample_tpcc_config8.xml
+[2026-01-05 09:37:06,484:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 12:01:58,170:main.py#L94:INFO]: [Workload 9/13] Successfully completed tuning for: sample_tpcc_config8.xml
+[2026-01-05 12:01:58,171:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 12:01:58,171:main.py#L88:INFO]: [Workload 10/13] Starting tuning for: sample_tpcc_config9.xml
+[2026-01-05 12:01:58,171:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 14:25:44,917:main.py#L94:INFO]: [Workload 10/13] Successfully completed tuning for: sample_tpcc_config9.xml
+[2026-01-05 14:25:44,918:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 14:25:44,918:main.py#L88:INFO]: [Workload 11/13] Starting tuning for: sample_tpcc_config10.xml
+[2026-01-05 14:25:44,918:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 16:48:49,679:main.py#L94:INFO]: [Workload 11/13] Successfully completed tuning for: sample_tpcc_config10.xml
+[2026-01-05 16:48:49,679:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 16:48:49,679:main.py#L88:INFO]: [Workload 12/13] Starting tuning for: sample_tpcc_config11.xml
+[2026-01-05 16:48:49,679:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 19:12:09,260:main.py#L94:INFO]: [Workload 12/13] Successfully completed tuning for: sample_tpcc_config11.xml
+[2026-01-05 19:12:09,260:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 19:12:09,260:main.py#L88:INFO]: [Workload 13/13] Starting tuning for: sample_tpcc_config12.xml
+[2026-01-05 19:12:09,260:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-05 21:35:43,796:main.py#L94:INFO]: [Workload 13/13] Successfully completed tuning for: sample_tpcc_config12.xml
+[2026-01-05 21:35:43,796:main.py#L109:INFO]: ====================================================================================================
+[2026-01-05 21:35:43,796:main.py#L110:INFO]: TUNING SUMMARY
+[2026-01-05 21:35:43,796:main.py#L111:INFO]: ====================================================================================================
+[2026-01-05 21:35:43,796:main.py#L112:INFO]: Total workloads processed: 13
+[2026-01-05 21:35:43,796:main.py#L113:INFO]: Successfully tuned: 11
+[2026-01-05 21:35:43,796:main.py#L114:INFO]: Skipped (already completed): 2
+[2026-01-05 21:35:43,796:main.py#L115:INFO]: Failed: 0
+[2026-01-05 21:35:43,796:main.py#L116:INFO]: ====================================================================================================
+[2026-01-05 21:35:43,797:main.py#L117:INFO]: E2ETune session completed
+[2026-01-05 21:35:43,797:main.py#L118:INFO]: ====================================================================================================

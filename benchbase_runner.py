@@ -178,6 +178,7 @@ class BenchBaseRunner:
             host = self.database_config.get('host', 'localhost')
             port = self.database_config.get('port', '5432')
             database = self.database_config.get('database', 'benchbase')
+            benchmark = self.benchmark_config.get('benchmark', 'tpcc').lower()
             username = self.database_config.get('user', 'postgres')
             password = self.database_config.get('password', '')
             
@@ -192,25 +193,25 @@ class BenchBaseRunner:
             # Update password
             content = re.sub(r'<password>.*?</password>', f'<password>{password}</password>', content)
             
-            if database == 'ycsb':
+            if benchmark == 'ycsb':
                 # update the scaling factor to 3600 for more challenging workload
                 content = re.sub(r'<scalefactor>.*?</scalefactor>', '<scalefactor>3600</scalefactor>', content)
                 # update rate to 15000
                 content = re.sub(r'<rate>.*?</rate>', '<rate>70000</rate>', content)
-            if database == 'wikipedia':
+            if benchmark == 'wikipedia':
                 content = re.sub(r'<rate>.*?</rate>', '<rate>unlimited</rate>', content)
                 # set scale factor to 22
                 content = re.sub(r'<scalefactor>.*?</scalefactor>', '<scalefactor>22</scalefactor>', content)
-            if database == 'twitter':
+            if benchmark == 'twitter':
                 content = re.sub(r'<scalefactor>.*?</scalefactor>', '<scalefactor>80</scalefactor>', content)
                 content = re.sub(r'<rate>.*?</rate>', '<rate>unlimited</rate>', content)
-            if database == 'smallbank':
+            if benchmark == 'smallbank':
                 content = re.sub(r'<scalefactor>.*?</scalefactor>', '<scalefactor>45</scalefactor>', content)
                 content = re.sub(r'<rate>.*?</rate>', '<rate>unlimited</rate>', content)
 
-            content = re.sub(r'<time>.*?</time>', '<time>60</time>', content)
+            content = re.sub(r'<time>.*?</time>', '<time>30</time>', content)
             # Update terminals
-            content = re.sub(r'<terminals>.*?</terminals>', '<terminals>16</terminals>', content)
+            content = re.sub(r'<terminals>.*?</terminals>', '<terminals>4</terminals>', content)
             
             # Write back to file
             with open(config_file, 'w', encoding='utf-8') as f:

@@ -1,0 +1,23 @@
+{
+    "workload": "sample_tpcc_config4",
+    "iterations": 100,
+    "best_cost": -2106.3306238198297,
+    "best_performance": 2106.3306238198297,
+    "configuration": {
+        "shared_buffers": 131072,
+        "work_mem": 65536,
+        "maintenance_work_mem": 262144,
+        "effective_cache_size": 3145728,
+        "max_connections": 200,
+        "wal_buffers": 2048,
+        "checkpoint_completion_target": 0.9,
+        "checkpoint_timeout": 900,
+        "effective_io_concurrency": 100,
+        "join_collapse_limit": 8,
+        "from_collapse_limit": 8,
+        "bgwriter_delay": 200,
+        "bgwriter_lru_multiplier": 2.0,
+        "default_statistics_target": 100,
+        "max_parallel_workers_per_gather": 2
+    }
+}
