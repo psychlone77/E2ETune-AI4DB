@@ -4,15 +4,15 @@
     <!-- Connection details -->
     <type>POSTGRES</type>
     <driver>org.postgresql.Driver</driver>
-    <url>jdbc:postgresql://localhost:5432/benchbase?sslmode=disable&amp;ApplicationName=twitter&amp;reWriteBatchedInserts=true</url>
-    <username>admin</username>
-    <password>password</password>
+    <url>jdbc:postgresql://localhost:5432/tpcc?sslmode=disable&amp;ApplicationName=twitter&amp;reWriteBatchedInserts=true</url>
+    <username>root</username>
+    <password>databasefyp</password>
     <reconnectOnConnectionFailure>true</reconnectOnConnectionFailure>
     <isolation>TRANSACTION_SERIALIZABLE</isolation>
     <batchsize>128</batchsize>
 
     <!-- Scalefactor in Twitter scales by *500 the number of users-->
-    <scalefactor>50</scalefactor>
+    <scalefactor>80</scalefactor>
 
 
     <!-- Trace files for Twitter -->
@@ -21,11 +21,11 @@
     <base_ip>10.1.</base_ip>
 
     <!-- The workload -->
-    <terminals>1</terminals>
+    <terminals>4</terminals>
     <works>
         <work>
-            <time>60</time>
-            <rate>10000</rate>
+            <time>30</time>
+            <rate>unlimited</rate>
             <weights>11,50,11,25,3</weights>
         </work>
     </works>

@@ -23,14 +23,14 @@ from stress_testing_tool import stress_testing_tool
 import logging
 
 # Path to HEBO output directory containing job_X_hebo_output folders
-HEBO_OUTPUT_DIR = './job'
+HEBO_OUTPUT_DIR = './tpcds'
 
 # Path to workload files
 WORKLOAD_DIR = './olap_workloads'
 
 # Output files - results written incrementally
-RESULTS_FILE = './test_results/hebo_comparison_results.txt'
-RESULTS_CSV = './test_results/hebo_comparison_results.csv'
+RESULTS_FILE = './test_results/tpcds_results.txt'
+RESULTS_CSV = './test_results/tpcds_results.csv'
 
 
 def load_best_configs() -> Dict[str, Dict[str, Any]]:

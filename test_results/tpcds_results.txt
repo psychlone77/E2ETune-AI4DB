@@ -1,0 +1,158 @@
+================================================================================
+HEBO Configuration Evaluation - Results
+================================================================================
+Started: 2026-01-08 10:07:11
+Total workloads to test: 13
+================================================================================
+
+[1/13] Workload: tpcds_0
+  Default Avg Time/Query: 0.7031 s
+  Tuned   Avg Time/Query: 0.5212 s
+  Speedup: 1.35x
+  Improvement: 25.87%
+  Time Saved: 0.1819 s
+  Completed: 2026-01-08 10:07:38
+--------------------------------------------------------------------------------
+
+[2/13] Workload: tpcds_1
+  Default Avg Time/Query: 0.5678 s
+  Tuned   Avg Time/Query: 0.5630 s
+  Speedup: 1.01x
+  Improvement: 0.85%
+  Time Saved: 0.0048 s
+  Completed: 2026-01-08 10:07:58
+--------------------------------------------------------------------------------
+
+[3/13] Workload: tpcds_10
+  Default Avg Time/Query: 0.5846 s
+  Tuned   Avg Time/Query: 0.5112 s
+  Speedup: 1.14x
+  Improvement: 12.56%
+  Time Saved: 0.0734 s
+  Completed: 2026-01-08 10:08:23
+--------------------------------------------------------------------------------
+
+[4/13] Workload: tpcds_11
+  Default Avg Time/Query: 0.1956 s
+  Tuned   Avg Time/Query: 0.1948 s
+  Speedup: 1.00x
+  Improvement: 0.41%
+  Time Saved: 0.0008 s
+  Completed: 2026-01-08 10:08:42
+--------------------------------------------------------------------------------
+
+[5/13] Workload: tpcds_12
+  Default Avg Time/Query: 0.1892 s
+  Tuned   Avg Time/Query: 0.2010 s
+  Speedup: 0.94x
+  Improvement: -6.23%
+  Time Saved: -0.0118 s
+  Completed: 2026-01-08 10:08:58
+--------------------------------------------------------------------------------
+
+[6/13] Workload: tpcds_2
+  Default Avg Time/Query: 0.2486 s
+  Tuned   Avg Time/Query: 0.2460 s
+  Speedup: 1.01x
+  Improvement: 1.05%
+  Time Saved: 0.0026 s
+  Completed: 2026-01-08 10:09:16
+--------------------------------------------------------------------------------
+
+[7/13] Workload: tpcds_3
+  Default Avg Time/Query: 0.3152 s
+  Tuned   Avg Time/Query: 0.2725 s
+  Speedup: 1.16x
+  Improvement: 13.56%
+  Time Saved: 0.0427 s
+  Completed: 2026-01-08 10:09:37
+--------------------------------------------------------------------------------
+
+[8/13] Workload: tpcds_4
+  Default Avg Time/Query: 0.5925 s
+  Tuned   Avg Time/Query: 0.5965 s
+  Speedup: 0.99x
+  Improvement: -0.68%
+  Time Saved: -0.0040 s
+  Completed: 2026-01-08 10:10:00
+--------------------------------------------------------------------------------
+
+[9/13] Workload: tpcds_5
+  Default Avg Time/Query: 0.3204 s
+  Tuned   Avg Time/Query: 0.3267 s
+  Speedup: 0.98x
+  Improvement: -1.96%
+  Time Saved: -0.0063 s
+  Completed: 2026-01-08 10:10:21
+--------------------------------------------------------------------------------
+
+[10/13] Workload: tpcds_6
+  Default Avg Time/Query: 0.3297 s
+  Tuned   Avg Time/Query: 0.2992 s
+  Speedup: 1.10x
+  Improvement: 9.25%
+  Time Saved: 0.0305 s
+  Completed: 2026-01-08 10:10:42
+--------------------------------------------------------------------------------
+
+[11/13] Workload: tpcds_7
+  Default Avg Time/Query: 0.5512 s
+  Tuned   Avg Time/Query: 0.5603 s
+  Speedup: 0.98x
+  Improvement: -1.67%
+  Time Saved: -0.0092 s
+  Completed: 2026-01-08 10:11:00
+--------------------------------------------------------------------------------
+
+[12/13] Workload: tpcds_8
+  Default Avg Time/Query: 0.0665 s
+  Tuned   Avg Time/Query: 0.0636 s
+  Speedup: 1.04x
+  Improvement: 4.27%
+  Time Saved: 0.0028 s
+  Completed: 2026-01-08 10:11:15
+--------------------------------------------------------------------------------
+
+[13/13] Workload: tpcds_9
+  Default Avg Time/Query: 0.2727 s
+  Tuned   Avg Time/Query: 0.3027 s
+  Speedup: 0.90x
+  Improvement: -11.01%
+  Time Saved: -0.0300 s
+  Completed: 2026-01-08 10:11:33
+--------------------------------------------------------------------------------
+
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Completed: 2026-01-08 10:11:33
+Total workloads tested: 13
+
+Average Speedup: 1.05x
+Average Improvement: 3.56%
+Total Time Saved (per query): 0.2783 s
+
+Top 10 Improvements:
+  1. tpcds_0: 25.87% (1.35x)
+  2. tpcds_3: 13.56% (1.16x)
+  3. tpcds_10: 12.56% (1.14x)
+  4. tpcds_6: 9.25% (1.10x)
+  5. tpcds_8: 4.27% (1.04x)
+  6. tpcds_2: 1.05% (1.01x)
+  7. tpcds_1: 0.85% (1.01x)
+  8. tpcds_11: 0.41% (1.00x)
+  9. tpcds_4: -0.68% (0.99x)
+  10. tpcds_7: -1.67% (0.98x)
+
+Bottom 10 Improvements:
+  1. tpcds_6: 9.25% (1.10x)
+  2. tpcds_8: 4.27% (1.04x)
+  3. tpcds_2: 1.05% (1.01x)
+  4. tpcds_1: 0.85% (1.01x)
+  5. tpcds_11: 0.41% (1.00x)
+  6. tpcds_4: -0.68% (0.99x)
+  7. tpcds_7: -1.67% (0.98x)
+  8. tpcds_5: -1.96% (0.98x)
+  9. tpcds_12: -6.23% (0.94x)
+  10. tpcds_9: -11.01% (0.90x)

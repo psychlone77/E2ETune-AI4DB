@@ -16249,3 +16249,381 @@ Thread 0 completed: 7 queries, total latency: 5.1820s
 Thread 0 started. Total queries: 7
 Thread 0: 7/7 queries done. Cumulative latency: 5.6478s
 Thread 0 completed: 7 queries, total latency: 5.6478s
+Thread 0 started. Total queries: 9
+Thread 0 Error on query 0: relation "store" does not exist
+LINE 1: SELECT s_state, COUNT(*) AS num_stores FROM store GROUP BY s...
+                                                    ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 5: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 6: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 7: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 8: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 9
+Thread 0 Error on query 0: relation "store" does not exist
+LINE 1: SELECT s_state, COUNT(*) AS num_stores FROM store GROUP BY s...
+                                                    ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 5: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 6: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 7: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 8: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 4
+Thread 0 Error on query 0: relation "store_sales" does not exist
+LINE 1: SELECT s_state, COUNT(*) AS num_orders FROM store_sales JOIN...
+                                                    ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 4
+Thread 0 Error on query 0: relation "store_sales" does not exist
+LINE 1: SELECT s_state, COUNT(*) AS num_orders FROM store_sales JOIN...
+                                                    ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 6
+Thread 0 Error on query 0: relation "store_sales" does not exist
+LINE 1: SELECT s_state, COUNT(*) as num_orders FROM store_sales JOIN...
+                                                    ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 5: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 6
+Thread 0 Error on query 0: relation "store_sales" does not exist
+LINE 1: SELECT s_state, COUNT(*) as num_orders FROM store_sales JOIN...
+                                                    ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 5: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 9
+Thread 0 Error on query 0: relation "store_sales" does not exist
+LINE 1: ...category, SUM(ss_sales_price) AS total_sales FROM store_sale...
+                                                             ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 5: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 6: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 7: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 8: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 9
+Thread 0 Error on query 0: relation "store_sales" does not exist
+LINE 1: ...category, SUM(ss_sales_price) AS total_sales FROM store_sale...
+                                                             ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 5: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 6: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 7: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 8: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 4
+Thread 0 Error on query 1: column "c_birth_country" does not exist
+LINE 1: SELECT c_birth_country, COUNT(*) AS num_customers FROM custo...
+               ^
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 1 queries, total latency: 0.0084s
+Thread 0 started. Total queries: 4
+Thread 0 Error on query 1: column "c_birth_country" does not exist
+LINE 1: SELECT c_birth_country, COUNT(*) AS num_customers FROM custo...
+               ^
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 1 queries, total latency: 0.0064s
+Thread 0 started. Total queries: 5
+Thread 0 Error on query 0: relation "store_sales" does not exist
+LINE 1: ...ore_name, SUM(ss_net_profit) as total_profit FROM store_sale...
+                                                             ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 5
+Thread 0 Error on query 0: relation "store_sales" does not exist
+LINE 1: ...ore_name, SUM(ss_net_profit) as total_profit FROM store_sale...
+                                                             ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 6
+Thread 0 Error on query 0: relation "store_sales" does not exist
+LINE 1: SELECT COUNT(*) FROM store_sales WHERE ss_customer_sk IN (91...
+                             ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 5: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 6
+Thread 0 Error on query 0: relation "store_sales" does not exist
+LINE 1: SELECT COUNT(*) FROM store_sales WHERE ss_customer_sk IN (91...
+                             ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 5: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 7
+Thread 0 Error on query 0: relation "inventory" does not exist
+LINE 1: ...y_on_hand) as total_inventory FROM warehouse JOIN inventory ...
+                                                             ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 5: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 6: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 7
+Thread 0 Error on query 0: relation "inventory" does not exist
+LINE 1: ...y_on_hand) as total_inventory FROM warehouse JOIN inventory ...
+                                                             ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 5: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 6: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 8
+Thread 0 Error on query 0: relation "customer_address" does not exist
+LINE 1: SELECT ca_city, COUNT(*) FROM customer_address GROUP BY ca_c...
+                                      ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 5: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 6: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 7: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 8
+Thread 0 Error on query 0: relation "customer_address" does not exist
+LINE 1: SELECT ca_city, COUNT(*) FROM customer_address GROUP BY ca_c...
+                                      ^
+
+Thread 0 Error on query 1: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 2: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 3: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 4: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 5: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 6: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 Error on query 7: current transaction is aborted, commands ignored until end of transaction block
+
+Thread 0 completed: 0 queries, total latency: 0.0000s
+Thread 0 started. Total queries: 9
+Thread 0: 9/9 queries done. Cumulative latency: 3.6064s
+Thread 0 completed: 9 queries, total latency: 3.6064s
+Thread 0 started. Total queries: 9
+Thread 0: 9/9 queries done. Cumulative latency: 2.5366s
+Thread 0 completed: 9 queries, total latency: 2.5366s
+Thread 0 started. Total queries: 4
+Thread 0: 4/4 queries done. Cumulative latency: 3.1912s
+Thread 0 completed: 4 queries, total latency: 3.1912s
+Thread 0 started. Total queries: 4
+Thread 0: 4/4 queries done. Cumulative latency: 2.1269s
+Thread 0 completed: 4 queries, total latency: 2.1269s
+Thread 0 started. Total queries: 6
+Thread 0: 6/6 queries done. Cumulative latency: 1.5832s
+Thread 0 completed: 6 queries, total latency: 1.5832s
+Thread 0 started. Total queries: 6
+Thread 0: 6/6 queries done. Cumulative latency: 1.4024s
+Thread 0 completed: 6 queries, total latency: 1.4024s
+Thread 0 started. Total queries: 9
+Thread 0: 9/9 queries done. Cumulative latency: 1.5206s
+Thread 0 completed: 9 queries, total latency: 1.5206s
+Thread 0 started. Total queries: 9
+Thread 0: 9/9 queries done. Cumulative latency: 1.3003s
+Thread 0 completed: 9 queries, total latency: 1.3003s
+Thread 0 started. Total queries: 4
+Thread 0: 4/4 queries done. Cumulative latency: 0.5167s
+Thread 0 completed: 4 queries, total latency: 0.5167s
+Thread 0 started. Total queries: 4
+Thread 0: 4/4 queries done. Cumulative latency: 0.7106s
+Thread 0 completed: 4 queries, total latency: 0.7106s
+Thread 0 started. Total queries: 5
+Thread 0: 5/5 queries done. Cumulative latency: 2.0828s
+Thread 0 completed: 5 queries, total latency: 2.0828s
+Thread 0 started. Total queries: 5
+Thread 0: 5/5 queries done. Cumulative latency: 1.8280s
+Thread 0 completed: 5 queries, total latency: 1.8280s
+Thread 0 started. Total queries: 6
+Thread 0: 6/6 queries done. Cumulative latency: 3.6823s
+Thread 0 completed: 6 queries, total latency: 3.6823s
+Thread 0 started. Total queries: 6
+Thread 0: 6/6 queries done. Cumulative latency: 2.5708s
+Thread 0 completed: 6 queries, total latency: 2.5708s
+Thread 0 started. Total queries: 7
+Thread 0: 7/7 queries done. Cumulative latency: 4.4083s
+Thread 0 completed: 7 queries, total latency: 4.4083s
+Thread 0 started. Total queries: 7
+Thread 0: 7/7 queries done. Cumulative latency: 4.4773s
+Thread 0 completed: 7 queries, total latency: 4.4773s
+Thread 0 started. Total queries: 8
+Thread 0: 8/8 queries done. Cumulative latency: 2.7844s
+Thread 0 completed: 8 queries, total latency: 2.7844s
+Thread 0 started. Total queries: 8
+Thread 0: 8/8 queries done. Cumulative latency: 3.4843s
+Thread 0 completed: 8 queries, total latency: 3.4843s
+Thread 0 started. Total queries: 8
+Thread 0: 8/8 queries done. Cumulative latency: 1.8851s
+Thread 0 completed: 8 queries, total latency: 1.8851s
+Thread 0 started. Total queries: 8
+Thread 0: 8/8 queries done. Cumulative latency: 1.4436s
+Thread 0 completed: 8 queries, total latency: 1.4436s
+Thread 0 started. Total queries: 3
+Thread 0: 3/3 queries done. Cumulative latency: 1.1574s
+Thread 0 completed: 3 queries, total latency: 1.1574s
+Thread 0 started. Total queries: 3
+Thread 0: 3/3 queries done. Cumulative latency: 1.1572s
+Thread 0 completed: 3 queries, total latency: 1.1572s
+Thread 0 started. Total queries: 1
+Thread 0: 1/1 queries done. Cumulative latency: 0.0039s
+Thread 0 completed: 1 queries, total latency: 0.0039s
+Thread 0 started. Total queries: 1
+Thread 0: 1/1 queries done. Cumulative latency: 0.0039s
+Thread 0 completed: 1 queries, total latency: 0.0039s
+Thread 0 started. Total queries: 4
+Thread 0: 4/4 queries done. Cumulative latency: 0.3265s
+Thread 0 completed: 4 queries, total latency: 0.3265s
+Thread 0 started. Total queries: 4
+Thread 0: 4/4 queries done. Cumulative latency: 0.4449s
+Thread 0 completed: 4 queries, total latency: 0.4449s
