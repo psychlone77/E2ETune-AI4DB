@@ -99107,3 +99107,146 @@ connection to server at "localhost" (127.0.0.1), port 5432 failed: Connection re
 [2026-01-14 02:59:39,540:tuner.py#L47:INFO]: [Tuning] Tuning complete for sample_ycsb_config12.xml
 [2026-01-14 02:59:39,541:tuner.py#L48:INFO]: [Tuning] Best configuration: {'shared_buffers': 370739.0, 'work_mem': 238447.0, 'maintenance_work_mem': 809818.0, 'effective_cache_size': 2516867.0, 'max_connections': 69.0, 'wal_buffers': 6173.0, 'checkpoint_completion_target': 0.7763348000798215, 'checkpoint_timeout': 1769.0, 'effective_io_concurrency': 260.0, 'join_collapse_limit': 18.0, 'from_collapse_limit': 10.0, 'bgwriter_delay': 887.0, 'bgwriter_lru_multiplier': 3.907472737457077, 'default_statistics_target': 404.0, 'max_parallel_workers_per_gather': 0.0}
 [2026-01-14 02:59:39,541:tuner.py#L49:INFO]: ================================================================================
+[2026-01-14 17:30:14,431:Database.py#L71:WARNING]: Connection attempt 1 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:14,432:Database.py#L73:INFO]: Retrying in 2 seconds... (2/3)
+[2026-01-14 17:30:16,445:Database.py#L71:WARNING]: Connection attempt 2 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:16,446:Database.py#L73:INFO]: Retrying in 2 seconds... (3/3)
+[2026-01-14 17:30:18,459:Database.py#L71:WARNING]: Connection attempt 3 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:18,459:Database.py#L76:WARNING]: All 3 attempts failed. Removing auto.conf and retrying...
+[2026-01-14 17:30:20,488:Database.py#L81:INFO]: Final connection attempt after removing auto.conf
+[2026-01-14 17:30:20,499:Database.py#L93:ERROR]: Connection failed after 4 attempts and auto.conf removal
+[2026-01-14 17:30:20,512:Database.py#L71:WARNING]: Connection attempt 1 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:20,512:Database.py#L73:INFO]: Retrying in 2 seconds... (2/3)
+[2026-01-14 17:30:22,527:Database.py#L71:WARNING]: Connection attempt 2 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:22,527:Database.py#L73:INFO]: Retrying in 2 seconds... (3/3)
+[2026-01-14 17:30:24,541:Database.py#L71:WARNING]: Connection attempt 3 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:24,541:Database.py#L76:WARNING]: All 3 attempts failed. Removing auto.conf and retrying...
+[2026-01-14 17:30:26,562:Database.py#L81:INFO]: Final connection attempt after removing auto.conf
+[2026-01-14 17:30:26,573:Database.py#L93:ERROR]: Connection failed after 4 attempts and auto.conf removal
+[2026-01-14 17:30:26,583:Database.py#L71:WARNING]: Connection attempt 1 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:26,583:Database.py#L73:INFO]: Retrying in 2 seconds... (2/3)
+[2026-01-14 17:30:28,597:Database.py#L71:WARNING]: Connection attempt 2 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:28,598:Database.py#L73:INFO]: Retrying in 2 seconds... (3/3)
+[2026-01-14 17:30:30,609:Database.py#L71:WARNING]: Connection attempt 3 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:30,609:Database.py#L76:WARNING]: All 3 attempts failed. Removing auto.conf and retrying...
+[2026-01-14 17:30:32,631:Database.py#L81:INFO]: Final connection attempt after removing auto.conf
+[2026-01-14 17:30:32,643:Database.py#L93:ERROR]: Connection failed after 4 attempts and auto.conf removal
+[2026-01-14 17:30:32,657:Database.py#L71:WARNING]: Connection attempt 1 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:32,657:Database.py#L73:INFO]: Retrying in 2 seconds... (2/3)
+[2026-01-14 17:30:34,671:Database.py#L71:WARNING]: Connection attempt 2 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:34,672:Database.py#L73:INFO]: Retrying in 2 seconds... (3/3)
+[2026-01-14 17:30:36,685:Database.py#L71:WARNING]: Connection attempt 3 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:36,685:Database.py#L76:WARNING]: All 3 attempts failed. Removing auto.conf and retrying...
+[2026-01-14 17:30:38,707:Database.py#L81:INFO]: Final connection attempt after removing auto.conf
+[2026-01-14 17:30:38,718:Database.py#L93:ERROR]: Connection failed after 4 attempts and auto.conf removal
+[2026-01-14 17:30:38,729:Database.py#L71:WARNING]: Connection attempt 1 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:38,729:Database.py#L73:INFO]: Retrying in 2 seconds... (2/3)
+[2026-01-14 17:30:40,742:Database.py#L71:WARNING]: Connection attempt 2 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:40,742:Database.py#L73:INFO]: Retrying in 2 seconds... (3/3)
+[2026-01-14 17:30:42,757:Database.py#L71:WARNING]: Connection attempt 3 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:42,758:Database.py#L76:WARNING]: All 3 attempts failed. Removing auto.conf and retrying...
+[2026-01-14 17:30:44,783:Database.py#L81:INFO]: Final connection attempt after removing auto.conf
+[2026-01-14 17:30:44,794:Database.py#L93:ERROR]: Connection failed after 4 attempts and auto.conf removal
+[2026-01-14 17:30:44,804:Database.py#L71:WARNING]: Connection attempt 1 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:44,804:Database.py#L73:INFO]: Retrying in 2 seconds... (2/3)
+[2026-01-14 17:30:46,818:Database.py#L71:WARNING]: Connection attempt 2 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:46,818:Database.py#L73:INFO]: Retrying in 2 seconds... (3/3)
+[2026-01-14 17:30:48,834:Database.py#L71:WARNING]: Connection attempt 3 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:48,834:Database.py#L76:WARNING]: All 3 attempts failed. Removing auto.conf and retrying...
+[2026-01-14 17:30:50,855:Database.py#L81:INFO]: Final connection attempt after removing auto.conf
+[2026-01-14 17:30:50,866:Database.py#L93:ERROR]: Connection failed after 4 attempts and auto.conf removal
+[2026-01-14 17:30:50,878:Database.py#L71:WARNING]: Connection attempt 1 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:50,879:Database.py#L73:INFO]: Retrying in 2 seconds... (2/3)
+[2026-01-14 17:30:52,892:Database.py#L71:WARNING]: Connection attempt 2 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:52,892:Database.py#L73:INFO]: Retrying in 2 seconds... (3/3)
+[2026-01-14 17:30:54,906:Database.py#L71:WARNING]: Connection attempt 3 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:54,907:Database.py#L76:WARNING]: All 3 attempts failed. Removing auto.conf and retrying...
+[2026-01-14 17:30:56,927:Database.py#L81:INFO]: Final connection attempt after removing auto.conf
+[2026-01-14 17:30:56,940:Database.py#L93:ERROR]: Connection failed after 4 attempts and auto.conf removal
+[2026-01-14 17:30:56,952:Database.py#L71:WARNING]: Connection attempt 1 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:56,952:Database.py#L73:INFO]: Retrying in 2 seconds... (2/3)
+[2026-01-14 17:30:58,965:Database.py#L71:WARNING]: Connection attempt 2 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:30:58,965:Database.py#L73:INFO]: Retrying in 2 seconds... (3/3)
+[2026-01-14 17:31:00,980:Database.py#L71:WARNING]: Connection attempt 3 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:00,980:Database.py#L76:WARNING]: All 3 attempts failed. Removing auto.conf and retrying...
+[2026-01-14 17:31:03,002:Database.py#L81:INFO]: Final connection attempt after removing auto.conf
+[2026-01-14 17:31:03,015:Database.py#L93:ERROR]: Connection failed after 4 attempts and auto.conf removal
+[2026-01-14 17:31:03,027:Database.py#L71:WARNING]: Connection attempt 1 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:03,028:Database.py#L73:INFO]: Retrying in 2 seconds... (2/3)
+[2026-01-14 17:31:05,041:Database.py#L71:WARNING]: Connection attempt 2 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:05,041:Database.py#L73:INFO]: Retrying in 2 seconds... (3/3)
+[2026-01-14 17:31:07,057:Database.py#L71:WARNING]: Connection attempt 3 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:07,057:Database.py#L76:WARNING]: All 3 attempts failed. Removing auto.conf and retrying...
+[2026-01-14 17:31:09,083:Database.py#L81:INFO]: Final connection attempt after removing auto.conf
+[2026-01-14 17:31:09,095:Database.py#L93:ERROR]: Connection failed after 4 attempts and auto.conf removal
+[2026-01-14 17:31:09,105:Database.py#L71:WARNING]: Connection attempt 1 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:09,106:Database.py#L73:INFO]: Retrying in 2 seconds... (2/3)
+[2026-01-14 17:31:11,120:Database.py#L71:WARNING]: Connection attempt 2 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:11,121:Database.py#L73:INFO]: Retrying in 2 seconds... (3/3)
+[2026-01-14 17:31:13,135:Database.py#L71:WARNING]: Connection attempt 3 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:13,136:Database.py#L76:WARNING]: All 3 attempts failed. Removing auto.conf and retrying...
+[2026-01-14 17:31:15,160:Database.py#L81:INFO]: Final connection attempt after removing auto.conf
+[2026-01-14 17:31:15,172:Database.py#L93:ERROR]: Connection failed after 4 attempts and auto.conf removal
+[2026-01-14 17:31:15,186:Database.py#L71:WARNING]: Connection attempt 1 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:15,187:Database.py#L73:INFO]: Retrying in 2 seconds... (2/3)
+[2026-01-14 17:31:17,201:Database.py#L71:WARNING]: Connection attempt 2 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:17,202:Database.py#L73:INFO]: Retrying in 2 seconds... (3/3)
+[2026-01-14 17:31:19,216:Database.py#L71:WARNING]: Connection attempt 3 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:19,216:Database.py#L76:WARNING]: All 3 attempts failed. Removing auto.conf and retrying...
+[2026-01-14 17:31:21,240:Database.py#L81:INFO]: Final connection attempt after removing auto.conf
+[2026-01-14 17:31:21,252:Database.py#L93:ERROR]: Connection failed after 4 attempts and auto.conf removal
+[2026-01-14 17:31:21,264:Database.py#L71:WARNING]: Connection attempt 1 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:21,265:Database.py#L73:INFO]: Retrying in 2 seconds... (2/3)
+[2026-01-14 17:31:23,278:Database.py#L71:WARNING]: Connection attempt 2 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:23,278:Database.py#L73:INFO]: Retrying in 2 seconds... (3/3)
+[2026-01-14 17:31:25,290:Database.py#L71:WARNING]: Connection attempt 3 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:25,290:Database.py#L76:WARNING]: All 3 attempts failed. Removing auto.conf and retrying...
+[2026-01-14 17:31:27,311:Database.py#L81:INFO]: Final connection attempt after removing auto.conf
+[2026-01-14 17:31:27,326:Database.py#L93:ERROR]: Connection failed after 4 attempts and auto.conf removal
+[2026-01-14 17:31:27,339:Database.py#L71:WARNING]: Connection attempt 1 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:27,340:Database.py#L73:INFO]: Retrying in 2 seconds... (2/3)
+[2026-01-14 17:31:29,354:Database.py#L71:WARNING]: Connection attempt 2 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:29,355:Database.py#L73:INFO]: Retrying in 2 seconds... (3/3)
+[2026-01-14 17:31:31,366:Database.py#L71:WARNING]: Connection attempt 3 failed: connection to server at "localhost" (::1), port 5432 failed: FATAL:  database "tpch" does not exist
+
+[2026-01-14 17:31:31,366:Database.py#L76:WARNING]: All 3 attempts failed. Removing auto.conf and retrying...
+[2026-01-14 17:31:33,388:Database.py#L81:INFO]: Final connection attempt after removing auto.conf
+[2026-01-14 17:31:33,401:Database.py#L93:ERROR]: Connection failed after 4 attempts and auto.conf removal
