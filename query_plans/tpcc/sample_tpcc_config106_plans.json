@@ -1,0 +1,17 @@
+{
+  "workload": "sample_tpcc_config106",
+  "query_plans": [
+    "Limit(cost=0.6)(Index Only Scan(cost=116.3))",
+    "ModifyTable(cost=8.2)(Bitmap Heap Scan(cost=8.2)(Bitmap Index Scan(cost=4.2)))",
+    "ModifyTable(cost=8.4)(Index Scan(cost=8.4))",
+    "ModifyTable(cost=8.4)(Index Scan(cost=8.4))",
+    "Index Scan(cost=8.3)",
+    "Index Scan(cost=8.4)",
+    "Bitmap Heap Scan(cost=8.2)(Bitmap Index Scan(cost=4.2))",
+    "ModifyTable(cost=8.3)(Index Scan(cost=8.3))",
+    "Index Scan(cost=8.4)",
+    "Index Scan(cost=8.3)",
+    "Aggregate(cost=25.1)(Nested Loop(cost=25.1)(Index Scan(cost=8.6); Index Scan(cost=8.4)))"
+  ],
+  "count": 11
+}
