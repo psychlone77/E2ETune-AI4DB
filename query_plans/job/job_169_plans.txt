@@ -1,0 +1,31 @@
+PostgreSQL Query Plan Summaries - job_169
+================================================================================
+
+Query 1:
+Sort(cost=14475.5)(Aggregate(cost=14475.3)(Sort(cost=14473.4)(Nested Loop(cost=14456.6)(Seq Scan(cost=2626.1); Bitmap Heap Scan(cost=1072.4)(Bitmap Index Scan(cost=6.7))))))
+--------------------------------------------------------------------------------
+
+Query 2:
+Sort(cost=86093.6)(Aggregate(cost=86078.3)(Gather Merge(cost=86071.5)(Aggregate(cost=84992.5)(Sort(cost=84982.9)(Nested Loop(cost=84916.2)(Seq Scan(cost=81758.7); Index Only Scan(cost=17.3)))))))
+--------------------------------------------------------------------------------
+
+Query 3:
+Sort(cost=211313.6)(Aggregate(cost=195719.8)(Gather Merge(cost=192932.1)(Aggregate(cost=159754.4)(Sort(cost=156107.4)(Hash Join(cost=103420.9)(Seq Scan(cost=29661.4); Hash(cost=51835.6)(Seq Scan(cost=51835.6))))))))
+--------------------------------------------------------------------------------
+
+Query 4:
+Sort(cost=9100.0)(Aggregate(cost=9099.9)(Gather Merge(cost=9099.7)(Sort(cost=8098.1)(Aggregate(cost=8098.0)(Hash Join(cost=8085.8)(Seq Scan(cost=8074.4); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))
+--------------------------------------------------------------------------------
+
+Query 5:
+Sort(cost=10257.0)(Aggregate(cost=10256.4)(Gather Merge(cost=10256.0)(Aggregate(cost=9253.3)(Sort(cost=9252.7)(Nested Loop(cost=9250.1)(Seq Scan(cost=4722.9); Index Scan(cost=322.7)))))))
+--------------------------------------------------------------------------------
+
+Query 6:
+Sort(cost=289671.0)(Aggregate(cost=289669.9)(Gather Merge(cost=289666.5)(Sort(cost=288640.4)(Aggregate(cost=288636.2)(Hash Join(cost=242273.7)(Seq Scan(cost=225435.1); Hash(cost=2.1)(Seq Scan(cost=2.1))))))))
+--------------------------------------------------------------------------------
+
+Query 7:
+Sort(cost=442512.1)(Aggregate(cost=442511.8)(Gather Merge(cost=442511.6)(Aggregate(cost=441508.8)(Sort(cost=441507.7)(Hash Join(cost=441499.9)(Seq Scan(cost=441498.0); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))
+--------------------------------------------------------------------------------
+

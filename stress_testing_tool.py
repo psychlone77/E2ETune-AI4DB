@@ -136,24 +136,49 @@ class stress_testing_tool:
         self.logger.info(f"[Iteration {iteration}] DWG complete, result: {result}")
         return result
     
-    def _test_by_surrogate(self, inner_metrics: list, workload_path: str, 
+    def _test_by_surrogate(self, inner_metrics: Any, workload_path: str, 
                            sur_config: Dict[str, Any], knobs: Dict[str, Any], 
                            iteration: int) -> float:
         """Predict performance using surrogate model."""
         self.logger.info(f"[Iteration {iteration}] Loading surrogate model")
         sg = Surrogate(sur_config, workload_path)
         
+        # 1. Prepare normalized knobs as a dictionary
         knob_detail = parse_knob_config.get_knobs('knob_config/knob_config.json')
-        x = []
-        
-        # Normalize knob values to [0, 1]
+        normalized_knobs = {}
         for key in knob_detail.keys():
             detail = knob_detail[key]
+            val = knobs.get(key, detail.get('default', 0))
             if detail['max'] - detail['min'] != 0:
-                normalized = (knobs[key] - detail['min']) / (detail['max'] - detail['min'])
-                x.append(normalized)
+                normalized = (val - detail['min']) / (detail['max'] - detail['min'])
+                normalized_knobs[key] = normalized
+            else:
+                normalized_knobs[key] = 0.0
+
+        # 2. Prepare internal metrics as a dictionary
+        # Database.fetch_inner_metrics() returns a dict
+        if isinstance(inner_metrics, dict):
+            inner_metrics_dict = inner_metrics
+        else:
+            # Fallback for list input
+            metric_keys = [
+                'xact_commit', 'xact_rollback', 'blks_read', 'blks_hit', 
+                'tup_returned', 'tup_fetched', 'tup_inserted', 'conflicts', 
+                'tup_updated', 'tup_deleted', 'disk_read_count', 'disk_write_count', 
+                'disk_read_bytes', 'disk_write_bytes'
+            ]
+            inner_metrics_dict = {}
+            for i, key in enumerate(metric_keys):
+                if i < len(inner_metrics):
+                    inner_metrics_dict[key] = inner_metrics[i]
+                else:
+                    inner_metrics_dict[key] = 0.0
+        
+        # Ensure temp_bytes is handled (default to 0 if not in dict)
+        if 'temp_bytes' not in inner_metrics_dict:
+            inner_metrics_dict['temp_bytes'] = 0.0
 
         self.logger.info(f"[Iteration {iteration}] Running surrogate prediction")
-        prediction = sg.run(inner_metrics, x)
+        prediction = sg.run(inner_metrics_dict, normalized_knobs)
         self.logger.info(f"[Iteration {iteration}] Surrogate prediction: {prediction:.4f}")
         return prediction

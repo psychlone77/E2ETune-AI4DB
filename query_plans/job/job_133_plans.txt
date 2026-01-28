@@ -1,0 +1,27 @@
+PostgreSQL Query Plan Summaries - job_133
+================================================================================
+
+Query 1:
+Limit(cost=305569.8)(Sort(cost=305686.0)(Aggregate(cost=304565.7)(Gather Merge(cost=300732.3)(Aggregate(cost=267552.8)(Sort(cost=260817.8)(Hash Join(cost=129273.4)(Seq Scan(cost=43303.5); Hash(cost=51835.6)(Seq Scan(cost=51835.6)))))))))
+--------------------------------------------------------------------------------
+
+Query 2:
+Limit(cost=1453463.2)(Sort(cost=1454866.1)(Aggregate(cost=1441336.3)(Gather Merge(cost=1395039.0)(Aggregate(cost=1005394.8)(Sort(cost=975974.7)(Hash Join(cost=598852.5)(Hash Join(cost=457387.5)(Seq Scan(cost=403743.6); Hash(cost=1.2)(Seq Scan(cost=1.2))); Hash(cost=73060.4)(Seq Scan(cost=73060.4)))))))))
+--------------------------------------------------------------------------------
+
+Query 3:
+Sort(cost=59832.1)(Aggregate(cost=59832.1)(Gather Merge(cost=59831.9)(Sort(cost=58830.3)(Aggregate(cost=58830.1)(Hash Join(cost=54352.7)(Seq Scan(cost=51835.6); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))
+--------------------------------------------------------------------------------
+
+Query 4:
+Limit(cost=2711095.6)(Sort(cost=2713709.0)(Aggregate(cost=2688505.3)(Gather Merge(cost=2602261.5)(Aggregate(cost=1877285.7)(Sort(cost=1808922.5)(Hash Join(cost=642537.0)(Seq Scan(cost=403743.6); Hash(cost=49519.2)(Seq Scan(cost=49519.2)))))))))
+--------------------------------------------------------------------------------
+
+Query 5:
+Sort(cost=599.1)(Aggregate(cost=599.1)(Hash Join(cost=561.5)(Seq Scan(cost=463.0); Hash(cost=1.2)(Seq Scan(cost=1.2)))))
+--------------------------------------------------------------------------------
+
+Query 6:
+Limit(cost=176614.5)(Sort(cost=176730.7)(Aggregate(cost=175610.4)(Gather Merge(cost=171777.0)(Aggregate(cost=138597.5)(Sort(cost=135844.6)(Hash Join(cost=105058.3)(Seq Scan(cost=46568.4); Hash(cost=35539.8)(Hash Join(cost=35539.8)(Seq Scan(cost=29661.4); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))))))
+--------------------------------------------------------------------------------
+

@@ -1,0 +1,909 @@
+[2026-01-27 09:45:11,308:main.py#L28:INFO]: ====================================================================================================
+[2026-01-27 09:45:11,308:main.py#L29:INFO]: E2ETune: End-to-End Database Tuning System
+[2026-01-27 09:45:11,308:main.py#L30:INFO]: ====================================================================================================
+[2026-01-27 09:45:11,308:main.py#L31:INFO]: Configuration file: config/config.ini
+[2026-01-27 09:45:11,309:main.py#L32:INFO]: Host: localhost
+[2026-01-27 09:45:11,309:main.py#L33:INFO]: Database: imdb
+[2026-01-27 09:45:11,309:main.py#L34:INFO]: Data Path: /var/lib/postgresql/12/main
+[2026-01-27 09:45:11,309:main.py#L35:INFO]: Benchmark: job
+[2026-01-27 09:45:11,309:main.py#L36:INFO]: Workload Path: ./olap_workloads
+[2026-01-27 09:45:11,309:main.py#L37:INFO]: ====================================================================================================
+[2026-01-27 09:45:11,313:main.py#L63:INFO]: Found 244 workloads matching prefix 'job'
+[2026-01-27 09:45:11,314:main.py#L71:INFO]: Found 134 completed workload records in: logs/performance_record
+[2026-01-27 09:45:11,314:main.py#L79:INFO]: Processing first 13 of 244 workloads
+[2026-01-27 09:45:11,314:main.py#L95:INFO]: [Workload 0/244] Skipping already completed: job_0.wg
+[2026-01-27 09:45:11,314:main.py#L95:INFO]: [Workload 1/244] Skipping already completed: job_1.wg
+[2026-01-27 09:45:11,314:main.py#L95:INFO]: [Workload 2/244] Skipping already completed: job_2.wg
+[2026-01-27 09:45:11,315:main.py#L95:INFO]: [Workload 3/244] Skipping already completed: job_3.wg
+[2026-01-27 09:45:11,315:main.py#L95:INFO]: [Workload 4/244] Skipping already completed: job_4.wg
+[2026-01-27 09:45:11,315:main.py#L95:INFO]: [Workload 5/244] Skipping already completed: job_5.wg
+[2026-01-27 09:45:11,315:main.py#L95:INFO]: [Workload 6/244] Skipping already completed: job_6.wg
+[2026-01-27 09:45:11,315:main.py#L95:INFO]: [Workload 7/244] Skipping already completed: job_7.wg
+[2026-01-27 09:45:11,315:main.py#L95:INFO]: [Workload 8/244] Skipping already completed: job_8.wg
+[2026-01-27 09:45:11,315:main.py#L95:INFO]: [Workload 9/244] Skipping already completed: job_9.wg
+[2026-01-27 09:45:11,315:main.py#L95:INFO]: [Workload 10/244] Skipping already completed: job_10.wg
+[2026-01-27 09:45:11,315:main.py#L95:INFO]: [Workload 11/244] Skipping already completed: job_11.wg
+[2026-01-27 09:45:11,316:main.py#L95:INFO]: [Workload 12/244] Skipping already completed: job_12.wg
+[2026-01-27 09:45:11,316:main.py#L144:INFO]: [Workload 0/244] Skipping already completed: job_13.wg
+[2026-01-27 09:45:11,316:main.py#L144:INFO]: [Workload 1/244] Skipping already completed: job_14.wg
+[2026-01-27 09:45:11,316:main.py#L144:INFO]: [Workload 2/244] Skipping already completed: job_15.wg
+[2026-01-27 09:45:11,316:main.py#L144:INFO]: [Workload 3/244] Skipping already completed: job_16.wg
+[2026-01-27 09:45:11,316:main.py#L144:INFO]: [Workload 4/244] Skipping already completed: job_17.wg
+[2026-01-27 09:45:11,316:main.py#L144:INFO]: [Workload 5/244] Skipping already completed: job_18.wg
+[2026-01-27 09:45:11,316:main.py#L144:INFO]: [Workload 6/244] Skipping already completed: job_19.wg
+[2026-01-27 09:45:11,317:main.py#L144:INFO]: [Workload 7/244] Skipping already completed: job_20.wg
+[2026-01-27 09:45:11,317:main.py#L144:INFO]: [Workload 8/244] Skipping already completed: job_21.wg
+[2026-01-27 09:45:11,317:main.py#L144:INFO]: [Workload 9/244] Skipping already completed: job_22.wg
+[2026-01-27 09:45:11,317:main.py#L144:INFO]: [Workload 10/244] Skipping already completed: job_23.wg
+[2026-01-27 09:45:11,317:main.py#L144:INFO]: [Workload 11/244] Skipping already completed: job_24.wg
+[2026-01-27 09:45:11,317:main.py#L144:INFO]: [Workload 12/244] Skipping already completed: job_25.wg
+[2026-01-27 09:45:11,317:main.py#L144:INFO]: [Workload 13/244] Skipping already completed: job_26.wg
+[2026-01-27 09:45:11,317:main.py#L144:INFO]: [Workload 14/244] Skipping already completed: job_27.wg
+[2026-01-27 09:45:11,318:main.py#L144:INFO]: [Workload 15/244] Skipping already completed: job_28.wg
+[2026-01-27 09:45:11,318:main.py#L144:INFO]: [Workload 16/244] Skipping already completed: job_29.wg
+[2026-01-27 09:45:11,318:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 09:45:11,318:main.py#L164:INFO]: [Workload 30/244] Starting tuning for: job_30.wg with surrogate
+[2026-01-27 09:45:11,318:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 09:50:59,304:main.py#L172:INFO]: [Workload 30/244] Successfully completed tuning for: job_30.wg with surrogate
+[2026-01-27 09:50:59,305:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 09:50:59,305:main.py#L164:INFO]: [Workload 31/244] Starting tuning for: job_31.wg with surrogate
+[2026-01-27 09:50:59,305:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:00:45,380:main.py#L172:INFO]: [Workload 31/244] Successfully completed tuning for: job_31.wg with surrogate
+[2026-01-27 10:00:45,380:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:00:45,381:main.py#L164:INFO]: [Workload 32/244] Starting tuning for: job_32.wg with surrogate
+[2026-01-27 10:00:45,381:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:05:44,819:main.py#L172:INFO]: [Workload 32/244] Successfully completed tuning for: job_32.wg with surrogate
+[2026-01-27 10:05:44,819:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:05:44,819:main.py#L164:INFO]: [Workload 33/244] Starting tuning for: job_33.wg with surrogate
+[2026-01-27 10:05:44,819:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:10:36,550:main.py#L172:INFO]: [Workload 33/244] Successfully completed tuning for: job_33.wg with surrogate
+[2026-01-27 10:10:36,551:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:10:36,551:main.py#L164:INFO]: [Workload 34/244] Starting tuning for: job_34.wg with surrogate
+[2026-01-27 10:10:36,551:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:15:38,647:main.py#L172:INFO]: [Workload 34/244] Successfully completed tuning for: job_34.wg with surrogate
+[2026-01-27 10:15:38,648:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:15:38,648:main.py#L164:INFO]: [Workload 35/244] Starting tuning for: job_35.wg with surrogate
+[2026-01-27 10:15:38,648:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:20:48,737:main.py#L172:INFO]: [Workload 35/244] Successfully completed tuning for: job_35.wg with surrogate
+[2026-01-27 10:20:48,737:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:20:48,737:main.py#L164:INFO]: [Workload 36/244] Starting tuning for: job_36.wg with surrogate
+[2026-01-27 10:20:48,737:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:26:35,336:main.py#L172:INFO]: [Workload 36/244] Successfully completed tuning for: job_36.wg with surrogate
+[2026-01-27 10:26:35,336:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:26:35,336:main.py#L164:INFO]: [Workload 37/244] Starting tuning for: job_37.wg with surrogate
+[2026-01-27 10:26:35,337:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:31:27,158:main.py#L172:INFO]: [Workload 37/244] Successfully completed tuning for: job_37.wg with surrogate
+[2026-01-27 10:31:27,159:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:31:27,159:main.py#L164:INFO]: [Workload 38/244] Starting tuning for: job_38.wg with surrogate
+[2026-01-27 10:31:27,159:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:36:21,055:main.py#L172:INFO]: [Workload 38/244] Successfully completed tuning for: job_38.wg with surrogate
+[2026-01-27 10:36:21,055:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:36:21,055:main.py#L164:INFO]: [Workload 39/244] Starting tuning for: job_39.wg with surrogate
+[2026-01-27 10:36:21,055:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:40:51,419:main.py#L172:INFO]: [Workload 39/244] Successfully completed tuning for: job_39.wg with surrogate
+[2026-01-27 10:40:51,419:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:40:51,419:main.py#L164:INFO]: [Workload 40/244] Starting tuning for: job_40.wg with surrogate
+[2026-01-27 10:40:51,419:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:46:20,952:main.py#L172:INFO]: [Workload 40/244] Successfully completed tuning for: job_40.wg with surrogate
+[2026-01-27 10:46:20,952:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:46:20,952:main.py#L164:INFO]: [Workload 41/244] Starting tuning for: job_41.wg with surrogate
+[2026-01-27 10:46:20,952:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:51:00,527:main.py#L172:INFO]: [Workload 41/244] Successfully completed tuning for: job_41.wg with surrogate
+[2026-01-27 10:51:00,527:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:51:00,527:main.py#L164:INFO]: [Workload 42/244] Starting tuning for: job_42.wg with surrogate
+[2026-01-27 10:51:00,527:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:57:13,029:main.py#L172:INFO]: [Workload 42/244] Successfully completed tuning for: job_42.wg with surrogate
+[2026-01-27 10:57:13,030:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 10:57:13,030:main.py#L164:INFO]: [Workload 43/244] Starting tuning for: job_43.wg with surrogate
+[2026-01-27 10:57:13,030:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:02:47,941:main.py#L172:INFO]: [Workload 43/244] Successfully completed tuning for: job_43.wg with surrogate
+[2026-01-27 11:02:47,941:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:02:47,941:main.py#L164:INFO]: [Workload 44/244] Starting tuning for: job_44.wg with surrogate
+[2026-01-27 11:02:47,941:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:08:53,456:main.py#L172:INFO]: [Workload 44/244] Successfully completed tuning for: job_44.wg with surrogate
+[2026-01-27 11:08:53,456:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:08:53,456:main.py#L164:INFO]: [Workload 45/244] Starting tuning for: job_45.wg with surrogate
+[2026-01-27 11:08:53,456:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:13:57,530:main.py#L172:INFO]: [Workload 45/244] Successfully completed tuning for: job_45.wg with surrogate
+[2026-01-27 11:13:57,530:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:13:57,530:main.py#L164:INFO]: [Workload 46/244] Starting tuning for: job_46.wg with surrogate
+[2026-01-27 11:13:57,530:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:18:47,609:main.py#L172:INFO]: [Workload 46/244] Successfully completed tuning for: job_46.wg with surrogate
+[2026-01-27 11:18:47,609:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:18:47,609:main.py#L164:INFO]: [Workload 47/244] Starting tuning for: job_47.wg with surrogate
+[2026-01-27 11:18:47,609:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:23:38,569:main.py#L172:INFO]: [Workload 47/244] Successfully completed tuning for: job_47.wg with surrogate
+[2026-01-27 11:23:38,569:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:23:38,569:main.py#L164:INFO]: [Workload 48/244] Starting tuning for: job_48.wg with surrogate
+[2026-01-27 11:23:38,569:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:29:05,992:main.py#L172:INFO]: [Workload 48/244] Successfully completed tuning for: job_48.wg with surrogate
+[2026-01-27 11:29:05,993:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:29:05,993:main.py#L164:INFO]: [Workload 49/244] Starting tuning for: job_49.wg with surrogate
+[2026-01-27 11:29:05,993:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:33:59,006:main.py#L172:INFO]: [Workload 49/244] Successfully completed tuning for: job_49.wg with surrogate
+[2026-01-27 11:33:59,007:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:33:59,007:main.py#L164:INFO]: [Workload 50/244] Starting tuning for: job_50.wg with surrogate
+[2026-01-27 11:33:59,007:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:39:40,072:main.py#L172:INFO]: [Workload 50/244] Successfully completed tuning for: job_50.wg with surrogate
+[2026-01-27 11:39:40,072:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:39:40,072:main.py#L164:INFO]: [Workload 51/244] Starting tuning for: job_51.wg with surrogate
+[2026-01-27 11:39:40,073:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:44:48,025:main.py#L172:INFO]: [Workload 51/244] Successfully completed tuning for: job_51.wg with surrogate
+[2026-01-27 11:44:48,025:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:44:48,025:main.py#L164:INFO]: [Workload 52/244] Starting tuning for: job_52.wg with surrogate
+[2026-01-27 11:44:48,025:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:50:49,031:main.py#L172:INFO]: [Workload 52/244] Successfully completed tuning for: job_52.wg with surrogate
+[2026-01-27 11:50:49,031:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:50:49,031:main.py#L164:INFO]: [Workload 53/244] Starting tuning for: job_53.wg with surrogate
+[2026-01-27 11:50:49,031:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:56:39,019:main.py#L172:INFO]: [Workload 53/244] Successfully completed tuning for: job_53.wg with surrogate
+[2026-01-27 11:56:39,019:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 11:56:39,019:main.py#L164:INFO]: [Workload 54/244] Starting tuning for: job_54.wg with surrogate
+[2026-01-27 11:56:39,019:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:01:50,573:main.py#L172:INFO]: [Workload 54/244] Successfully completed tuning for: job_54.wg with surrogate
+[2026-01-27 12:01:50,573:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:01:50,573:main.py#L164:INFO]: [Workload 55/244] Starting tuning for: job_55.wg with surrogate
+[2026-01-27 12:01:50,573:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:06:50,907:main.py#L172:INFO]: [Workload 55/244] Successfully completed tuning for: job_55.wg with surrogate
+[2026-01-27 12:06:50,907:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:06:50,907:main.py#L164:INFO]: [Workload 56/244] Starting tuning for: job_56.wg with surrogate
+[2026-01-27 12:06:50,908:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:12:03,915:main.py#L172:INFO]: [Workload 56/244] Successfully completed tuning for: job_56.wg with surrogate
+[2026-01-27 12:12:03,916:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:12:03,916:main.py#L164:INFO]: [Workload 57/244] Starting tuning for: job_57.wg with surrogate
+[2026-01-27 12:12:03,916:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:17:28,644:main.py#L172:INFO]: [Workload 57/244] Successfully completed tuning for: job_57.wg with surrogate
+[2026-01-27 12:17:28,644:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:17:28,644:main.py#L164:INFO]: [Workload 58/244] Starting tuning for: job_58.wg with surrogate
+[2026-01-27 12:17:28,645:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:22:29,776:main.py#L172:INFO]: [Workload 58/244] Successfully completed tuning for: job_58.wg with surrogate
+[2026-01-27 12:22:29,777:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:22:29,777:main.py#L164:INFO]: [Workload 59/244] Starting tuning for: job_59.wg with surrogate
+[2026-01-27 12:22:29,777:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:29:17,822:main.py#L172:INFO]: [Workload 59/244] Successfully completed tuning for: job_59.wg with surrogate
+[2026-01-27 12:29:17,822:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:29:17,822:main.py#L164:INFO]: [Workload 60/244] Starting tuning for: job_60.wg with surrogate
+[2026-01-27 12:29:17,822:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:34:16,515:main.py#L172:INFO]: [Workload 60/244] Successfully completed tuning for: job_60.wg with surrogate
+[2026-01-27 12:34:16,515:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:34:16,515:main.py#L164:INFO]: [Workload 61/244] Starting tuning for: job_61.wg with surrogate
+[2026-01-27 12:34:16,515:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:40:14,877:main.py#L172:INFO]: [Workload 61/244] Successfully completed tuning for: job_61.wg with surrogate
+[2026-01-27 12:40:14,878:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:40:14,878:main.py#L164:INFO]: [Workload 62/244] Starting tuning for: job_62.wg with surrogate
+[2026-01-27 12:40:14,878:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:45:22,446:main.py#L172:INFO]: [Workload 62/244] Successfully completed tuning for: job_62.wg with surrogate
+[2026-01-27 12:45:22,447:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:45:22,447:main.py#L164:INFO]: [Workload 63/244] Starting tuning for: job_63.wg with surrogate
+[2026-01-27 12:45:22,447:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:50:42,413:main.py#L172:INFO]: [Workload 63/244] Successfully completed tuning for: job_63.wg with surrogate
+[2026-01-27 12:50:42,413:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:50:42,413:main.py#L164:INFO]: [Workload 64/244] Starting tuning for: job_64.wg with surrogate
+[2026-01-27 12:50:42,413:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:55:21,169:main.py#L172:INFO]: [Workload 64/244] Successfully completed tuning for: job_64.wg with surrogate
+[2026-01-27 12:55:21,170:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 12:55:21,170:main.py#L164:INFO]: [Workload 65/244] Starting tuning for: job_65.wg with surrogate
+[2026-01-27 12:55:21,170:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:05:00,655:main.py#L172:INFO]: [Workload 65/244] Successfully completed tuning for: job_65.wg with surrogate
+[2026-01-27 13:05:00,655:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:05:00,655:main.py#L164:INFO]: [Workload 66/244] Starting tuning for: job_66.wg with surrogate
+[2026-01-27 13:05:00,655:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:10:53,069:main.py#L172:INFO]: [Workload 66/244] Successfully completed tuning for: job_66.wg with surrogate
+[2026-01-27 13:10:53,069:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:10:53,069:main.py#L164:INFO]: [Workload 67/244] Starting tuning for: job_67.wg with surrogate
+[2026-01-27 13:10:53,069:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:16:02,262:main.py#L172:INFO]: [Workload 67/244] Successfully completed tuning for: job_67.wg with surrogate
+[2026-01-27 13:16:02,262:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:16:02,262:main.py#L164:INFO]: [Workload 68/244] Starting tuning for: job_68.wg with surrogate
+[2026-01-27 13:16:02,262:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:21:45,965:main.py#L172:INFO]: [Workload 68/244] Successfully completed tuning for: job_68.wg with surrogate
+[2026-01-27 13:21:45,966:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:21:45,966:main.py#L164:INFO]: [Workload 69/244] Starting tuning for: job_69.wg with surrogate
+[2026-01-27 13:21:45,966:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:26:28,157:main.py#L172:INFO]: [Workload 69/244] Successfully completed tuning for: job_69.wg with surrogate
+[2026-01-27 13:26:28,158:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:26:28,158:main.py#L164:INFO]: [Workload 70/244] Starting tuning for: job_70.wg with surrogate
+[2026-01-27 13:26:28,158:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:32:42,300:main.py#L172:INFO]: [Workload 70/244] Successfully completed tuning for: job_70.wg with surrogate
+[2026-01-27 13:32:42,300:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:32:42,300:main.py#L164:INFO]: [Workload 71/244] Starting tuning for: job_71.wg with surrogate
+[2026-01-27 13:32:42,300:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:37:55,125:main.py#L172:INFO]: [Workload 71/244] Successfully completed tuning for: job_71.wg with surrogate
+[2026-01-27 13:37:55,126:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:37:55,126:main.py#L164:INFO]: [Workload 72/244] Starting tuning for: job_72.wg with surrogate
+[2026-01-27 13:37:55,126:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:44:07,501:main.py#L172:INFO]: [Workload 72/244] Successfully completed tuning for: job_72.wg with surrogate
+[2026-01-27 13:44:07,501:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:44:07,501:main.py#L164:INFO]: [Workload 73/244] Starting tuning for: job_73.wg with surrogate
+[2026-01-27 13:44:07,501:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:49:29,690:main.py#L172:INFO]: [Workload 73/244] Successfully completed tuning for: job_73.wg with surrogate
+[2026-01-27 13:49:29,690:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:49:29,691:main.py#L164:INFO]: [Workload 74/244] Starting tuning for: job_74.wg with surrogate
+[2026-01-27 13:49:29,691:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:54:38,286:main.py#L172:INFO]: [Workload 74/244] Successfully completed tuning for: job_74.wg with surrogate
+[2026-01-27 13:54:38,286:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 13:54:38,286:main.py#L164:INFO]: [Workload 75/244] Starting tuning for: job_75.wg with surrogate
+[2026-01-27 13:54:38,286:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:00:29,194:main.py#L172:INFO]: [Workload 75/244] Successfully completed tuning for: job_75.wg with surrogate
+[2026-01-27 14:00:29,194:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:00:29,194:main.py#L164:INFO]: [Workload 76/244] Starting tuning for: job_76.wg with surrogate
+[2026-01-27 14:00:29,194:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:05:18,740:main.py#L172:INFO]: [Workload 76/244] Successfully completed tuning for: job_76.wg with surrogate
+[2026-01-27 14:05:18,740:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:05:18,740:main.py#L164:INFO]: [Workload 77/244] Starting tuning for: job_77.wg with surrogate
+[2026-01-27 14:05:18,740:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:15:07,441:main.py#L172:INFO]: [Workload 77/244] Successfully completed tuning for: job_77.wg with surrogate
+[2026-01-27 14:15:07,442:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:15:07,442:main.py#L164:INFO]: [Workload 78/244] Starting tuning for: job_78.wg with surrogate
+[2026-01-27 14:15:07,442:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:19:54,309:main.py#L172:INFO]: [Workload 78/244] Successfully completed tuning for: job_78.wg with surrogate
+[2026-01-27 14:19:54,309:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:19:54,309:main.py#L164:INFO]: [Workload 79/244] Starting tuning for: job_79.wg with surrogate
+[2026-01-27 14:19:54,309:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:25:29,496:main.py#L172:INFO]: [Workload 79/244] Successfully completed tuning for: job_79.wg with surrogate
+[2026-01-27 14:25:29,496:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:25:29,496:main.py#L164:INFO]: [Workload 80/244] Starting tuning for: job_80.wg with surrogate
+[2026-01-27 14:25:29,496:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:30:28,835:main.py#L172:INFO]: [Workload 80/244] Successfully completed tuning for: job_80.wg with surrogate
+[2026-01-27 14:30:28,836:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:30:28,836:main.py#L164:INFO]: [Workload 81/244] Starting tuning for: job_81.wg with surrogate
+[2026-01-27 14:30:28,836:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:35:30,931:main.py#L172:INFO]: [Workload 81/244] Successfully completed tuning for: job_81.wg with surrogate
+[2026-01-27 14:35:30,931:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:35:30,931:main.py#L164:INFO]: [Workload 82/244] Starting tuning for: job_82.wg with surrogate
+[2026-01-27 14:35:30,931:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:40:13,800:main.py#L172:INFO]: [Workload 82/244] Successfully completed tuning for: job_82.wg with surrogate
+[2026-01-27 14:40:13,800:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:40:13,800:main.py#L164:INFO]: [Workload 83/244] Starting tuning for: job_83.wg with surrogate
+[2026-01-27 14:40:13,801:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:44:52,086:main.py#L172:INFO]: [Workload 83/244] Successfully completed tuning for: job_83.wg with surrogate
+[2026-01-27 14:44:52,086:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:44:52,086:main.py#L164:INFO]: [Workload 84/244] Starting tuning for: job_84.wg with surrogate
+[2026-01-27 14:44:52,086:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:49:41,779:main.py#L172:INFO]: [Workload 84/244] Successfully completed tuning for: job_84.wg with surrogate
+[2026-01-27 14:49:41,779:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:49:41,779:main.py#L164:INFO]: [Workload 85/244] Starting tuning for: job_85.wg with surrogate
+[2026-01-27 14:49:41,779:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:56:39,618:main.py#L172:INFO]: [Workload 85/244] Successfully completed tuning for: job_85.wg with surrogate
+[2026-01-27 14:56:39,619:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 14:56:39,619:main.py#L164:INFO]: [Workload 86/244] Starting tuning for: job_86.wg with surrogate
+[2026-01-27 14:56:39,619:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:01:51,858:main.py#L172:INFO]: [Workload 86/244] Successfully completed tuning for: job_86.wg with surrogate
+[2026-01-27 15:01:51,858:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:01:51,858:main.py#L164:INFO]: [Workload 87/244] Starting tuning for: job_87.wg with surrogate
+[2026-01-27 15:01:51,858:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:06:33,239:main.py#L172:INFO]: [Workload 87/244] Successfully completed tuning for: job_87.wg with surrogate
+[2026-01-27 15:06:33,239:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:06:33,239:main.py#L164:INFO]: [Workload 88/244] Starting tuning for: job_88.wg with surrogate
+[2026-01-27 15:06:33,239:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:17:55,665:main.py#L172:INFO]: [Workload 88/244] Successfully completed tuning for: job_88.wg with surrogate
+[2026-01-27 15:17:55,666:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:17:55,666:main.py#L164:INFO]: [Workload 89/244] Starting tuning for: job_89.wg with surrogate
+[2026-01-27 15:17:55,666:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:23:34,977:main.py#L172:INFO]: [Workload 89/244] Successfully completed tuning for: job_89.wg with surrogate
+[2026-01-27 15:23:34,977:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:23:34,977:main.py#L164:INFO]: [Workload 90/244] Starting tuning for: job_90.wg with surrogate
+[2026-01-27 15:23:34,977:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:29:14,080:main.py#L172:INFO]: [Workload 90/244] Successfully completed tuning for: job_90.wg with surrogate
+[2026-01-27 15:29:14,080:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:29:14,080:main.py#L164:INFO]: [Workload 91/244] Starting tuning for: job_91.wg with surrogate
+[2026-01-27 15:29:14,080:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:36:50,450:main.py#L172:INFO]: [Workload 91/244] Successfully completed tuning for: job_91.wg with surrogate
+[2026-01-27 15:36:50,450:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:36:50,450:main.py#L164:INFO]: [Workload 92/244] Starting tuning for: job_92.wg with surrogate
+[2026-01-27 15:36:50,450:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:42:06,457:main.py#L172:INFO]: [Workload 92/244] Successfully completed tuning for: job_92.wg with surrogate
+[2026-01-27 15:42:06,457:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:42:06,457:main.py#L164:INFO]: [Workload 93/244] Starting tuning for: job_93.wg with surrogate
+[2026-01-27 15:42:06,457:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:47:39,292:main.py#L172:INFO]: [Workload 93/244] Successfully completed tuning for: job_93.wg with surrogate
+[2026-01-27 15:47:39,292:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:47:39,292:main.py#L164:INFO]: [Workload 94/244] Starting tuning for: job_94.wg with surrogate
+[2026-01-27 15:47:39,292:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:52:05,881:main.py#L172:INFO]: [Workload 94/244] Successfully completed tuning for: job_94.wg with surrogate
+[2026-01-27 15:52:05,882:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:52:05,882:main.py#L164:INFO]: [Workload 95/244] Starting tuning for: job_95.wg with surrogate
+[2026-01-27 15:52:05,882:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:56:49,970:main.py#L172:INFO]: [Workload 95/244] Successfully completed tuning for: job_95.wg with surrogate
+[2026-01-27 15:56:49,970:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 15:56:49,970:main.py#L164:INFO]: [Workload 96/244] Starting tuning for: job_96.wg with surrogate
+[2026-01-27 15:56:49,970:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:02:23,849:main.py#L172:INFO]: [Workload 96/244] Successfully completed tuning for: job_96.wg with surrogate
+[2026-01-27 16:02:23,849:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:02:23,849:main.py#L164:INFO]: [Workload 97/244] Starting tuning for: job_97.wg with surrogate
+[2026-01-27 16:02:23,849:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:07:17,239:main.py#L172:INFO]: [Workload 97/244] Successfully completed tuning for: job_97.wg with surrogate
+[2026-01-27 16:07:17,239:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:07:17,239:main.py#L164:INFO]: [Workload 98/244] Starting tuning for: job_98.wg with surrogate
+[2026-01-27 16:07:17,239:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:12:19,126:main.py#L172:INFO]: [Workload 98/244] Successfully completed tuning for: job_98.wg with surrogate
+[2026-01-27 16:12:19,127:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:12:19,127:main.py#L164:INFO]: [Workload 99/244] Starting tuning for: job_99.wg with surrogate
+[2026-01-27 16:12:19,127:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:17:18,172:main.py#L172:INFO]: [Workload 99/244] Successfully completed tuning for: job_99.wg with surrogate
+[2026-01-27 16:17:18,173:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:17:18,173:main.py#L164:INFO]: [Workload 100/244] Starting tuning for: job_100.wg with surrogate
+[2026-01-27 16:17:18,173:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:24:03,841:main.py#L172:INFO]: [Workload 100/244] Successfully completed tuning for: job_100.wg with surrogate
+[2026-01-27 16:24:03,841:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:24:03,841:main.py#L164:INFO]: [Workload 101/244] Starting tuning for: job_101.wg with surrogate
+[2026-01-27 16:24:03,841:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:29:13,204:main.py#L172:INFO]: [Workload 101/244] Successfully completed tuning for: job_101.wg with surrogate
+[2026-01-27 16:29:13,204:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:29:13,204:main.py#L164:INFO]: [Workload 102/244] Starting tuning for: job_102.wg with surrogate
+[2026-01-27 16:29:13,204:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:34:35,895:main.py#L172:INFO]: [Workload 102/244] Successfully completed tuning for: job_102.wg with surrogate
+[2026-01-27 16:34:35,895:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:34:35,895:main.py#L164:INFO]: [Workload 103/244] Starting tuning for: job_103.wg with surrogate
+[2026-01-27 16:34:35,895:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:40:09,781:main.py#L172:INFO]: [Workload 103/244] Successfully completed tuning for: job_103.wg with surrogate
+[2026-01-27 16:40:09,782:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:40:09,782:main.py#L164:INFO]: [Workload 104/244] Starting tuning for: job_104.wg with surrogate
+[2026-01-27 16:40:09,782:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:44:49,344:main.py#L172:INFO]: [Workload 104/244] Successfully completed tuning for: job_104.wg with surrogate
+[2026-01-27 16:44:49,344:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:44:49,344:main.py#L164:INFO]: [Workload 105/244] Starting tuning for: job_105.wg with surrogate
+[2026-01-27 16:44:49,344:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:49:29,994:main.py#L172:INFO]: [Workload 105/244] Successfully completed tuning for: job_105.wg with surrogate
+[2026-01-27 16:49:29,994:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:49:29,994:main.py#L164:INFO]: [Workload 106/244] Starting tuning for: job_106.wg with surrogate
+[2026-01-27 16:49:29,994:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:55:38,557:main.py#L172:INFO]: [Workload 106/244] Successfully completed tuning for: job_106.wg with surrogate
+[2026-01-27 16:55:38,557:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 16:55:38,557:main.py#L164:INFO]: [Workload 107/244] Starting tuning for: job_107.wg with surrogate
+[2026-01-27 16:55:38,557:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:00:04,609:main.py#L172:INFO]: [Workload 107/244] Successfully completed tuning for: job_107.wg with surrogate
+[2026-01-27 17:00:04,609:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:00:04,609:main.py#L164:INFO]: [Workload 108/244] Starting tuning for: job_108.wg with surrogate
+[2026-01-27 17:00:04,609:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:05:28,092:main.py#L172:INFO]: [Workload 108/244] Successfully completed tuning for: job_108.wg with surrogate
+[2026-01-27 17:05:28,092:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:05:28,092:main.py#L164:INFO]: [Workload 109/244] Starting tuning for: job_109.wg with surrogate
+[2026-01-27 17:05:28,093:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:10:19,084:main.py#L172:INFO]: [Workload 109/244] Successfully completed tuning for: job_109.wg with surrogate
+[2026-01-27 17:10:19,084:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:10:19,084:main.py#L164:INFO]: [Workload 110/244] Starting tuning for: job_110.wg with surrogate
+[2026-01-27 17:10:19,084:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:15:26,508:main.py#L172:INFO]: [Workload 110/244] Successfully completed tuning for: job_110.wg with surrogate
+[2026-01-27 17:15:26,509:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:15:26,509:main.py#L164:INFO]: [Workload 111/244] Starting tuning for: job_111.wg with surrogate
+[2026-01-27 17:15:26,509:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:20:09,071:main.py#L172:INFO]: [Workload 111/244] Successfully completed tuning for: job_111.wg with surrogate
+[2026-01-27 17:20:09,071:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:20:09,071:main.py#L164:INFO]: [Workload 112/244] Starting tuning for: job_112.wg with surrogate
+[2026-01-27 17:20:09,071:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:26:36,976:main.py#L172:INFO]: [Workload 112/244] Successfully completed tuning for: job_112.wg with surrogate
+[2026-01-27 17:26:36,976:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:26:36,976:main.py#L164:INFO]: [Workload 113/244] Starting tuning for: job_113.wg with surrogate
+[2026-01-27 17:26:36,976:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:32:22,973:main.py#L172:INFO]: [Workload 113/244] Successfully completed tuning for: job_113.wg with surrogate
+[2026-01-27 17:32:22,973:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:32:22,974:main.py#L164:INFO]: [Workload 114/244] Starting tuning for: job_114.wg with surrogate
+[2026-01-27 17:32:22,974:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:37:35,208:main.py#L172:INFO]: [Workload 114/244] Successfully completed tuning for: job_114.wg with surrogate
+[2026-01-27 17:37:35,208:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:37:35,208:main.py#L164:INFO]: [Workload 115/244] Starting tuning for: job_115.wg with surrogate
+[2026-01-27 17:37:35,209:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:49:19,340:main.py#L172:INFO]: [Workload 115/244] Successfully completed tuning for: job_115.wg with surrogate
+[2026-01-27 17:49:19,340:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:49:19,340:main.py#L164:INFO]: [Workload 116/244] Starting tuning for: job_116.wg with surrogate
+[2026-01-27 17:49:19,340:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:54:49,220:main.py#L172:INFO]: [Workload 116/244] Successfully completed tuning for: job_116.wg with surrogate
+[2026-01-27 17:54:49,220:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:54:49,220:main.py#L164:INFO]: [Workload 117/244] Starting tuning for: job_117.wg with surrogate
+[2026-01-27 17:54:49,220:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:59:55,991:main.py#L172:INFO]: [Workload 117/244] Successfully completed tuning for: job_117.wg with surrogate
+[2026-01-27 17:59:55,992:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 17:59:55,992:main.py#L164:INFO]: [Workload 118/244] Starting tuning for: job_118.wg with surrogate
+[2026-01-27 17:59:55,992:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:06:17,155:main.py#L172:INFO]: [Workload 118/244] Successfully completed tuning for: job_118.wg with surrogate
+[2026-01-27 18:06:17,156:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:06:17,156:main.py#L164:INFO]: [Workload 119/244] Starting tuning for: job_119.wg with surrogate
+[2026-01-27 18:06:17,156:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:13:29,323:main.py#L172:INFO]: [Workload 119/244] Successfully completed tuning for: job_119.wg with surrogate
+[2026-01-27 18:13:29,323:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:13:29,323:main.py#L164:INFO]: [Workload 120/244] Starting tuning for: job_120.wg with surrogate
+[2026-01-27 18:13:29,323:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:18:53,022:main.py#L172:INFO]: [Workload 120/244] Successfully completed tuning for: job_120.wg with surrogate
+[2026-01-27 18:18:53,022:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:18:53,022:main.py#L164:INFO]: [Workload 121/244] Starting tuning for: job_121.wg with surrogate
+[2026-01-27 18:18:53,022:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:24:15,065:main.py#L172:INFO]: [Workload 121/244] Successfully completed tuning for: job_121.wg with surrogate
+[2026-01-27 18:24:15,065:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:24:15,065:main.py#L164:INFO]: [Workload 122/244] Starting tuning for: job_122.wg with surrogate
+[2026-01-27 18:24:15,065:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:29:09,417:main.py#L172:INFO]: [Workload 122/244] Successfully completed tuning for: job_122.wg with surrogate
+[2026-01-27 18:29:09,417:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:29:09,417:main.py#L164:INFO]: [Workload 123/244] Starting tuning for: job_123.wg with surrogate
+[2026-01-27 18:29:09,417:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:34:38,242:main.py#L172:INFO]: [Workload 123/244] Successfully completed tuning for: job_123.wg with surrogate
+[2026-01-27 18:34:38,242:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:34:38,242:main.py#L164:INFO]: [Workload 124/244] Starting tuning for: job_124.wg with surrogate
+[2026-01-27 18:34:38,242:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:40:03,704:main.py#L172:INFO]: [Workload 124/244] Successfully completed tuning for: job_124.wg with surrogate
+[2026-01-27 18:40:03,704:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:40:03,704:main.py#L164:INFO]: [Workload 125/244] Starting tuning for: job_125.wg with surrogate
+[2026-01-27 18:40:03,705:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:45:27,126:main.py#L172:INFO]: [Workload 125/244] Successfully completed tuning for: job_125.wg with surrogate
+[2026-01-27 18:45:27,126:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:45:27,127:main.py#L164:INFO]: [Workload 126/244] Starting tuning for: job_126.wg with surrogate
+[2026-01-27 18:45:27,127:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:52:00,989:main.py#L172:INFO]: [Workload 126/244] Successfully completed tuning for: job_126.wg with surrogate
+[2026-01-27 18:52:00,990:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:52:00,990:main.py#L164:INFO]: [Workload 127/244] Starting tuning for: job_127.wg with surrogate
+[2026-01-27 18:52:00,990:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:58:03,239:main.py#L172:INFO]: [Workload 127/244] Successfully completed tuning for: job_127.wg with surrogate
+[2026-01-27 18:58:03,240:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 18:58:03,240:main.py#L164:INFO]: [Workload 128/244] Starting tuning for: job_128.wg with surrogate
+[2026-01-27 18:58:03,240:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:02:36,481:main.py#L172:INFO]: [Workload 128/244] Successfully completed tuning for: job_128.wg with surrogate
+[2026-01-27 19:02:36,481:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:02:36,481:main.py#L164:INFO]: [Workload 129/244] Starting tuning for: job_129.wg with surrogate
+[2026-01-27 19:02:36,481:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:07:20,970:main.py#L172:INFO]: [Workload 129/244] Successfully completed tuning for: job_129.wg with surrogate
+[2026-01-27 19:07:20,970:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:07:20,971:main.py#L164:INFO]: [Workload 130/244] Starting tuning for: job_130.wg with surrogate
+[2026-01-27 19:07:20,971:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:11:56,995:main.py#L172:INFO]: [Workload 130/244] Successfully completed tuning for: job_130.wg with surrogate
+[2026-01-27 19:11:56,995:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:11:56,995:main.py#L164:INFO]: [Workload 131/244] Starting tuning for: job_131.wg with surrogate
+[2026-01-27 19:11:56,996:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:21:08,016:main.py#L172:INFO]: [Workload 131/244] Successfully completed tuning for: job_131.wg with surrogate
+[2026-01-27 19:21:08,016:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:21:08,017:main.py#L164:INFO]: [Workload 132/244] Starting tuning for: job_132.wg with surrogate
+[2026-01-27 19:21:08,017:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:25:54,822:main.py#L172:INFO]: [Workload 132/244] Successfully completed tuning for: job_132.wg with surrogate
+[2026-01-27 19:25:54,822:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:25:54,822:main.py#L164:INFO]: [Workload 133/244] Starting tuning for: job_133.wg with surrogate
+[2026-01-27 19:25:54,822:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:30:49,740:main.py#L172:INFO]: [Workload 133/244] Successfully completed tuning for: job_133.wg with surrogate
+[2026-01-27 19:30:49,740:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:30:49,740:main.py#L164:INFO]: [Workload 134/244] Starting tuning for: job_134.wg with surrogate
+[2026-01-27 19:30:49,740:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:36:02,147:main.py#L172:INFO]: [Workload 134/244] Successfully completed tuning for: job_134.wg with surrogate
+[2026-01-27 19:36:02,147:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:36:02,148:main.py#L164:INFO]: [Workload 135/244] Starting tuning for: job_135.wg with surrogate
+[2026-01-27 19:36:02,148:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:40:45,028:main.py#L172:INFO]: [Workload 135/244] Successfully completed tuning for: job_135.wg with surrogate
+[2026-01-27 19:40:45,029:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:40:45,029:main.py#L164:INFO]: [Workload 136/244] Starting tuning for: job_136.wg with surrogate
+[2026-01-27 19:40:45,029:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:45:19,722:main.py#L172:INFO]: [Workload 136/244] Successfully completed tuning for: job_136.wg with surrogate
+[2026-01-27 19:45:19,723:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:45:19,723:main.py#L164:INFO]: [Workload 137/244] Starting tuning for: job_137.wg with surrogate
+[2026-01-27 19:45:19,723:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:50:14,742:main.py#L172:INFO]: [Workload 137/244] Successfully completed tuning for: job_137.wg with surrogate
+[2026-01-27 19:50:14,742:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:50:14,742:main.py#L164:INFO]: [Workload 138/244] Starting tuning for: job_138.wg with surrogate
+[2026-01-27 19:50:14,742:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:54:39,671:main.py#L172:INFO]: [Workload 138/244] Successfully completed tuning for: job_138.wg with surrogate
+[2026-01-27 19:54:39,671:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:54:39,671:main.py#L164:INFO]: [Workload 139/244] Starting tuning for: job_139.wg with surrogate
+[2026-01-27 19:54:39,671:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:59:18,732:main.py#L172:INFO]: [Workload 139/244] Successfully completed tuning for: job_139.wg with surrogate
+[2026-01-27 19:59:18,732:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 19:59:18,732:main.py#L164:INFO]: [Workload 140/244] Starting tuning for: job_140.wg with surrogate
+[2026-01-27 19:59:18,732:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:03:54,207:main.py#L172:INFO]: [Workload 140/244] Successfully completed tuning for: job_140.wg with surrogate
+[2026-01-27 20:03:54,207:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:03:54,207:main.py#L164:INFO]: [Workload 141/244] Starting tuning for: job_141.wg with surrogate
+[2026-01-27 20:03:54,207:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:08:24,615:main.py#L172:INFO]: [Workload 141/244] Successfully completed tuning for: job_141.wg with surrogate
+[2026-01-27 20:08:24,616:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:08:24,616:main.py#L164:INFO]: [Workload 142/244] Starting tuning for: job_142.wg with surrogate
+[2026-01-27 20:08:24,616:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:13:27,926:main.py#L172:INFO]: [Workload 142/244] Successfully completed tuning for: job_142.wg with surrogate
+[2026-01-27 20:13:27,927:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:13:27,927:main.py#L164:INFO]: [Workload 143/244] Starting tuning for: job_143.wg with surrogate
+[2026-01-27 20:13:27,927:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:18:48,178:main.py#L172:INFO]: [Workload 143/244] Successfully completed tuning for: job_143.wg with surrogate
+[2026-01-27 20:18:48,179:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:18:48,179:main.py#L164:INFO]: [Workload 144/244] Starting tuning for: job_144.wg with surrogate
+[2026-01-27 20:18:48,179:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:23:41,427:main.py#L172:INFO]: [Workload 144/244] Successfully completed tuning for: job_144.wg with surrogate
+[2026-01-27 20:23:41,428:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:23:41,428:main.py#L164:INFO]: [Workload 145/244] Starting tuning for: job_145.wg with surrogate
+[2026-01-27 20:23:41,428:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:28:04,900:main.py#L172:INFO]: [Workload 145/244] Successfully completed tuning for: job_145.wg with surrogate
+[2026-01-27 20:28:04,900:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:28:04,900:main.py#L164:INFO]: [Workload 146/244] Starting tuning for: job_146.wg with surrogate
+[2026-01-27 20:28:04,900:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:33:17,000:main.py#L172:INFO]: [Workload 146/244] Successfully completed tuning for: job_146.wg with surrogate
+[2026-01-27 20:33:17,000:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:33:17,000:main.py#L164:INFO]: [Workload 147/244] Starting tuning for: job_147.wg with surrogate
+[2026-01-27 20:33:17,000:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:37:37,073:main.py#L172:INFO]: [Workload 147/244] Successfully completed tuning for: job_147.wg with surrogate
+[2026-01-27 20:37:37,073:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:37:37,073:main.py#L164:INFO]: [Workload 148/244] Starting tuning for: job_148.wg with surrogate
+[2026-01-27 20:37:37,073:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:42:12,310:main.py#L172:INFO]: [Workload 148/244] Successfully completed tuning for: job_148.wg with surrogate
+[2026-01-27 20:42:12,310:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:42:12,310:main.py#L164:INFO]: [Workload 149/244] Starting tuning for: job_149.wg with surrogate
+[2026-01-27 20:42:12,310:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:46:30,882:main.py#L172:INFO]: [Workload 149/244] Successfully completed tuning for: job_149.wg with surrogate
+[2026-01-27 20:46:30,882:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:46:30,883:main.py#L164:INFO]: [Workload 150/244] Starting tuning for: job_150.wg with surrogate
+[2026-01-27 20:46:30,883:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:50:45,703:main.py#L172:INFO]: [Workload 150/244] Successfully completed tuning for: job_150.wg with surrogate
+[2026-01-27 20:50:45,703:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:50:45,703:main.py#L164:INFO]: [Workload 151/244] Starting tuning for: job_151.wg with surrogate
+[2026-01-27 20:50:45,703:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:56:53,427:main.py#L172:INFO]: [Workload 151/244] Successfully completed tuning for: job_151.wg with surrogate
+[2026-01-27 20:56:53,427:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 20:56:53,428:main.py#L164:INFO]: [Workload 152/244] Starting tuning for: job_152.wg with surrogate
+[2026-01-27 20:56:53,428:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:02:14,341:main.py#L172:INFO]: [Workload 152/244] Successfully completed tuning for: job_152.wg with surrogate
+[2026-01-27 21:02:14,341:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:02:14,342:main.py#L164:INFO]: [Workload 153/244] Starting tuning for: job_153.wg with surrogate
+[2026-01-27 21:02:14,342:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:08:21,177:main.py#L172:INFO]: [Workload 153/244] Successfully completed tuning for: job_153.wg with surrogate
+[2026-01-27 21:08:21,177:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:08:21,177:main.py#L164:INFO]: [Workload 154/244] Starting tuning for: job_154.wg with surrogate
+[2026-01-27 21:08:21,177:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:13:34,164:main.py#L172:INFO]: [Workload 154/244] Successfully completed tuning for: job_154.wg with surrogate
+[2026-01-27 21:13:34,164:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:13:34,164:main.py#L164:INFO]: [Workload 155/244] Starting tuning for: job_155.wg with surrogate
+[2026-01-27 21:13:34,164:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:19:21,473:main.py#L172:INFO]: [Workload 155/244] Successfully completed tuning for: job_155.wg with surrogate
+[2026-01-27 21:19:21,474:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:19:21,474:main.py#L164:INFO]: [Workload 156/244] Starting tuning for: job_156.wg with surrogate
+[2026-01-27 21:19:21,474:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:24:08,274:main.py#L172:INFO]: [Workload 156/244] Successfully completed tuning for: job_156.wg with surrogate
+[2026-01-27 21:24:08,274:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:24:08,274:main.py#L164:INFO]: [Workload 157/244] Starting tuning for: job_157.wg with surrogate
+[2026-01-27 21:24:08,274:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:28:36,825:main.py#L172:INFO]: [Workload 157/244] Successfully completed tuning for: job_157.wg with surrogate
+[2026-01-27 21:28:36,825:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:28:36,825:main.py#L164:INFO]: [Workload 158/244] Starting tuning for: job_158.wg with surrogate
+[2026-01-27 21:28:36,825:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:34:43,021:main.py#L172:INFO]: [Workload 158/244] Successfully completed tuning for: job_158.wg with surrogate
+[2026-01-27 21:34:43,021:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:34:43,021:main.py#L164:INFO]: [Workload 159/244] Starting tuning for: job_159.wg with surrogate
+[2026-01-27 21:34:43,021:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:39:21,890:main.py#L172:INFO]: [Workload 159/244] Successfully completed tuning for: job_159.wg with surrogate
+[2026-01-27 21:39:21,890:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:39:21,890:main.py#L164:INFO]: [Workload 160/244] Starting tuning for: job_160.wg with surrogate
+[2026-01-27 21:39:21,890:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:44:13,449:main.py#L172:INFO]: [Workload 160/244] Successfully completed tuning for: job_160.wg with surrogate
+[2026-01-27 21:44:13,449:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:44:13,449:main.py#L164:INFO]: [Workload 161/244] Starting tuning for: job_161.wg with surrogate
+[2026-01-27 21:44:13,449:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:50:30,111:main.py#L172:INFO]: [Workload 161/244] Successfully completed tuning for: job_161.wg with surrogate
+[2026-01-27 21:50:30,111:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:50:30,112:main.py#L164:INFO]: [Workload 162/244] Starting tuning for: job_162.wg with surrogate
+[2026-01-27 21:50:30,112:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:54:49,175:main.py#L172:INFO]: [Workload 162/244] Successfully completed tuning for: job_162.wg with surrogate
+[2026-01-27 21:54:49,175:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 21:54:49,175:main.py#L164:INFO]: [Workload 163/244] Starting tuning for: job_163.wg with surrogate
+[2026-01-27 21:54:49,175:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:01:30,261:main.py#L172:INFO]: [Workload 163/244] Successfully completed tuning for: job_163.wg with surrogate
+[2026-01-27 22:01:30,261:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:01:30,262:main.py#L164:INFO]: [Workload 164/244] Starting tuning for: job_164.wg with surrogate
+[2026-01-27 22:01:30,262:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:06:09,504:main.py#L172:INFO]: [Workload 164/244] Successfully completed tuning for: job_164.wg with surrogate
+[2026-01-27 22:06:09,504:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:06:09,505:main.py#L164:INFO]: [Workload 165/244] Starting tuning for: job_165.wg with surrogate
+[2026-01-27 22:06:09,505:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:10:34,452:main.py#L172:INFO]: [Workload 165/244] Successfully completed tuning for: job_165.wg with surrogate
+[2026-01-27 22:10:34,452:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:10:34,452:main.py#L164:INFO]: [Workload 166/244] Starting tuning for: job_166.wg with surrogate
+[2026-01-27 22:10:34,452:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:15:03,523:main.py#L172:INFO]: [Workload 166/244] Successfully completed tuning for: job_166.wg with surrogate
+[2026-01-27 22:15:03,523:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:15:03,523:main.py#L164:INFO]: [Workload 167/244] Starting tuning for: job_167.wg with surrogate
+[2026-01-27 22:15:03,523:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:20:31,334:main.py#L172:INFO]: [Workload 167/244] Successfully completed tuning for: job_167.wg with surrogate
+[2026-01-27 22:20:31,334:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:20:31,334:main.py#L164:INFO]: [Workload 168/244] Starting tuning for: job_168.wg with surrogate
+[2026-01-27 22:20:31,335:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:25:36,147:main.py#L172:INFO]: [Workload 168/244] Successfully completed tuning for: job_168.wg with surrogate
+[2026-01-27 22:25:36,147:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:25:36,147:main.py#L164:INFO]: [Workload 169/244] Starting tuning for: job_169.wg with surrogate
+[2026-01-27 22:25:36,147:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:29:58,532:main.py#L172:INFO]: [Workload 169/244] Successfully completed tuning for: job_169.wg with surrogate
+[2026-01-27 22:29:58,532:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:29:58,532:main.py#L164:INFO]: [Workload 170/244] Starting tuning for: job_170.wg with surrogate
+[2026-01-27 22:29:58,532:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:34:42,554:main.py#L172:INFO]: [Workload 170/244] Successfully completed tuning for: job_170.wg with surrogate
+[2026-01-27 22:34:42,554:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:34:42,554:main.py#L164:INFO]: [Workload 171/244] Starting tuning for: job_171.wg with surrogate
+[2026-01-27 22:34:42,554:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:39:29,356:main.py#L172:INFO]: [Workload 171/244] Successfully completed tuning for: job_171.wg with surrogate
+[2026-01-27 22:39:29,356:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:39:29,356:main.py#L164:INFO]: [Workload 172/244] Starting tuning for: job_172.wg with surrogate
+[2026-01-27 22:39:29,356:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:43:57,612:main.py#L172:INFO]: [Workload 172/244] Successfully completed tuning for: job_172.wg with surrogate
+[2026-01-27 22:43:57,612:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:43:57,612:main.py#L164:INFO]: [Workload 173/244] Starting tuning for: job_173.wg with surrogate
+[2026-01-27 22:43:57,612:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:49:10,229:main.py#L172:INFO]: [Workload 173/244] Successfully completed tuning for: job_173.wg with surrogate
+[2026-01-27 22:49:10,229:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:49:10,229:main.py#L164:INFO]: [Workload 174/244] Starting tuning for: job_174.wg with surrogate
+[2026-01-27 22:49:10,229:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:53:54,179:main.py#L172:INFO]: [Workload 174/244] Successfully completed tuning for: job_174.wg with surrogate
+[2026-01-27 22:53:54,179:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:53:54,179:main.py#L164:INFO]: [Workload 175/244] Starting tuning for: job_175.wg with surrogate
+[2026-01-27 22:53:54,179:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:58:30,000:main.py#L172:INFO]: [Workload 175/244] Successfully completed tuning for: job_175.wg with surrogate
+[2026-01-27 22:58:30,001:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 22:58:30,001:main.py#L164:INFO]: [Workload 176/244] Starting tuning for: job_176.wg with surrogate
+[2026-01-27 22:58:30,001:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:05:09,382:main.py#L172:INFO]: [Workload 176/244] Successfully completed tuning for: job_176.wg with surrogate
+[2026-01-27 23:05:09,382:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:05:09,382:main.py#L164:INFO]: [Workload 177/244] Starting tuning for: job_177.wg with surrogate
+[2026-01-27 23:05:09,382:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:09:17,801:main.py#L172:INFO]: [Workload 177/244] Successfully completed tuning for: job_177.wg with surrogate
+[2026-01-27 23:09:17,802:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:09:17,802:main.py#L164:INFO]: [Workload 178/244] Starting tuning for: job_178.wg with surrogate
+[2026-01-27 23:09:17,802:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:13:50,152:main.py#L172:INFO]: [Workload 178/244] Successfully completed tuning for: job_178.wg with surrogate
+[2026-01-27 23:13:50,153:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:13:50,153:main.py#L164:INFO]: [Workload 179/244] Starting tuning for: job_179.wg with surrogate
+[2026-01-27 23:13:50,153:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:19:04,238:main.py#L172:INFO]: [Workload 179/244] Successfully completed tuning for: job_179.wg with surrogate
+[2026-01-27 23:19:04,238:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:19:04,238:main.py#L164:INFO]: [Workload 180/244] Starting tuning for: job_180.wg with surrogate
+[2026-01-27 23:19:04,238:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:23:58,028:main.py#L172:INFO]: [Workload 180/244] Successfully completed tuning for: job_180.wg with surrogate
+[2026-01-27 23:23:58,029:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:23:58,029:main.py#L164:INFO]: [Workload 181/244] Starting tuning for: job_181.wg with surrogate
+[2026-01-27 23:23:58,029:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:29:30,417:main.py#L172:INFO]: [Workload 181/244] Successfully completed tuning for: job_181.wg with surrogate
+[2026-01-27 23:29:30,417:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:29:30,417:main.py#L164:INFO]: [Workload 182/244] Starting tuning for: job_182.wg with surrogate
+[2026-01-27 23:29:30,417:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:33:52,823:main.py#L172:INFO]: [Workload 182/244] Successfully completed tuning for: job_182.wg with surrogate
+[2026-01-27 23:33:52,823:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:33:52,824:main.py#L164:INFO]: [Workload 183/244] Starting tuning for: job_183.wg with surrogate
+[2026-01-27 23:33:52,824:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:38:45,531:main.py#L172:INFO]: [Workload 183/244] Successfully completed tuning for: job_183.wg with surrogate
+[2026-01-27 23:38:45,532:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:38:45,532:main.py#L164:INFO]: [Workload 184/244] Starting tuning for: job_184.wg with surrogate
+[2026-01-27 23:38:45,532:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:44:27,146:main.py#L172:INFO]: [Workload 184/244] Successfully completed tuning for: job_184.wg with surrogate
+[2026-01-27 23:44:27,147:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:44:27,147:main.py#L164:INFO]: [Workload 185/244] Starting tuning for: job_185.wg with surrogate
+[2026-01-27 23:44:27,147:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:48:42,654:main.py#L172:INFO]: [Workload 185/244] Successfully completed tuning for: job_185.wg with surrogate
+[2026-01-27 23:48:42,654:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:48:42,654:main.py#L164:INFO]: [Workload 186/244] Starting tuning for: job_186.wg with surrogate
+[2026-01-27 23:48:42,654:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:53:41,179:main.py#L172:INFO]: [Workload 186/244] Successfully completed tuning for: job_186.wg with surrogate
+[2026-01-27 23:53:41,179:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:53:41,179:main.py#L164:INFO]: [Workload 187/244] Starting tuning for: job_187.wg with surrogate
+[2026-01-27 23:53:41,179:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:58:00,959:main.py#L172:INFO]: [Workload 187/244] Successfully completed tuning for: job_187.wg with surrogate
+[2026-01-27 23:58:00,959:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-27 23:58:00,959:main.py#L164:INFO]: [Workload 188/244] Starting tuning for: job_188.wg with surrogate
+[2026-01-27 23:58:00,959:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:02:56,454:main.py#L172:INFO]: [Workload 188/244] Successfully completed tuning for: job_188.wg with surrogate
+[2026-01-28 00:02:56,454:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:02:56,455:main.py#L164:INFO]: [Workload 189/244] Starting tuning for: job_189.wg with surrogate
+[2026-01-28 00:02:56,455:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:07:57,653:main.py#L172:INFO]: [Workload 189/244] Successfully completed tuning for: job_189.wg with surrogate
+[2026-01-28 00:07:57,653:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:07:57,653:main.py#L164:INFO]: [Workload 190/244] Starting tuning for: job_190.wg with surrogate
+[2026-01-28 00:07:57,653:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:14:15,162:main.py#L172:INFO]: [Workload 190/244] Successfully completed tuning for: job_190.wg with surrogate
+[2026-01-28 00:14:15,162:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:14:15,162:main.py#L164:INFO]: [Workload 191/244] Starting tuning for: job_191.wg with surrogate
+[2026-01-28 00:14:15,162:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:20:05,601:main.py#L172:INFO]: [Workload 191/244] Successfully completed tuning for: job_191.wg with surrogate
+[2026-01-28 00:20:05,602:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:20:05,602:main.py#L164:INFO]: [Workload 192/244] Starting tuning for: job_192.wg with surrogate
+[2026-01-28 00:20:05,602:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:24:21,201:main.py#L172:INFO]: [Workload 192/244] Successfully completed tuning for: job_192.wg with surrogate
+[2026-01-28 00:24:21,202:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:24:21,202:main.py#L164:INFO]: [Workload 193/244] Starting tuning for: job_193.wg with surrogate
+[2026-01-28 00:24:21,202:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:29:16,743:main.py#L172:INFO]: [Workload 193/244] Successfully completed tuning for: job_193.wg with surrogate
+[2026-01-28 00:29:16,743:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:29:16,743:main.py#L164:INFO]: [Workload 194/244] Starting tuning for: job_194.wg with surrogate
+[2026-01-28 00:29:16,743:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:34:19,784:main.py#L172:INFO]: [Workload 194/244] Successfully completed tuning for: job_194.wg with surrogate
+[2026-01-28 00:34:19,785:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:34:19,785:main.py#L164:INFO]: [Workload 195/244] Starting tuning for: job_195.wg with surrogate
+[2026-01-28 00:34:19,785:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:39:33,384:main.py#L172:INFO]: [Workload 195/244] Successfully completed tuning for: job_195.wg with surrogate
+[2026-01-28 00:39:33,385:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:39:33,385:main.py#L164:INFO]: [Workload 196/244] Starting tuning for: job_196.wg with surrogate
+[2026-01-28 00:39:33,385:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:44:32,258:main.py#L172:INFO]: [Workload 196/244] Successfully completed tuning for: job_196.wg with surrogate
+[2026-01-28 00:44:32,258:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:44:32,258:main.py#L164:INFO]: [Workload 197/244] Starting tuning for: job_197.wg with surrogate
+[2026-01-28 00:44:32,258:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:49:19,660:main.py#L172:INFO]: [Workload 197/244] Successfully completed tuning for: job_197.wg with surrogate
+[2026-01-28 00:49:19,660:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:49:19,660:main.py#L164:INFO]: [Workload 198/244] Starting tuning for: job_198.wg with surrogate
+[2026-01-28 00:49:19,660:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:56:58,189:main.py#L172:INFO]: [Workload 198/244] Successfully completed tuning for: job_198.wg with surrogate
+[2026-01-28 00:56:58,189:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 00:56:58,189:main.py#L164:INFO]: [Workload 199/244] Starting tuning for: job_199.wg with surrogate
+[2026-01-28 00:56:58,190:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:01:39,836:main.py#L172:INFO]: [Workload 199/244] Successfully completed tuning for: job_199.wg with surrogate
+[2026-01-28 01:01:39,836:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:01:39,837:main.py#L164:INFO]: [Workload 200/244] Starting tuning for: job_200.wg with surrogate
+[2026-01-28 01:01:39,837:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:06:03,718:main.py#L172:INFO]: [Workload 200/244] Successfully completed tuning for: job_200.wg with surrogate
+[2026-01-28 01:06:03,719:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:06:03,719:main.py#L164:INFO]: [Workload 201/244] Starting tuning for: job_201.wg with surrogate
+[2026-01-28 01:06:03,719:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:14:06,499:main.py#L172:INFO]: [Workload 201/244] Successfully completed tuning for: job_201.wg with surrogate
+[2026-01-28 01:14:06,499:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:14:06,499:main.py#L164:INFO]: [Workload 202/244] Starting tuning for: job_202.wg with surrogate
+[2026-01-28 01:14:06,499:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:18:40,280:main.py#L172:INFO]: [Workload 202/244] Successfully completed tuning for: job_202.wg with surrogate
+[2026-01-28 01:18:40,280:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:18:40,281:main.py#L164:INFO]: [Workload 203/244] Starting tuning for: job_203.wg with surrogate
+[2026-01-28 01:18:40,281:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:23:14,937:main.py#L172:INFO]: [Workload 203/244] Successfully completed tuning for: job_203.wg with surrogate
+[2026-01-28 01:23:14,937:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:23:14,937:main.py#L164:INFO]: [Workload 204/244] Starting tuning for: job_204.wg with surrogate
+[2026-01-28 01:23:14,937:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:28:11,796:main.py#L172:INFO]: [Workload 204/244] Successfully completed tuning for: job_204.wg with surrogate
+[2026-01-28 01:28:11,796:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:28:11,796:main.py#L164:INFO]: [Workload 205/244] Starting tuning for: job_205.wg with surrogate
+[2026-01-28 01:28:11,796:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:32:25,332:main.py#L172:INFO]: [Workload 205/244] Successfully completed tuning for: job_205.wg with surrogate
+[2026-01-28 01:32:25,332:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:32:25,332:main.py#L164:INFO]: [Workload 206/244] Starting tuning for: job_206.wg with surrogate
+[2026-01-28 01:32:25,332:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:37:18,246:main.py#L172:INFO]: [Workload 206/244] Successfully completed tuning for: job_206.wg with surrogate
+[2026-01-28 01:37:18,246:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:37:18,246:main.py#L164:INFO]: [Workload 207/244] Starting tuning for: job_207.wg with surrogate
+[2026-01-28 01:37:18,246:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:42:19,111:main.py#L172:INFO]: [Workload 207/244] Successfully completed tuning for: job_207.wg with surrogate
+[2026-01-28 01:42:19,111:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:42:19,111:main.py#L164:INFO]: [Workload 208/244] Starting tuning for: job_208.wg with surrogate
+[2026-01-28 01:42:19,111:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:46:58,750:main.py#L172:INFO]: [Workload 208/244] Successfully completed tuning for: job_208.wg with surrogate
+[2026-01-28 01:46:58,751:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:46:58,751:main.py#L164:INFO]: [Workload 209/244] Starting tuning for: job_209.wg with surrogate
+[2026-01-28 01:46:58,751:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:52:06,985:main.py#L172:INFO]: [Workload 209/244] Successfully completed tuning for: job_209.wg with surrogate
+[2026-01-28 01:52:06,985:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:52:06,985:main.py#L164:INFO]: [Workload 210/244] Starting tuning for: job_210.wg with surrogate
+[2026-01-28 01:52:06,985:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:56:57,187:main.py#L172:INFO]: [Workload 210/244] Successfully completed tuning for: job_210.wg with surrogate
+[2026-01-28 01:56:57,187:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 01:56:57,187:main.py#L164:INFO]: [Workload 211/244] Starting tuning for: job_211.wg with surrogate
+[2026-01-28 01:56:57,187:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:01:22,382:main.py#L172:INFO]: [Workload 211/244] Successfully completed tuning for: job_211.wg with surrogate
+[2026-01-28 02:01:22,382:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:01:22,382:main.py#L164:INFO]: [Workload 212/244] Starting tuning for: job_212.wg with surrogate
+[2026-01-28 02:01:22,382:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:06:43,097:main.py#L172:INFO]: [Workload 212/244] Successfully completed tuning for: job_212.wg with surrogate
+[2026-01-28 02:06:43,098:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:06:43,098:main.py#L164:INFO]: [Workload 213/244] Starting tuning for: job_213.wg with surrogate
+[2026-01-28 02:06:43,098:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:11:33,819:main.py#L172:INFO]: [Workload 213/244] Successfully completed tuning for: job_213.wg with surrogate
+[2026-01-28 02:11:33,819:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:11:33,819:main.py#L164:INFO]: [Workload 214/244] Starting tuning for: job_214.wg with surrogate
+[2026-01-28 02:11:33,819:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:17:42,914:main.py#L172:INFO]: [Workload 214/244] Successfully completed tuning for: job_214.wg with surrogate
+[2026-01-28 02:17:42,914:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:17:42,914:main.py#L164:INFO]: [Workload 215/244] Starting tuning for: job_215.wg with surrogate
+[2026-01-28 02:17:42,914:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:22:11,203:main.py#L172:INFO]: [Workload 215/244] Successfully completed tuning for: job_215.wg with surrogate
+[2026-01-28 02:22:11,203:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:22:11,203:main.py#L164:INFO]: [Workload 216/244] Starting tuning for: job_216.wg with surrogate
+[2026-01-28 02:22:11,203:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:27:20,273:main.py#L172:INFO]: [Workload 216/244] Successfully completed tuning for: job_216.wg with surrogate
+[2026-01-28 02:27:20,273:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:27:20,273:main.py#L164:INFO]: [Workload 217/244] Starting tuning for: job_217.wg with surrogate
+[2026-01-28 02:27:20,273:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:32:09,757:main.py#L172:INFO]: [Workload 217/244] Successfully completed tuning for: job_217.wg with surrogate
+[2026-01-28 02:32:09,757:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:32:09,757:main.py#L164:INFO]: [Workload 218/244] Starting tuning for: job_218.wg with surrogate
+[2026-01-28 02:32:09,757:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:36:40,847:main.py#L172:INFO]: [Workload 218/244] Successfully completed tuning for: job_218.wg with surrogate
+[2026-01-28 02:36:40,847:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:36:40,847:main.py#L164:INFO]: [Workload 219/244] Starting tuning for: job_219.wg with surrogate
+[2026-01-28 02:36:40,847:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:41:22,765:main.py#L172:INFO]: [Workload 219/244] Successfully completed tuning for: job_219.wg with surrogate
+[2026-01-28 02:41:22,766:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:41:22,766:main.py#L164:INFO]: [Workload 220/244] Starting tuning for: job_220.wg with surrogate
+[2026-01-28 02:41:22,766:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:45:49,645:main.py#L172:INFO]: [Workload 220/244] Successfully completed tuning for: job_220.wg with surrogate
+[2026-01-28 02:45:49,646:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:45:49,646:main.py#L164:INFO]: [Workload 221/244] Starting tuning for: job_221.wg with surrogate
+[2026-01-28 02:45:49,646:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:50:55,868:main.py#L172:INFO]: [Workload 221/244] Successfully completed tuning for: job_221.wg with surrogate
+[2026-01-28 02:50:55,868:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:50:55,868:main.py#L164:INFO]: [Workload 222/244] Starting tuning for: job_222.wg with surrogate
+[2026-01-28 02:50:55,868:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:56:34,682:main.py#L172:INFO]: [Workload 222/244] Successfully completed tuning for: job_222.wg with surrogate
+[2026-01-28 02:56:34,682:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 02:56:34,682:main.py#L164:INFO]: [Workload 223/244] Starting tuning for: job_223.wg with surrogate
+[2026-01-28 02:56:34,682:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:01:50,677:main.py#L172:INFO]: [Workload 223/244] Successfully completed tuning for: job_223.wg with surrogate
+[2026-01-28 03:01:50,677:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:01:50,677:main.py#L164:INFO]: [Workload 224/244] Starting tuning for: job_224.wg with surrogate
+[2026-01-28 03:01:50,677:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:06:50,338:main.py#L172:INFO]: [Workload 224/244] Successfully completed tuning for: job_224.wg with surrogate
+[2026-01-28 03:06:50,338:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:06:50,338:main.py#L164:INFO]: [Workload 225/244] Starting tuning for: job_225.wg with surrogate
+[2026-01-28 03:06:50,338:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:12:20,226:main.py#L172:INFO]: [Workload 225/244] Successfully completed tuning for: job_225.wg with surrogate
+[2026-01-28 03:12:20,227:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:12:20,227:main.py#L164:INFO]: [Workload 226/244] Starting tuning for: job_226.wg with surrogate
+[2026-01-28 03:12:20,227:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:17:40,038:main.py#L172:INFO]: [Workload 226/244] Successfully completed tuning for: job_226.wg with surrogate
+[2026-01-28 03:17:40,039:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:17:40,039:main.py#L164:INFO]: [Workload 227/244] Starting tuning for: job_227.wg with surrogate
+[2026-01-28 03:17:40,039:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:22:24,461:main.py#L172:INFO]: [Workload 227/244] Successfully completed tuning for: job_227.wg with surrogate
+[2026-01-28 03:22:24,461:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:22:24,461:main.py#L164:INFO]: [Workload 228/244] Starting tuning for: job_228.wg with surrogate
+[2026-01-28 03:22:24,461:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:27:02,125:main.py#L172:INFO]: [Workload 228/244] Successfully completed tuning for: job_228.wg with surrogate
+[2026-01-28 03:27:02,125:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:27:02,125:main.py#L164:INFO]: [Workload 229/244] Starting tuning for: job_229.wg with surrogate
+[2026-01-28 03:27:02,125:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:31:34,786:main.py#L172:INFO]: [Workload 229/244] Successfully completed tuning for: job_229.wg with surrogate
+[2026-01-28 03:31:34,787:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:31:34,787:main.py#L164:INFO]: [Workload 230/244] Starting tuning for: job_230.wg with surrogate
+[2026-01-28 03:31:34,787:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:36:44,934:main.py#L172:INFO]: [Workload 230/244] Successfully completed tuning for: job_230.wg with surrogate
+[2026-01-28 03:36:44,935:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:36:44,935:main.py#L164:INFO]: [Workload 231/244] Starting tuning for: job_231.wg with surrogate
+[2026-01-28 03:36:44,935:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:42:23,513:main.py#L172:INFO]: [Workload 231/244] Successfully completed tuning for: job_231.wg with surrogate
+[2026-01-28 03:42:23,513:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:42:23,513:main.py#L164:INFO]: [Workload 232/244] Starting tuning for: job_232.wg with surrogate
+[2026-01-28 03:42:23,513:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:48:05,682:main.py#L172:INFO]: [Workload 232/244] Successfully completed tuning for: job_232.wg with surrogate
+[2026-01-28 03:48:05,682:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:48:05,682:main.py#L164:INFO]: [Workload 233/244] Starting tuning for: job_233.wg with surrogate
+[2026-01-28 03:48:05,682:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:53:10,864:main.py#L172:INFO]: [Workload 233/244] Successfully completed tuning for: job_233.wg with surrogate
+[2026-01-28 03:53:10,864:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:53:10,865:main.py#L164:INFO]: [Workload 234/244] Starting tuning for: job_234.wg with surrogate
+[2026-01-28 03:53:10,865:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:58:32,468:main.py#L172:INFO]: [Workload 234/244] Successfully completed tuning for: job_234.wg with surrogate
+[2026-01-28 03:58:32,468:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 03:58:32,468:main.py#L164:INFO]: [Workload 235/244] Starting tuning for: job_235.wg with surrogate
+[2026-01-28 03:58:32,468:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:03:08,035:main.py#L172:INFO]: [Workload 235/244] Successfully completed tuning for: job_235.wg with surrogate
+[2026-01-28 04:03:08,035:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:03:08,035:main.py#L164:INFO]: [Workload 236/244] Starting tuning for: job_236.wg with surrogate
+[2026-01-28 04:03:08,035:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:07:51,502:main.py#L172:INFO]: [Workload 236/244] Successfully completed tuning for: job_236.wg with surrogate
+[2026-01-28 04:07:51,503:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:07:51,503:main.py#L164:INFO]: [Workload 237/244] Starting tuning for: job_237.wg with surrogate
+[2026-01-28 04:07:51,503:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:12:29,968:main.py#L172:INFO]: [Workload 237/244] Successfully completed tuning for: job_237.wg with surrogate
+[2026-01-28 04:12:29,968:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:12:29,968:main.py#L164:INFO]: [Workload 238/244] Starting tuning for: job_238.wg with surrogate
+[2026-01-28 04:12:29,968:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:18:01,522:main.py#L172:INFO]: [Workload 238/244] Successfully completed tuning for: job_238.wg with surrogate
+[2026-01-28 04:18:01,522:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:18:01,522:main.py#L164:INFO]: [Workload 239/244] Starting tuning for: job_239.wg with surrogate
+[2026-01-28 04:18:01,522:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:23:06,861:main.py#L172:INFO]: [Workload 239/244] Successfully completed tuning for: job_239.wg with surrogate
+[2026-01-28 04:23:06,861:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:23:06,861:main.py#L164:INFO]: [Workload 240/244] Starting tuning for: job_240.wg with surrogate
+[2026-01-28 04:23:06,861:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:30:07,458:main.py#L172:INFO]: [Workload 240/244] Successfully completed tuning for: job_240.wg with surrogate
+[2026-01-28 04:30:07,458:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:30:07,458:main.py#L164:INFO]: [Workload 241/244] Starting tuning for: job_241.wg with surrogate
+[2026-01-28 04:30:07,458:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:37:49,332:main.py#L172:INFO]: [Workload 241/244] Successfully completed tuning for: job_241.wg with surrogate
+[2026-01-28 04:37:49,332:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:37:49,332:main.py#L164:INFO]: [Workload 242/244] Starting tuning for: job_242.wg with surrogate
+[2026-01-28 04:37:49,332:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:42:25,613:main.py#L172:INFO]: [Workload 242/244] Successfully completed tuning for: job_242.wg with surrogate
+[2026-01-28 04:42:25,613:main.py#L163:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:42:25,613:main.py#L164:INFO]: [Workload 243/244] Starting tuning for: job_243.wg with surrogate
+[2026-01-28 04:42:25,613:main.py#L167:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-28 04:46:45,986:main.py#L172:INFO]: [Workload 243/244] Successfully completed tuning for: job_243.wg with surrogate
+[2026-01-28 04:46:45,986:main.py#L184:INFO]: ====================================================================================================
+[2026-01-28 04:46:45,987:main.py#L185:INFO]: TUNING SUMMARY
+[2026-01-28 04:46:45,987:main.py#L186:INFO]: ====================================================================================================
+[2026-01-28 04:46:45,987:main.py#L187:INFO]: Total workloads processed: 244
+[2026-01-28 04:46:45,987:main.py#L188:INFO]: Successfully tuned: 214
+[2026-01-28 04:46:45,987:main.py#L189:INFO]: Skipped (already completed): 30
+[2026-01-28 04:46:45,987:main.py#L190:INFO]: Failed: 0
+[2026-01-28 04:46:45,987:main.py#L191:INFO]: ====================================================================================================
+[2026-01-28 04:46:45,987:main.py#L192:INFO]: E2ETune session completed
+[2026-01-28 04:46:45,987:main.py#L193:INFO]: ====================================================================================================
