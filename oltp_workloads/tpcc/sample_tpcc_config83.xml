@@ -4,9 +4,9 @@
     <!-- Connection details -->
     <type>POSTGRES</type>
     <driver>org.postgresql.Driver</driver>
-    <url>jdbc:postgresql://localhost:5432/benchbase?sslmode=disable&amp;ApplicationName=tpcc&amp;reWriteBatchedInserts=true</url>
-    <username>admin</username>
-    <password>password</password>
+    <url>jdbc:postgresql://localhost:5432/tpcc?sslmode=disable&amp;ApplicationName=tpcc&amp;reWriteBatchedInserts=true</url>
+    <username>root</username>
+    <password>databasefyp</password>
     <reconnectOnConnectionFailure>true</reconnectOnConnectionFailure>
     <isolation>TRANSACTION_SERIALIZABLE</isolation>
     <batchsize>128</batchsize>
@@ -15,10 +15,10 @@
     <scalefactor>50</scalefactor>
 
     <!-- The workload -->
-    <terminals>1</terminals>
+    <terminals>4</terminals>
     <works>
         <work>
-            <time>60</time>
+            <time>30</time>
             <rate>10000</rate>
             <weights>10,20,69,0,1</weights>
         </work>
