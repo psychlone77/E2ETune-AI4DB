@@ -1,0 +1,33 @@
+{
+  "workload": "tpcds_209",
+  "query_plans": [
+    "Aggregate(cost=70258.7)(Gather Merge(cost=70255.4)(Aggregate(cost=69216.6)(Sort(cost=69184.9)(Hash Join(cost=68793.6)(Seq Scan(cost=63698.1); Hash(cost=1942.1)(Seq Scan(cost=1942.1)))))))",
+    "Aggregate(cost=70320.3)(Gather Merge(cost=70311.8)(Aggregate(cost=69233.3)(Sort(cost=69184.9)(Hash Join(cost=68793.6)(Seq Scan(cost=63698.1); Hash(cost=1942.1)(Seq Scan(cost=1942.1)))))))",
+    "Aggregate(cost=70040.1)(Gather Merge(cost=70037.1)(Aggregate(cost=69013.3)(Sort(cost=68995.1)(Hash Join(cost=68899.1)(Seq Scan(cost=63698.1); Hash(cost=2049.6)(Seq Scan(cost=2049.6)))))))",
+    "Sort(cost=80682.4)(Aggregate(cost=80501.6)(Gather(cost=80209.1)(Aggregate(cost=77409.1)(Hash Join(cost=68317.6)(Seq Scan(cost=63698.1); Hash(cost=1335.9)(Seq Scan(cost=1335.9)))))))",
+    "Sort(cost=161630.1)(Aggregate(cost=161630.0)(Gather Merge(cost=161629.9)(Sort(cost=160628.8)(Aggregate(cost=160628.7)(Hash Join(cost=136160.0)(Seq Scan(cost=112424.3); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))",
+    "Sort(cost=1.6)(Aggregate(cost=1.3)(Seq Scan(cost=1.1)))",
+    "Sort(cost=4488.2)(Aggregate(cost=4485.9)(Seq Scan(cost=4268.0)))",
+    "Sort(cost=1839.1)(Aggregate(cost=1837.5)(Seq Scan(cost=1587.0)))",
+    "Aggregate(cost=3.1)(Seq Scan(cost=2.9))",
+    "Aggregate(cost=14.0)(Seq Scan(cost=12.5))",
+    "Sort(cost=1.2)(Aggregate(cost=1.1)(Seq Scan(cost=1.1)))",
+    "Aggregate(cost=25630.2)(Gather Merge(cost=25626.8)(Aggregate(cost=24588.0)(Sort(cost=24578.8)(Hash Join(cost=24496.1)(Seq Scan(cost=21764.4); Hash(cost=1942.1)(Seq Scan(cost=1942.1)))))))",
+    "Aggregate(cost=25680.5)(Gather Merge(cost=25672.0)(Aggregate(cost=24593.5)(Sort(cost=24578.8)(Hash Join(cost=24496.1)(Seq Scan(cost=21764.4); Hash(cost=1942.1)(Seq Scan(cost=1942.1)))))))",
+    "Aggregate(cost=25653.5)(Gather Merge(cost=25650.4)(Aggregate(cost=24626.6)(Sort(cost=24621.3)(Hash Join(cost=24601.6)(Seq Scan(cost=21764.4); Hash(cost=2049.6)(Seq Scan(cost=2049.6)))))))",
+    "Sort(cost=29631.0)(Aggregate(cost=29450.2)(Gather(cost=29157.7)(Aggregate(cost=26357.7)(Hash Join(cost=24019.7)(Seq Scan(cost=21764.4); Hash(cost=1335.9)(Seq Scan(cost=1335.9)))))))",
+    "Aggregate(cost=48172.6)(Gather Merge(cost=48169.2)(Aggregate(cost=47130.4)(Sort(cost=47113.7)(Hash Join(cost=46932.9)(Seq Scan(cost=43411.3); Hash(cost=1942.1)(Seq Scan(cost=1942.1)))))))",
+    "Aggregate(cost=48226.7)(Gather Merge(cost=48218.2)(Aggregate(cost=47139.6)(Sort(cost=47113.7)(Hash Join(cost=46932.9)(Seq Scan(cost=43411.3); Hash(cost=1942.1)(Seq Scan(cost=1942.1)))))))",
+    "Aggregate(cost=48118.7)(Gather Merge(cost=48115.6)(Aggregate(cost=47091.8)(Sort(cost=47082.2)(Hash Join(cost=47038.4)(Seq Scan(cost=43411.3); Hash(cost=2049.6)(Seq Scan(cost=2049.6)))))))",
+    "Sort(cost=54324.6)(Aggregate(cost=54143.9)(Gather(cost=53851.4)(Aggregate(cost=51051.4)(Hash Join(cost=46456.6)(Seq Scan(cost=43411.3); Hash(cost=1335.9)(Seq Scan(cost=1335.9)))))))",
+    "Aggregate(cost=2386.7)(Seq Scan(cost=2224.0))",
+    "Aggregate(cost=5012.6)(Seq Scan(cost=4677.8))",
+    "Aggregate(cost=7562.9)(Gather(cost=7562.9)(Aggregate(cost=6562.7)(Seq Scan(cost=6288.5))))",
+    "Sort(cost=166838.7)(Aggregate(cost=166838.6)(Gather Merge(cost=166838.5)(Sort(cost=165837.3)(Aggregate(cost=165837.2)(Hash Join(cost=144934.9)(Seq Scan(cost=124658.6); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))",
+    "Aggregate(cost=25632.2)(Gather Merge(cost=25628.9)(Aggregate(cost=24590.1)(Sort(cost=24587.2)(Hash Join(cost=24577.8)(Seq Scan(cost=22513.8); Hash(cost=1942.1)(Seq Scan(cost=1942.1)))))))",
+    "Aggregate(cost=48162.7)(Gather Merge(cost=48159.3)(Aggregate(cost=47120.5)(Sort(cost=47116.6)(Hash Join(cost=47095.5)(Seq Scan(cost=44912.9); Hash(cost=1942.1)(Seq Scan(cost=1942.1)))))))",
+    "Aggregate(cost=69914.0)(Gather Merge(cost=69910.6)(Aggregate(cost=68871.8)(Sort(cost=68868.2)(Hash Join(cost=68850.2)(Seq Scan(cost=66698.6); Hash(cost=1942.1)(Seq Scan(cost=1942.1)))))))",
+    "Sort(cost=4624.0)(Aggregate(cost=4621.7)(Seq Scan(cost=4518.0)))"
+  ],
+  "count": 27
+}

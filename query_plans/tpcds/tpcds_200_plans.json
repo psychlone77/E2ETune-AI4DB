@@ -1,0 +1,8 @@
+{
+  "workload": "tpcds_200",
+  "query_plans": [
+    "Sort(cost=161630.1)(Aggregate(cost=161630.0)(Gather Merge(cost=161629.9)(Sort(cost=160628.8)(Aggregate(cost=160628.7)(Hash Join(cost=136160.0)(Seq Scan(cost=112424.3); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))",
+    "Sort(cost=119359.0)(Aggregate(cost=112938.6)(Gather Merge(cost=112753.8)(Aggregate(cost=110900.3)(Sort(cost=110826.4)(Hash Join(cost=110598.1)(Seq Scan(cost=63698.1); Hash(cost=42376.2)(Hash Join(cost=42376.2)(Seq Scan(cost=3356.2); Hash(cost=38834.7)(Seq Scan(cost=38834.7))))))))); Aggregate(cost=199.6)(CTE Scan(cost=177.4)); Merge Join(cost=6042.9)(Index Scan(cost=5378.4); Sort(cost=377.5)(CTE Scan(cost=199.6))))"
+  ],
+  "count": 2
+}
