@@ -1,0 +1,9 @@
+{
+  "workload": "ssb_55",
+  "query_plans": [
+    "Sort(cost=16.8)(Aggregate(cost=16.8)(Sort(cost=16.8)(Nested Loop(cost=16.8)(Index Scan(cost=8.4); Index Scan(cost=8.3)))))",
+    "Sort(cost=146.2)(Aggregate(cost=146.2)(Sort(cost=145.7)(Nested Loop(cost=144.9)(Index Scan(cost=17.4); Bitmap Heap Scan(cost=127.2)(Bitmap Index Scan(cost=4.7))))))",
+    "Sort(cost=10249.7)(Aggregate(cost=10249.7)(Nested Loop(cost=10212.2)(Index Scan(cost=16.9); Bitmap Heap Scan(cost=10165.3)(Bitmap Index Scan(cost=58.9)))))"
+  ],
+  "count": 3
+}

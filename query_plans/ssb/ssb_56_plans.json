@@ -1,0 +1,15 @@
+{
+  "workload": "ssb_56",
+  "query_plans": [
+    "Limit(cost=9506.1)(Sort(cost=9512.0)(Aggregate(cost=9455.3)(Nested Loop(cost=9414.2)(Nested Loop(cost=8697.3)(Seq Scan(cost=76.3); Bitmap Heap Scan(cost=8596.0)(Bitmap Index Scan(cost=47.1))); Index Scan(cost=0.3)))))",
+    "Limit(cost=9827.6)(Sort(cost=9833.4)(Aggregate(cost=9776.8)(Nested Loop(cost=9729.9)(Nested Loop(cost=8697.3)(Seq Scan(cost=76.3); Bitmap Heap Scan(cost=8596.0)(Bitmap Index Scan(cost=47.1))); Index Scan(cost=0.4)))))",
+    "Sort(cost=8942.3)(Aggregate(cost=8875.3)(Sort(cost=8848.3)(Hash Join(cost=8768.1)(Nested Loop(cost=8690.9)(Seq Scan(cost=70.0); Bitmap Heap Scan(cost=8596.0)(Bitmap Index Scan(cost=47.1))); Hash(cost=55.5)(Seq Scan(cost=55.5))))))",
+    "Sort(cost=9425.6)(Aggregate(cost=9425.5)(Nested Loop(cost=9407.9)(Nested Loop(cost=8690.9)(Seq Scan(cost=70.0); Bitmap Heap Scan(cost=8596.0)(Bitmap Index Scan(cost=47.1))); Index Scan(cost=0.3))))",
+    "Aggregate(cost=9741.0)(Sort(cost=9739.1)(Nested Loop(cost=9732.3)(Nested Loop(cost=8690.9)(Seq Scan(cost=70.0); Bitmap Heap Scan(cost=8596.0)(Bitmap Index Scan(cost=47.1))); Index Scan(cost=0.4))))",
+    "Sort(cost=9060.2)(Aggregate(cost=8945.5)(Sort(cost=8913.8)(Hash Join(cost=8776.4)(Nested Loop(cost=8697.3)(Seq Scan(cost=76.3); Bitmap Heap Scan(cost=8596.0)(Bitmap Index Scan(cost=47.1))); Hash(cost=48.0)(Seq Scan(cost=48.0))))))",
+    "Sort(cost=8679.9)(Aggregate(cost=8679.9)(Sort(cost=8679.9)(Nested Loop(cost=8679.9)(Nested Loop(cost=8671.5)(Seq Scan(cost=70.0); Bitmap Heap Scan(cost=8601.6)(Bitmap Index Scan(cost=47.1))); Index Scan(cost=8.3)))))",
+    "Sort(cost=9736.0)(Aggregate(cost=9734.6)(Sort(cost=9733.7)(Nested Loop(cost=9732.3)(Nested Loop(cost=8690.9)(Seq Scan(cost=70.0); Bitmap Heap Scan(cost=8596.0)(Bitmap Index Scan(cost=47.1))); Index Scan(cost=0.4)))))",
+    "Sort(cost=8714.1)(Aggregate(cost=8714.1)(Sort(cost=8714.0)(Hash Join(cost=8714.0)(Nested Loop(cost=8690.9)(Seq Scan(cost=70.0); Bitmap Heap Scan(cost=8596.0)(Bitmap Index Scan(cost=47.1))); Hash(cost=16.9)(Index Scan(cost=16.9))))))"
+  ],
+  "count": 9
+}
