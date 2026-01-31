@@ -1,0 +1,23 @@
+PostgreSQL Query Plan Summaries - tpch_190
+================================================================================
+
+Query 1:
+Aggregate(cost=5703.6)(Gather Merge(cost=5700.5)(Sort(cost=4671.6)(Aggregate(cost=4666.9)(Hash Join(cost=4571.9)(Seq Scan(cost=4210.0); Hash(cost=2.5)(Hash Join(cost=2.5)(Seq Scan(cost=1.2); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))))
+--------------------------------------------------------------------------------
+
+Query 2:
+Aggregate(cost=38059.4)(Gather Merge(cost=37937.6)(Sort(cost=36071.8)(Aggregate(cost=35839.9)(Hash Join(cost=33302.6)(Seq Scan(cost=20784.0); Hash(cost=4930.3)(Seq Scan(cost=4930.3)))))))
+--------------------------------------------------------------------------------
+
+Query 3:
+Aggregate(cost=37186.1)(Gather Merge(cost=37186.0)(Sort(cost=36184.8)(Aggregate(cost=36184.7)(Seq Scan(cost=35470.0)))))
+--------------------------------------------------------------------------------
+
+Query 4:
+Sort(cost=197325.6)(Aggregate(cost=197122.3)(Gather Merge(cost=196847.3)(Sort(cost=193538.8)(Aggregate(cost=192849.4)(Hash Join(cost=190839.5)(Hash Join(cost=185140.2)(Seq Scan(cost=137508.1); Hash(cost=35470.0)(Seq Scan(cost=35470.0))); Hash(cost=322.0)(Seq Scan(cost=322.0))))))))
+--------------------------------------------------------------------------------
+
+Query 5:
+Sort(cost=327368.6)(Aggregate(cost=308455.7)(Gather Merge(cost=303580.7)(Aggregate(cost=267953.2)(Sort(cost=261355.1)(Hash Join(cost=213784.0)(Hash Join(cost=201133.4)(Seq Scan(cost=32345.0); Hash(cost=150010.6)(Seq Scan(cost=150010.6))); Hash(cost=4210.0)(Seq Scan(cost=4210.0))))))))
+--------------------------------------------------------------------------------
+
