@@ -1,0 +1,45 @@
+[2026-01-07 19:55:27,649:main.py#L25:INFO]: ====================================================================================================
+[2026-01-07 19:55:27,650:main.py#L26:INFO]: E2ETune: End-to-End Database Tuning System
+[2026-01-07 19:55:27,650:main.py#L27:INFO]: ====================================================================================================
+[2026-01-07 19:55:27,650:main.py#L28:INFO]: Configuration file: config/config.ini
+[2026-01-07 19:55:27,650:main.py#L29:INFO]: Host: localhost
+[2026-01-07 19:55:27,650:main.py#L30:INFO]: Database: tpcc
+[2026-01-07 19:55:27,650:main.py#L31:INFO]: Data Path: /var/lib/postgresql/12/main
+[2026-01-07 19:55:27,650:main.py#L32:INFO]: Benchmark: smallbank
+[2026-01-07 19:55:27,650:main.py#L33:INFO]: Workload Path: ./oltp_workloads/smallbank/
+[2026-01-07 19:55:27,650:main.py#L34:INFO]: ====================================================================================================
+[2026-01-07 19:55:27,652:main.py#L54:INFO]: Found 201 workloads matching prefix 'smallbank'
+[2026-01-07 19:55:27,652:main.py#L60:INFO]: Found 75 completed workload records in: logs/performance_record
+[2026-01-07 19:55:27,652:main.py#L68:INFO]: Processing first 13 of 201 workloads
+[2026-01-07 19:55:27,652:main.py#L80:INFO]: [Workload 1/13] Skipping already completed: sample_smallbank_config0.xml
+[2026-01-07 19:55:27,652:main.py#L80:INFO]: [Workload 2/13] Skipping already completed: sample_smallbank_config1.xml
+[2026-01-07 19:55:27,652:main.py#L80:INFO]: [Workload 3/13] Skipping already completed: sample_smallbank_config2.xml
+[2026-01-07 19:55:27,652:main.py#L80:INFO]: [Workload 4/13] Skipping already completed: sample_smallbank_config3.xml
+[2026-01-07 19:55:27,653:main.py#L80:INFO]: [Workload 5/13] Skipping already completed: sample_smallbank_config4.xml
+[2026-01-07 19:55:27,653:main.py#L80:INFO]: [Workload 6/13] Skipping already completed: sample_smallbank_config5.xml
+[2026-01-07 19:55:27,653:main.py#L80:INFO]: [Workload 7/13] Skipping already completed: sample_smallbank_config6.xml
+[2026-01-07 19:55:27,653:main.py#L80:INFO]: [Workload 8/13] Skipping already completed: sample_smallbank_config7.xml
+[2026-01-07 19:55:27,653:main.py#L80:INFO]: [Workload 9/13] Skipping already completed: sample_smallbank_config8.xml
+[2026-01-07 19:55:27,653:main.py#L80:INFO]: [Workload 10/13] Skipping already completed: sample_smallbank_config9.xml
+[2026-01-07 19:55:27,653:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-07 19:55:27,653:main.py#L88:INFO]: [Workload 11/13] Starting tuning for: sample_smallbank_config10.xml
+[2026-01-07 19:55:27,653:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-07 21:37:39,075:main.py#L94:INFO]: [Workload 11/13] Successfully completed tuning for: sample_smallbank_config10.xml
+[2026-01-07 21:37:39,075:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-07 21:37:39,075:main.py#L88:INFO]: [Workload 12/13] Starting tuning for: sample_smallbank_config11.xml
+[2026-01-07 21:37:39,075:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-07 23:20:13,855:main.py#L94:INFO]: [Workload 12/13] Successfully completed tuning for: sample_smallbank_config11.xml
+[2026-01-07 23:20:13,855:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-07 23:20:13,855:main.py#L88:INFO]: [Workload 13/13] Starting tuning for: sample_smallbank_config12.xml
+[2026-01-07 23:20:13,855:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-08 01:02:06,698:main.py#L94:INFO]: [Workload 13/13] Successfully completed tuning for: sample_smallbank_config12.xml
+[2026-01-08 01:02:06,698:main.py#L109:INFO]: ====================================================================================================
+[2026-01-08 01:02:06,698:main.py#L110:INFO]: TUNING SUMMARY
+[2026-01-08 01:02:06,698:main.py#L111:INFO]: ====================================================================================================
+[2026-01-08 01:02:06,698:main.py#L112:INFO]: Total workloads processed: 13
+[2026-01-08 01:02:06,698:main.py#L113:INFO]: Successfully tuned: 3
+[2026-01-08 01:02:06,698:main.py#L114:INFO]: Skipped (already completed): 10
+[2026-01-08 01:02:06,698:main.py#L115:INFO]: Failed: 0
+[2026-01-08 01:02:06,699:main.py#L116:INFO]: ====================================================================================================
+[2026-01-08 01:02:06,699:main.py#L117:INFO]: E2ETune session completed
+[2026-01-08 01:02:06,699:main.py#L118:INFO]: ====================================================================================================

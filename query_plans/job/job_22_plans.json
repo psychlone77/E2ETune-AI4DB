@@ -1,0 +1,15 @@
+{
+  "workload": "job_22",
+  "query_plans": [
+    "Sort(cost=3783.0)(Aggregate(cost=3782.8)(Sort(cost=3782.1)(Nested Loop(cost=3781.2)(Nested Loop(cost=3764.7)(Seq Scan(cost=2626.1); Bitmap Heap Scan(cost=1135.5)(Bitmap Index Scan(cost=6.7))); Index Scan(cost=0.5)))))",
+    "Sort(cost=925912.6)(Aggregate(cost=859410.9)(Sort(cost=815714.0)(Hash Join(cost=379842.5)(Nested Loop(cost=149783.3)(Seq Scan(cost=1.1); Index Scan(cost=116832.8)); Hash(cost=97415.4)(Seq Scan(cost=97415.4))))))",
+    "Sort(cost=202277.8)(Aggregate(cost=196599.5)(Gather Merge(cost=190943.6)(Aggregate(cost=142464.5)(Sort(cost=138980.2)(Hash Join(cost=106538.2)(Hash Join(cost=95831.5)(Seq Scan(cost=29661.4); Hash(cost=49202.0)(Seq Scan(cost=49202.0))); Hash(cost=4377.3)(Seq Scan(cost=4377.3))))))))",
+    "Sort(cost=78572.1)(Aggregate(cost=78535.4)(Gather Merge(cost=78494.2)(Aggregate(cost=77283.0)(Sort(cost=77269.3)(Hash Join(cost=77222.0)(Bitmap Heap Scan(cost=38490.4)(Bitmap Index Scan(cost=1897.0)); Hash(cost=38158.2)(Bitmap Heap Scan(cost=38158.2)(Bitmap Index Scan(cost=1640.7)))))))))",
+    "Sort(cost=982410.5)(Aggregate(cost=915908.8)(Gather Merge(cost=875987.4)(Aggregate(cost=584467.7)(Sort(cost=565590.5)(Hash Join(cost=413432.3)(Hash Join(cost=285102.8)(Seq Scan(cost=46568.4); Hash(cost=149783.3)(Nested Loop(cost=149783.3)(Seq Scan(cost=1.1); Index Scan(cost=116832.8)))); Hash(cost=73060.4)(Seq Scan(cost=73060.4))))))))",
+    "Sort(cost=273638.0)(Aggregate(cost=270071.7)(Gather Merge(cost=266382.0)(Aggregate(cost=234408.9)(Sort(cost=229160.6)(Hash Join(cost=137382.0)(Hash Join(cost=123685.2)(Seq Scan(cost=43303.5); Hash(cost=51835.6)(Seq Scan(cost=51835.6))); Hash(cost=2290.7)(Seq Scan(cost=2290.7))))))))",
+    "Sort(cost=982410.5)(Aggregate(cost=915908.8)(Gather Merge(cost=875987.4)(Aggregate(cost=584467.7)(Sort(cost=565590.5)(Hash Join(cost=413432.3)(Hash Join(cost=285102.8)(Seq Scan(cost=46568.4); Hash(cost=149783.3)(Nested Loop(cost=149783.3)(Seq Scan(cost=1.1); Index Scan(cost=116832.8)))); Hash(cost=73060.4)(Seq Scan(cost=73060.4))))))))",
+    "Sort(cost=625614.5)(Aggregate(cost=624518.1)(Gather Merge(cost=623261.2)(Sort(cost=611710.7)(Aggregate(cost=608059.0)(Hash Join(cost=605966.0)(Hash Join(cost=492873.1)(Seq Scan(cost=403743.6); Hash(cost=49202.0)(Seq Scan(cost=49202.0))); Hash(cost=73060.4)(Seq Scan(cost=73060.4))))))))",
+    "Sort(cost=7296.7)(Aggregate(cost=7270.0)(Nested Loop(cost=7236.7)(Nested Loop(cost=245.2)(Seq Scan(cost=1.2); Bitmap Heap Scan(cost=225.3)(Bitmap Index Scan(cost=38.4))); Index Scan(cost=4.2))))"
+  ],
+  "count": 9
+}

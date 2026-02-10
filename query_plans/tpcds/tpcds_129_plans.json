@@ -1,0 +1,8 @@
+{
+  "workload": "tpcds_129",
+  "query_plans": [
+    "Limit(cost=75385.4)(Seq Scan(cost=2318.1); Seq Scan(cost=2318.1); Sort(cost=70749.1)(Aggregate(cost=70749.1)(Gather Merge(cost=70749.1)(Aggregate(cost=69748.8)(Sort(cost=69745.1)(Hash Join(cost=69721.4)(Seq Scan(cost=69699.1); Hash(cost=1.2)(Seq Scan(cost=1.2)))))))))",
+    "Sort(cost=3.5)(Aggregate(cost=3.5)(Sort(cost=3.4)(Seq Scan(cost=3.4))))"
+  ],
+  "count": 2
+}

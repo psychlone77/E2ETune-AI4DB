@@ -1,0 +1,13 @@
+{
+  "workload": "tpcds_18",
+  "query_plans": [
+    "Sort(cost=25922.0)(Aggregate(cost=25921.9)(Gather Merge(cost=25921.6)(Aggregate(cost=24919.2)(Sort(cost=24905.2)(Hash Join(cost=24738.7)(Seq Scan(cost=23263.1); Hash(cost=1335.9)(Seq Scan(cost=1335.9))))))))",
+    "Aggregate(cost=9480.6)(Gather(cost=9480.6)(Aggregate(cost=8480.0)(Hash Join(cost=8471.6)(Seq Scan(cost=5989.0); Hash(cost=2159.3)(Seq Scan(cost=2159.3))))))",
+    "Aggregate(cost=23944.9)(Gather Merge(cost=23944.8)(Sort(cost=22944.1)(Aggregate(cost=22944.1)(Hash Join(cost=22719.2)(Seq Scan(cost=21764.4); Hash(cost=1.3)(Seq Scan(cost=1.3)))))))",
+    "Aggregate(cost=23714.9)(Gather(cost=23714.9)(Aggregate(cost=22714.7)(Hash Join(cost=22664.8)(Seq Scan(cost=21764.4); Hash(cost=2.4)(Seq Scan(cost=2.4))))))",
+    "Aggregate(cost=2582.9)(Sort(cost=2582.9)(Seq Scan(cost=2582.8)))",
+    "Sort(cost=152213.3)(Aggregate(cost=152213.1)(Gather Merge(cost=152212.9)(Sort(cost=151210.5)(Aggregate(cost=151210.3)(Hash Join(cost=126741.6)(Seq Scan(cost=112424.3); Hash(cost=1335.9)(Seq Scan(cost=1335.9))))))))",
+    "Aggregate(cost=11.8)(Sort(cost=11.8)(Seq Scan(cost=11.8)))"
+  ],
+  "count": 7
+}

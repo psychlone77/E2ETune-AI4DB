@@ -1,0 +1,63 @@
+PostgreSQL Query Plan Summaries - job_170
+================================================================================
+
+Query 1:
+Aggregate(cost=246733.8)(Seq Scan(cost=2.4); Gather(cost=246731.4)(Aggregate(cost=245731.2)(Bitmap Heap Scan(cost=245728.2)(Bitmap Index Scan(cost=3918.0)))))
+--------------------------------------------------------------------------------
+
+Query 2:
+Sort(cost=3783.0)(Aggregate(cost=3782.8)(Sort(cost=3782.1)(Nested Loop(cost=3781.2)(Nested Loop(cost=3764.7)(Seq Scan(cost=2626.1); Bitmap Heap Scan(cost=1135.5)(Bitmap Index Scan(cost=6.7))); Index Scan(cost=0.5)))))
+--------------------------------------------------------------------------------
+
+Query 3:
+Sort(cost=2700087.3)(Aggregate(cost=2571518.0)(Gather Merge(cost=2485274.2)(Aggregate(cost=1760298.4)(Sort(cost=1691935.2)(Merge Join(cost=576138.7)(Index Only Scan(cost=730279.2); Index Scan(cost=117949.5)))))))
+--------------------------------------------------------------------------------
+
+Query 4:
+Sort(cost=840654.1)(Seq Scan(cost=1.1); Aggregate(cost=774151.2)(Gather Merge(cost=732513.7)(Aggregate(cost=414583.2)(Sort(cost=393989.9)(Hash Join(cost=227136.2)(Index Scan(cost=97612.4); Hash(cost=73060.4)(Seq Scan(cost=73060.4))))))))
+--------------------------------------------------------------------------------
+
+Query 5:
+Sort(cost=390351.7)(Seq Scan(cost=2.4); Aggregate(cost=384482.8)(Gather Merge(cost=380508.9)(Aggregate(cost=359123.0)(Sort(cost=357798.4)(Hash Join(cost=350323.0)(Bitmap Heap Scan(cost=234207.2)(Bitmap Index Scan(cost=3918.0)); Hash(cost=73060.4)(Seq Scan(cost=73060.4))))))))
+--------------------------------------------------------------------------------
+
+Query 6:
+Sort(cost=1042735.0)(Seq Scan(cost=1.1); Aggregate(cost=1039164.0)(Gather Merge(cost=1034799.6)(Aggregate(cost=1002798.8)(Sort(cost=988871.1)(Hash Join(cost=611749.2)(Seq Scan(cost=403743.6); Hash(cost=46126.8)(Bitmap Heap Scan(cost=46126.8)(Bitmap Index Scan(cost=7792.8)))))))))
+--------------------------------------------------------------------------------
+
+Query 7:
+Sort(cost=83666.0)(Aggregate(cost=80654.9)(Gather Merge(cost=78500.7)(Aggregate(cost=66449.4)(Sort(cost=65731.4)(Nested Loop(cost=61890.4)(Hash Join(cost=37314.2)(Seq Scan(cost=29661.4); Hash(cost=4722.9)(Seq Scan(cost=4722.9))); Index Scan(cost=0.5)))))))
+--------------------------------------------------------------------------------
+
+Query 8:
+Sort(cost=58098.2)(Aggregate(cost=56866.7)(Gather Merge(cost=55914.2)(Aggregate(cost=50028.3)(Sort(cost=49710.8)(Nested Loop(cost=48137.3)(Hash Join(cost=37271.7)(Seq Scan(cost=29661.4); Hash(cost=4722.9)(Seq Scan(cost=4722.9))); Index Scan(cost=0.5)))))))
+--------------------------------------------------------------------------------
+
+Query 9:
+Sort(cost=41790.6)(Aggregate(cost=41603.0)(Gather Merge(cost=41428.6)(Aggregate(cost=39533.5)(Sort(cost=39475.4)(Nested Loop(cost=39234.6)(Hash Join(cost=37244.2)(Seq Scan(cost=29661.4); Hash(cost=4722.9)(Seq Scan(cost=4722.9))); Index Scan(cost=0.5)))))))
+--------------------------------------------------------------------------------
+
+Query 10:
+Sort(cost=354872.6)(Seq Scan(cost=2.4); Aggregate(cost=353101.3)(Gather Merge(cost=351776.7)(Aggregate(cost=343981.3)(Sort(cost=343539.8)(Hash Join(cost=341281.3)(Bitmap Heap Scan(cost=268891.6)(Bitmap Index Scan(cost=3918.0)); Hash(cost=46568.4)(Seq Scan(cost=46568.4))))))))
+--------------------------------------------------------------------------------
+
+Query 11:
+Sort(cost=354872.6)(Seq Scan(cost=2.4); Aggregate(cost=353101.3)(Gather Merge(cost=351776.7)(Aggregate(cost=343981.3)(Sort(cost=343539.8)(Hash Join(cost=341281.3)(Bitmap Heap Scan(cost=268891.6)(Bitmap Index Scan(cost=3918.0)); Hash(cost=46568.4)(Seq Scan(cost=46568.4))))))))
+--------------------------------------------------------------------------------
+
+Query 12:
+Sort(cost=145497.2)(Seq Scan(cost=2.4); Aggregate(cost=144420.0)(Gather Merge(cost=143578.4)(Aggregate(cost=138261.0)(Sort(cost=137980.5)(Nested Loop(cost=136606.7)(Bitmap Heap Scan(cost=55874.6)(Bitmap Index Scan(cost=2490.3)); Index Scan(cost=4.3)))))))
+--------------------------------------------------------------------------------
+
+Query 13:
+Sort(cost=275549.3)(Seq Scan(cost=2.4); Aggregate(cost=275333.6)(Gather Merge(cost=275138.0)(Aggregate(cost=273134.2)(Sort(cost=273069.0)(Nested Loop(cost=272795.4)(Bitmap Heap Scan(cost=245730.1)(Bitmap Index Scan(cost=3918.0)); Index Scan(cost=6.2)))))))
+--------------------------------------------------------------------------------
+
+Query 14:
+Sort(cost=283063.9)(Seq Scan(cost=2.4); Aggregate(cost=282761.6)(Gather Merge(cost=282496.0)(Aggregate(cost=280133.5)(Sort(cost=280045.0)(Nested Loop(cost=279660.6)(Bitmap Heap Scan(cost=245731.0)(Bitmap Index Scan(cost=3918.0)); Index Scan(cost=5.8)))))))
+--------------------------------------------------------------------------------
+
+Query 15:
+Sort(cost=248060.8)(Seq Scan(cost=2.4); Aggregate(cost=248053.8)(Gather Merge(cost=248046.9)(Aggregate(cost=247011.6)(Sort(cost=247009.3)(Nested Loop(cost=247003.4)(Bitmap Heap Scan(cost=245727.6)(Bitmap Index Scan(cost=3918.0)); Index Scan(cost=8.3)))))))
+--------------------------------------------------------------------------------
+

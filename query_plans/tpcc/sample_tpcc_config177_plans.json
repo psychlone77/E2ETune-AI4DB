@@ -1,0 +1,33 @@
+{
+  "workload": "sample_tpcc_config177",
+  "query_plans": [
+    "ModifyTable(cost=6.6)(Seq Scan(cost=6.6))",
+    "Index Scan(cost=8.4)",
+    "Aggregate(cost=11.9)(Index Scan(cost=11.9))",
+    "ModifyTable(cost=8.4)(Index Scan(cost=8.4))",
+    "Seq Scan(cost=6.6)",
+    "ModifyTable(cost=8.3)(Index Scan(cost=8.3))",
+    "ModifyTable(cost=8.3)(Index Scan(cost=8.3))",
+    "Index Scan(cost=8.3)",
+    "ModifyTable(cost=8.4)(Index Scan(cost=8.4))",
+    "ModifyTable(cost=8.4)(Index Scan(cost=8.4))",
+    "ModifyTable(cost=0.0)(Values Scan(cost=0.0))",
+    "LockRows(cost=8.5)(Index Scan(cost=8.4))",
+    "Index Scan(cost=8.4)",
+    "ModifyTable(cost=8.5)(Index Scan(cost=8.5))",
+    "Index Scan(cost=11.9)",
+    "Index Scan(cost=8.3)",
+    "Limit(cost=0.6)(Index Only Scan(cost=208.8))",
+    "Limit(cost=8.4)(Index Scan(cost=8.4))",
+    "LockRows(cost=8.3)(Index Scan(cost=8.3))",
+    "ModifyTable(cost=0.1)(Values Scan(cost=0.1))",
+    "ModifyTable(cost=0.0)(Result(cost=0.0))",
+    "Seq Scan(cost=6.6)",
+    "ModifyTable(cost=8.4)(Index Scan(cost=8.4))",
+    "ModifyTable(cost=0.0)(Result(cost=0.0))",
+    "ModifyTable(cost=0.1)(Values Scan(cost=0.1))",
+    "Index Scan(cost=8.4)",
+    "Index Scan(cost=8.4)"
+  ],
+  "count": 27
+}

@@ -1,0 +1,75 @@
+[2026-01-12 06:52:48,291:main.py#L25:INFO]: ====================================================================================================
+[2026-01-12 06:52:48,291:main.py#L26:INFO]: E2ETune: End-to-End Database Tuning System
+[2026-01-12 06:52:48,291:main.py#L27:INFO]: ====================================================================================================
+[2026-01-12 06:52:48,291:main.py#L28:INFO]: Configuration file: config/config.ini
+[2026-01-12 06:52:48,291:main.py#L29:INFO]: Host: localhost
+[2026-01-12 06:52:48,291:main.py#L30:INFO]: Database: tpcc
+[2026-01-12 06:52:48,291:main.py#L31:INFO]: Data Path: /var/lib/postgresql/12/main
+[2026-01-12 06:52:48,291:main.py#L32:INFO]: Benchmark: wikipedia
+[2026-01-12 06:52:48,291:main.py#L33:INFO]: Workload Path: ./oltp_workloads/wikipedia/
+[2026-01-12 06:52:48,291:main.py#L34:INFO]: ====================================================================================================
+[2026-01-12 06:52:48,292:main.py#L54:INFO]: Found 201 workloads matching prefix 'wikipedia'
+[2026-01-12 06:52:48,293:main.py#L60:INFO]: Found 91 completed workload records in: logs/performance_record
+[2026-01-12 06:52:48,293:main.py#L68:INFO]: Processing first 13 of 201 workloads
+[2026-01-12 06:52:48,293:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 06:52:48,293:main.py#L88:INFO]: [Workload 1/13] Starting tuning for: sample_wikipedia_config0.xml
+[2026-01-12 06:52:48,293:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 08:19:22,083:main.py#L94:INFO]: [Workload 1/13] Successfully completed tuning for: sample_wikipedia_config0.xml
+[2026-01-12 08:19:22,083:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 08:19:22,083:main.py#L88:INFO]: [Workload 2/13] Starting tuning for: sample_wikipedia_config1.xml
+[2026-01-12 08:19:22,083:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 09:47:57,305:main.py#L94:INFO]: [Workload 2/13] Successfully completed tuning for: sample_wikipedia_config1.xml
+[2026-01-12 09:47:57,306:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 09:47:57,306:main.py#L88:INFO]: [Workload 3/13] Starting tuning for: sample_wikipedia_config2.xml
+[2026-01-12 09:47:57,306:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 11:15:37,483:main.py#L94:INFO]: [Workload 3/13] Successfully completed tuning for: sample_wikipedia_config2.xml
+[2026-01-12 11:15:37,483:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 11:15:37,483:main.py#L88:INFO]: [Workload 4/13] Starting tuning for: sample_wikipedia_config3.xml
+[2026-01-12 11:15:37,483:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 12:43:34,602:main.py#L94:INFO]: [Workload 4/13] Successfully completed tuning for: sample_wikipedia_config3.xml
+[2026-01-12 12:43:34,602:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 12:43:34,602:main.py#L88:INFO]: [Workload 5/13] Starting tuning for: sample_wikipedia_config4.xml
+[2026-01-12 12:43:34,602:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 14:11:04,578:main.py#L94:INFO]: [Workload 5/13] Successfully completed tuning for: sample_wikipedia_config4.xml
+[2026-01-12 14:11:04,578:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 14:11:04,578:main.py#L88:INFO]: [Workload 6/13] Starting tuning for: sample_wikipedia_config5.xml
+[2026-01-12 14:11:04,578:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 15:37:39,855:main.py#L94:INFO]: [Workload 6/13] Successfully completed tuning for: sample_wikipedia_config5.xml
+[2026-01-12 15:37:39,855:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 15:37:39,855:main.py#L88:INFO]: [Workload 7/13] Starting tuning for: sample_wikipedia_config6.xml
+[2026-01-12 15:37:39,855:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 17:03:35,227:main.py#L94:INFO]: [Workload 7/13] Successfully completed tuning for: sample_wikipedia_config6.xml
+[2026-01-12 17:03:35,227:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 17:03:35,227:main.py#L88:INFO]: [Workload 8/13] Starting tuning for: sample_wikipedia_config7.xml
+[2026-01-12 17:03:35,227:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 18:29:45,062:main.py#L94:INFO]: [Workload 8/13] Successfully completed tuning for: sample_wikipedia_config7.xml
+[2026-01-12 18:29:45,062:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 18:29:45,062:main.py#L88:INFO]: [Workload 9/13] Starting tuning for: sample_wikipedia_config8.xml
+[2026-01-12 18:29:45,062:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 19:55:54,853:main.py#L94:INFO]: [Workload 9/13] Successfully completed tuning for: sample_wikipedia_config8.xml
+[2026-01-12 19:55:54,853:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 19:55:54,853:main.py#L88:INFO]: [Workload 10/13] Starting tuning for: sample_wikipedia_config9.xml
+[2026-01-12 19:55:54,853:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 21:24:15,513:main.py#L94:INFO]: [Workload 10/13] Successfully completed tuning for: sample_wikipedia_config9.xml
+[2026-01-12 21:24:15,513:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 21:24:15,513:main.py#L88:INFO]: [Workload 11/13] Starting tuning for: sample_wikipedia_config10.xml
+[2026-01-12 21:24:15,513:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 22:51:39,357:main.py#L94:INFO]: [Workload 11/13] Successfully completed tuning for: sample_wikipedia_config10.xml
+[2026-01-12 22:51:39,357:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-12 22:51:39,357:main.py#L88:INFO]: [Workload 12/13] Starting tuning for: sample_wikipedia_config11.xml
+[2026-01-12 22:51:39,357:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-13 00:19:34,002:main.py#L94:INFO]: [Workload 12/13] Successfully completed tuning for: sample_wikipedia_config11.xml
+[2026-01-13 00:19:34,002:main.py#L87:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-13 00:19:34,002:main.py#L88:INFO]: [Workload 13/13] Starting tuning for: sample_wikipedia_config12.xml
+[2026-01-13 00:19:34,002:main.py#L89:INFO]: ----------------------------------------------------------------------------------------------------
+[2026-01-13 01:45:53,177:main.py#L94:INFO]: [Workload 13/13] Successfully completed tuning for: sample_wikipedia_config12.xml
+[2026-01-13 01:45:53,177:main.py#L109:INFO]: ====================================================================================================
+[2026-01-13 01:45:53,177:main.py#L110:INFO]: TUNING SUMMARY
+[2026-01-13 01:45:53,177:main.py#L111:INFO]: ====================================================================================================
+[2026-01-13 01:45:53,177:main.py#L112:INFO]: Total workloads processed: 13
+[2026-01-13 01:45:53,177:main.py#L113:INFO]: Successfully tuned: 13
+[2026-01-13 01:45:53,177:main.py#L114:INFO]: Skipped (already completed): 0
+[2026-01-13 01:45:53,177:main.py#L115:INFO]: Failed: 0
+[2026-01-13 01:45:53,177:main.py#L116:INFO]: ====================================================================================================
+[2026-01-13 01:45:53,177:main.py#L117:INFO]: E2ETune session completed
+[2026-01-13 01:45:53,177:main.py#L118:INFO]: ====================================================================================================

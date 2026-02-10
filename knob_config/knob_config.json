@@ -1,355 +1,122 @@
 {
     "shared_buffers": {
-        "describe": "Sets 25% of RAM (32GB) as buffers. Unit: 8kB pages. Target: ~8GB (1048576 pages).",
-        "step": 1024,
+        "describe": "Database memory for data blocks. Set to ~25% of RAM.",
         "type": "integer",
-        "default": 131072.0,
-        "min": 16384.0,
-        "max": 1572864.0
+        "default": 131072,
+        "min": 16384,
+        "max": 1572864,
+        "step": 1024
     },
     "work_mem": {
-        "describe": "Memory per operation (sort/hash). Unit: kB. Range: 16MB to 256MB.",
-        "step": 1024,
+        "describe": "Memory for internal sort/hash operations before writing to disk.",
         "type": "integer",
-        "default": 65536.0,
-        "min": 16384.0,
-        "max": 262144.0
+        "default": 65536,
+        "min": 16384,
+        "max": 262144,
+        "step": 1024
     },
     "maintenance_work_mem": {
-        "describe": "Max memory for vacuum/index builds. Unit: kB. Range: 256MB to 2GB.",
-        "step": 16384,
+        "describe": "Memory used for maintenance tasks like VACUUM and index builds.",
         "type": "integer",
-        "default": 262144.0,
-        "min": 65536.0,
-        "max": 2097152.0
+        "default": 262144,
+        "min": 65536,
+        "max": 2097152,
+        "step": 16384
     },
     "effective_cache_size": {
-        "describe": "Assumption of OS cache. Unit: 8kB pages. Target: ~75% RAM (24GB).",
-        "step": 16384,
+        "describe": "Planner's estimate of the OS disk cache availability.",
         "type": "integer",
-        "default": 3145728.0,
-        "min": 131072.0,
-        "max": 3932160.0
+        "default": 3145728,
+        "min": 131072,
+        "max": 3932160,
+        "step": 16384
     },
     "max_connections": {
-        "describe": "Lower is better for throughput on 16 cores. Use pooler for more.",
-        "step": 10,
+        "describe": "Maximum concurrent client connections.",
         "type": "integer",
-        "default": 200.0,
-        "min": 50.0,
-        "max": 500.0
-    },
-    "max_wal_senders": {
-        "step": 1,
-        "type": "integer",
-        "default": 10.0,
-        "min": 0.0,
-        "max": 20.0
-    },
-    "wal_buffers": {
-        "describe": "WAL data RAM buffer. Unit: 8kB pages. Max usually 16MB (2048 pages).",
-        "step": 32,
-        "type": "integer",
-        "default": 2048.0,
-        "min": 256.0,
-        "max": 8192.0
-    },
-    "autovacuum_max_workers": {
-        "step": 1,
-        "type": "integer",
-        "default": 3.0,
-        "min": 3.0,
-        "max": 10.0
-    },
-    "autovacuum_analyze_scale_factor": {
-        "describe": "Trigger analyze after 1% to 10% change. Previous max was 10000%.",
-        "max": 0.1,
-        "min": 0.005,
-        "type": "float",
-        "important_rank": 1,
-        "default": 0.05,
-        "step": 0.005
-    },
-    "autovacuum_analyze_threshold": {
-        "max": 5000,
+        "default": 200,
         "min": 50,
-        "type": "integer",
-        "important_rank": 2,
-        "default": 50.0,
-        "step": 50
-    },
-    "autovacuum_naptime": {
-        "max": 60,
-        "min": 1,
-        "type": "integer",
-        "important_rank": 3,
-        "default": 15.0,
-        "step": 1
-    },
-    "autovacuum_vacuum_cost_delay": {
-        "max": 20,
-        "min": 0,
-        "type": "integer",
-        "important_rank": 4,
-        "default": 2.0,
-        "step": 1
-    },
-    "autovacuum_vacuum_cost_limit": {
-        "max": 1000,
-        "min": -1,
-        "type": "integer",
-        "important_rank": 5,
-        "default": -1.0,
+        "max": 500,
         "step": 10
     },
-    "autovacuum_vacuum_scale_factor": {
-        "max": 0.2,
-        "min": 0.01,
+    "wal_buffers": {
+        "describe": "Memory for WAL data that has not yet been written to disk.",
+        "type": "integer",
+        "default": 2048,
+        "min": 256,
+        "max": 8192,
+        "step": 32
+    },
+    "checkpoint_completion_target": {
+        "describe": "Fraction of checkpoint time for disk flush to finish.",
         "type": "float",
-        "important_rank": 6,
-        "default": 0.1,
-        "step": 0.01
+        "default": 0.9,
+        "min": 0.5,
+        "max": 0.9,
+        "step": 0.05
     },
-    "autovacuum_vacuum_threshold": {
-        "max": 5000,
-        "min": 50,
+    "checkpoint_timeout": {
+        "describe": "Maximum time between automatic WAL checkpoints.",
         "type": "integer",
-        "important_rank": 7,
-        "default": 50.0,
-        "step": 50
+        "default": 900,
+        "min": 300,
+        "max": 1800,
+        "step": 60
     },
-    "backend_flush_after": {
-        "max": 256,
-        "min": 0,
+    "effective_io_concurrency": {
+        "describe": "The number of simultaneous disk I/O operations.",
         "type": "integer",
-        "important_rank": 8,
-        "default": 0.0,
+        "default": 100,
+        "min": 1,
+        "max": 300,
+        "step": 10
+    },
+    "join_collapse_limit": {
+        "describe": "Threshold for planner to flatten explicit JOIN clauses.",
+        "type": "integer",
+        "default": 8,
+        "min": 8,
+        "max": 20,
+        "step": 1
+    },
+    "from_collapse_limit": {
+        "describe": "Threshold for planner to flatten sub-queries.",
+        "type": "integer",
+        "default": 8,
+        "min": 8,
+        "max": 20,
         "step": 1
     },
     "bgwriter_delay": {
-        "max": 1000,
+        "describe": "Delay between activity rounds for the background writer.",
+        "type": "integer",
+        "default": 200,
         "min": 10,
-        "type": "integer",
-        "important_rank": 9,
-        "default": 200.0,
-        "step": 10
-    },
-    "bgwriter_flush_after": {
-        "max": 256,
-        "min": 0,
-        "type": "integer",
-        "important_rank": 10,
-        "default": 64.0,
-        "step": 1
-    },
-    "bgwriter_lru_maxpages": {
         "max": 1000,
-        "min": 0,
-        "type": "integer",
-        "important_rank": 11,
-        "default": 100.0,
         "step": 10
     },
     "bgwriter_lru_multiplier": {
-        "max": 10,
-        "min": 0,
-        "type": "integer",
-        "important_rank": 12,
+        "describe": "Multiplier for the number of buffers to clean in one round.",
+        "type": "float",
         "default": 2.0,
+        "min": 0.0,
+        "max": 10.0,
         "step": 0.1
-    },
-    "checkpoint_completion_target": {
-        "max": 0.9,
-        "min": 0.5,
-        "type": "float",
-        "important_rank": 13,
-        "default": 0.9,
-        "step": 0.05
-    },
-    "checkpoint_flush_after": {
-        "max": 256,
-        "min": 0,
-        "type": "integer",
-        "important_rank": 14,
-        "default": 32.0,
-        "step": 2
-    },
-    "checkpoint_timeout": {
-        "max": 1800,
-        "min": 300,
-        "type": "integer",
-        "important_rank": 15,
-        "default": 900.0,
-        "step": 60
-    },
-    "commit_delay": {
-        "max": 1000,
-        "min": 0,
-        "type": "integer",
-        "important_rank": 16,
-        "default": 0.0,
-        "step": 10
-    },
-    "commit_siblings": {
-        "max": 100,
-        "min": 1,
-        "type": "integer",
-        "important_rank": 17,
-        "default": 5.0,
-        "step": 1
-    },
-    "cursor_tuple_fraction": {
-        "max": 1,
-        "min": 0,
-        "type": "float",
-        "important_rank": 21,
-        "default": 0.1,
-        "step": 0.1
-    },
-    "deadlock_timeout": {
-        "max": 5000,
-        "min": 100,
-        "type": "integer",
-        "important_rank": 22,
-        "default": 1000.0,
-        "step": 100
     },
     "default_statistics_target": {
-        "max": 500,
+        "describe": "Determines the level of detail for database statistics.",
+        "type": "integer",
+        "default": 100,
         "min": 10,
-        "type": "integer",
-        "important_rank": 23,
-        "default": 100.0,
+        "max": 500,
         "step": 10
     },
-    "effective_io_concurrency": {
-        "max": 300,
-        "min": 1,
+    "max_parallel_workers_per_gather": {
+        "describe": "Max workers used for a single Parallel Gather node.",
         "type": "integer",
-        "important_rank": 25,
-        "default": 100.0,
-        "step": 10
-    },
-    "from_collapse_limit": {
-        "describe": "Keep low to prevent exponential planning time.",
-        "max": 20,
-        "min": 8,
-        "type": "integer",
-        "important_rank": 26,
-        "default": 8.0,
-        "step": 1
-    },
-    "geqo_effort": {
-        "max": 10,
-        "min": 1,
-        "type": "integer",
-        "important_rank": 27,
-        "default": 5.0,
-        "step": 1
-    },
-    "geqo_generations": {
-        "max": 1000,
+        "default": 2,
         "min": 0,
-        "type": "integer",
-        "important_rank": 28,
-        "default": 0.0,
-        "step": 10
-    },
-    "geqo_pool_size": {
-        "max": 1000,
-        "min": 0,
-        "type": "integer",
-        "important_rank": 29,
-        "default": 0.0,
-        "step": 10
-    },
-    "geqo_seed": {
-        "max": 1,
-        "min": 0,
-        "type": "float",
-        "important_rank": 30,
-        "default": 0.0,
-        "step": 0.1
-    },
-    "geqo_threshold": {
-        "max": 30,
-        "min": 8,
-        "type": "integer",
-        "important_rank": 32,
-        "default": 12.0,
+        "max": 8,
         "step": 1
-    },
-    "join_collapse_limit": {
-        "describe": "Critical for JOB workload. Never exceed ~20.",
-        "max": 20,
-        "min": 8,
-        "type": "integer",
-        "important_rank": 33,
-        "default": 8.0,
-        "step": 1
-    },
-    "temp_buffers": {
-        "max": 4096,
-        "min": 100,
-        "type": "integer",
-        "important_rank": 38,
-        "default": 1024.0,
-        "step": 32
-    },
-    "temp_file_limit": {
-        "max": -1,
-        "min": -1,
-        "type": "integer",
-        "important_rank": 39,
-        "default": -1.0,
-        "step": 32
-    },
-    "vacuum_cost_delay": {
-        "max": 50,
-        "min": 0,
-        "type": "integer",
-        "important_rank": 40,
-        "default": 0.0,
-        "step": 1
-    },
-    "vacuum_cost_limit": {
-        "max": 2000,
-        "min": 1,
-        "type": "integer",
-        "important_rank": 41,
-        "default": 200.0,
-        "step": 10
-    },
-    "vacuum_cost_page_dirty": {
-        "max": 100,
-        "min": 0,
-        "type": "integer",
-        "important_rank": 42,
-        "default": 20.0,
-        "step": 1
-    },
-    "vacuum_cost_page_hit": {
-        "max": 100,
-        "min": 0,
-        "type": "integer",
-        "important_rank": 43,
-        "default": 1.0,
-        "step": 1
-    },
-    "vacuum_cost_page_miss": {
-        "max": 100,
-        "min": 0,
-        "type": "integer",
-        "important_rank": 44,
-        "default": 10.0,
-        "step": 1
-    },
-    "wal_writer_delay": {
-        "max": 5000,
-        "min": 1,
-        "type": "integer",
-        "important_rank": 47,
-        "default": 200.0,
-        "step": 10
     }
 }

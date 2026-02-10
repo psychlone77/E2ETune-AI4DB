@@ -1,0 +1,429 @@
+================================================================================
+E2ETune Configuration Test Results - ssb
+================================================================================
+
+SUMMARY
+--------------------------------------------------------------------------------
+Total candidates tested: 7
+Performance - Min: 0.0000
+Performance - Max: 2.7637
+Performance - Avg: 2.0365
+
+BEST CONFIGURATION
+--------------------------------------------------------------------------------
+Candidate: 7
+Real Performance: 0.0000
+
+Configuration:
+  autovacuum_analyze_scale_factor: 70.0
+  autovacuum_analyze_threshold: 858993459
+  autovacuum_max_workers: 81
+  autovacuum_naptime: 429497
+  autovacuum_vacuum_cost_delay: 50
+  autovacuum_vacuum_cost_limit: 8000
+  autovacuum_vacuum_scale_factor: 30.0
+  autovacuum_vacuum_threshold: 214748365
+  backend_flush_after: 51
+  bgwriter_delay: 4006
+  bgwriter_flush_after: 205
+  bgwriter_lru_maxpages: 400
+  bgwriter_lru_multiplier: 5
+  checkpoint_completion_target: 0.5
+  checkpoint_flush_after: 205
+  checkpoint_timeout: 1101
+  commit_delay: 20000
+  commit_siblings: 100
+  cursor_tuple_fraction: 0.0
+  deadlock_timeout: 644245095
+  default_statistics_target: 9000
+  effective_cache_size: 1717986918
+  effective_io_concurrency: 200
+  from_collapse_limit: 1932735282
+  geqo_effort: 7
+  geqo_generations: 644245094
+  geqo_pool_size: 214748365
+  geqo_seed: 0.9
+  geqo_threshold: 2
+  join_collapse_limit: 858993459
+  maintenance_work_mem: 214749286
+  max_connections: 2115
+  max_wal_senders: 35
+  shared_buffers: 16
+  temp_buffers: 107374272
+  temp_file_limit: -1
+  vacuum_cost_delay: 0
+  vacuum_cost_limit: 8000
+  vacuum_cost_page_dirty: 5000
+  vacuum_cost_page_hit: 5000
+  vacuum_cost_page_miss: 6000
+  wal_buffers: 65536
+  wal_writer_delay: 9000
+  work_mem: 64
+
+DETAILED RESULTS
+================================================================================
+
+Candidate 1
+--------------------------------------------------------------------------------
+Real Performance: 2.2450
+
+Configuration:
+  autovacuum_analyze_scale_factor: 70.0
+  autovacuum_analyze_threshold: 0
+  autovacuum_max_workers: 1
+  autovacuum_naptime: 429497
+  autovacuum_vacuum_cost_delay: 50
+  autovacuum_vacuum_cost_limit: 999
+  autovacuum_vacuum_scale_factor: 80.0
+  autovacuum_vacuum_threshold: 644245094
+  backend_flush_after: 102
+  bgwriter_delay: 1009
+  bgwriter_flush_after: 77
+  bgwriter_lru_maxpages: 400
+  bgwriter_lru_multiplier: 1
+  checkpoint_completion_target: 0.9
+  checkpoint_flush_after: 26
+  checkpoint_timeout: 2172
+  commit_delay: 80000
+  commit_siblings: 300
+  cursor_tuple_fraction: 0.0
+  deadlock_timeout: 1503238553
+  default_statistics_target: 3001
+  effective_cache_size: 214748366
+  effective_io_concurrency: 800
+  from_collapse_limit: 1
+  geqo_effort: 3
+  geqo_generations: 214748365
+  geqo_pool_size: 1288490188
+  geqo_seed: 0.9
+  geqo_threshold: 214748366
+  join_collapse_limit: 1503238553
+  maintenance_work_mem: 858994073
+  max_connections: 1230
+  max_wal_senders: 5
+  shared_buffers: 2516589
+  temp_buffers: 644245134
+  temp_file_limit: -1
+  vacuum_cost_delay: 40
+  vacuum_cost_limit: 1
+  vacuum_cost_page_dirty: 0
+  vacuum_cost_page_hit: 4000
+  vacuum_cost_page_miss: 1000
+  wal_buffers: 104857
+  wal_writer_delay: 6000
+  work_mem: 1073741856
+
+================================================================================
+
+Candidate 2
+--------------------------------------------------------------------------------
+Real Performance: 2.2708
+
+Configuration:
+  autovacuum_analyze_scale_factor: 0.0
+  autovacuum_analyze_threshold: 1932735282
+  autovacuum_max_workers: 41
+  autovacuum_naptime: 214749
+  autovacuum_vacuum_cost_delay: 19
+  autovacuum_vacuum_cost_limit: -1
+  autovacuum_vacuum_scale_factor: 10.0
+  autovacuum_vacuum_threshold: 858993459
+  backend_flush_after: 0
+  bgwriter_delay: 5005
+  bgwriter_flush_after: 51
+  bgwriter_lru_maxpages: 900
+  bgwriter_lru_multiplier: 1
+  checkpoint_completion_target: 0.9
+  checkpoint_flush_after: 77
+  checkpoint_timeout: 744
+  commit_delay: 80000
+  commit_siblings: 800
+  cursor_tuple_fraction: 0.0
+  deadlock_timeout: 214748366
+  default_statistics_target: 9000
+  effective_cache_size: 858993459
+  effective_io_concurrency: 500
+  from_collapse_limit: 1073741824
+  geqo_effort: 2
+  geqo_generations: 214748365
+  geqo_pool_size: 429496729
+  geqo_seed: 0.9
+  geqo_threshold: 644245096
+  join_collapse_limit: 1
+  maintenance_work_mem: 1932735385
+  max_connections: 640
+  max_wal_senders: 5
+  shared_buffers: 2516589
+  temp_buffers: 858993478
+  temp_file_limit: -1
+  vacuum_cost_delay: 60
+  vacuum_cost_limit: 1001
+  vacuum_cost_page_dirty: 8000
+  vacuum_cost_page_hit: 6000
+  vacuum_cost_page_miss: 0
+  wal_buffers: 13106
+  wal_writer_delay: 7000
+  work_mem: 1503238572
+
+================================================================================
+
+Candidate 3
+--------------------------------------------------------------------------------
+Real Performance: 2.7637
+
+Configuration:
+  autovacuum_analyze_scale_factor: 40.0
+  autovacuum_analyze_threshold: 1073741824
+  autovacuum_max_workers: 160
+  autovacuum_naptime: 1717987
+  autovacuum_vacuum_cost_delay: 9
+  autovacuum_vacuum_cost_limit: 6000
+  autovacuum_vacuum_scale_factor: 0.0
+  autovacuum_vacuum_threshold: 1288490188
+  backend_flush_after: 128
+  bgwriter_delay: 1009
+  bgwriter_flush_after: 0
+  bgwriter_lru_maxpages: 900
+  bgwriter_lru_multiplier: 4
+  checkpoint_completion_target: 0.9
+  checkpoint_flush_after: 179
+  checkpoint_timeout: 744
+  commit_delay: 60000
+  commit_siblings: 200
+  cursor_tuple_fraction: 0.0
+  deadlock_timeout: 644245095
+  default_statistics_target: 5000
+  effective_cache_size: 429496730
+  effective_io_concurrency: 300
+  from_collapse_limit: 858993459
+  geqo_effort: 7
+  geqo_generations: 214748365
+  geqo_pool_size: 858993459
+  geqo_seed: 0.0
+  geqo_threshold: 858993460
+  join_collapse_limit: 1
+  maintenance_work_mem: 1288490598
+  max_connections: 1820
+  max_wal_senders: 40
+  shared_buffers: 16
+  temp_buffers: 536870962
+  temp_file_limit: -1
+  vacuum_cost_delay: 60
+  vacuum_cost_limit: 5000
+  vacuum_cost_page_dirty: 5000
+  vacuum_cost_page_hit: 0
+  vacuum_cost_page_miss: 0
+  wal_buffers: -1
+  wal_writer_delay: 5000
+  work_mem: 429496781
+
+================================================================================
+
+Candidate 4
+--------------------------------------------------------------------------------
+Real Performance: 2.3965
+
+Configuration:
+  autovacuum_analyze_scale_factor: 70.0
+  autovacuum_analyze_threshold: 1932735282
+  autovacuum_max_workers: 1
+  autovacuum_naptime: 1
+  autovacuum_vacuum_cost_delay: 19
+  autovacuum_vacuum_cost_limit: 1999
+  autovacuum_vacuum_scale_factor: 20.0
+  autovacuum_vacuum_threshold: 1932735282
+  backend_flush_after: 0
+  bgwriter_delay: 1009
+  bgwriter_flush_after: 26
+  bgwriter_lru_maxpages: 0
+  bgwriter_lru_multiplier: 0
+  checkpoint_completion_target: 0.0
+  checkpoint_flush_after: 179
+  checkpoint_timeout: 2529
+  commit_delay: 60000
+  commit_siblings: 0
+  cursor_tuple_fraction: 0.9
+  deadlock_timeout: 1
+  default_statistics_target: 3001
+  effective_cache_size: 1073741824
+  effective_io_concurrency: 400
+  from_collapse_limit: 429496730
+  geqo_effort: 1
+  geqo_generations: 1288490188
+  geqo_pool_size: 214748365
+  geqo_seed: 0.0
+  geqo_threshold: 1932735282
+  join_collapse_limit: 1503238553
+  maintenance_work_mem: 1932735385
+  max_connections: 1820
+  max_wal_senders: 40
+  shared_buffers: 2516589
+  temp_buffers: 429496789
+  temp_file_limit: -1
+  vacuum_cost_delay: 50
+  vacuum_cost_limit: 8000
+  vacuum_cost_page_dirty: 1000
+  vacuum_cost_page_hit: 5000
+  vacuum_cost_page_miss: 1000
+  wal_buffers: -1
+  wal_writer_delay: 9000
+  work_mem: 858993497
+
+================================================================================
+
+Candidate 5
+--------------------------------------------------------------------------------
+Real Performance: 2.3413
+
+Configuration:
+  autovacuum_analyze_scale_factor: 90.0
+  autovacuum_analyze_threshold: 1503238553
+  autovacuum_max_workers: 160
+  autovacuum_naptime: 1073742
+  autovacuum_vacuum_cost_delay: 29
+  autovacuum_vacuum_cost_limit: 7000
+  autovacuum_vacuum_scale_factor: 20.0
+  autovacuum_vacuum_threshold: 214748365
+  backend_flush_after: 102
+  bgwriter_delay: 1009
+  bgwriter_flush_after: 230
+  bgwriter_lru_maxpages: 100
+  bgwriter_lru_multiplier: 4
+  checkpoint_completion_target: 0.0
+  checkpoint_flush_after: 102
+  checkpoint_timeout: 30
+  commit_delay: 80000
+  commit_siblings: 500
+  cursor_tuple_fraction: 0.0
+  deadlock_timeout: 429496730
+  default_statistics_target: 7000
+  effective_cache_size: 1932735282
+  effective_io_concurrency: 800
+  from_collapse_limit: 1
+  geqo_effort: 4
+  geqo_generations: 1717986918
+  geqo_pool_size: 0
+  geqo_seed: 0.0
+  geqo_threshold: 429496731
+  join_collapse_limit: 214748366
+  maintenance_work_mem: 1288490598
+  max_connections: 1525
+  max_wal_senders: 20
+  shared_buffers: 419445
+  temp_buffers: 100
+  temp_file_limit: -1
+  vacuum_cost_delay: 80
+  vacuum_cost_limit: 5000
+  vacuum_cost_page_dirty: 7000
+  vacuum_cost_page_hit: 0
+  vacuum_cost_page_miss: 8000
+  wal_buffers: 39321
+  wal_writer_delay: 2001
+  work_mem: 1717986930
+
+================================================================================
+
+Candidate 6
+--------------------------------------------------------------------------------
+Real Performance: 2.2383
+
+Configuration:
+  autovacuum_analyze_scale_factor: 90.0
+  autovacuum_analyze_threshold: 1073741824
+  autovacuum_max_workers: 21
+  autovacuum_naptime: 1073742
+  autovacuum_vacuum_cost_delay: 29
+  autovacuum_vacuum_cost_limit: 8000
+  autovacuum_vacuum_scale_factor: 60.0
+  autovacuum_vacuum_threshold: 1073741824
+  backend_flush_after: 205
+  bgwriter_delay: 5005
+  bgwriter_flush_after: 77
+  bgwriter_lru_maxpages: 900
+  bgwriter_lru_multiplier: 1
+  checkpoint_completion_target: 0.0
+  checkpoint_flush_after: 128
+  checkpoint_timeout: 2172
+  commit_delay: 20000
+  commit_siblings: 0
+  cursor_tuple_fraction: 0.9
+  deadlock_timeout: 644245095
+  default_statistics_target: 4001
+  effective_cache_size: 1
+  effective_io_concurrency: 800
+  from_collapse_limit: 1073741824
+  geqo_effort: 9
+  geqo_generations: 644245094
+  geqo_pool_size: 0
+  geqo_seed: 0.9
+  geqo_threshold: 1073741824
+  join_collapse_limit: 1717986918
+  maintenance_work_mem: 1932735385
+  max_connections: 1230
+  max_wal_senders: 15
+  shared_buffers: 3355446
+  temp_buffers: 858993478
+  temp_file_limit: -1
+  vacuum_cost_delay: 10
+  vacuum_cost_limit: 1
+  vacuum_cost_page_dirty: 0
+  vacuum_cost_page_hit: 7000
+  vacuum_cost_page_miss: 7000
+  wal_buffers: -1
+  wal_writer_delay: 5000
+  work_mem: 1932735289
+
+================================================================================
+
+Candidate 7
+--------------------------------------------------------------------------------
+Real Performance: 0.0000
+
+Configuration:
+  autovacuum_analyze_scale_factor: 70.0
+  autovacuum_analyze_threshold: 858993459
+  autovacuum_max_workers: 81
+  autovacuum_naptime: 429497
+  autovacuum_vacuum_cost_delay: 50
+  autovacuum_vacuum_cost_limit: 8000
+  autovacuum_vacuum_scale_factor: 30.0
+  autovacuum_vacuum_threshold: 214748365
+  backend_flush_after: 51
+  bgwriter_delay: 4006
+  bgwriter_flush_after: 205
+  bgwriter_lru_maxpages: 400
+  bgwriter_lru_multiplier: 5
+  checkpoint_completion_target: 0.5
+  checkpoint_flush_after: 205
+  checkpoint_timeout: 1101
+  commit_delay: 20000
+  commit_siblings: 100
+  cursor_tuple_fraction: 0.0
+  deadlock_timeout: 644245095
+  default_statistics_target: 9000
+  effective_cache_size: 1717986918
+  effective_io_concurrency: 200
+  from_collapse_limit: 1932735282
+  geqo_effort: 7
+  geqo_generations: 644245094
+  geqo_pool_size: 214748365
+  geqo_seed: 0.9
+  geqo_threshold: 2
+  join_collapse_limit: 858993459
+  maintenance_work_mem: 214749286
+  max_connections: 2115
+  max_wal_senders: 35
+  shared_buffers: 16
+  temp_buffers: 107374272
+  temp_file_limit: -1
+  vacuum_cost_delay: 0
+  vacuum_cost_limit: 8000
+  vacuum_cost_page_dirty: 5000
+  vacuum_cost_page_hit: 5000
+  vacuum_cost_page_miss: 6000
+  wal_buffers: 65536
+  wal_writer_delay: 9000
+  work_mem: 64
+
+================================================================================
+

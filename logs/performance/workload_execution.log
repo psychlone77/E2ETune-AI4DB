@@ -1,19 +1,18 @@
 ======================================================================
 WORKLOAD EXECUTION SUMMARY
 ======================================================================
-Workload: ./olap_workloads/job_12.wg
-Threads: 4
-Total wall clock time: 22.5033 seconds
-Total queries executed: 22
-Sum of query latencies: 45.6308 seconds
+Workload: ./olap_workloads/tpcds_9.wg
+Threads: 3
+Total wall clock time: 2.0539 seconds
+Total queries executed: 10
+Sum of query latencies: 3.0271 seconds
 
 PERFORMANCE METRICS:
-  Throughput (QPS): 0.9776
-  Average latency per query: 2.074128 seconds
+  Throughput (QPS): 4.8688
+  Average latency per query: 0.302711 seconds
 
 PER-THREAD BREAKDOWN:
-  Thread 0: 6 queries, 22.4754s total latency, 3.745905s avg latency
-  Thread 1: 6 queries, 1.6589s total latency, 0.276491s avg latency
-  Thread 2: 5 queries, 10.4509s total latency, 2.090187s avg latency
-  Thread 3: 5 queries, 11.0455s total latency, 2.209104s avg latency
+  Thread 0: 4 queries, 0.4449s total latency, 0.111232s avg latency
+  Thread 1: 3 queries, 2.0343s total latency, 0.678096s avg latency
+  Thread 2: 3 queries, 0.5479s total latency, 0.182631s avg latency
 ======================================================================

@@ -1,0 +1,8 @@
+{
+  "workload": "tpcds_36",
+  "query_plans": [
+    "Aggregate(cost=1.1)(Seq Scan(cost=1.1))",
+    "Aggregate(cost=13.3)(Sort(cost=13.3)(Seq Scan(cost=13.2)))"
+  ],
+  "count": 2
+}

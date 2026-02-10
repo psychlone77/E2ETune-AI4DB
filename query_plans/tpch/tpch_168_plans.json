@@ -1,0 +1,8 @@
+{
+  "workload": "tpch_168",
+  "query_plans": [
+    "Sort(cost=41914.7)(Aggregate(cost=41910.0)(Gather Merge(cost=41903.8)(Sort(cost=40874.9)(Aggregate(cost=40870.2)(Hash Join(cost=40631.8)(Seq Scan(cost=35470.0); Hash(cost=4571.9)(Hash Join(cost=4571.9)(Seq Scan(cost=4210.0); Hash(cost=2.5)(Hash Join(cost=2.5)(Seq Scan(cost=1.2); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))))))",
+    "Sort(cost=169143.0)(Aggregate(cost=168887.2)(Sort(cost=168253.4)(Gather(cost=166121.0)(Hash Join(cost=162328.0)(Seq Scan(cost=156261.9); Hash(cost=5242.8)(Seq Scan(cost=5242.8)))))))"
+  ],
+  "count": 2
+}

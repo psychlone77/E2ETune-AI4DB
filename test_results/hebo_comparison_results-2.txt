@@ -1,0 +1,158 @@
+================================================================================
+HEBO Configuration Evaluation - Results
+================================================================================
+Started: 2025-12-24 12:59:59
+Total workloads to test: 13
+================================================================================
+
+[1/13] Workload: job_0
+  Default Avg Time/Query: 4.7665 s
+  Tuned   Avg Time/Query: 3.5071 s
+  Speedup: 1.36x
+  Improvement: 26.42%
+  Time Saved: 1.2594 s
+  Completed: 2025-12-24 13:01:28
+--------------------------------------------------------------------------------
+
+[2/13] Workload: job_1
+  Default Avg Time/Query: 0.0368 s
+  Tuned   Avg Time/Query: 0.0388 s
+  Speedup: 0.95x
+  Improvement: -5.65%
+  Time Saved: -0.0021 s
+  Completed: 2025-12-24 13:01:43
+--------------------------------------------------------------------------------
+
+[3/13] Workload: job_10
+  Default Avg Time/Query: 7.5776 s
+  Tuned   Avg Time/Query: 5.9421 s
+  Speedup: 1.28x
+  Improvement: 21.58%
+  Time Saved: 1.6355 s
+  Completed: 2025-12-24 13:03:32
+--------------------------------------------------------------------------------
+
+[4/13] Workload: job_11
+  Default Avg Time/Query: 4.6416 s
+  Tuned   Avg Time/Query: 3.2609 s
+  Speedup: 1.42x
+  Improvement: 29.75%
+  Time Saved: 1.3807 s
+  Completed: 2025-12-24 13:05:54
+--------------------------------------------------------------------------------
+
+[5/13] Workload: job_12
+  Default Avg Time/Query: 1.3119 s
+  Tuned   Avg Time/Query: 0.7253 s
+  Speedup: 1.81x
+  Improvement: 44.72%
+  Time Saved: 0.5867 s
+  Completed: 2025-12-24 13:06:54
+--------------------------------------------------------------------------------
+
+[6/13] Workload: job_2
+  Default Avg Time/Query: 1.4656 s
+  Tuned   Avg Time/Query: 1.4234 s
+  Speedup: 1.03x
+  Improvement: 2.88%
+  Time Saved: 0.0422 s
+  Completed: 2025-12-24 13:08:13
+--------------------------------------------------------------------------------
+
+[7/13] Workload: job_3
+  Default Avg Time/Query: 1.8577 s
+  Tuned   Avg Time/Query: 1.1118 s
+  Speedup: 1.67x
+  Improvement: 40.15%
+  Time Saved: 0.7459 s
+  Completed: 2025-12-24 13:09:07
+--------------------------------------------------------------------------------
+
+[8/13] Workload: job_4
+  Default Avg Time/Query: 6.0080 s
+  Tuned   Avg Time/Query: 5.6418 s
+  Speedup: 1.06x
+  Improvement: 6.10%
+  Time Saved: 0.3663 s
+  Completed: 2025-12-24 13:11:30
+--------------------------------------------------------------------------------
+
+[9/13] Workload: job_5
+  Default Avg Time/Query: 6.2385 s
+  Tuned   Avg Time/Query: 4.9611 s
+  Speedup: 1.26x
+  Improvement: 20.48%
+  Time Saved: 1.2774 s
+  Completed: 2025-12-24 13:13:04
+--------------------------------------------------------------------------------
+
+[10/13] Workload: job_6
+  Default Avg Time/Query: 1.2464 s
+  Tuned   Avg Time/Query: 0.7648 s
+  Speedup: 1.63x
+  Improvement: 38.64%
+  Time Saved: 0.4816 s
+  Completed: 2025-12-24 13:13:53
+--------------------------------------------------------------------------------
+
+[11/13] Workload: job_7
+  Default Avg Time/Query: 0.0096 s
+  Tuned   Avg Time/Query: 0.0106 s
+  Speedup: 0.90x
+  Improvement: -10.52%
+  Time Saved: -0.0010 s
+  Completed: 2025-12-24 13:14:08
+--------------------------------------------------------------------------------
+
+[12/13] Workload: job_8
+  Default Avg Time/Query: 0.5484 s
+  Tuned   Avg Time/Query: 0.4205 s
+  Speedup: 1.30x
+  Improvement: 23.32%
+  Time Saved: 0.1279 s
+  Completed: 2025-12-24 13:14:38
+--------------------------------------------------------------------------------
+
+[13/13] Workload: job_9
+  Default Avg Time/Query: 4.4929 s
+  Tuned   Avg Time/Query: 5.4073 s
+  Speedup: 0.83x
+  Improvement: -20.35%
+  Time Saved: -0.9144 s
+  Completed: 2025-12-24 13:17:31
+--------------------------------------------------------------------------------
+
+
+================================================================================
+SUMMARY STATISTICS
+================================================================================
+Completed: 2025-12-24 13:17:31
+Total workloads tested: 13
+
+Average Speedup: 1.27x
+Average Improvement: 16.73%
+Total Time Saved (per query): 6.9861 s
+
+Top 10 Improvements:
+  1. job_12: 44.72% (1.81x)
+  2. job_3: 40.15% (1.67x)
+  3. job_6: 38.64% (1.63x)
+  4. job_11: 29.75% (1.42x)
+  5. job_0: 26.42% (1.36x)
+  6. job_8: 23.32% (1.30x)
+  7. job_10: 21.58% (1.28x)
+  8. job_5: 20.48% (1.26x)
+  9. job_4: 6.10% (1.06x)
+  10. job_2: 2.88% (1.03x)
+
+Bottom 10 Improvements:
+  1. job_11: 29.75% (1.42x)
+  2. job_0: 26.42% (1.36x)
+  3. job_8: 23.32% (1.30x)
+  4. job_10: 21.58% (1.28x)
+  5. job_5: 20.48% (1.26x)
+  6. job_4: 6.10% (1.06x)
+  7. job_2: 2.88% (1.03x)
+  8. job_1: -5.65% (0.95x)
+  9. job_7: -10.52% (0.90x)
+  10. job_9: -20.35% (0.83x)
