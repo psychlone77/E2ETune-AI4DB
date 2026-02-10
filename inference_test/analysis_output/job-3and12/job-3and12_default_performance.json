@@ -1,0 +1,37 @@
+{
+    "performance": 0.43037167582453484,
+    "knobs": {
+        "shared_buffers": 131072,
+        "work_mem": 65536,
+        "maintenance_work_mem": 262144,
+        "effective_cache_size": 3145728,
+        "max_connections": 200,
+        "wal_buffers": 2048,
+        "checkpoint_completion_target": 0.9,
+        "checkpoint_timeout": 900,
+        "effective_io_concurrency": 100,
+        "join_collapse_limit": 8,
+        "from_collapse_limit": 8,
+        "bgwriter_delay": 200,
+        "bgwriter_lru_multiplier": 2.0,
+        "default_statistics_target": 100,
+        "max_parallel_workers_per_gather": 2
+    },
+    "workload": "job-3and12",
+    "internal_metrics": {
+        "xact_commit": 101.0,
+        "xact_rollback": 1.0,
+        "blks_read": 1146486.0,
+        "blks_hit": 259430.0,
+        "tup_returned": 142455102.0,
+        "tup_fetched": 26406455.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 1400697.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 11474509824.0,
+        "disk_write_bytes": 0.0
+    }
+}
