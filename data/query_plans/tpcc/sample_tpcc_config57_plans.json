@@ -1,0 +1,17 @@
+{
+  "workload": "sample_tpcc_config57",
+  "query_plans": [
+    "Limit(cost=0.5)(Index Only Scan(cost=80.4))",
+    "Aggregate(cost=16.9)(Index Scan(cost=16.9))",
+    "Limit(cost=8.4)(Index Scan(cost=8.4))",
+    "Index Scan(cost=8.3)",
+    "Index Scan(cost=8.4)",
+    "Index Scan(cost=8.4)",
+    "ModifyTable(cost=8.5)(Index Scan(cost=8.5))",
+    "Index Scan(cost=16.9)",
+    "ModifyTable(cost=8.4)(Index Scan(cost=8.4))",
+    "ModifyTable(cost=8.4)(Index Scan(cost=8.4))",
+    "Aggregate(cost=25.1)(Nested Loop(cost=25.1)(Index Scan(cost=8.6); Index Scan(cost=8.4)))"
+  ],
+  "count": 11
+}

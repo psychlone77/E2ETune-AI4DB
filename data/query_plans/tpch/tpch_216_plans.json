@@ -1,0 +1,27 @@
+{
+  "workload": "tpch_216",
+  "query_plans": [
+    "Sort(cost=6391.3)(Aggregate(cost=6390.6)(Gather Merge(cost=6390.1)(Sort(cost=5384.3)(Aggregate(cost=5383.7)(Hash Join(cost=5070.9)(Seq Scan(cost=4210.0); Hash(cost=1.2)(Seq Scan(cost=1.2))))))))",
+    "Aggregate(cost=5635.9)(Gather Merge(cost=5635.8)(Sort(cost=4634.6)(Aggregate(cost=4634.5)(Hash Join(cost=4571.9)(Seq Scan(cost=4210.0); Hash(cost=2.5)(Hash Join(cost=2.5)(Seq Scan(cost=1.2); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))))",
+    "Aggregate(cost=28301.2)(Gather Merge(cost=28298.2)(Sort(cost=27263.6)(Aggregate(cost=27257.8)(Hash Join(cost=27222.2)(Seq Scan(cost=20784.0); Hash(cost=5138.7)(Seq Scan(cost=5138.7)))))))",
+    "Sort(cost=255630.8)(Aggregate(cost=254941.4)(Gather Merge(cost=254666.4)(Sort(cost=251357.9)(Aggregate(cost=250668.5)(Hash Join(cost=238420.6)(Hash Join(cost=221304.2)(Seq Scan(cost=137508.1); Hash(cost=33907.5)(Seq Scan(cost=33907.5))); Hash(cost=322.0)(Seq Scan(cost=322.0))))))))",
+    "Aggregate(cost=88001.3)(Sort(cost=86855.5)(Hash Join(cost=61963.9)(Seq Scan(cost=48595.0); Hash(cost=5085.0)(Seq Scan(cost=5085.0)))))",
+    "Aggregate(cost=506.8)(Sort(cost=496.7)(Hash Join(cost=382.1)(Seq Scan(cost=322.0); Hash(cost=2.5)(Hash Join(cost=2.5)(Seq Scan(cost=1.2); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))",
+    "Aggregate(cost=6163.0)(Gather Merge(cost=6162.3)(Sort(cost=5156.5)(Aggregate(cost=5155.8)(Seq Scan(cost=5138.7)))))",
+    "Sort(cost=341519.2)(Aggregate(cost=323120.8)(Gather Merge(cost=318995.8)(Aggregate(cost=283368.3)(Sort(cost=276516.7)(Hash Join(cost=216275.0)(Seq Scan(cost=137508.1); Hash(cost=39883.5)(Hash Join(cost=39883.5)(Seq Scan(cost=33907.5); Hash(cost=4210.0)(Seq Scan(cost=4210.0))))))))))",
+    "Aggregate(cost=511.4)(Hash Join(cost=461.1)(Seq Scan(cost=322.0); Hash(cost=1.2)(Seq Scan(cost=1.2))))",
+    "Aggregate(cost=6267.3)(Gather Merge(cost=6263.2)(Sort(cost=5228.6)(Aggregate(cost=5222.8)(Seq Scan(cost=5138.7)))))",
+    "Aggregate(cost=200457.0)(Gather Merge(cost=200456.9)(Sort(cost=199455.7)(Aggregate(cost=199455.6)(Hash Join(cost=198227.0)(Seq Scan(cost=143759.4); Hash(cost=39937.8)(Hash Join(cost=39937.8)(Seq Scan(cost=32345.0); Hash(cost=4571.9)(Hash Join(cost=4571.9)(Seq Scan(cost=4210.0); Hash(cost=2.5)(Hash Join(cost=2.5)(Seq Scan(cost=1.2); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))))))))",
+    "Aggregate(cost=6450.0)(Gather Merge(cost=6449.2)(Sort(cost=5439.9)(Aggregate(cost=5438.8)(Seq Scan(cost=5347.0)))))",
+    "Aggregate(cost=216693.2)(Sort(cost=215834.0)(Gather(cost=198754.3)(Hash Join(cost=182570.7)(Hash Join(cost=181253.8)(Seq Scan(cost=137508.1); Hash(cost=33907.5)(Seq Scan(cost=33907.5))); Hash(cost=322.0)(Seq Scan(cost=322.0))))))",
+    "Aggregate(cost=59391.1)(Sort(cost=58722.2)(Hash Join(cost=39227.2)(Hash Join(cost=36802.2)(Seq Scan(cost=25450.2); Hash(cost=6597.0)(Seq Scan(cost=6597.0))); Hash(cost=461.1)(Hash Join(cost=461.1)(Seq Scan(cost=322.0); Hash(cost=1.2)(Seq Scan(cost=1.2)))))))",
+    "Aggregate(cost=396749.2)(Sort(cost=390991.8)(Gather(cost=287528.3)(Hash Join(cost=201379.7)(Hash Join(cost=193579.7)(Seq Scan(cost=32345.0); Hash(cost=143759.4)(Seq Scan(cost=143759.4))); Hash(cost=4210.0)(Seq Scan(cost=4210.0))))))",
+    "Aggregate(cost=41564.2)(Gather Merge(cost=41564.1)(Sort(cost=40562.9)(Aggregate(cost=40562.8)(Hash Join(cost=39937.8)(Seq Scan(cost=32345.0); Hash(cost=4571.9)(Hash Join(cost=4571.9)(Seq Scan(cost=4210.0); Hash(cost=2.5)(Hash Join(cost=2.5)(Seq Scan(cost=1.2); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))))))",
+    "Aggregate(cost=354731.8)(Sort(cost=350100.6)(Hash Join(cost=233828.1)(Seq Scan(cost=202521.3); Hash(cost=6097.0)(Seq Scan(cost=6097.0)))))",
+    "Aggregate(cost=30293.4)(Gather Merge(cost=30292.7)(Sort(cost=29286.9)(Aggregate(cost=29286.2)(Hash Join(cost=25952.9)(Seq Scan(cost=20784.0); Hash(cost=461.1)(Hash Join(cost=461.1)(Seq Scan(cost=322.0); Hash(cost=1.2)(Seq Scan(cost=1.2)))))))))",
+    "Aggregate(cost=263931.0)(Gather Merge(cost=263930.8)(Sort(cost=262929.7)(Aggregate(cost=262929.6)(Hash Join(cost=237924.4)(Seq Scan(cost=137508.1); Hash(cost=42284.2)(Hash Join(cost=42284.2)(Seq Scan(cost=32345.0); Hash(cost=4210.0)(Seq Scan(cost=4210.0)))))))))",
+    "Aggregate(cost=6477.6)(Sort(cost=6447.6)(Hash Join(cost=6056.1)(Seq Scan(cost=5085.0); Hash(cost=348.6)(Nested Loop(cost=348.6)(Seq Scan(cost=347.0); Seq Scan(cost=1.2))))))",
+    "Aggregate(cost=161973.7)(Gather Merge(cost=161973.0)(Sort(cost=160967.2)(Aggregate(cost=160966.6)(Hash Join(cost=159037.1)(Seq Scan(cost=150010.6); Hash(cost=4930.3)(Seq Scan(cost=4930.3)))))))"
+  ],
+  "count": 21
+}
