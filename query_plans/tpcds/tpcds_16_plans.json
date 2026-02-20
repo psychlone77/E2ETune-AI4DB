@@ -1,8 +1,0 @@
-{
-  "workload": "tpcds_16",
-  "query_plans": [
-    "Sort(cost=156735.5)(Aggregate(cost=156735.5)(Gather Merge(cost=156735.4)(Sort(cost=155735.0)(Aggregate(cost=155734.9)(Hash Join(cost=136160.0)(Seq Scan(cost=112424.3); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))",
-    "Sort(cost=46013.9)(Aggregate(cost=46013.9)(Gather Merge(cost=46013.8)(Aggregate(cost=45013.1)(Sort(cost=45011.5)(Hash Join(cost=45005.5)(Seq Scan(cost=43411.3); Hash(cost=16.9)(Index Scan(cost=16.9))))))))"
-  ],
-  "count": 2
-}

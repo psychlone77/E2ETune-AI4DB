@@ -1,8 +1,0 @@
-{
-  "workload": "job_205",
-  "query_plans": [
-    "Limit(cost=55676.8)(Sort(cost=55713.3)(Aggregate(cost=55361.3)(Gather Merge(cost=54339.4)(Aggregate(cost=49126.6)(Sort(cost=48716.0)(Nested Loop(cost=47378.8)(Nested Loop(cost=34320.4)(Bitmap Heap Scan(cost=18481.4)(Bitmap Index Scan(cost=100.9)); Index Scan(cost=7.0)); Index Scan(cost=9.9))))))))",
-    "Sort(cost=49814.2)(Aggregate(cost=49814.2)(Gather Merge(cost=49814.0)(Sort(cost=48813.3)(Aggregate(cost=48813.3)(Hash Join(cost=48700.4)(Nested Loop(cost=48634.2)(Bitmap Heap Scan(cost=18481.4)(Bitmap Index Scan(cost=100.9)); Index Scan(cost=13.4)); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))"
-  ],
-  "count": 2
-}

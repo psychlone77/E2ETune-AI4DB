@@ -1,9 +1,0 @@
-{
-  "workload": "ssb_198",
-  "query_plans": [
-    "Limit(cost=120829.6)(Sort(cost=120838.6)(Aggregate(cost=120751.3)(Gather Merge(cost=120642.6)(Sort(cost=118806.4)(Aggregate(cost=118583.3)(Hash Join(cost=117859.5)(Seq Scan(cost=115948.0); Hash(cost=869.5)(Seq Scan(cost=869.5)))))))))",
-    "Sort(cost=147544.6)(Aggregate(cost=147239.5)(Sort(cost=145170.3)(Gather(cost=133167.9)(Hash Join(cost=121576.8)(Seq Scan(cost=115948.0); Hash(cost=4482.5)(Seq Scan(cost=4482.5)))))))",
-    "Sort(cost=29609.0)(Aggregate(cost=29609.0)(Sort(cost=29602.2)(Nested Loop(cost=29584.7)(Index Scan(cost=16.9); Bitmap Heap Scan(cost=9854.7)(Bitmap Index Scan(cost=58.9))))))"
-  ],
-  "count": 3
-}
