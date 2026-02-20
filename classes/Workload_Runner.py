@@ -2,8 +2,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Optional
-
-from classes.Knob_Settings import KnobSettingsSet
+from classes.Knob_Config import KnobConfig
 
 
 @dataclass
@@ -13,15 +12,12 @@ class BenchmarkTask:
     """
 
     workload_path: Path
-    knob_config: KnobSettingsSet
+    knob_config: KnobConfig
     query_plans: Optional[Dict[str, Any]] = None
     internal_metrics: Optional[Dict[str, Any]] = None
 
 
 class WorkloadRunner(ABC):
-    @abstractmethod
-    def __init__(self):
-        super().__init__()
 
     @abstractmethod
     def run_workload(self, workload_task: BenchmarkTask) -> float:
