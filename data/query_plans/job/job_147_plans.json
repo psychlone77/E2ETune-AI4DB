@@ -1,0 +1,8 @@
+{
+  "workload": "job_147",
+  "query_plans": [
+    "Sort(cost=601556.7)(Aggregate(cost=601556.7)(Gather Merge(cost=601556.6)(Sort(cost=600555.9)(Aggregate(cost=600555.8)(Hash Join(cost=592946.6)(Seq Scan(cost=403743.6); Hash(cost=2884.1)(Hash Join(cost=2884.1)(Seq Scan(cost=2419.6); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))))",
+    "Sort(cost=214575.3)(Aggregate(cost=214575.0)(Gather Merge(cost=214574.1)(Aggregate(cost=213569.9)(Sort(cost=213569.6)(Nested Loop(cost=213569.1)(Nested Loop(cost=192483.9)(Seq Scan(cost=33738.1); Index Scan(cost=129.7)); Index Scan(cost=0.5)))))))"
+  ],
+  "count": 2
+}

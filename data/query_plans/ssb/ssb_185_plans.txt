@@ -1,0 +1,27 @@
+PostgreSQL Query Plan Summaries - ssb_185
+================================================================================
+
+Query 1:
+Sort(cost=9246.1)(Aggregate(cost=9177.4)(Sort(cost=9148.8)(Nested Loop(cost=9080.1)(Nested Loop(cost=8691.6)(Seq Scan(cost=70.0); Bitmap Heap Scan(cost=8608.2)(Bitmap Index Scan(cost=47.1))); Index Scan(cost=0.3)))))
+--------------------------------------------------------------------------------
+
+Query 2:
+Sort(cost=116910.3)(Aggregate(cost=116776.3)(Gather Merge(cost=116718.8)(Sort(cost=115188.3)(Aggregate(cost=115054.3)(Hash Join(cost=114803.8)(Seq Scan(cost=103445.3); Hash(cost=4776.6)(Seq Scan(cost=4776.6))))))))
+--------------------------------------------------------------------------------
+
+Query 3:
+Sort(cost=116956.4)(Aggregate(cost=116956.4)(Sort(cost=116956.4)(Nested Loop(cost=116956.4)(Gather(cost=116948.1)(Seq Scan(cost=115948.0)); Index Scan(cost=8.3)))))
+--------------------------------------------------------------------------------
+
+Query 4:
+Sort(cost=4563.8)(Aggregate(cost=4550.5)(Hash Join(cost=4525.3)(Bitmap Heap Scan(cost=3390.9)(Bitmap Index Scan(cost=32.2)); Hash(cost=757.0)(Seq Scan(cost=757.0)))))
+--------------------------------------------------------------------------------
+
+Query 5:
+Sort(cost=8518.0)(Aggregate(cost=8518.0)(Sort(cost=8515.5)(Nested Loop(cost=8500.6)(Seq Scan(cost=70.0); Bitmap Heap Scan(cost=8427.2)(Bitmap Index Scan(cost=46.7))))))
+--------------------------------------------------------------------------------
+
+Query 6:
+Sort(cost=120082.2)(Aggregate(cost=120082.2)(Sort(cost=120082.2)(Nested Loop(cost=120082.2)(Gather(cost=120073.7)(Seq Scan(cost=119073.6)); Index Scan(cost=8.4)))))
+--------------------------------------------------------------------------------
+

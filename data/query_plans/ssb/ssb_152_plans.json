@@ -1,0 +1,11 @@
+{
+  "workload": "ssb_152",
+  "query_plans": [
+    "Limit(cost=121452.5)(Sort(cost=121467.2)(Aggregate(cost=121325.4)(Gather Merge(cost=121207.8)(Sort(cost=118850.1)(Aggregate(cost=118467.2)(Hash Join(cost=117850.2)(Seq Scan(cost=115948.0); Hash(cost=832.0)(Seq Scan(cost=832.0)))))))))",
+    "Sort(cost=123838.2)(Aggregate(cost=123397.8)(Gather Merge(cost=123289.4)(Aggregate(cost=121647.6)(Sort(cost=121598.9)(Hash Join(cost=121432.9)(Hash Join(cost=121336.7)(Seq Scan(cost=115948.0); Hash(cost=4335.4)(Seq Scan(cost=4335.4))); Hash(cost=53.0)(Seq Scan(cost=53.0))))))))",
+    "Aggregate(cost=130670.6)(Gather Merge(cost=130668.5)(Sort(cost=129649.1)(Aggregate(cost=129646.2)(Hash Join(cost=118407.4)(Seq Scan(cost=115948.0); Hash(cost=63.6)(Seq Scan(cost=63.6)))))))",
+    "Sort(cost=126452.1)(Aggregate(cost=125816.7)(Gather Merge(cost=125561.2)(Sort(cost=122416.8)(Aggregate(cost=121781.4)(Hash Join(cost=121516.1)(Seq Scan(cost=115948.0); Hash(cost=4482.5)(Seq Scan(cost=4482.5))))))))",
+    "Aggregate(cost=114488.4)(Gather Merge(cost=114484.1)(Sort(cost=113443.6)(Aggregate(cost=113436.7)(Hash Join(cost=111410.3)(Hash Join(cost=110080.8)(Seq Scan(cost=103445.3); Hash(cost=53.0)(Seq Scan(cost=53.0))); Hash(cost=73.2)(Seq Scan(cost=73.2)))))))"
+  ],
+  "count": 5
+}

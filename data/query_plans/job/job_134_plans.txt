@@ -1,0 +1,59 @@
+PostgreSQL Query Plan Summaries - job_134
+================================================================================
+
+Query 1:
+Aggregate(cost=18532.8)(Bitmap Heap Scan(cost=18532.8)(Bitmap Index Scan(cost=100.9)))
+--------------------------------------------------------------------------------
+
+Query 2:
+Sort(cost=9350.0)(Aggregate(cost=9349.5)(Gather Merge(cost=9349.2)(Aggregate(cost=8347.1)(Sort(cost=8346.3)(Nested Loop(cost=8341.6)(Seq Scan(cost=4722.9); Index Scan(cost=327.6)))))))
+--------------------------------------------------------------------------------
+
+Query 3:
+Aggregate(cost=18532.9)(Sort(cost=18532.9)(Bitmap Heap Scan(cost=18532.8)(Bitmap Index Scan(cost=100.9))))
+--------------------------------------------------------------------------------
+
+Query 4:
+Aggregate(cost=39258.2)(Gather Merge(cost=39258.2)(Sort(cost=38257.7)(Aggregate(cost=38257.7)(Hash Join(cost=35539.8)(Seq Scan(cost=29661.4); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))
+--------------------------------------------------------------------------------
+
+Query 5:
+Limit(cost=463356.5)(Sort(cost=463704.9)(Aggregate(cost=460344.2)(Gather Merge(cost=457556.2)(Aggregate(cost=424376.7)(Sort(cost=413558.0)(Hash Join(cost=135061.9)(Seq Scan(cost=43303.5); Hash(cost=46568.4)(Seq Scan(cost=46568.4)))))))))
+--------------------------------------------------------------------------------
+
+Query 6:
+Sort(cost=56929.7)(Aggregate(cost=56929.7)(Sort(cost=56929.7)(Bitmap Heap Scan(cost=56929.7)(Bitmap Index Scan(cost=1653.9)))))
+--------------------------------------------------------------------------------
+
+Query 7:
+Limit(cost=3686516.4)(Sort(cost=3690725.3)(Aggregate(cost=3650135.8)(Gather Merge(cost=3616465.0)(Aggregate(cost=3226820.9)(Sort(cost=3134476.7)(Hash Join(cost=676563.7)(Seq Scan(cost=403743.6); Hash(cost=73060.4)(Seq Scan(cost=73060.4)))))))))
+--------------------------------------------------------------------------------
+
+Query 8:
+Limit(cost=10314.0)(Sort(cost=10389.0)(Aggregate(cost=9665.8)(Merge Join(cost=9215.8)(Index Scan(cost=101697.3); Index Scan(cost=959.5)))))
+--------------------------------------------------------------------------------
+
+Query 9:
+Aggregate(cost=6431.2)(Gather Merge(cost=6431.1)(Aggregate(cost=5430.8)(Sort(cost=5430.7)(Nested Loop(cost=5430.2)(Seq Scan(cost=5414.1); Index Only Scan(cost=6.7))))))
+--------------------------------------------------------------------------------
+
+Query 10:
+Limit(cost=3207247.7)(Sort(cost=3207596.1)(Aggregate(cost=3204235.3)(Gather Merge(cost=3201447.4)(Aggregate(cost=3168267.9)(Sort(cost=3091365.1)(Hash Join(cost=633452.2)(Seq Scan(cost=403743.6); Hash(cost=46568.4)(Seq Scan(cost=46568.4)))))))))
+--------------------------------------------------------------------------------
+
+Query 11:
+Limit(cost=395339.9)(Sort(cost=395675.3)(Aggregate(cost=392440.5)(Gather Merge(cost=389757.1)(Aggregate(cost=357784.0)(Sort(cost=347017.6)(Hash Join(cost=68521.4)(Seq Scan(cost=43303.5); Hash(cost=2290.7)(Seq Scan(cost=2290.7)))))))))
+--------------------------------------------------------------------------------
+
+Query 12:
+Sort(cost=88977.0)(Aggregate(cost=87806.3)(Gather Merge(cost=87577.3)(Aggregate(cost=85022.0)(Sort(cost=84920.9)(Nested Loop(cost=84475.7)(Bitmap Heap Scan(cost=47893.0)(BitmapOr(cost=314.7)(Bitmap Index Scan(cost=100.9); Bitmap Index Scan(cost=100.9); Bitmap Index Scan(cost=100.9))); Index Scan(cost=5.4)))))))
+--------------------------------------------------------------------------------
+
+Query 13:
+Sort(cost=274275.0)(Aggregate(cost=258680.4)(Gather Merge(cost=255892.5)(Aggregate(cost=222712.9)(Sort(cost=217241.7)(Hash Join(cost=118409.9)(Seq Scan(cost=37814.9); Hash(cost=46568.4)(Seq Scan(cost=46568.4))))))))
+--------------------------------------------------------------------------------
+
+Query 14:
+Sort(cost=533900.0)(Aggregate(cost=533899.7)(Gather Merge(cost=533899.5)(Sort(cost=532896.7)(Aggregate(cost=532896.4)(Hash Join(cost=457387.5)(Seq Scan(cost=403743.6); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))
+--------------------------------------------------------------------------------
+

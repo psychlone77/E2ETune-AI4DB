@@ -1,0 +1,15 @@
+PostgreSQL Query Plan Summaries - job_177
+================================================================================
+
+Query 1:
+Sort(cost=132584.4)(Aggregate(cost=132560.7)(Sort(cost=132379.7)(Gather(cost=130767.9)(Nested Loop(cost=127604.6)(Bitmap Heap Scan(cost=38228.7)(Bitmap Index Scan(cost=1640.7)); Index Scan(cost=141.7))))))
+--------------------------------------------------------------------------------
+
+Query 2:
+Sort(cost=2420.7)(Aggregate(cost=2420.7)(Sort(cost=2420.7)(Nested Loop(cost=2420.7)(Seq Scan(cost=2419.6); Seq Scan(cost=1.1)))))
+--------------------------------------------------------------------------------
+
+Query 3:
+Sort(cost=56283.1)(Aggregate(cost=56283.1)(Gather Merge(cost=56283.0)(Aggregate(cost=55282.5)(Sort(cost=55282.4)(Nested Loop(cost=55282.4)(Nested Loop(cost=55281.5)(Seq Scan(cost=52786.0); Index Scan(cost=2487.9)); Index Scan(cost=0.5)))))))
+--------------------------------------------------------------------------------
+
