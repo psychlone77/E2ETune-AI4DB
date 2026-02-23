@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from classes.Workload_Runner import BenchmarkTask
 from classes.Workload_Runner import WorkloadRunner
+from classes.Internal_Metrics import InternalMetrics
 
 
 class Database(WorkloadRunner):
@@ -19,11 +20,21 @@ class Database(WorkloadRunner):
         pass
 
     @abstractmethod
-    def fetch_internal_metrics(self) -> dict:
+    def fetch_internal_metrics(self) -> InternalMetrics:
         """Fetch internal metrics from the database.
         Returns:
             A dictionary containing internal metrics relevant to the database performance.
         """
+        pass
+
+    @abstractmethod
+    def reset_internal_metrics(self):
+        """Reset the internal metrics to prepare for the next workload run."""
+        pass
+
+    @abstractmethod
+    def reset_knobs(self):
+        """Reset the database configuration knobs to their default values."""
         pass
 
     @abstractmethod

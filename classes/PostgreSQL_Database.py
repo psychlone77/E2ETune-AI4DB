@@ -2,32 +2,31 @@ from classes.Database import Database
 from classes.Knob_Config import KnobConfig
 from classes.Workload_Runner import WorkloadRunner, BenchmarkTask
 from classes.Script_Config import DatabaseConfig
+from classes.Internal_Metrics import InternalMetrics
 from typing import Optional
 import utils
 import psycopg2
+import time
 
 
-class PostgreSQLDatabase(WorkloadRunner, Database):
+class PostgreSQLDatabase(Database):
     """
     A class representing a PostgreSQL database instance, responsible for managing the connection and executing workloads.
     """
 
-    db_config: DatabaseConfig
-    connection: psycopg2.extensions.connection
-
     def __init__(self, db_config: DatabaseConfig, log_path: Optional[str] = None):
         super().__init__()
-        self.db_config = db_config
+        self.db_config: DatabaseConfig = db_config
         self.logger = utils.get_logger(log_path) if log_path is not None else None
-        self.connect(3)
+        self.connection = self.connect(3)
 
     def connect(
         self,
         max_retries: int = 3,
-    ) -> None:
+    ) -> psycopg2.extensions.connection:
         for attempt in range(1, max_retries + 1):
             try:
-                self.connection = psycopg2.connect(
+                connection = psycopg2.connect(
                     dbname=self.db_config.name,
                     user=self.db_config.user,
                     password=self.db_config.password,
@@ -35,7 +34,7 @@ class PostgreSQLDatabase(WorkloadRunner, Database):
                     port=self.db_config.port,
                 )
                 self.logger.info("Connection established.")
-                return
+                return connection
             except psycopg2.OperationalError as e:
                 self.logger.error(f"Connection attempt {attempt} failed: {e}")
                 if attempt == max_retries:
@@ -52,8 +51,9 @@ class PostgreSQLDatabase(WorkloadRunner, Database):
             self.connection.commit()
         self.logger.info("Database knobs have been set.")
 
-    def fetch_internal_metrics(self) -> dict:
+    def fetch_internal_metrics(self) -> InternalMetrics:
         """Fetch internal metrics from the database."""
+        metrics = InternalMetrics()
         with self.connection.cursor() as cursor:
             try:
                 cursor.execute(
@@ -72,7 +72,7 @@ class PostgreSQLDatabase(WorkloadRunner, Database):
                     FROM pg_stat_database 
                     WHERE datname = %s;
                 """,
-                    (self.database,),
+                    (self.db_config.name,),
                 )
                 d = cursor.fetchone()
                 metrics.update(
@@ -120,30 +120,65 @@ class PostgreSQLDatabase(WorkloadRunner, Database):
                 print(f"Fetched {len(metrics)} internal metrics")
             except Exception as e:
                 print(f"Error fetching internal metrics: {e}")
-                metrics = {
-                    "xact_commit": 0.0,
-                    "xact_rollback": 0.0,
-                    "blks_read": 0.0,
-                    "blks_hit": 0.0,
-                    "tup_returned": 0.0,
-                    "tup_fetched": 0.0,
-                    "tup_inserted": 0.0,
-                    "conflicts": 0.0,
-                    "tup_updated": 0.0,
-                    "tup_deleted": 0.0,
-                    "disk_read_count": 0.0,
-                    "disk_write_count": 0.0,
-                    "disk_read_bytes": 0.0,
-                    "disk_write_bytes": 0.0,
-                }
+                metrics = InternalMetrics(
+                    {
+                        "xact_commit": 0.0,
+                        "xact_rollback": 0.0,
+                        "blks_read": 0.0,
+                        "blks_hit": 0.0,
+                        "tup_returned": 0.0,
+                        "tup_fetched": 0.0,
+                        "tup_inserted": 0.0,
+                        "conflicts": 0.0,
+                        "tup_updated": 0.0,
+                        "tup_deleted": 0.0,
+                        "disk_read_count": 0.0,
+                        "disk_write_count": 0.0,
+                        "disk_read_bytes": 0.0,
+                        "disk_write_bytes": 0.0,
+                    }
+                )
 
         return metrics
 
+    def reset_internal_metrics(self):
+        with self.connection.cursor() as cursor:
+            try:
+                cursor.execute("SELECT pg_stat_reset();")
+                cursor.execute("SELECT pg_stat_reset_shared('bgwriter');")
+                self.connection.commit()
+                print("Internal metrics reset successfully")
+            except Exception as e:
+                print(f"Error resetting internal metrics: {e}")
+            finally:
+                cursor.close()
+        self.logger.info("Internal metrics have been reset.")
+
+    def reset_knobs(self):
+        with self.connection.cursor() as cursor:
+            try:
+                cursor.execute("ALTER SYSTEM RESET ALL;")
+                cursor.execute("SELECT pg_reload_conf();")
+                self.connection.commit()
+            except Exception as e:
+                self.logger.error(f"Error resetting database knobs: {e}")
+            finally:
+                cursor.close()
+        self.logger.info("Database knobs have been reset.")
+
     def run_workload(self, workload_task: BenchmarkTask) -> float:
-        print(
-            f"Running workload for database {self.db_config.name} with configuration: {self.db_config}"
-        )
-        print(
-            f"Workload path: {workload_task.workload_path} with knobs: {workload_task.knob_config}"
-        )
-        return 0.0  # Placeholder for actual performance metric
+        with open(workload_task.workload_path, "r") as f:
+            sql_script = f.read()
+        with self.connection.cursor() as cursor:
+            try:
+                start = time.perf_counter()
+                cursor.execute(sql_script)
+                self.connection.commit()
+                end = time.perf_counter()
+                self.logger.info(
+                    f"Workload {workload_task.workload_path} executed successfully."
+                )
+                return end - start
+            except Exception as e:
+                self.logger.error(f"Error executing workload: {e}")
+                self.connection.rollback()
