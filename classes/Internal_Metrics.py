@@ -2,15 +2,17 @@ from typing import TypedDict
 
 
 class InternalMetrics(TypedDict):
-    xact_commit: int
-    xact_rollback: int
-    blks_read: int
-    blks_hit: int
-    tup_returned: int
-    tup_fetched: int
-    tup_inserted: int
-    conflicts: int
-    tup_updated: int
-    tup_deleted: int
-    disk_read_count: int
-    disk_write_count: int
+    xact_commit: float
+    xact_rollback: float
+    blks_read: float
+    blks_hit: float
+    tup_returned: float
+    tup_fetched: float
+    tup_inserted: float
+    conflicts: float
+    tup_updated: float
+    tup_deleted: float
+    disk_read_count: float
+    disk_write_count: float
+    disk_read_bytes: float
+    disk_write_bytes: float

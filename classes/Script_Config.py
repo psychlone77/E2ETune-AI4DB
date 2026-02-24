@@ -5,6 +5,19 @@ import yaml
 
 @dataclass
 class DatabaseConfig:
+    """Configuration for connecting to a database cluster.
+
+    Attributes:
+        host: Database host address or IP.
+        port: TCP port number the database listens on.
+        user: Username for authenticating to the database.
+        password: Password for authenticating to the database.
+        name: Logical database name to connect to.
+        data_path: Filesystem path to the database data directory.
+        pg_version: Major PostgreSQL version number (as int).
+        cluster_name: Identifier for the database cluster.
+    """
+
     host: str
     port: int
     user: str
@@ -31,6 +44,16 @@ class DatabaseConfig:
 
 @dataclass
 class TuningConfig:
+    """Configuration options for the tuning process.
+
+    Attributes:
+        method: Name of the tuning method (e.g., 'hebo', 'random').
+        sample_num: Number of samples to draw during tuning.
+        suggest_num: Number of suggestions to propose each iteration.
+        early_stop_plateau: Number of iterations without improvement
+            before early stopping.
+    """
+
     method: str
     sample_num: int
     suggest_num: int
@@ -49,6 +72,17 @@ class TuningConfig:
 
 @dataclass
 class BenchmarkConfig:
+    """Configuration describing the benchmark/benchmarking tool.
+
+    Attributes:
+        type: Benchmark category (e.g., 'oltp', 'olap').
+        name: Human-readable name for the benchmark.
+        path: Filesystem path to benchmark assets or scripts.
+        workload_execution: Command or method to run the workload.
+        performance_record_path: Path where performance records are stored.
+        benchbase_jar: Path to the BenchBase JAR (if applicable).
+    """
+
     type: str
     name: str
     path: str
@@ -71,6 +105,12 @@ class BenchmarkConfig:
 
 @dataclass
 class SurrogateConfig:
+    """Configuration for a surrogate model used during tuning.
+
+    Attributes:
+        model_path: Filesystem path to the surrogate model artifact.
+    """
+
     model_path: str
 
     @classmethod
@@ -83,6 +123,19 @@ class SurrogateConfig:
 
 @dataclass
 class ScriptConfig:
+    """Top-level script configuration container.
+
+    This aggregates `DatabaseConfig`, `TuningConfig`, `BenchmarkConfig`,
+    and `SurrogateConfig` into a single object that can be loaded from a
+    YAML file and passed around the tuning and benchmarking code.
+
+    Attributes:
+        database_config: Settings required to connect to and identify the DB.
+        tuning_config: Settings that control the tuner behavior.
+        benchmark_config: Settings that describe the benchmark and execution.
+        surrogate_config: Settings related to any surrogate model used.
+    """
+
     database_config: DatabaseConfig
     tuning_config: TuningConfig
     benchmark_config: BenchmarkConfig

@@ -18,13 +18,25 @@ class BenchmarkTask:
 
 
 class WorkloadRunner(ABC):
+    """An abstract base class for running database workloads. This class defines the interface for executing workloads and fetching performance metrics, which can be implemented by specific database classes like PostgresSQLDatabase.
+
+    Methods:
+        run_workload: An abstract method that should be implemented by subclasses to execute the workload and return the performance metric.
+    """
 
     @abstractmethod
-    def run_workload(self, workload_task: BenchmarkTask) -> float:
-        """Run the workload with the given configuration and return the performance metric.
+    def run_workload(self, workload_task: BenchmarkTask) -> tuple[float, float]:
+        """Run the workload with the given configuration and return the negative average latency and throughput.
         Args:
             workload_task: The BenchmarkTask containing all necessary information to run the workload.
         Returns:
-            The performance metric (e.g., latency, throughput) obtained from running the workload.
+            A tuple containing the [-average_latency, throughput_ps] performance metrics.
+
+        Example usage:
+        ```
+        workload_task = BenchmarkTask(...)
+        runner = WorkloadRunner()
+        average_latency, throughput_ps = runner.run_workload(workload_task)
+        print(f"average_latency: {average_latency}, Throughput_ps: {throughput_ps}")
         """
         pass

@@ -1,14 +1,10 @@
-from abc import ABC, abstractmethod
+from abc import abstractmethod
 from classes.Workload_Runner import BenchmarkTask
 from classes.Workload_Runner import WorkloadRunner
 from classes.Internal_Metrics import InternalMetrics
 
 
 class Database(WorkloadRunner):
-    @abstractmethod
-    def __init__(self, config):
-        super().__init__()
-
     @abstractmethod
     def connect(self, max_retries: int = 3) -> None:
         """Establish a connection to the database, with retry logic."""
@@ -38,11 +34,5 @@ class Database(WorkloadRunner):
         pass
 
     @abstractmethod
-    def run_workload(self, workload_task: BenchmarkTask) -> float:
-        """Run the workload with the given configuration and return the performance metric.
-        Args:
-            workload_task: The BenchmarkTask containing all necessary information to run the workload.
-        Returns:
-            The performance metric (e.g., latency, throughput) obtained from running the workload.
-        """
+    def run_workload(self, workload_task: BenchmarkTask) -> tuple[float, float]:
         pass
