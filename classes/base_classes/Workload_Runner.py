@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Optional
-from classes.Knob_Config import KnobConfig
+from classes.base_classes.Knob_Config import KnobConfig
 
 
 @dataclass

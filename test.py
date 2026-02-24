@@ -1,7 +1,7 @@
 from classes.PostgreSQL_Database import PostgresSQLDatabase
-from classes.Knob_Settings import KnobSettingsSet
-from classes.Workload_Runner import BenchmarkTask
-from classes.Script_Config import ScriptConfig
+from classes.base_classes.Knob_Settings import KnobSettingsSet
+from classes.base_classes.Workload_Runner import BenchmarkTask
+from classes.base_classes.Script_Config import ScriptConfig
 from classes.HEBO_Tuner import HEBOTuner
 
 knob_config = KnobSettingsSet.from_json_file("knob_config/knob_config.json")

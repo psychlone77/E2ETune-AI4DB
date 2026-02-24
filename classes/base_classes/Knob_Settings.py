@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import Dict, Any, List, Union, Literal
 import json
 
-from classes.Knob_Config import KnobConfig
+from classes.base_classes.Knob_Config import KnobConfig
 
 
 @dataclass

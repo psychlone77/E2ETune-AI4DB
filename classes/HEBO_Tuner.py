@@ -1,11 +1,11 @@
 import json
 import os
 
-from classes.Knob_Config import KnobConfig
+from classes.base_classes.Knob_Config import KnobConfig
 from classes.Tuner import Tuner
-from classes.Script_Config import TuningConfig
-from classes.Workload_Runner import BenchmarkTask, WorkloadRunner
-from classes.Knob_Settings import KnobSettingsSet
+from classes.base_classes.Script_Config import TuningConfig
+from classes.base_classes.Workload_Runner import BenchmarkTask, WorkloadRunner
+from classes.base_classes.Knob_Settings import KnobSettingsSet
 from typing import List, Optional, Literal
 from pathlib import Path
 import utils
@@ -66,7 +66,9 @@ class HEBOTuner(Tuner):
 
         default_config = self.knob_settings.get_default_knob_settings()
         self.workload_task.knob_config = default_config
-        default_performance = self.workload_runner.run_workload(self.workload_task)[self.tuning_parameter]
+        default_performance = self.workload_runner.run_workload(self.workload_task)[
+            self.tuning_parameter
+        ]
         default_config_df = self._get_tunable_knobs(default_config, params)
         default_performance_array = self._get_perf_ndarray(default_performance)
 
@@ -77,30 +79,34 @@ class HEBOTuner(Tuner):
 
         best_config: KnobConfig = default_config
         best_objective: float = default_performance
-        with open(history_file, 'w') as f:
-            json.dump({
-                'config': default_config.to_dict(),
-                'cost': default_performance,
-            }, f)
-            f.write('\n')
+        with open(history_file, "w") as f:
+            json.dump(
+                {
+                    "config": default_config.to_dict(),
+                    "cost": default_performance,
+                },
+                f,
+            )
+            f.write("\n")
 
         try:
             for iteration in range(self.tuning_config.suggest_num):
                 suggestion = hebo.suggest(n_suggestions=1)
                 config_dict = suggestion.iloc[0].to_dict()
                 self.workload_task.knob_config = KnobConfig.from_dict(config_dict)
-                cur_objective = self.workload_runner.run_workload(self.workload_task)[self.tuning_parameter]
+                cur_objective = self.workload_runner.run_workload(self.workload_task)[
+                    self.tuning_parameter
+                ]
 
-                config_df = self._get_tunable_knobs(self.workload_task.knob_config, params)
+                config_df = self._get_tunable_knobs(
+                    self.workload_task.knob_config, params
+                )
                 performance_array = self._get_perf_ndarray(cur_objective)
                 hebo.observe(config_df, performance_array)
 
-                with open(history_file, 'a') as f:
-                    json.dump({
-                        'config': config_dict,
-                        'cost': cur_objective
-                    }, f)
-                    f.write('\n')
+                with open(history_file, "a") as f:
+                    json.dump({"config": config_dict, "cost": cur_objective}, f)
+                    f.write("\n")
                 if cur_objective < best_objective:
                     best_config = self.workload_task.knob_config
                     best_objective = cur_objective
@@ -112,12 +118,16 @@ class HEBOTuner(Tuner):
 
         best_config_file = f"{self.output_dir}/best_config.json"
         with open(best_config_file, "w") as f:
-            json.dump({
-                "workload": self.workload_task.workload_path,
-                "best_cost": best_objective,
-                "best_performance": -best_objective,
-                "configuration": best_config.to_dict()
-            }, f, indent=4)
+            json.dump(
+                {
+                    "workload": self.workload_task.workload_path,
+                    "best_cost": best_objective,
+                    "best_performance": -best_objective,
+                    "configuration": best_config.to_dict(),
+                },
+                f,
+                indent=4,
+            )
 
         return best_config
 

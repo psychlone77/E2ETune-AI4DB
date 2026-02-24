@@ -1,8 +1,8 @@
-from classes.Database import Database
-from classes.Knob_Config import KnobConfig
-from classes.Workload_Runner import BenchmarkTask
-from classes.Script_Config import DatabaseConfig
-from classes.Internal_Metrics import InternalMetrics
+from classes.base_classes.Database import Database
+from classes.base_classes.Knob_Config import KnobConfig
+from classes.base_classes.Workload_Runner import BenchmarkTask
+from classes.base_classes.Script_Config import DatabaseConfig
+from classes.base_classes.Internal_Metrics import InternalMetrics
 from typing import Optional
 import utils
 import psycopg2
@@ -77,21 +77,21 @@ class PostgresSQLDatabase(Database):
                 )
                 d = cursor.fetchone()
                 metrics = {
-                        "xact_commit": float(d[0]),
-                        "xact_rollback": float(d[1]),
-                        "blks_read": float(d[2]),
-                        "blks_hit": float(d[3]),
-                        "tup_returned": float(d[4]),
-                        "tup_fetched": float(d[5]),
-                        "tup_inserted": float(d[6]),
-                        "conflicts": float(d[7]),
-                        "tup_updated": float(d[8]),
-                        "tup_deleted": float(d[9]),
-                        "disk_read_count": 0,
-                        "disk_write_count": 0,
-                        "disk_read_bytes": 0,
-                        "disk_write_bytes": 0,
-                    }
+                    "xact_commit": float(d[0]),
+                    "xact_rollback": float(d[1]),
+                    "blks_read": float(d[2]),
+                    "blks_hit": float(d[3]),
+                    "tup_returned": float(d[4]),
+                    "tup_fetched": float(d[5]),
+                    "tup_inserted": float(d[6]),
+                    "conflicts": float(d[7]),
+                    "tup_updated": float(d[8]),
+                    "tup_deleted": float(d[9]),
+                    "disk_read_count": 0,
+                    "disk_write_count": 0,
+                    "disk_read_bytes": 0,
+                    "disk_write_bytes": 0,
+                }
 
                 cursor.execute(
                     """
@@ -124,22 +124,21 @@ class PostgresSQLDatabase(Database):
             except Exception as e:
                 print(f"Error fetching internal metrics: {e}")
                 metrics: InternalMetrics = {
-                        "xact_commit": 0.0,
-                        "xact_rollback": 0.0,
-                        "blks_read": 0.0,
-                        "blks_hit": 0.0,
-                        "tup_returned": 0.0,
-                        "tup_fetched": 0.0,
-                        "tup_inserted": 0.0,
-                        "conflicts": 0.0,
-                        "tup_updated": 0.0,
-                        "tup_deleted": 0.0,
-                        "disk_read_count": 0.0,
-                        "disk_write_count": 0.0,
-                        "disk_read_bytes": 0.0,
-                        "disk_write_bytes": 0.0,
+                    "xact_commit": 0.0,
+                    "xact_rollback": 0.0,
+                    "blks_read": 0.0,
+                    "blks_hit": 0.0,
+                    "tup_returned": 0.0,
+                    "tup_fetched": 0.0,
+                    "tup_inserted": 0.0,
+                    "conflicts": 0.0,
+                    "tup_updated": 0.0,
+                    "tup_deleted": 0.0,
+                    "disk_read_count": 0.0,
+                    "disk_write_count": 0.0,
+                    "disk_read_bytes": 0.0,
+                    "disk_write_bytes": 0.0,
                 }
-
 
         return metrics
 

@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from classes.Knob_Config import KnobConfig
+from classes.base_classes.Knob_Config import KnobConfig
 
 
 class Tuner(ABC):

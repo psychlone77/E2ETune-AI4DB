@@ -1,7 +1,7 @@
 from abc import abstractmethod
-from classes.Workload_Runner import BenchmarkTask
-from classes.Workload_Runner import WorkloadRunner
-from classes.Internal_Metrics import InternalMetrics
+from classes.base_classes.Workload_Runner import BenchmarkTask
+from classes.base_classes.Workload_Runner import WorkloadRunner
+from classes.base_classes.Internal_Metrics import InternalMetrics
 
 
 class Database(WorkloadRunner):
