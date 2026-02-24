@@ -2,12 +2,13 @@ import json
 import logging
 import os
 import sys
-import time
+from pathlib import Path
+
 import pandas as pd
 import re
 
 
-def get_logger(path: str, name: str = "E2ETune") -> logging.Logger:
+def get_logger(path: Path, name: str = "E2ETune") -> logging.Logger:
     """Return a logger configured to write to `path` and stdout.
     
     Force re-configuration to ensure INFO logs are shown.
