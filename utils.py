@@ -3,14 +3,15 @@ import logging
 import os
 import sys
 from pathlib import Path
+from typing import Optional
 
 import pandas as pd
 import re
 
 
-def get_logger(path: Path, name: str = "E2ETune") -> logging.Logger:
+def get_logger(path: Optional[Path], name: str = "E2ETune") -> logging.Logger:
     """Return a logger configured to write to `path` and stdout.
-    
+
     Force re-configuration to ensure INFO logs are shown.
     """
     # Ensure directory exists for file handler
@@ -21,26 +22,28 @@ def get_logger(path: Path, name: str = "E2ETune") -> logging.Logger:
             pass
 
     logger = logging.getLogger(name)
-    
+
     # Reset any global disable that might have been set by other libraries
     logging.disable(logging.NOTSET)
-    
+
     # Force the level to INFO
     logger.setLevel(logging.INFO)
-    
+
     # Remove existing handlers to start fresh (avoids duplicates and bad configs)
     if logger.hasHandlers():
         logger.handlers.clear()
-        
+
     # Prevent propagation to root logger
     logger.propagate = False
 
-    fmt = logging.Formatter('[%(asctime)s:%(filename)s#L%(lineno)d:%(levelname)s]: %(message)s')
+    fmt = logging.Formatter(
+        "[%(asctime)s:%(filename)s#L%(lineno)d:%(levelname)s]: %(message)s"
+    )
 
     # File handler
     if path:
         try:
-            fh = logging.FileHandler(path, encoding='utf-8')
+            fh = logging.FileHandler(path, encoding="utf-8")
             fh.setLevel(logging.INFO)
             fh.setFormatter(fmt)
             logger.addHandler(fh)
@@ -97,7 +100,7 @@ def get_completed_workloads(perf_dir: str) -> set:
 
 
 def load_sampling_data(sampling_log):
-    with open(sampling_log, 'r') as f:
+    with open(sampling_log, "r") as f:
         lines = f.readlines()
 
     records = []

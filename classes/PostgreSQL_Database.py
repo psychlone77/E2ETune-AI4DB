@@ -1,3 +1,5 @@
+import subprocess
+
 from classes.base_classes.Database import Database
 from classes.base_classes.Knob_Config import KnobConfig
 from classes.base_classes.Workload_Runner import BenchmarkTask
@@ -17,13 +19,13 @@ class PostgresSQLDatabase(Database):
 
     def __init__(self, db_config: DatabaseConfig, log_path: Optional[Path] = None):
         self.db_config: DatabaseConfig = db_config
-        self.logger = utils.get_logger(log_path) if log_path is not None else None
-        self.connection = self.connect(3)
+        self.logger = utils.get_logger(log_path)
+        self.connect(3)
 
     def connect(
         self,
         max_retries: int = 3,
-    ) -> psycopg2.extensions.connection | None:
+    ) -> None:
         for attempt in range(1, max_retries + 1):
             try:
                 connection = psycopg2.connect(
@@ -34,7 +36,7 @@ class PostgresSQLDatabase(Database):
                     port=self.db_config.port,
                 )
                 self.logger.info("Connection established.")
-                return connection
+                self.connection = connection
             except psycopg2.OperationalError as e:
                 self.logger.error(f"Connection attempt {attempt} failed: {e}")
                 if attempt == max_retries:
@@ -49,6 +51,7 @@ class PostgresSQLDatabase(Database):
         with self.connection.cursor() as cursor:
             for knob in knob_config.knobs:
                 cursor.execute(f"ALTER SYSTEM SET {knob.name} TO '{knob.value}';")
+                self.restart_db()
             self.connection.commit()
         self.logger.info("Database knobs have been set.")
 
@@ -167,11 +170,63 @@ class PostgresSQLDatabase(Database):
                 cursor.close()
         self.logger.info("Database knobs have been reset.")
 
+    def restart_db(self, stop_timeout: int = 30, start_timeout: int = 30) -> bool:
+        try:
+            print(f"Stopping PostgreSQL {self.pg_version}/{self.cluster_name}...")
+            subprocess.run(
+                [
+                    "sudo",
+                    "pg_ctlcluster",
+                    str(self.pg_version),
+                    self.cluster_name,
+                    "stop",
+                ],
+                check=True,
+                timeout=stop_timeout,
+            )
+            time.sleep(2)
+
+            print(f"Starting PostgreSQL {self.pg_version}/{self.cluster_name}...")
+            result = subprocess.run(
+                [
+                    "sudo",
+                    "pg_ctlcluster",
+                    str(self.pg_version),
+                    self.cluster_name,
+                    "start",
+                ],
+                capture_output=True,
+                text=True,
+                timeout=start_timeout,
+            )
+
+            if result.returncode != 0:
+                print("Start failed. Removing auto.conf and retrying...")
+                self.remove_auto_conf()
+                time.sleep(1)
+                subprocess.run(
+                    [
+                        "sudo",
+                        "pg_ctlcluster",
+                        str(self.pg_version),
+                        self.cluster_name,
+                        "start",
+                    ],
+                    check=True,
+                    timeout=start_timeout,
+                )
+
+            return True
+        except Exception as e:
+            print(f"Failed to restart PostgreSQL: {e}")
+            return False
+
     def run_workload(self, workload_task: BenchmarkTask) -> tuple[float, float]:
         num_queries = 0
         with open(workload_task.workload_path, "r") as f:
             sql_script = f.read()
             num_queries = sql_script.count(";")
+        self.set_knobs(workload_task.knob_config)
         with self.connection.cursor() as cursor:
             try:
                 start = time.perf_counter()
@@ -185,7 +240,7 @@ class PostgresSQLDatabase(Database):
                     (end - start) / num_queries if num_queries > 0 else 0.0
                 )
                 throughput_ps = num_queries / (end - start) if end > start else 0.0
-                return -average_latency, throughput_ps
+                return average_latency, -throughput_ps
             except Exception as e:
                 self.logger.error(f"Error executing workload: {e}")
                 self.connection.rollback()
