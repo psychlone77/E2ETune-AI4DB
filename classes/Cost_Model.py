@@ -127,7 +127,7 @@ class CostModel(WorkloadRunner):
         # 3. Predict tps (assuming prediction is TPS)
         tps = self.predict(knob_values, workload_feature_vector)
         
-        # 4. Return tuple (-latency, throughput)
+        # 4. Return tuple (latency, -throughput)
         # Set a dummy latency if optimizing for throughput
-        latency = (1000.0 / tps) if tps > 0 else 1000.0
-        return -latency, tps
+        latency = (1.0 / tps) if tps > 0 else 0
+        return latency, -tps
