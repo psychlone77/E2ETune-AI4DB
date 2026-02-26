@@ -2,8 +2,8 @@ import json
 import os
 
 from classes.base_classes.Knob_Config import KnobConfig
-from classes.Tuner import Tuner
 from classes.base_classes.Script_Config import TuningConfig
+from classes.base_classes.Tuner import Tuner
 from classes.base_classes.Workload_Runner import BenchmarkTask, WorkloadRunner
 from classes.base_classes.Knob_Settings import KnobSettingsSet
 from typing import List, Optional, Literal
@@ -33,7 +33,7 @@ class HEBOTuner(Tuner):
         self.workload_task = workload_task
         self.knob_settings = knob_settings
         self.output_dir = output_dir
-        self.logger = utils.get_logger(log_path) if log_path is not None else None
+        self.logger = utils.get_logger(log_path)
 
     @staticmethod
     def _get_tunable_knobs(config: KnobConfig, params) -> pd.DataFrame:

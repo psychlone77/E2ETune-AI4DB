@@ -2,6 +2,8 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Dict, Optional
+
+from classes.base_classes.Internal_Metrics import InternalMetrics
 from classes.base_classes.Knob_Config import KnobConfig
 
 
@@ -14,7 +16,7 @@ class BenchmarkTask:
     workload_path: Path
     knob_config: KnobConfig
     query_plans: Optional[Dict[str, Any]] = None
-    internal_metrics: Optional[Dict[str, Any]] = None
+    internal_metrics: InternalMetrics = None
 
 
 class WorkloadRunner(ABC):
@@ -26,17 +28,17 @@ class WorkloadRunner(ABC):
 
     @abstractmethod
     def run_workload(self, workload_task: BenchmarkTask) -> tuple[float, float]:
-        """Run the workload with the given configuration and return the negative average latency and throughput.
+        """Run the workload with the given configuration and return the average latency and the negative throughput.
         Args:
             workload_task: The BenchmarkTask containing all necessary information to run the workload.
         Returns:
-            A tuple containing the [-average_latency, throughput_ps] performance metrics.
+            A tuple containing the [average_latency, -throughput_ps] performance metrics.
 
         Example usage:
         ```
         workload_task = BenchmarkTask(...)
         runner = WorkloadRunner()
         average_latency, throughput_ps = runner.run_workload(workload_task)
-        print(f"average_latency: {average_latency}, Throughput_ps: {throughput_ps}")
+        print(f"average_latency: {average_latency}, -Throughput_ps: {throughput_ps}")
         """
         pass
