@@ -1,6 +1,5 @@
-from abc import ABC, abstractmethod
-from classes.Workload_Runner import BenchmarkTask
-from classes.Workload_Runner import WorkloadRunner
+from classes.base_classes.Workload_Runner import BenchmarkTask
+from classes.base_classes.Workload_Runner import WorkloadRunner
 
 
 class CostModel(WorkloadRunner):
