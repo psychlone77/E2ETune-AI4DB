@@ -5,12 +5,10 @@ from typing import List, Dict, Any
 
 from sklearn.preprocessing import StandardScaler
 
+from classes.base_classes.Knob_Settings import KnobSettingsSet
 from classes.base_classes.Workload_Runner import BenchmarkTask, WorkloadRunner
 from classes.base_classes.Surrogate_Strategy import SurrogateStrategy
 
-
-# --- CORE CLASS: COST MODEL ---
-# Orchestrates data processing, feature engineering, and model management
 
 class CostModel(WorkloadRunner):
     """
@@ -20,14 +18,15 @@ class CostModel(WorkloadRunner):
     It implements the WorkloadRunner interface to act as a physical Database drop-in replacement.
     """
     
-    def __init__(self, strategy: SurrogateStrategy, knob_config_path: str):
+    def __init__(self, strategy: SurrogateStrategy, knob_settings: KnobSettingsSet):
         self.strategy = strategy
-        self.knob_config = self._load_json(knob_config_path)
+        self.knob_settings = knob_settings
         self.scaler = StandardScaler()
         self.is_trained = False
-        self.workload_features = {} # Should be populated externally for predictions
+        self.workload_features = {}
         
-    def _load_json(self, path: str) -> Dict:
+    @staticmethod
+    def _load_json(path: str) -> Dict:
         with open(path, 'r') as f:
             return json.load(f)
 
@@ -48,7 +47,7 @@ class CostModel(WorkloadRunner):
         """
         Combines normalized knobs and workload features into a training matrix.
         """
-        X, y = [], []
+        x, y = [], []
         for sample in samples:
             # 1. Extract and normalize knobs
             knob_part = self.preprocess_knobs(sample)
@@ -59,20 +58,20 @@ class CostModel(WorkloadRunner):
             
             # 3. Combine parts
             full_vector = knob_part + feature_part
-            X.append(full_vector)
+            x.append(full_vector)
             y.append(sample.get('tps', 0.0))
             
-        return np.array(X), np.array(y)
+        return np.array(x), np.array(y)
 
     def train(self, samples: List[Dict], workload_features: Dict[str, List[float]]):
         """Trains the underlying surrogate strategy."""
-        X, y = self.prepare_training_data(samples, workload_features)
+        x, y = self.prepare_training_data(samples, workload_features)
         
         # Scale features for better performance (especially for non-tree models)
-        X_scaled = self.scaler.fit_transform(X)
+        x_scaled = self.scaler.fit_transform(x)
         
-        print(f"Training cost model on {len(X)} samples...")
-        self.strategy.train(X_scaled, y)
+        print(f"Training cost model on {len(x)} samples...")
+        self.strategy.train(x_scaled, y)
         self.is_trained = True
         
     def predict(self, knob_values: Dict[str, Any], workload_feature_vector: List[float]) -> float:
