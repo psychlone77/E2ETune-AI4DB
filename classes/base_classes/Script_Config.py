@@ -48,25 +48,23 @@ class TuningConfig:
 
     Attributes:
         method: Name of the tuning method (e.g., 'hebo', 'random').
+        iterations: Number of tuning iterations to run.
         sample_num: Number of samples to draw during tuning.
-        suggest_num: Number of suggestions to propose each iteration.
         early_stop_plateau: Number of iterations without improvement
             before early stopping.
     """
 
     method: str
+    iterations: int
     sample_num: int
-    suggest_num: int
-    early_stop_plateau: int
 
     @classmethod
     def from_dict(cls, config: Dict[str, Any]) -> "TuningConfig":
         """Create a TuningConfig instance from dictionary."""
         return cls(
             method=config["method"],
+            iterations=int(config["iterations"]),
             sample_num=int(config["sample_num"]),
-            suggest_num=int(config["suggest_num"]),
-            early_stop_plateau=int(config["early_stop_plateau"]),
         )
 
 

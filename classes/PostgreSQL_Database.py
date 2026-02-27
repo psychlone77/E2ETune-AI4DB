@@ -38,23 +38,54 @@ class PostgresSQLDatabase(Database):
                 )
                 self.logger.info("Connection established.")
                 self.connection = connection
+                return
             except psycopg2.OperationalError as e:
                 self.logger.error(f"Connection attempt {attempt} failed: {e}")
+                
+                # Try to start PostgreSQL service if connection failed
+                if attempt < max_retries:
+                    self.logger.info("Attempting to start PostgreSQL service...")
+                    try:
+                        subprocess.run(
+                            ["sudo", "systemctl", "start", "postgresql"],
+                            check=True,
+                            timeout=30,
+                            capture_output=True,
+                            text=True
+                        )
+                        self.logger.info("PostgreSQL service started. Waiting for it to be ready...")
+                        time.sleep(3)
+                    except subprocess.CalledProcessError as start_error:
+                        self.logger.warning(f"Failed to start PostgreSQL service: {start_error}")
+                    except Exception as start_error:
+                        self.logger.warning(f"Error starting PostgreSQL service: {start_error}")
+                
                 if attempt == max_retries:
                     self.logger.error(
                         "Max retries reached. Could not connect to the database."
                     )
                     raise ConnectionError("Could not connect to the database.")
+                
+                time.sleep(2)
         return None
 
     def set_knobs(self, knob_config: KnobConfig):
         """Set the database configuration knobs based on the provided knob configuration."""
-        with self.connection.cursor() as cursor:
-            for knob in knob_config.knobs:
-                cursor.execute(f"ALTER SYSTEM SET {knob.name} TO '{knob.value}';")
-                self.restart_db()
-            self.connection.commit()
-        self.logger.info("Database knobs have been set.")
+        old_autocommit = self.connection.autocommit
+        try:
+            # ALTER SYSTEM cannot run inside a transaction block
+            self.connection.autocommit = True
+            with self.connection.cursor() as cursor:
+                for knob in knob_config.knobs:
+                    cursor.execute(f"ALTER SYSTEM SET {knob.name} = %s;", (knob.value,))
+            
+            # Restart DB to apply changes
+            if not self.restart_db():
+                self.logger.warning("Database restart failed - configuration may be invalid. Continuing with previous/default settings.")
+            else:
+                self.logger.info("Database knobs have been set and DB restarted successfully.")
+        finally:
+            self.connection.autocommit = old_autocommit
 
     def fetch_internal_metrics(self) -> InternalMetrics:
         """Fetch internal metrics from the database."""
@@ -176,6 +207,8 @@ class PostgresSQLDatabase(Database):
             pg_ver = str(self.db_config.pg_version)
             cluster = self.db_config.cluster_name
             base_cmd = ["sudo", "pg_ctlcluster", pg_ver, cluster]
+            data_dir = self.db_config.data_path
+            auto_conf_path = f"{data_dir}/postgresql.auto.conf"
 
             print(f"Stopping PostgreSQL {pg_ver}/{cluster}...")
             subprocess.run(base_cmd + ["stop"], check=True, timeout=stop_timeout)
@@ -190,13 +223,31 @@ class PostgresSQLDatabase(Database):
             )
 
             if result.returncode != 0:
-                print(f"Start failed: {result.stderr}. Removing auto.conf and retrying...")
+                print(f"Start failed: {result.stderr}")
+                print(f"Removing auto.conf and retrying...")
+                
+                # Remove the auto.conf file that contains the problematic settings
+                try:
+                    subprocess.run(
+                        ["sudo", "rm", "-f", auto_conf_path],
+                        check=True,
+                        timeout=5
+                    )
+                    print(f"Removed {auto_conf_path}")
+                except Exception as e:
+                    print(f"Failed to remove auto.conf: {e}")
+                
                 time.sleep(1)
-                subprocess.run(
+                result = subprocess.run(
                     base_cmd + ["start"],
-                    check=True,
+                    capture_output=True,
+                    text=True,
                     timeout=start_timeout,
                 )
+                
+                if result.returncode != 0:
+                    print(f"Second start attempt also failed: {result.stderr}")
+                    return False
 
             self.connect()
             return True
@@ -209,8 +260,8 @@ class PostgresSQLDatabase(Database):
         with open(workload_task.workload_path, "r") as f:
             sql_script = f.read()
             num_queries = sql_script.count(";")
-        self.logger.info(f"Executing workload {workload_task.workload_path}...")
         self.set_knobs(workload_task.knob_config)
+        self.logger.info(f"Executing workload {workload_task.workload_path}...")
         with self.connection.cursor() as cursor:
             try:
                 start = time.perf_counter()

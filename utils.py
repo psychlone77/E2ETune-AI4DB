@@ -79,21 +79,29 @@ def natural_sort(items: list) -> list:
     return sorted(items, key=natural_keys)
 
 
-def get_completed_workloads(perf_dir: str) -> set:
-    """Scan `perf_dir` for records and return a set of completed workload identifiers.
-    Returns a set of strings that can be matched against workload filenames
-    (e.g. 'job_0' or 'job_0.wg').
+def get_completed_workloads(dbengine: str, servername: str, benchmark_name: str) -> set:
+    """Scan benchmark directory for workload folders containing performance_record.txt.
+    Returns a set of completed workload identifiers (e.g. 'job_0', 'job_1').
     """
     completed = set()
-    if not perf_dir:
-        return completed
+    perf_dir = Path("data") / dbengine / servername / benchmark_name
+    print(f"Checking for completed workloads in: {perf_dir}")
+    
     try:
-        if not os.path.isdir(perf_dir):
+        if not perf_dir.exists() or not perf_dir.is_dir():
             return completed
-        for fname in os.listdir(perf_dir):
-            name_no_ext = os.path.splitext(fname)[0]
-            completed.add(name_no_ext)
-    except Exception:
+        
+        # Iterate through subdirectories in the benchmark folder
+        for item in perf_dir.iterdir():
+            if item.is_dir():
+                # Check if performance_record.txt exists in this workload folder
+                perf_record_file = item / "performance_record.txt"
+                if perf_record_file.exists():
+                    # Add the workload name (folder name) to completed set
+                    completed.add(item.name)
+                    print(f"  Found completed workload: {item.name}")
+    except Exception as e:
+        print(f"Error scanning for completed workloads: {e}")
         return completed
 
     return completed

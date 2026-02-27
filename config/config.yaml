@@ -1,23 +1,22 @@
 database:
   host: localhost
-  port: 5555
+  port: 5432
   user: root
   password: databasefyp
-  name: ssb
+  name: imdb
   data_path: /var/lib/postgresql/12/main
   pg_version: 12
   cluster_name: main
 
 tuning:
   method: HEBO
+  iterations: 100
   sample_num: 5
-  suggest_num: 100
-  early_stop_plateau: 40
   config: knob_config/knob_config.json
   
 benchmark:
   type: olap
-  name: tpch
+  name: job
   path: ./olap_workloads
   workload_execution: logs/performance/workload_execution.log
   performance_record_path: logs/performance_record
