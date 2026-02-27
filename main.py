@@ -1,193 +1,221 @@
+import argparse
 import os
+import yaml
 from datetime import datetime
-
-from tuner import run_tuning
-from config import parse_config
-from surrogate.train_surrogate import train_surrogate
-import utils
-from get_workload_features import process_olap_workload_features
 from pathlib import Path
-import logging
+
+import utils
+from classes.base_classes.Script_Config import ScriptConfig
+from classes.base_classes.Knob_Settings import KnobSettingsSet
+from classes.base_classes.Workload_Runner import BenchmarkTask
+from classes.HEBO_Tuner import HEBOTuner
+from classes.PostgreSQL_Database import PostgresSQLDatabase
+from classes.Cost_Model import CostModel
+from classes.base_classes.Surrogate_Strategy import SurrogateFactory
+from classes.Global_Vars import THROUGHPUT
+from get_workload_features import process_olap_workload_features
+
+REAL_TUNING_LIMIT = 13
+
+
+def build_tuner(
+    workload_runner,
+    script_config: ScriptConfig,
+    knob_settings: KnobSettingsSet,
+    workload_path: Path,
+    output_dir: Path,
+    log_path: Path,
+) -> HEBOTuner:
+    """Construct an HEBOTuner for a single workload."""
+    return HEBOTuner(
+        workload_runner=workload_runner,
+        tuning_config=script_config.tuning_config,
+        tuning_parameter=THROUGHPUT,
+        workload_task=BenchmarkTask(
+            workload_path=workload_path,
+            knob_config=knob_settings.get_default_knob_settings(),
+        ),
+        knob_settings=knob_settings,
+        output_dir=output_dir,
+        log_path=log_path,
+    )
 
 
 if __name__ == "__main__":
-    # Load configuration from config.ini
-    args = parse_config.parse_args("config/config.ini")
+    parser = argparse.ArgumentParser(description="E2ETune: Database Tuning System")
+    parser.add_argument(
+        "--config",
+        default="config/config.yaml",
+        help="Path to YAML configuration file (default: config/config.yaml)",
+    )
+    cli_args = parser.parse_args()
 
-    # Extract configuration values
-    host = args["database_config"]["host"]
-    database = args["database_config"]["database"]
-    data_path = args["database_config"]["data_path"]
-    benchmark = args["benchmark_config"]["benchmark"]
-    workload_base_path = args["benchmark_config"]["workload_path"]
+    # Load raw YAML to access fields not mapped into ScriptConfig dataclasses
+    with open(cli_args.config, "r") as f:
+        raw_config = yaml.safe_load(f)
+
+    # Load typed configuration into ScriptConfig
+    script_config = ScriptConfig.from_yaml_file(cli_args.config)
+    db_config = script_config.database_config
+    tuning_config = script_config.tuning_config
+    benchmark_config = script_config.benchmark_config
+    surrogate_config = script_config.surrogate_config
+
+    # Knob config path lives under tuning.config in the YAML
+    knob_config_path = raw_config.get("tuning", {}).get(
+        "config", "knob_config/knob_config.json"
+    )
+    knob_settings = KnobSettingsSet.from_json_file(knob_config_path)
 
     # Setup main logger
-    main_log_path = f"logs/tuning/main_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+    main_log_path = Path(
+        f"logs/tuning/main_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+    )
     logger = utils.get_logger(main_log_path, name="Main")
-    print(logger)
     logger.info("=" * 100)
     logger.info("E2ETune: End-to-End Database Tuning System")
     logger.info("=" * 100)
-    logger.info(f"Configuration file: config/config.ini")
-    logger.info(f"Host: {host}")
-    logger.info(f"Database: {database}")
-    logger.info(f"Data Path: {data_path}")
-    logger.info(f"Benchmark: {benchmark}")
-    logger.info(f"Workload Path: {workload_base_path}")
+    logger.info(f"Config: {cli_args.config}")
+    logger.info(f"Host: {db_config.host}  DB: {db_config.name}")
+    logger.info(f"Benchmark: {benchmark_config.name}  Type: {benchmark_config.type}")
+    logger.info(f"Workload path: {benchmark_config.path}")
     logger.info("=" * 100)
 
-    # Discover workloads from configured path
+    # Discover workloads
+    workload_base_path = benchmark_config.path
     if not os.path.isdir(workload_base_path):
         logger.error(f"Workload path does not exist: {workload_base_path}")
-        logger.error(
-            "Please check 'workload_path' in [benchmark_config] section of config.ini"
-        )
         exit(1)
 
     all_files = os.listdir(workload_base_path)
-
-    if args["benchmark_config"].get("type", "olap") == "oltp":
+    if benchmark_config.type == "oltp":
         workloads = [
-            f for f in all_files if f.__contains__(benchmark) and f.endswith(".xml")
+            f for f in all_files if benchmark_config.name in f and f.endswith(".xml")
         ]
     else:
-        all_files = os.listdir(workload_base_path)
         workloads = [
-            f for f in all_files if f.startswith(benchmark) and f.endswith(".wg")
+            f
+            for f in all_files
+            if f.startswith(benchmark_config.name) and f.endswith(".wg")
         ]
 
-    # Sort workloads in natural (numeric-aware) order, e.g. job_2.wg before job_10.wg
     workloads = utils.natural_sort(workloads)
-
     total_workloads = len(workloads)
-    logger.info(f"Found {total_workloads} workloads matching prefix '{benchmark}'")
+    logger.info(f"Found {total_workloads} workloads matching '{benchmark_config.name}'")
 
-    # Check performance records to skip already-run workloads (resume support)
-    perf_dir = args["benchmark_config"].get(
-        "performance_record_path", "logs/performance_record"
-    )
-    completed = utils.get_completed_workloads(perf_dir)
+    # Resume support: skip already-completed workloads
+    completed = utils.get_completed_workloads(benchmark_config.performance_record_path)
     if completed:
-        logger.info(f"Found {len(completed)} completed workload records in: {perf_dir}")
+        logger.info(
+            f"Found {len(completed)} completed workloads in: {benchmark_config.performance_record_path}"
+        )
 
-    # Determine workload subset to tune (don't filter by completed yet)
-    if total_workloads < 10:
-        workloads_to_tune = workloads
-        logger.info(f"Processing all {len(workloads)} workloads")
-    else:
-        workloads_to_tune = workloads
-        logger.info(f"Processing first 13 of {len(workloads)} workloads")
+    successful, failed, skipped = 0, 0, 0
 
-    # Tune workloads
-    successful = 0
-    failed = 0
-    skipped = 0
+    # ------------------------------------------------------------------
+    # Phase 1: Real database execution (first REAL_TUNING_LIMIT workloads)
+    # ------------------------------------------------------------------
+    logger.info(f"Phase 1: Real execution – up to {REAL_TUNING_LIMIT} workloads")
+    db = PostgresSQLDatabase(db_config=db_config, log_path=main_log_path)
 
-    for idx, workload in enumerate(workloads_to_tune[:13]):
-        # Check if this workload is already completed
+    for idx, workload in enumerate(workloads[:REAL_TUNING_LIMIT]):
         workload_id = os.path.splitext(workload)[0]
-        if (
-            workload_id in completed
-            or workload in completed
-            or os.path.basename(workload) in completed
-        ):
+        if workload_id in completed or workload in completed:
             skipped += 1
             logger.info(
-                f"[Workload {idx}/{len(workloads_to_tune)}] Skipping already completed: {workload}"
+                f"[Phase-1 {idx + 1}/{REAL_TUNING_LIMIT}] Skipping completed: {workload}"
             )
             continue
 
-        args["benchmark_config"]["workload_path"] = os.path.join(
-            workload_base_path, workload
+        workload_path = Path(workload_base_path) / workload
+        output_dir = Path("data/hebo_runs") / benchmark_config.name / workload_id
+        log_path = Path(
+            f"logs/tuning/{workload_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
         )
-        args["benchmark_config"]["workload_name"] = workload
 
         try:
-            logger.info("-" * 100)
-            logger.info(
-                f"[Workload {idx}/{len(workloads_to_tune)}] Starting tuning for: {workload}"
+            logger.info("-" * 80)
+            logger.info(f"[Phase-1 {idx + 1}/{REAL_TUNING_LIMIT}] Tuning: {workload}")
+            tuner = build_tuner(
+                db, script_config, knob_settings, workload_path, output_dir, log_path
             )
-            logger.info("-" * 100)
-
-            run_tuning(args, False)
-
+            tuner.tune()
             successful += 1
             logger.info(
-                f"[Workload {idx}/{len(workloads_to_tune)}] Successfully completed tuning for: {workload}"
+                f"[Phase-1 {idx + 1}/{REAL_TUNING_LIMIT}] Completed: {workload}"
             )
-
         except Exception as e:
             failed += 1
             logger.error(
-                f"[Workload {idx}/{len(workloads_to_tune)}] Error tuning {workload}: {e}",
+                f"[Phase-1 {idx + 1}/{REAL_TUNING_LIMIT}] Error tuning {workload}: {e}",
                 exc_info=True,
             )
-
-            # For larger workload sets, stop on first failure
             if total_workloads >= 10:
                 logger.error("Stopping due to error (large workload set)")
                 break
-            else:
-                logger.warning("Continuing to next workload (small workload set)")
+
+    # ------------------------------------------------------------------
+    # Phase 2: Surrogate model execution (workloads beyond REAL_TUNING_LIMIT)
+    # ------------------------------------------------------------------
+    if total_workloads > REAL_TUNING_LIMIT:
+        logger.info("=" * 80)
+        logger.info("Phase 2: Surrogate-based tuning")
+        logger.info("=" * 80)
+
+        strategy = SurrogateFactory.create_strategy("tree_ensemble")
+        cost_model = CostModel(strategy=strategy, knob_settings=knob_settings)
+        cost_model.load_model(surrogate_config.model_path)
+
+        wk_feature_dir = Path("data/workload_features") / benchmark_config.name
+
+        for idx, workload in enumerate(workloads[REAL_TUNING_LIMIT:]):
+            workload_id = os.path.splitext(workload)[0]
+            if workload_id in completed or workload in completed:
+                skipped += 1
+                logger.info(f"[Phase-2 {idx + 1}] Skipping completed: {workload}")
                 continue
 
-    for idx, workload in enumerate(workloads_to_tune[13:]):
-        args["benchmark_config"]["tool"] = "surrogate"
-        wk_output_dir = Path("workload_features") / benchmark
-        workload_id = os.path.splitext(workload)[0]
-        if (
-            workload_id in completed
-            or workload in completed
-            or os.path.basename(workload) in completed
-        ):
-            skipped += 1
-            logger.info(
-                f"[Workload {idx}/{len(workloads_to_tune)}] Skipping already completed: {workload}"
+            workload_path = Path(workload_base_path) / workload
+            output_dir = Path("data/hebo_runs") / benchmark_config.name / workload_id
+            log_path = Path(
+                f"logs/tuning/{workload_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
             )
-            continue
 
-        # Process OLAP workload features
-        process_olap_workload_features(
-            workload_file=os.path.join(workload_base_path, workload),
-            benchmark_name=benchmark,
-            output_dir=wk_output_dir,
-            workload_name=os.path.splitext(workload)[0],
-        )
-
-        args["benchmark_config"]["workload_path"] = os.path.join(
-            workload_base_path, workload
-        )
-        args["benchmark_config"]["workload_name"] = workload
-
-        try:
-            logger.info("-" * 100)
-            logger.info(
-                f"[Workload {idx+13}/{len(workloads_to_tune)}] Starting tuning for: {workload} with surrogate"
+            # Extract workload features required by the cost model
+            process_olap_workload_features(
+                workload_file=str(workload_path),
+                benchmark_name=benchmark_config.name,
+                output_dir=wk_feature_dir,
+                workload_name=workload_id,
             )
-            logger.info("-" * 100)
 
-            run_tuning(args, True)
-
-            successful += 1
-            logger.info(
-                f"[Workload {idx+13}/{len(workloads_to_tune)}] Successfully completed tuning for: {workload} with surrogate"
-            )
-        except Exception as e:
-            failed += 1
-            logger.error(
-                f"[Workload {idx+13}/{len(workloads_to_tune)}] Error tuning {workload} with surrogate: {e}",
-                exc_info=True,
-            )
-            continue
+            try:
+                logger.info("-" * 80)
+                logger.info(f"[Phase-2 {idx + 1}] Tuning (surrogate): {workload}")
+                tuner = build_tuner(
+                    cost_model,
+                    script_config,
+                    knob_settings,
+                    workload_path,
+                    output_dir,
+                    log_path,
+                )
+                tuner.tune()
+                successful += 1
+                logger.info(f"[Phase-2 {idx + 1}] Completed: {workload}")
+            except Exception as e:
+                failed += 1
+                logger.error(
+                    f"[Phase-2 {idx + 1}] Error tuning {workload}: {e}",
+                    exc_info=True,
+                )
 
     # Summary
     logger.info("=" * 100)
     logger.info("TUNING SUMMARY")
     logger.info("=" * 100)
-    logger.info(f"Total workloads processed: {len(workloads_to_tune)}")
-    logger.info(f"Successfully tuned: {successful}")
-    logger.info(f"Skipped (already completed): {skipped}")
-    logger.info(f"Failed: {failed}")
+    logger.info(f"Total workloads: {total_workloads}")
+    logger.info(f"Successful: {successful}  Skipped: {skipped}  Failed: {failed}")
     logger.info("=" * 100)
     logger.info("E2ETune session completed")
     logger.info("=" * 100)

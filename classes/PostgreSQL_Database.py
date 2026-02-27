@@ -18,6 +18,7 @@ class PostgresSQLDatabase(Database):
     """
 
     def __init__(self, db_config: DatabaseConfig, log_path: Optional[Path] = None):
+        self.connection = None
         self.db_config: DatabaseConfig = db_config
         self.logger = utils.get_logger(log_path)
         self.connect(3)
@@ -172,50 +173,32 @@ class PostgresSQLDatabase(Database):
 
     def restart_db(self, stop_timeout: int = 30, start_timeout: int = 30) -> bool:
         try:
-            print(f"Stopping PostgreSQL {self.pg_version}/{self.cluster_name}...")
-            subprocess.run(
-                [
-                    "sudo",
-                    "pg_ctlcluster",
-                    str(self.pg_version),
-                    self.cluster_name,
-                    "stop",
-                ],
-                check=True,
-                timeout=stop_timeout,
-            )
+            pg_ver = str(self.db_config.pg_version)
+            cluster = self.db_config.cluster_name
+            base_cmd = ["sudo", "pg_ctlcluster", pg_ver, cluster]
+
+            print(f"Stopping PostgreSQL {pg_ver}/{cluster}...")
+            subprocess.run(base_cmd + ["stop"], check=True, timeout=stop_timeout)
             time.sleep(2)
 
-            print(f"Starting PostgreSQL {self.pg_version}/{self.cluster_name}...")
+            print(f"Starting PostgreSQL {pg_ver}/{cluster}...")
             result = subprocess.run(
-                [
-                    "sudo",
-                    "pg_ctlcluster",
-                    str(self.pg_version),
-                    self.cluster_name,
-                    "start",
-                ],
+                base_cmd + ["start"],
                 capture_output=True,
                 text=True,
                 timeout=start_timeout,
             )
 
             if result.returncode != 0:
-                print("Start failed. Removing auto.conf and retrying...")
-                self.remove_auto_conf()
+                print(f"Start failed: {result.stderr}. Removing auto.conf and retrying...")
                 time.sleep(1)
                 subprocess.run(
-                    [
-                        "sudo",
-                        "pg_ctlcluster",
-                        str(self.pg_version),
-                        self.cluster_name,
-                        "start",
-                    ],
+                    base_cmd + ["start"],
                     check=True,
                     timeout=start_timeout,
                 )
 
+            self.connect()
             return True
         except Exception as e:
             print(f"Failed to restart PostgreSQL: {e}")
@@ -226,6 +209,7 @@ class PostgresSQLDatabase(Database):
         with open(workload_task.workload_path, "r") as f:
             sql_script = f.read()
             num_queries = sql_script.count(";")
+        self.logger.info(f"Executing workload {workload_task.workload_path}...")
         self.set_knobs(workload_task.knob_config)
         with self.connection.cursor() as cursor:
             try:
