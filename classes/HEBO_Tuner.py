@@ -56,16 +56,15 @@ class HEBOTuner(Tuner):
         self.logger.info(f"Number of iterations: {self.tuning_config.iterations}")
         self.logger.info(f"Sample size: {self.tuning_config.sample_num}")
         self.logger.info("=" * 80)
-        
+
         params = self._make_params()
         self.logger.info(f"Created parameter space with {len(params)} tunable knobs")
-        
-        os.makedirs(self.output_dir, exist_ok=True)
+
         self.logger.info(f"Created output directory: {self.output_dir}")
-        
+
         design_space = DesignSpace().parse(params)
         self.logger.info("Initialized HEBO design space")
-        
+
         hebo = HEBO(
             design_space,
             rand_sample=self.tuning_config.sample_num,
@@ -91,8 +90,10 @@ class HEBOTuner(Tuner):
         default_performance = self.workload_runner.run_workload(self.workload_task)[
             self.tuning_parameter.value
         ]
-        self.logger.info(f"Default configuration performance: {default_performance:.6f}")
-        
+        self.logger.info(
+            f"Default configuration performance: {default_performance:.6f}"
+        )
+
         default_config_df = self._get_tunable_knobs(default_config, params)
         default_performance_array = self._get_perf_ndarray(default_performance)
 
@@ -104,28 +105,36 @@ class HEBOTuner(Tuner):
 
         best_config: KnobConfig = default_config
         best_objective: float = default_performance
-        
-        super().save_tuning_history(history_file, default_config, default_performance, True)
+
+        super().save_tuning_history(
+            history_file, default_config, default_performance, True
+        )
         super().save_best_config(
-            best_config_file, 
+            best_config_file,
             self.tuning_parameter,
-            default_performance, 
+            default_performance,
             best_objective,
-            best_config, 
-            )
-        super().write_performance_record(performance_record_file, 0, self.tuning_parameter, default_performance, True)
+            best_config,
+        )
+        super().write_performance_record(
+            performance_record_file, 0, self.tuning_parameter, default_performance, True
+        )
         self.logger.info("Saved initial results to files")
         self.logger.info("-" * 80)
 
         try:
             for iteration in range(self.tuning_config.iterations):
-                self.logger.info(f"[HEBO Iteration {iteration + 1}/{self.tuning_config.iterations}]")
-                
+                self.logger.info(
+                    f"[HEBO Iteration {iteration + 1}/{self.tuning_config.iterations}]"
+                )
+
                 suggestion = hebo.suggest(n_suggestions=1)
                 config_dict = suggestion.iloc[0].to_dict()
-                
-                self.workload_task.knob_config = KnobConfig.from_dict(config_dict, self.knob_settings)
-                
+
+                self.workload_task.knob_config = KnobConfig.from_dict(
+                    config_dict, self.knob_settings
+                )
+
                 cur_objective = self.workload_runner.run_workload(self.workload_task)[
                     self.tuning_parameter.value
                 ]
@@ -136,16 +145,27 @@ class HEBOTuner(Tuner):
                 )
                 performance_array = self._get_perf_ndarray(cur_objective)
                 hebo.observe(config_df, performance_array)
-                
-                super().save_tuning_history(history_file, self.workload_task.knob_config, cur_objective)
-                super().write_performance_record(performance_record_file, iteration + 1, self.tuning_parameter, cur_objective)
-                
+
+                super().save_tuning_history(
+                    history_file, self.workload_task.knob_config, cur_objective
+                )
+                super().write_performance_record(
+                    performance_record_file,
+                    iteration + 1,
+                    self.tuning_parameter,
+                    cur_objective,
+                )
+
                 if cur_objective < best_objective:
-                    improvement = ((best_objective - cur_objective) / best_objective) * 100
-                    self.logger.info(f"✓ NEW BEST! Improved by {improvement:.2f}% (previous: {best_objective:.6f}, current: {cur_objective:.6f})")
+                    improvement = (
+                        (best_objective - cur_objective) / best_objective
+                    ) * 100
+                    self.logger.info(
+                        f"✓ NEW BEST! Improved by {improvement:.2f}% (previous: {best_objective:.6f}, current: {cur_objective:.6f})"
+                    )
                     best_config = self.workload_task.knob_config
                     best_objective = cur_objective
-                
+
                 self.logger.info("-" * 80)
 
         except Exception as e:
@@ -155,21 +175,25 @@ class HEBOTuner(Tuner):
                 best_config = self.knob_settings.get_default_knob_settings()
 
         super().save_best_config(
-            best_config_file, 
+            best_config_file,
             self.tuning_parameter,
-            default_performance, 
+            default_performance,
             best_objective,
-            best_config, 
+            best_config,
         )
         self.logger.info(f"Saved final best configuration to: {best_config_file}")
-        
+
         # Final summary
         self.logger.info("=" * 80)
         self.logger.info("HEBO Tuning Complete")
         self.logger.info(f"Best performance achieved: {best_objective:.6f}")
         if default_performance != 0:
-            total_improvement = ((default_performance - best_objective) / default_performance) * 100
-            self.logger.info(f"Total improvement over default: {total_improvement:.2f}%")
+            total_improvement = (
+                (default_performance - best_objective) / default_performance
+            ) * 100
+            self.logger.info(
+                f"Total improvement over default: {total_improvement:.2f}%"
+            )
         self.logger.info(f"Results saved to: {self.output_dir}")
         self.logger.info("=" * 80)
 
@@ -191,7 +215,7 @@ class HEBOTuner(Tuner):
                 params.append(
                     {
                         "name": knob.name,
-                        "type": "num", 
+                        "type": "num",
                         "lb": float(knob.min),
                         "ub": float(knob.max),
                     }

@@ -13,6 +13,9 @@ from classes.PostgreSQL_Database import PostgresSQLDatabase
 from classes.Cost_Model import CostModel
 from classes.base_classes.Surrogate_Strategy import SurrogateFactory
 from classes.Global_Vars import TuningParameter
+from classes.base_classes.Database import Database
+from classes.Default_Data_Collector import DefaultDataCollector
+
 # from get_workload_features import process_olap_workload_features
 
 REAL_TUNING_LIMIT = 13
@@ -25,7 +28,7 @@ def build_tuner(
     workload_path: Path,
     output_dir: Path,
     log_path: Path,
-    tuning_parameter: TuningParameter
+    tuning_parameter: TuningParameter,
 ) -> HEBOTuner:
     """Construct an HEBOTuner for a single workload."""
     return HEBOTuner(
@@ -109,15 +112,21 @@ if __name__ == "__main__":
             for f in all_files
             if f.startswith(benchmark_config.name) and f.endswith(".wg")
         ]
-        
-    tuning_parameter = TuningParameter.THROUGHPUT if benchmark_config.type == "oltp" else TuningParameter.LATENCY
+
+    tuning_parameter = (
+        TuningParameter.THROUGHPUT
+        if benchmark_config.type == "oltp"
+        else TuningParameter.LATENCY
+    )
 
     workloads = utils.natural_sort(workloads)
     total_workloads = len(workloads)
     logger.info(f"Found {total_workloads} workloads matching '{benchmark_config.name}'")
 
     # Resume support: skip already-completed workloads
-    completed = utils.get_completed_workloads(cli_args.dbengine, cli_args.servername, benchmark_config.name)
+    completed = utils.get_completed_workloads(
+        cli_args.dbengine, cli_args.servername, benchmark_config.name
+    )
     if completed:
         logger.info(
             f"Found {len(completed)} completed workloads in: {benchmark_config.performance_record_path}"
@@ -129,10 +138,11 @@ if __name__ == "__main__":
     # Phase 1: Real database execution (first REAL_TUNING_LIMIT workloads)
     # ------------------------------------------------------------------
     logger.info(f"Phase 1: Real execution – up to {REAL_TUNING_LIMIT} workloads")
-    db = PostgresSQLDatabase(db_config=db_config, log_path=main_log_path)
+    db: Database = PostgresSQLDatabase(db_config=db_config, log_path=main_log_path)
 
     for idx, workload in enumerate(workloads[:REAL_TUNING_LIMIT]):
-        if idx == 0: continue
+        if idx == 0:
+            continue
         workload_id = os.path.splitext(workload)[0]
         if workload_id in completed or workload in completed:
             skipped += 1
@@ -142,16 +152,38 @@ if __name__ == "__main__":
             continue
 
         workload_path = Path(workload_base_path) / workload
-        output_dir = Path("data") / cli_args.dbengine / cli_args.servername / benchmark_config.name / workload_id
+        output_dir = (
+            Path("data")
+            / cli_args.dbengine
+            / cli_args.servername
+            / benchmark_config.name
+            / workload_id
+        )
+        os.makedirs(output_dir, exist_ok=True)
         log_path = Path(
             f"logs/tuning/{workload_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
         )
+
+        ddc = DefaultDataCollector(
+            workload_path=workload_path,
+            db=db,
+            output_dir=output_dir,
+            knob_settings_set=knob_settings,
+            log_path=log_path,
+        )
+        ddc.collect()
 
         try:
             logger.info("-" * 80)
             logger.info(f"[Phase-1 {idx + 1}/{REAL_TUNING_LIMIT}] Tuning: {workload}")
             tuner = build_tuner(
-                db, script_config, knob_settings, workload_path, output_dir, log_path, tuning_parameter
+                db,
+                script_config,
+                knob_settings,
+                workload_path,
+                output_dir,
+                log_path,
+                tuning_parameter,
             )
             tuner.tune()
             successful += 1

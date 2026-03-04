@@ -7,7 +7,7 @@ from classes.base_classes.Knob_Config import KnobConfig
 from classes.base_classes.Workload_Runner import BenchmarkTask
 from classes.base_classes.Script_Config import DatabaseConfig
 from classes.base_classes.Internal_Metrics import InternalMetrics
-from typing import Optional, List, Dict, Any
+from typing import Any, Dict, List, Optional
 import utils
 import psycopg2
 import time
@@ -307,6 +307,7 @@ class PostgresSQLDatabase(Database):
                     )
                     cursor.execute(f"EXPLAIN (FORMAT JSON) {query}")
                     row = cursor.fetchone()
+                    self.connection.commit()
                     # EXPLAIN JSON result is a single JSON array; row[0] is that array
                     plan_json = row[0][0]  # [{"Plan": {...}}] -> take first element
                     formatted_plan = self._format_query_plan(plan_json)
