@@ -2,6 +2,7 @@ from classes.base_classes.Database import Database
 from classes.base_classes.Workload_Runner import BenchmarkTask
 from classes.base_classes.Internal_Metrics import InternalMetrics
 from classes.base_classes.Knob_Settings import KnobSettingsSet
+from classes.Workload_Features import WorkloadFeatureExtractor
 
 from typing import Any, Dict, List, Optional
 from pathlib import Path
@@ -62,11 +63,7 @@ class DefaultDataCollector:
             return []
 
     def _collect_workload_features(self) -> Dict[str, Any]:
-        # try:
-        #     return self.db.extract_workload_features()
-        # except Exception as e:
-        #     self.log_path.error(f"Error collecting workload features: {e}")
-        return {}
+        return WorkloadFeatureExtractor().extract(self.workload_path)
 
     def collect(self) -> None:
         self.log_path.info(
