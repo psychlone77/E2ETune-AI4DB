@@ -1,11 +1,13 @@
 import subprocess
+import re
+import json
 
 from classes.base_classes.Database import Database
 from classes.base_classes.Knob_Config import KnobConfig
 from classes.base_classes.Workload_Runner import BenchmarkTask
 from classes.base_classes.Script_Config import DatabaseConfig
 from classes.base_classes.Internal_Metrics import InternalMetrics
-from typing import Optional
+from typing import Optional, List, Dict, Any
 import utils
 import psycopg2
 import time
@@ -38,10 +40,10 @@ class PostgresSQLDatabase(Database):
                 )
                 self.logger.info("Connection established.")
                 self.connection = connection
-                return
+                return None
             except psycopg2.OperationalError as e:
                 self.logger.error(f"Connection attempt {attempt} failed: {e}")
-                
+
                 # Try to start PostgreSQL service if connection failed
                 if attempt < max_retries:
                     self.logger.info("Attempting to start PostgreSQL service...")
@@ -51,21 +53,27 @@ class PostgresSQLDatabase(Database):
                             check=True,
                             timeout=30,
                             capture_output=True,
-                            text=True
+                            text=True,
                         )
-                        self.logger.info("PostgreSQL service started. Waiting for it to be ready...")
+                        self.logger.info(
+                            "PostgreSQL service started. Waiting for it to be ready..."
+                        )
                         time.sleep(3)
                     except subprocess.CalledProcessError as start_error:
-                        self.logger.warning(f"Failed to start PostgreSQL service: {start_error}")
+                        self.logger.warning(
+                            f"Failed to start PostgreSQL service: {start_error}"
+                        )
                     except Exception as start_error:
-                        self.logger.warning(f"Error starting PostgreSQL service: {start_error}")
-                
+                        self.logger.warning(
+                            f"Error starting PostgreSQL service: {start_error}"
+                        )
+
                 if attempt == max_retries:
                     self.logger.error(
                         "Max retries reached. Could not connect to the database."
                     )
                     raise ConnectionError("Could not connect to the database.")
-                
+
                 time.sleep(2)
         return None
 
@@ -78,12 +86,16 @@ class PostgresSQLDatabase(Database):
             with self.connection.cursor() as cursor:
                 for knob in knob_config.knobs:
                     cursor.execute(f"ALTER SYSTEM SET {knob.name} = %s;", (knob.value,))
-            
+
             # Restart DB to apply changes
             if not self.restart_db():
-                self.logger.warning("Database restart failed - configuration may be invalid. Continuing with previous/default settings.")
+                self.logger.warning(
+                    "Database restart failed - configuration may be invalid. Continuing with previous/default settings."
+                )
             else:
-                self.logger.info("Database knobs have been set and DB restarted successfully.")
+                self.logger.info(
+                    "Database knobs have been set and DB restarted successfully."
+                )
         finally:
             self.connection.autocommit = old_autocommit
 
@@ -225,18 +237,16 @@ class PostgresSQLDatabase(Database):
             if result.returncode != 0:
                 print(f"Start failed: {result.stderr}")
                 print(f"Removing auto.conf and retrying...")
-                
+
                 # Remove the auto.conf file that contains the problematic settings
                 try:
                     subprocess.run(
-                        ["sudo", "rm", "-f", auto_conf_path],
-                        check=True,
-                        timeout=5
+                        ["sudo", "rm", "-f", auto_conf_path], check=True, timeout=5
                     )
                     print(f"Removed {auto_conf_path}")
                 except Exception as e:
                     print(f"Failed to remove auto.conf: {e}")
-                
+
                 time.sleep(1)
                 result = subprocess.run(
                     base_cmd + ["start"],
@@ -244,7 +254,7 @@ class PostgresSQLDatabase(Database):
                     text=True,
                     timeout=start_timeout,
                 )
-                
+
                 if result.returncode != 0:
                     print(f"Second start attempt also failed: {result.stderr}")
                     return False
@@ -280,3 +290,65 @@ class PostgresSQLDatabase(Database):
                 self.logger.error(f"Error executing workload: {e}")
                 self.connection.rollback()
                 return float("inf"), 0.0
+
+    def extract_query_plans(self, workload_path: Path) -> List[str]:
+        with open(workload_path, "r") as f:
+            sql_script = f.read()
+
+        workload_queries = [q.strip() for q in sql_script.split(";") if q.strip()]
+
+        plans: List[str] = []
+
+        with self.connection.cursor() as cursor:
+            for i, query in enumerate(workload_queries):
+                try:
+                    self.logger.info(
+                        f"Explaining query {i + 1}/{len(workload_queries)}"
+                    )
+                    cursor.execute(f"EXPLAIN (FORMAT JSON) {query}")
+                    row = cursor.fetchone()
+                    # EXPLAIN JSON result is a single JSON array; row[0] is that array
+                    plan_json = row[0][0]  # [{"Plan": {...}}] -> take first element
+                    formatted_plan = self._format_query_plan(plan_json)
+                    plans.append(formatted_plan)
+                except Exception as e:
+                    self.logger.error(f"Error explaining query {i + 1}: {e}")
+                    self.logger.debug(f"Query (truncated): {query[:100]}...")
+
+        return plans
+
+    @staticmethod
+    def _format_query_plan(plan_json: Dict[str, Any]) -> str:
+        """
+        Parse and format a query plan into a compact summary string.
+        Handles raw JSON strings (with '+' line continuations), lists, or dicts.
+
+        Returns a compact representation: NodeType(cost=X.X)(child1; child2; ...)
+        """
+        # Clean and parse if the input is a raw JSON string
+        if isinstance(plan_json, str):
+            cleaned = re.sub(r"\+\s*\n", "", plan_json)
+            cleaned = re.sub(r"\s+", " ", cleaned).strip()
+            plan_json = json.loads(cleaned)
+
+        # Unwrap list wrapper: [{"Plan": {...}}] -> {"Plan": {...}}
+        if isinstance(plan_json, list) and len(plan_json) > 0:
+            plan_json = plan_json[0]
+
+        def extract_node_summary(node: Dict[str, Any]) -> str:
+            if not isinstance(node, dict):
+                return ""
+            node_type = node.get("Node Type", "Unknown")
+            total_cost = node.get("Total Cost", 0)
+            summary = f"{node_type}(cost={total_cost:.1f})"
+            plans = node.get("Plans", [])
+            if plans:
+                child_summaries = [
+                    s for s in (extract_node_summary(c) for c in plans) if s
+                ]
+                if child_summaries:
+                    summary += "(" + "; ".join(child_summaries) + ")"
+            return summary
+
+        plan_node = plan_json.get("Plan", {}) if isinstance(plan_json, dict) else {}
+        return extract_node_summary(plan_node)

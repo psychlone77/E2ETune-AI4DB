@@ -1,4 +1,6 @@
 from abc import abstractmethod
+from pathlib import Path
+from typing import List
 from classes.base_classes.Workload_Runner import BenchmarkTask
 from classes.base_classes.Workload_Runner import WorkloadRunner
 from classes.base_classes.Internal_Metrics import InternalMetrics
@@ -35,4 +37,12 @@ class Database(WorkloadRunner):
 
     @abstractmethod
     def run_workload(self, workload_task: BenchmarkTask) -> tuple[float, float]:
+        pass
+
+    @abstractmethod
+    def extract_query_plans(self, workload_path: Path) -> List[str]:
+        """Extract query plans for a list of SQL queries using EXPLAIN (FORMAT JSON) or equivalent.
+        Loads queries from the file at workload_path and returns a list of formatted plan summaries
+        in nested paranthetical notation (e.g., "Seq Scan on table1 (cost=0.00..431.00 rows=1000 width=4)").
+        """
         pass
