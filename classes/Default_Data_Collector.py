@@ -2,9 +2,11 @@ from classes.base_classes.Database import Database
 from classes.base_classes.Workload_Runner import BenchmarkTask
 from classes.base_classes.Internal_Metrics import InternalMetrics
 from classes.base_classes.Knob_Settings import KnobSettingsSet
-from classes.Workload_Features import WorkloadFeatureExtractor
+from classes.base_classes.Workload_Feature_Extractor import WorkloadFeatureExtractor
+from classes.WFE_OLAP import WorkloadFeatureExtractorOLAP
+from classes.WFE_OLTP import WorkloadFeatureExtractorOLTP
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Literal
 from pathlib import Path
 import utils
 import json
@@ -15,15 +17,22 @@ class DefaultDataCollector:
         self,
         workload_path: Path,
         db: Database,
+        benchmark: str,
         output_dir: Path,
         knob_settings_set: KnobSettingsSet,
         log_path: Optional[Path] = None,
+        workload_type: Literal["olap", "oltp"] = "olap",
     ):
         self.workload_path = workload_path
         self.db = db
         self.output_dir = output_dir
         self.knob_settings_set = knob_settings_set
         self.log_path = utils.get_logger(log_path, "DefaultDataCollector.log")
+        self.wfe: WorkloadFeatureExtractor = (
+            WorkloadFeatureExtractorOLAP()
+            if workload_type == "olap"
+            else WorkloadFeatureExtractorOLTP(benchmark)
+        )
 
     def _collect_internal_metrics(self) -> InternalMetrics:
         task = BenchmarkTask(
@@ -63,7 +72,7 @@ class DefaultDataCollector:
             return []
 
     def _collect_workload_features(self) -> Dict[str, Any]:
-        return WorkloadFeatureExtractor().extract(self.workload_path)
+        return self.wfe.extract(self.workload_path)
 
     def collect(self) -> None:
         self.log_path.info(

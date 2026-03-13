@@ -7,7 +7,10 @@ from typing import Dict
 import sqlglot
 import sqlglot.expressions as exp
 
-class WorkloadFeatureExtractor:
+from classes.base_classes.Workload_Feature_Extractor import WorkloadFeatureExtractor
+
+
+class WorkloadFeatureExtractorOLAP(WorkloadFeatureExtractor):
     """
     Extracts macro-level static features from a SQL workload file.
 
@@ -18,21 +21,20 @@ class WorkloadFeatureExtractor:
 
     Usage
     -----
-    extractor = WorkloadFeatureExtractor()
+    extractor = WorkloadFeatureExtractorOLAP()
     features  = extractor.extract("/path/to/workload.sql")
     """
 
-    _READ_TYPES  = (exp.Select,)
+    _READ_TYPES = (exp.Select,)
     _WRITE_TYPES = (exp.Insert, exp.Update, exp.Delete, exp.Merge)
 
     _AGG_MAP = {
         "count_agg": exp.Count,
-        "sum_agg":   exp.Sum,
-        "avg_agg":   exp.Avg,
-        "min_agg":   exp.Min,
-        "max_agg":   exp.Max,
+        "sum_agg": exp.Sum,
+        "avg_agg": exp.Avg,
+        "min_agg": exp.Min,
+        "max_agg": exp.Max,
     }
-
 
     def extract(self, sql_file_path: str | Path) -> Dict:
         """
@@ -53,7 +55,8 @@ class WorkloadFeatureExtractor:
         sql_text = Path(sql_file_path).read_text(encoding="utf-8")
 
         statements = [
-            s for s in sqlglot.parse(sql_text, error_level=sqlglot.ErrorLevel.WARN)
+            s
+            for s in sqlglot.parse(sql_text, error_level=sqlglot.ErrorLevel.WARN)
             if s is not None
         ]
 
@@ -62,8 +65,8 @@ class WorkloadFeatureExtractor:
             return self._empty_result()
 
         table_freq: Dict[str, int] = defaultdict(int)
-        read_count      = 0
-        write_count     = 0
+        read_count = 0
+        write_count = 0
         predicate_total = 0
         op_hits = {k: 0 for k in ("order_by", "group_by", *self._AGG_MAP)}
 
@@ -92,20 +95,19 @@ class WorkloadFeatureExtractor:
                 if stmt.find(agg_type):
                     op_hits[key] += 1
 
-        rw_ratio  = (read_count / write_count) if write_count > 0 else None
+        rw_ratio = (read_count / write_count) if write_count > 0 else None
         avg_preds = round(predicate_total / total, 4)
-        op_props  = {k: v / total for k, v in op_hits.items()}
+        op_props = {k: v / total for k, v in op_hits.items()}
 
         return {
-            "total_statements":         total,
-            "table_access_frequency":   dict(table_freq),
-            "read_count":               read_count,
-            "write_count":              write_count,
-            "read_write_ratio":         rw_ratio,
+            "total_statements": total,
+            "table_access_frequency": dict(table_freq),
+            "read_count": read_count,
+            "write_count": write_count,
+            "read_write_ratio": rw_ratio,
             "avg_predicates_per_query": avg_preds,
-            "operator_proportions":     op_props,
+            "operator_proportions": op_props,
         }
-
 
     def _count_predicates(self, stmt: exp.Expression) -> int:
         """
@@ -123,28 +125,27 @@ class WorkloadFeatureExtractor:
     def _count_conditions(self, node: exp.Expression) -> int:
         """Recursively count leaf predicates under *node*."""
         if isinstance(node, (exp.And, exp.Or)):
-            return (
-                self._count_conditions(node.left)
-                + self._count_conditions(node.right)
+            return self._count_conditions(node.left) + self._count_conditions(
+                node.right
             )
         return 1
 
     @staticmethod
     def _empty_result() -> Dict:
         return {
-            "total_statements":         0,
-            "table_access_frequency":   {},
-            "read_count":               0,
-            "write_count":              0,
-            "read_write_ratio":         None,
+            "total_statements": 0,
+            "table_access_frequency": {},
+            "read_count": 0,
+            "write_count": 0,
+            "read_write_ratio": None,
             "avg_predicates_per_query": 0.0,
             "operator_proportions": {
-                "order_by":  0.0,
-                "group_by":  0.0,
+                "order_by": 0.0,
+                "group_by": 0.0,
                 "count_agg": 0.0,
-                "sum_agg":   0.0,
-                "avg_agg":   0.0,
-                "min_agg":   0.0,
-                "max_agg":   0.0,
+                "sum_agg": 0.0,
+                "avg_agg": 0.0,
+                "min_agg": 0.0,
+                "max_agg": 0.0,
             },
         }
