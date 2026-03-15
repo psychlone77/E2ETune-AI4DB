@@ -13,6 +13,7 @@ import utils
 
 import numpy as np
 import pandas as pd
+from math import ceil
 from hebo.design_space.design_space import DesignSpace
 from hebo.optimizers.hebo import HEBO
 
@@ -87,9 +88,8 @@ class HEBOTuner(Tuner):
         self.logger.info("Evaluating default configuration...")
         default_config = self.knob_settings.get_default_knob_settings()
         self.workload_task.knob_config = default_config
-        default_performance = self.workload_runner.run_workload(self.workload_task)[
-            self.tuning_parameter.value
-        ]
+        default_results = self.workload_runner.run_workload(self.workload_task)
+        default_performance = default_results[self.tuning_parameter.value]
         self.logger.info(
             f"Default configuration performance: {default_performance:.6f}"
         )
@@ -122,6 +122,31 @@ class HEBOTuner(Tuner):
         self.logger.info("Saved initial results to files")
         self.logger.info("-" * 80)
 
+        avg_latency_sec = abs(default_results[TuningParameter.LATENCY.value])
+        throughput_qps = abs(default_results[TuningParameter.THROUGHPUT.value])
+
+        # Total observation time for the default run
+        total_time_observed = avg_latency_sec * utils.get_num_queries(self.workload_task.workload_path)
+        self.logger.info("Estimated time per iteration: "
+                         f"{total_time_observed:.2f} seconds "
+                         f"({avg_latency_sec:.4f}s latency * {utils.get_num_queries(self.workload_task.workload_path)} queries)")
+        utils.send_telegram(
+            f"Estimated time per iteration: {total_time_observed:.2f} seconds "
+            f"({avg_latency_sec:.4f}s latency * {utils.get_num_queries(self.workload_task.workload_path)} queries)"
+        )
+
+        # If the test finished too fast (< 1s), variance will be high. 
+        # We increase 'runs_per_iteration' to get a stable average.
+        if total_time_observed < 3.0:
+            runs_per_iteration = max(3, min(ceil(1/total_time_observed), 10))
+            
+            self.logger.info(
+                f"Low latency detected ({avg_latency_sec:.4f}s). "
+                f"Averaging over {runs_per_iteration} runs for stability."
+            )
+        else:
+            runs_per_iteration = 1
+
         try:
             for iteration in range(self.tuning_config.iterations):
                 self.logger.info(
@@ -135,7 +160,7 @@ class HEBOTuner(Tuner):
                     config_dict, self.knob_settings
                 )
 
-                cur_objective = self.workload_runner.run_workload(self.workload_task)[
+                cur_objective = self.workload_runner.run_workload(self.workload_task, runs_per_iteration)[
                     self.tuning_parameter.value
                 ]
                 self.logger.info(f"Performance: {cur_objective:.6f}")
@@ -162,6 +187,10 @@ class HEBOTuner(Tuner):
                     ) * 100
                     self.logger.info(
                         f"✓ NEW BEST! Improved by {improvement:.2f}% (previous: {best_objective:.6f}, current: {cur_objective:.6f})"
+                    )
+                    utils.send_telegram(
+                        f"HEBO Iteration {iteration + 1}: New Best Configuration Found!\n"
+                        f"Performance: {cur_objective:.6f} ({improvement:.2f}% improvement)"
                     )
                     best_config = self.workload_task.knob_config
                     best_objective = cur_objective
@@ -196,6 +225,11 @@ class HEBOTuner(Tuner):
             )
         self.logger.info(f"Results saved to: {self.output_dir}")
         self.logger.info("=" * 80)
+        utils.send_telegram(
+            f"HEBO Tuning Complete for {self.workload_task.workload_path}\n"
+            f"Best {self.tuning_parameter}: {best_objective:.6f}\n"
+            f"Improvement over default: {total_improvement:.2f}%"
+        )
 
         return best_config
 

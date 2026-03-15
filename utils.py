@@ -2,12 +2,15 @@ import json
 import logging
 import os
 import sys
+import requests
+from dotenv import load_dotenv
 from pathlib import Path
 from typing import Optional
 
 import pandas as pd
 import re
 
+load_dotenv() 
 
 def get_logger(path: Optional[Path], name: str = "E2ETune") -> logging.Logger:
     """Return a logger configured to write to `path` and stdout.
@@ -97,9 +100,14 @@ def get_completed_workloads(dbengine: str, servername: str, benchmark_name: str)
                 # Check if performance_record.txt exists in this workload folder
                 perf_record_file = item / "performance_record.txt"
                 if perf_record_file.exists():
-                    # Add the workload name (folder name) to completed set
-                    completed.add(item.name)
-                    print(f"  Found completed workload: {item.name}")
+                    try:
+                        with open(perf_record_file, "r") as f:
+                            content = f.read()
+                            if "[Iteration 100]" in content:
+                                completed.add(item.name)
+                                print(f"  Found completed workload (reached iteration 100): {item.name}")
+                    except Exception as e:
+                        print(f"Error reading performance record for {item.name}: {e}")
     except Exception as e:
         print(f"Error scanning for completed workloads: {e}")
         return completed
@@ -118,3 +126,30 @@ def load_sampling_data(sampling_log):
     data = pd.DataFrame(records)
 
     return data
+
+def send_telegram(message):
+    token = os.getenv("TELEGRAM_BOT_TOKEN")
+    chat_id = os.getenv("TELEGRAM_CHAT_ID")
+    
+    if not token or not chat_id:
+        print("Telegram notifications disabled: TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID not set.")
+        return
+
+    url = f"https://api.telegram.org/bot{token}/sendMessage"
+    payload = {"chat_id": chat_id, "text": message, "parse_mode": "Markdown"}
+    
+    try:
+        requests.post(url, json=payload, timeout=10)
+    except Exception as e:
+        print(f"Failed to send Telegram notification: {e}")
+
+def get_num_queries(workload_path: Path) -> int:
+    """Count the number of queries in the workload file."""
+    try:
+        with open(workload_path, "r") as f:
+            sql_script = f.read()
+            num_queries = sql_script.count(";")
+            return num_queries
+    except Exception as e:
+        print(f"Error counting queries in {workload_path}: {e}")
+        return 1

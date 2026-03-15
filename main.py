@@ -1,6 +1,7 @@
 import argparse
 import os
 import yaml
+import json
 from datetime import datetime
 from pathlib import Path
 
@@ -59,8 +60,8 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--servername",
-        default="hetzner-4c-8t-32gb",
-        help="Server specifications for tuning (default: hetzner-4c-8t-32gb)",
+        default="hetzner-4c-8t-64gb",
+        help="Server specifications for tuning (default: hetzner-4c-8t-64gb)",
     )
     cli_args = parser.parse_args()
 
@@ -94,6 +95,7 @@ if __name__ == "__main__":
     logger.info(f"Benchmark: {benchmark_config.name}  Type: {benchmark_config.type}")
     logger.info(f"Workload path: {benchmark_config.path}")
     logger.info("=" * 100)
+    utils.send_telegram(f"E2ETune started for benchmark: *{benchmark_config.name}*")
 
     # Discover workloads
     workload_base_path = benchmark_config.path
@@ -123,6 +125,22 @@ if __name__ == "__main__":
     total_workloads = len(workloads)
     logger.info(f"Found {total_workloads} workloads matching '{benchmark_config.name}'")
 
+    phase1_workloads = []
+    try:
+        with open("representative_workloads_sampled.json", "r") as f:
+            sampled_data = json.load(f)
+            benchmark_clusters = sampled_data.get(benchmark_config.name, {})
+            for cluster_name, cluster_wks in benchmark_clusters.items():
+                phase1_workloads.extend(cluster_wks)
+    except Exception as e:
+        logger.error(f"Could not load representative workloads: {e}")
+        # fallback
+        phase1_workloads = workloads[:REAL_TUNING_LIMIT]
+
+    # only keep workloads that actually exist in the folder just to be safe
+    phase1_workloads = [wk for wk in phase1_workloads if wk in workloads]
+    phase2_workloads = [w for w in workloads if w not in phase1_workloads]
+
     # Resume support: skip already-completed workloads
     completed = utils.get_completed_workloads(
         cli_args.dbengine, cli_args.servername, benchmark_config.name
@@ -135,20 +153,20 @@ if __name__ == "__main__":
     successful, failed, skipped = 0, 0, 0
 
     # ------------------------------------------------------------------
-    # Phase 1: Real database execution (first REAL_TUNING_LIMIT workloads)
+    # Phase 1: Real database execution (sampled cluster workloads)
     # ------------------------------------------------------------------
-    logger.info(f"Phase 1: Real execution – up to {REAL_TUNING_LIMIT} workloads")
+    logger.info(f"Phase 1: Real execution – up to {len(phase1_workloads)} workloads")
+    utils.send_telegram(f"Phase 1 started: Real execution of representative workloads ({len(phase1_workloads)} workloads)")
     db: Database = PostgresSQLDatabase(db_config=db_config, log_path=main_log_path)
 
-    for idx, workload in enumerate(workloads[:REAL_TUNING_LIMIT]):
-        if idx == 0:
-            continue
+    for idx, workload in enumerate(phase1_workloads):
         workload_id = os.path.splitext(workload)[0]
         if workload_id in completed or workload in completed:
             skipped += 1
             logger.info(
-                f"[Phase-1 {idx + 1}/{REAL_TUNING_LIMIT}] Skipping completed: {workload}"
+                f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Skipping completed: {workload}"
             )
+            utils.send_telegram(f"Phase 1: Skipping completed workload: *{workload}*")
             continue
 
         workload_path = Path(workload_base_path) / workload
@@ -164,9 +182,11 @@ if __name__ == "__main__":
             f"logs/tuning/{workload_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
         )
 
+        utils.send_telegram(f"Phase 1: Starting default data collection for workload: *{workload}*")
         ddc = DefaultDataCollector(
             workload_path=workload_path,
             db=db,
+            benchmark=benchmark_config.name,
             output_dir=output_dir,
             knob_settings_set=knob_settings,
             log_path=log_path,
@@ -175,7 +195,8 @@ if __name__ == "__main__":
 
         try:
             logger.info("-" * 80)
-            logger.info(f"[Phase-1 {idx + 1}/{REAL_TUNING_LIMIT}] Tuning: {workload}")
+            logger.info(f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Tuning: {workload}")
+            utils.send_telegram(f"Phase 1: Tuning started for workload: *{workload}*")
             tuner = build_tuner(
                 db,
                 script_config,
@@ -188,24 +209,27 @@ if __name__ == "__main__":
             tuner.tune()
             successful += 1
             logger.info(
-                f"[Phase-1 {idx + 1}/{REAL_TUNING_LIMIT}] Completed: {workload}"
+                f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Completed: {workload}"
             )
+            utils.send_telegram(f"Phase 1: Tuning completed for workload: *{workload}*")
         except Exception as e:
             failed += 1
             logger.error(
-                f"[Phase-1 {idx + 1}/{REAL_TUNING_LIMIT}] Error tuning {workload}: {e}",
+                f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Error tuning {workload}: {e}",
                 exc_info=True,
             )
+            utils.send_telegram(f"Phase 1: Error tuning workload: *{workload}* - {e}")
             if total_workloads >= 10:
                 logger.error("Stopping due to error (large workload set)")
+                utils.send_telegram("Stopping E2ETune due to error (large workload set)")
                 break
 
     # ------------------------------------------------------------------
-    # Phase 2: Surrogate model execution (workloads beyond REAL_TUNING_LIMIT)
+    # Phase 2: Surrogate model execution
     # ------------------------------------------------------------------
-    # if total_workloads > REAL_TUNING_LIMIT:
+    # if phase2_workloads:
     #     logger.info("=" * 80)
-    #     logger.info("Phase 2: Surrogate-based tuning")
+    #     logger.info(f"Phase 2: Surrogate-based tuning - up to {len(phase2_workloads)} workloads")
     #     logger.info("=" * 80)
 
     #     strategy = SurrogateFactory.create_strategy("tree_ensemble")
@@ -214,15 +238,22 @@ if __name__ == "__main__":
 
     #     wk_feature_dir = Path("data/workload_features") / benchmark_config.name
 
-    #     for idx, workload in enumerate(workloads[REAL_TUNING_LIMIT:]):
+    #     for idx, workload in enumerate(phase2_workloads):
     #         workload_id = os.path.splitext(workload)[0]
     #         if workload_id in completed or workload in completed:
     #             skipped += 1
-    #             logger.info(f"[Phase-2 {idx + 1}] Skipping completed: {workload}")
+    #             logger.info(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Skipping completed: {workload}")
     #             continue
 
     #         workload_path = Path(workload_base_path) / workload
-    #         output_dir = Path("data/hebo_runs") / benchmark_config.name / workload_id
+    #         output_dir = (
+    #             Path("data")
+    #             / cli_args.dbengine
+    #             / cli_args.servername
+    #             / benchmark_config.name
+    #             / workload_id
+    #         )
+    #         os.makedirs(output_dir, exist_ok=True)
     #         log_path = Path(
     #             f"logs/tuning/{workload_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
     #         )
@@ -237,7 +268,7 @@ if __name__ == "__main__":
 
     #         try:
     #             logger.info("-" * 80)
-    #             logger.info(f"[Phase-2 {idx + 1}] Tuning (surrogate): {workload}")
+    #             logger.info(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Tuning (surrogate): {workload}")
     #             tuner = build_tuner(
     #                 cost_model,
     #                 script_config,
@@ -245,14 +276,15 @@ if __name__ == "__main__":
     #                 workload_path,
     #                 output_dir,
     #                 log_path,
+    #                 tuning_parameter,
     #             )
     #             tuner.tune()
     #             successful += 1
-    #             logger.info(f"[Phase-2 {idx + 1}] Completed: {workload}")
+    #             logger.info(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Completed: {workload}")
     #         except Exception as e:
     #             failed += 1
     #             logger.error(
-    #                 f"[Phase-2 {idx + 1}] Error tuning {workload}: {e}",
+    #                 f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Error tuning {workload}: {e}",
     #                 exc_info=True,
     #             )
 
@@ -265,3 +297,4 @@ if __name__ == "__main__":
     logger.info("=" * 100)
     logger.info("E2ETune session completed")
     logger.info("=" * 100)
+    utils.send_telegram(f"E2ETune session completed for benchmark: *{benchmark_config.name}*")

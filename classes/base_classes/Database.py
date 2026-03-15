@@ -1,6 +1,6 @@
 from abc import abstractmethod
 from pathlib import Path
-from typing import List
+from typing import List, Optional
 from classes.base_classes.Workload_Runner import BenchmarkTask
 from classes.base_classes.Workload_Runner import WorkloadRunner
 from classes.base_classes.Internal_Metrics import InternalMetrics
@@ -36,7 +36,7 @@ class Database(WorkloadRunner):
         pass
 
     @abstractmethod
-    def run_workload(self, workload_task: BenchmarkTask) -> tuple[float, float]:
+    def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: Optional[int] = 1) -> tuple[float, float]:
         pass
 
     @abstractmethod

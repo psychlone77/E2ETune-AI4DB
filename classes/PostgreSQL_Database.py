@@ -265,7 +265,7 @@ class PostgresSQLDatabase(Database):
             print(f"Failed to restart PostgreSQL: {e}")
             return False
 
-    def run_workload(self, workload_task: BenchmarkTask) -> tuple[float, float]:
+    def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: Optional[int] = 1) -> tuple[float, float]:
         num_queries = 0
         with open(workload_task.workload_path, "r") as f:
             sql_script = f.read()
@@ -274,17 +274,22 @@ class PostgresSQLDatabase(Database):
         self.logger.info(f"Executing workload {workload_task.workload_path}...")
         with self.connection.cursor() as cursor:
             try:
-                start = time.perf_counter()
-                cursor.execute(sql_script)
-                self.connection.commit()
-                end = time.perf_counter()
+                sum_latency = 0.0
+                sum_throughput = 0.0
+                for _ in range(runs_per_iteration):
+                    start = time.perf_counter()
+                    cursor.execute(sql_script)
+                    self.connection.commit()
+                    end = time.perf_counter()
+                    sum_latency += (
+                        (end - start) / num_queries if num_queries > 0 else 0.0
+                    )
+                    sum_throughput += num_queries / (end - start) if end > start else 0.0
                 self.logger.info(
                     f"Workload {workload_task.workload_path} executed successfully."
                 )
-                average_latency = (
-                    (end - start) / num_queries if num_queries > 0 else 0.0
-                )
-                throughput_ps = num_queries / (end - start) if end > start else 0.0
+                average_latency = sum_latency / runs_per_iteration
+                throughput_ps = sum_throughput / runs_per_iteration
                 return average_latency, -throughput_ps
             except Exception as e:
                 self.logger.error(f"Error executing workload: {e}")
