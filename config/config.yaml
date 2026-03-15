@@ -3,7 +3,7 @@ database:
   port: 5432
   user: root
   password: databasefyp
-  name: imdb
+  name: ssb
   data_path: /var/lib/postgresql/12/main
   pg_version: 12
   cluster_name: main
@@ -11,12 +11,12 @@ database:
 tuning:
   method: HEBO
   iterations: 100
-  sample_num: 5
+  sample_num: 30
   config: knob_config/knob_config.json
   
 benchmark:
   type: olap
-  name: job
+  name: ssb
   path: ./olap_workloads
   workload_execution: logs/performance/workload_execution.log
   performance_record_path: logs/performance_record
