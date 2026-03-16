@@ -65,86 +65,86 @@ def normalize_sql(sql_text):
     text = re.sub(r"'.*?'", '?', sql_text)
     text = re.sub(r'\b\d+\b', '?', text)
 
-    try:
-        # Parse possibly multi-statement SQL.
-        expressions = sqlglot.parse(text)
+    # try:
+    #     # Parse possibly multi-statement SQL.
+    #     expressions = sqlglot.parse(text)
 
-        table_map = {}
-        column_map = {}
-        other_ident_map = {}
+    #     table_map = {}
+    #     column_map = {}
+    #     other_ident_map = {}
 
-        table_counter = 0
-        column_counter = 0
-        ident_counter = 0
+    #     table_counter = 0
+    #     column_counter = 0
+    #     ident_counter = 0
 
-        def _normalize_identifier(name, kind):
-            nonlocal table_counter, column_counter, ident_counter
-            if kind == "table":
-                if name not in table_map:
-                    table_counter += 1
-                    table_map[name] = f"T{table_counter}"
-                return table_map[name]
-            if kind == "column":
-                if name not in column_map:
-                    column_counter += 1
-                    column_map[name] = f"C{column_counter}"
-                return column_map[name]
-            # other identifiers (aliases, etc.)
-            if name not in other_ident_map:
-                ident_counter += 1
-                other_ident_map[name] = f"I{ident_counter}"
-            return other_ident_map[name]
+    #     def _normalize_identifier(name, kind):
+    #         nonlocal table_counter, column_counter, ident_counter
+    #         if kind == "table":
+    #             if name not in table_map:
+    #                 table_counter += 1
+    #                 table_map[name] = f"T{table_counter}"
+    #             return table_map[name]
+    #         if kind == "column":
+    #             if name not in column_map:
+    #                 column_counter += 1
+    #                 column_map[name] = f"C{column_counter}"
+    #             return column_map[name]
+    #         # other identifiers (aliases, etc.)
+    #         if name not in other_ident_map:
+    #             ident_counter += 1
+    #             other_ident_map[name] = f"I{ident_counter}"
+    #         return other_ident_map[name]
 
-        def _transform(expr):
-            from sqlglot import exp
+    #     def _transform(expr):
+    #         from sqlglot import exp
 
-            # Tables — anonymize both the table name and any alias.
-            # Modify in-place (no copy) so sqlglot continues traversing children
-            # on the same node, ensuring nested Columns are also anonymized.
-            if isinstance(expr, exp.Table):
-                name = getattr(expr, "name", None)
-                if not name and expr.this is not None:
-                    inner = expr.this
-                    name = getattr(inner, "this", None) if hasattr(inner, "this") else str(inner)
-                if name:
-                    anon = _normalize_identifier(str(name), "table")
-                    expr.set("this", sqlglot.exp.to_identifier(anon))
-                    if expr.alias:
-                        anon_alias = _normalize_identifier(str(expr.alias), "other")
-                        expr.set("alias", anon_alias)
-                return expr
+    #         # Tables — anonymize both the table name and any alias.
+    #         # Modify in-place (no copy) so sqlglot continues traversing children
+    #         # on the same node, ensuring nested Columns are also anonymized.
+    #         if isinstance(expr, exp.Table):
+    #             name = getattr(expr, "name", None)
+    #             if not name and expr.this is not None:
+    #                 inner = expr.this
+    #                 name = getattr(inner, "this", None) if hasattr(inner, "this") else str(inner)
+    #             if name:
+    #                 anon = _normalize_identifier(str(name), "table")
+    #                 expr.set("this", sqlglot.exp.to_identifier(anon))
+    #                 if expr.alias:
+    #                     anon_alias = _normalize_identifier(str(expr.alias), "other")
+    #                     expr.set("alias", anon_alias)
+    #             return expr
 
-            # Columns — anonymize qualifier and column name
-            if isinstance(expr, exp.Column):
-                if expr.table:
-                    anon_table = _normalize_identifier(str(expr.table), "table")
-                    expr.set("table", sqlglot.exp.to_identifier(anon_table))
-                if expr.name:
-                    anon_col = _normalize_identifier(str(expr.name), "column")
-                    expr.set("this", sqlglot.exp.to_identifier(anon_col))
-                return expr
+    #         # Columns — anonymize qualifier and column name
+    #         if isinstance(expr, exp.Column):
+    #             if expr.table:
+    #                 anon_table = _normalize_identifier(str(expr.table), "table")
+    #                 expr.set("table", sqlglot.exp.to_identifier(anon_table))
+    #             if expr.name:
+    #                 anon_col = _normalize_identifier(str(expr.name), "column")
+    #                 expr.set("this", sqlglot.exp.to_identifier(anon_col))
+    #             return expr
 
-            # Aliases in SELECT (e.g. COUNT(*) AS num_cast_members)
-            if isinstance(expr, exp.Alias):
-                if expr.alias:
-                    anon_alias = _normalize_identifier(str(expr.alias), "other")
-                    expr.set("alias", anon_alias)
-                return expr
+    #         # Aliases in SELECT (e.g. COUNT(*) AS num_cast_members)
+    #         if isinstance(expr, exp.Alias):
+    #             if expr.alias:
+    #                 anon_alias = _normalize_identifier(str(expr.alias), "other")
+    #                 expr.set("alias", anon_alias)
+    #             return expr
 
-            return expr
+    #         return expr
 
-        transformed = [e.transform(_transform) for e in expressions]
+        # transformed = [e.transform(_transform) for e in expressions]
         # Use default SQL generation (no dialect= argument to avoid version incompatibilities)
-        normalized = "; ".join(e.sql() for e in transformed)
-        return normalized
+        # normalized = "; ".join(e.sql() for e in transformed)
+        # return normalized
 
-    except Exception:
+    # except Exception:
         # If anything goes wrong, fall back to literal stripping only.
-        return text
+    return text
 
 def process_workloads_with_resume(directory_path, save_file="workload_embeddings.npy", tracker_file="processed_files.txt"):
     # Get and sort all workload files to ensure consistent ordering
-    workload_files = sorted([f for f in glob.glob(os.path.join(directory_path, "*.wg")) if "ssb_flat" not in os.path.basename(f)])
+    workload_files = sorted([f for f in glob.glob(os.path.join(directory_path, "*.wg"))])
 
     
     # Load previous progress to avoid re-embedding files you already paid for/waited for
@@ -173,6 +173,7 @@ def process_workloads_with_resume(directory_path, save_file="workload_embeddings
             
         clean_sql = normalize_sql(raw_sql)
         print(f"Processing {filename} with normalized SQL:\n{clean_sql}\n")
+    
         prompt_text = f"Analyze the structural complexity of this database workload: {clean_sql}"
 
         # Retry loop for handling 429 Quota Exceeded errors gracefully
