@@ -136,7 +136,7 @@ def send_telegram(message):
         return
 
     url = f"https://api.telegram.org/bot{token}/sendMessage"
-    payload = {"chat_id": chat_id, "text": message, "parse_mode": "Markdown"}
+    payload = {"chat_id": chat_id, "text": message, "parse_mode": "HTML"}
     
     try:
         requests.post(url, json=payload, timeout=10)

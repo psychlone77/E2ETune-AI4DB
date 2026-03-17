@@ -158,6 +158,9 @@ if __name__ == "__main__":
     logger.info(f"Phase 1: Real execution – up to {len(phase1_workloads)} workloads")
     utils.send_telegram(f"Phase 1 started: Real execution of representative workloads ({len(phase1_workloads)} workloads)")
     db: Database = PostgresSQLDatabase(db_config=db_config, log_path=main_log_path)
+    log_path = Path(
+        f"logs/tuning/{benchmark_config.name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+    )
 
     for idx, workload in enumerate(phase1_workloads):
         workload_id = os.path.splitext(workload)[0]
@@ -178,9 +181,6 @@ if __name__ == "__main__":
             / workload_id
         )
         os.makedirs(output_dir, exist_ok=True)
-        log_path = Path(
-            f"logs/tuning/{workload_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
-        )
 
         utils.send_telegram(f"Phase 1: Starting default data collection for workload: *{workload}*")
         ddc = DefaultDataCollector(

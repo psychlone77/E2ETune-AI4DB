@@ -135,14 +135,24 @@ class HEBOTuner(Tuner):
             f"({avg_latency_sec:.4f}s latency * {utils.get_num_queries(self.workload_task.workload_path)} queries)"
         )
 
-        # If the test finished too fast (< 1s), variance will be high. 
-        # We increase 'runs_per_iteration' to get a stable average.
-        if total_time_observed < 3.0:
-            runs_per_iteration = max(3, min(ceil(1/total_time_observed), 10))
+        # Configuration
+        TARGET_STABILITY_TIME = 10
+        MAX_REPETITIONS = 15
+
+        if total_time_observed < TARGET_STABILITY_TIME:
+            # Calculate how many runs we need to hit our 5-second target
+            needed_runs = ceil(TARGET_STABILITY_TIME / max(total_time_observed, 0.001))
             
-            self.logger.info(
-                f"Low latency detected ({avg_latency_sec:.4f}s). "
-                f"Averaging over {runs_per_iteration} runs for stability."
+            # Constrain the result to a reasonable range
+            runs_per_iteration = max(2, min(needed_runs, MAX_REPETITIONS))
+            
+            self.logger.info(f"Short run detected ({total_time_observed:.2f}s). "
+                            f"Adjusting to {runs_per_iteration} runs to hit "
+                            f"{TARGET_STABILITY_TIME}s stability target.")
+            utils.send_telegram(
+                f"Short run detected ({total_time_observed:.2f}s). "
+                f"Adjusting to {runs_per_iteration} runs to hit "
+                f"{TARGET_STABILITY_TIME}s stability target."
             )
         else:
             runs_per_iteration = 1
