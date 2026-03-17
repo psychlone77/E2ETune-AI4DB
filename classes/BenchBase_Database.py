@@ -14,6 +14,7 @@ from classes.base_classes.Knob_Config import KnobConfig
 from classes.base_classes.Workload_Runner import BenchmarkTask
 from classes.base_classes.Script_Config import DatabaseConfig
 from classes.base_classes.Internal_Metrics import InternalMetrics
+from classes.base_classes.Script_Config import BenchmarkConfig
 import utils
 
 
@@ -27,7 +28,7 @@ class BenchBaseDatabase(Database):
     def __init__(
         self,
         db_config: DatabaseConfig,
-        benchmark_config: dict,
+        benchmark_config: BenchmarkConfig,
         log_path: Optional[Path] = None,
     ):
         self.connection = None
@@ -71,6 +72,7 @@ class BenchBaseDatabase(Database):
                 self.logger.info("Database knobs set and DB restarted successfully.")
         finally:
             self.connection.autocommit = old_autocommit
+            cursor.close()
 
     def fetch_internal_metrics(self) -> InternalMetrics:
         with self.connection.cursor() as cursor:
@@ -150,27 +152,33 @@ class BenchBaseDatabase(Database):
             finally:
                 cursor.close()
 
-    def run_workload(self, workload_task: BenchmarkTask) -> tuple[float, float]:
+    def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: int = 1) -> tuple[float, float]:
         """Run the BenchBase benchmark against the given workload config file.
         Returns (0.0, -throughput) to match the minimization convention used elsewhere.
         """
+        self.connection.rollback()
         self.set_knobs(workload_task.knob_config)
         throughput = self._run_benchbase(workload_task.workload_path)
         return 0.0, -throughput
 
     def extract_query_plans(self, workload_path: Path) -> List[str]:
         """Extract query plans using auto_explain by tracking log file bytes before and after execution."""
+        old_autocommit = self.connection.autocommit
         try:
-            # Enable auto_explain
+            self.connection.autocommit = True
             with self.connection.cursor() as cursor:
-                cursor.execute(
-                    "ALTER SYSTEM SET shared_preload_libraries = 'auto_explain';"
-                )
-                cursor.execute("ALTER SYSTEM SET auto_explain.log_min_duration = 0;")
-                cursor.execute(
-                    "ALTER SYSTEM SET auto_explain.log_nested_statements = on;"
-                )
+                self.logger.info("Enabling auto_explain for query plan extraction.")
+                cursor.execute("ALTER SYSTEM SET shared_preload_libraries = 'auto_explain';")
+
             self._restart_db()
+
+            self.connection.autocommit = True
+            with self.connection.cursor() as cursor:
+                self.logger.info("Configuring auto_explain settings.")
+                cursor.execute("ALTER SYSTEM SET auto_explain.log_min_duration = 0;")
+                cursor.execute("ALTER SYSTEM SET auto_explain.log_nested_statements = on;")
+                # Reload configuration to apply the specific module settings
+                cursor.execute("SELECT pg_reload_conf();")
 
             # Get postgres log file path
             with self.connection.cursor() as cursor:
@@ -183,7 +191,6 @@ class BenchBaseDatabase(Database):
                         "Could not determine current log file. Ensure logging_collector=on."
                     )
                     return []
-
                 if not os.path.isabs(log_file):
                     cursor.execute("SHOW data_directory;")
                     data_dir = cursor.fetchone()[0]
@@ -205,25 +212,39 @@ class BenchBaseDatabase(Database):
                     f.seek(initial_size)
                     new_logs = f.read()
 
-                # Basic parsing logic to extract Nested Parenthesis form
                 in_plan = False
                 current_plan = []
+                
                 for line in new_logs.splitlines():
-                    # detect start of an auto_explain block
+                    # 1. Detect start of an auto_explain block
                     if "duration:" in line and "plan:" in line.lower():
                         in_plan = True
                         current_plan = []
                         continue
+                    
                     if in_plan:
-                        if line.startswith("\t") or line.startswith("  "):
-                            # This is part of the explain plan tree
-                            current_plan.append(line.strip())
-                        else:
-                            # Plan ended
-                            in_plan = False
+                        stripped = line.strip()
+                        
+                        # 2. Check if the block has ended
+                        # (Plan lines must start with whitespace; if not, the plan is over)
+                        if not (line.startswith("\t") or line.startswith("  ")):
                             if current_plan:
-                                # Join into a mock Nested Parenthesis string representation
                                 plans.append("(" + " ".join(current_plan) + ")")
+                            in_plan = False
+                            current_plan = []
+                            continue
+
+                        # 3. Filter out unnecessary metadata rows
+                        if any(stripped.startswith(x) for x in ["Query Text:", "Query Parameters:", "Output:"]):
+                            continue
+                        
+                        # 4. Remove cost/rows/width info to get clean operators
+                        # This turns "Index Scan using idx (cost=0.28..8.29 rows=1...)" 
+                        # into "Index Scan using idx"
+                        clean_line = re.sub(r"\(cost=.*?width=.*?\)", "", stripped).strip()
+                        
+                        if clean_line:
+                            current_plan.append(clean_line)
 
             # Disable auto_explain
             with self.connection.cursor() as cursor:
@@ -237,6 +258,8 @@ class BenchBaseDatabase(Database):
         except Exception as e:
             self.logger.error(f"Failed to extract query plans: {e}")
             return []
+        finally:
+            self.connection.autocommit = old_autocommit
 
     def load_database(self, workload_path: str):
         """Load benchmark data into the database via BenchBase (create + load, no execute)."""
@@ -261,7 +284,7 @@ class BenchBaseDatabase(Database):
     # --- Private helpers ---
 
     def _run_benchbase(self, workload_path) -> float:
-        benchmark_name = self.benchmark_config.get("benchmark", "tpcc")
+        benchmark_name = self.benchmark_config.name
         workload_name = Path(workload_path).stem
         results_dir = os.path.abspath(
             os.path.join(
@@ -301,9 +324,7 @@ class BenchBaseDatabase(Database):
         self, workload_path, benchmark_name: str
     ) -> tuple[str, str]:
         self._update_config_file(str(workload_path), benchmark_name)
-        benchbase_jar = self.benchmark_config.get(
-            "benchbase_jar", "./benchbase/target/benchbase-postgres/benchbase.jar"
-        )
+        benchbase_jar = self.benchmark_config.benchbase_jar
         benchbase_root = os.path.dirname(os.path.dirname(benchbase_jar))
         benchbase_jar_dir = os.path.join(benchbase_root, "benchbase-postgres")
         config_dir = os.path.join(benchbase_jar_dir, "config", "postgres")
@@ -424,7 +445,6 @@ class BenchBaseDatabase(Database):
                 if result.returncode != 0:
                     self.logger.error(f"Retry start also failed: {result.stderr}")
                     return False
-
             self.connect()
             return True
         except Exception as e:

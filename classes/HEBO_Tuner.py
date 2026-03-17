@@ -122,40 +122,42 @@ class HEBOTuner(Tuner):
         self.logger.info("Saved initial results to files")
         self.logger.info("-" * 80)
 
-        avg_latency_sec = abs(default_results[TuningParameter.LATENCY.value])
-        throughput_qps = abs(default_results[TuningParameter.THROUGHPUT.value])
-
-        # Total observation time for the default run
-        total_time_observed = avg_latency_sec * utils.get_num_queries(self.workload_task.workload_path)
-        self.logger.info("Estimated time per iteration: "
-                         f"{total_time_observed:.2f} seconds "
-                         f"({avg_latency_sec:.4f}s latency * {utils.get_num_queries(self.workload_task.workload_path)} queries)")
-        utils.send_telegram(
-            f"Estimated time per iteration: {total_time_observed:.2f} seconds "
-            f"({avg_latency_sec:.4f}s latency * {utils.get_num_queries(self.workload_task.workload_path)} queries)"
-        )
-
-        # Configuration
-        TARGET_STABILITY_TIME = 10
-        MAX_REPETITIONS = 15
-
-        if total_time_observed < TARGET_STABILITY_TIME:
-            # Calculate how many runs we need to hit our 5-second target
-            needed_runs = ceil(TARGET_STABILITY_TIME / max(total_time_observed, 0.001))
-            
-            # Constrain the result to a reasonable range
-            runs_per_iteration = max(2, min(needed_runs, MAX_REPETITIONS))
-            
-            self.logger.info(f"Short run detected ({total_time_observed:.2f}s). "
-                            f"Adjusting to {runs_per_iteration} runs to hit "
-                            f"{TARGET_STABILITY_TIME}s stability target.")
+        if self.tuning_parameter == TuningParameter.LATENCY:
+            avg_latency_sec = abs(default_results[TuningParameter.LATENCY.value])
+            # Total observation time for the default run
+            total_time_observed = avg_latency_sec * utils.get_num_queries(self.workload_task.workload_path)
+            self.logger.info("Estimated time per iteration: "
+                            f"{total_time_observed:.2f} seconds "
+                            f"({avg_latency_sec:.4f}s latency * {utils.get_num_queries(self.workload_task.workload_path)} queries)")
             utils.send_telegram(
-                f"Short run detected ({total_time_observed:.2f}s). "
-                f"Adjusting to {runs_per_iteration} runs to hit "
-                f"{TARGET_STABILITY_TIME}s stability target."
+                f"Estimated time per iteration: {total_time_observed:.2f} seconds "
+                f"({avg_latency_sec:.4f}s latency * {utils.get_num_queries(self.workload_task.workload_path)} queries)"
             )
+
+            # Configuration
+            TARGET_STABILITY_TIME = 10
+            MAX_REPETITIONS = 15
+
+            if total_time_observed < TARGET_STABILITY_TIME:
+                # Calculate how many runs we need to hit our 5-second target
+                needed_runs = ceil(TARGET_STABILITY_TIME / max(total_time_observed, 0.001))
+                
+                # Constrain the result to a reasonable range
+                runs_per_iteration = max(2, min(needed_runs, MAX_REPETITIONS))
+                
+                self.logger.info(f"Short run detected ({total_time_observed:.2f}s). "
+                                f"Adjusting to {runs_per_iteration} runs to hit "
+                                f"{TARGET_STABILITY_TIME}s stability target.")
+                utils.send_telegram(
+                    f"Short run detected ({total_time_observed:.2f}s). "
+                    f"Adjusting to {runs_per_iteration} runs to hit "
+                    f"{TARGET_STABILITY_TIME}s stability target."
+                )
+            else:
+                runs_per_iteration = 1
         else:
             runs_per_iteration = 1
+            self.logger.info("Non-latency tuning parameter detected, using 1 run per iteration")
 
         try:
             for iteration in range(self.tuning_config.iterations):
