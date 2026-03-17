@@ -4,22 +4,8 @@ import glob
 
 # Benchmarks to aggregate from the project root (e.g., E2ETune-AI4DB/job, E2ETune-AI4DB/tpch)
 BENCHMARK_DIRS = [
-    'job',
-    'tpch',
+    'data/postgresql/hetzner-4c-8t-64gb/job',
 ]
-
-
-def find_runhistory_files(base_dir):
-    """Find all runhistory.jsonl files under benchmark output folders."""
-    files = []
-    for bench in BENCHMARK_DIRS:
-        bench_dir = os.path.join(base_dir, bench)
-        if not os.path.isdir(bench_dir):
-            continue
-        # Look for *hebo_output directories that contain runhistory.jsonl
-        pattern = os.path.join(bench_dir, '*_hebo_output', 'runhistory.jsonl')
-        files.extend(glob.glob(pattern))
-    return sorted(files)
 
 
 def read_jsonl_records(path):
@@ -41,30 +27,63 @@ def read_jsonl_records(path):
     return records
 
 
-def combine_runhistories(base_dir, output_path):
-    """Combine all runhistory.jsonl records from benchmarks into one JSON file."""
-    sources = find_runhistory_files(base_dir)
-    all_records = []
-    for src in sources:
-        records = read_jsonl_records(src)
-        all_records.extend(records)
-    # Write a single JSON array file
+def combine_workload_data(base_dir, output_path):
+    """Combine run_history.jsonl and collected_data.json from each workload into one JSON file."""
+    all_workloads = {}
+    total_run_history_records = 0
+    total_collected_data_records = 0
+    
+    for bench in BENCHMARK_DIRS:
+        bench_dir = os.path.join(base_dir, bench)
+        if not os.path.isdir(bench_dir):
+            print(f"Warning: Benchmark directory not found: {bench_dir}")
+            continue
+        
+        # Look for workload directories e.g., job_0, job_1...
+        for workload_dir in os.listdir(bench_dir):
+            full_dir = os.path.join(bench_dir, workload_dir)
+            if not os.path.isdir(full_dir):
+                continue
+                
+            run_history_path = os.path.join(full_dir, 'run_history.jsonl')
+            collected_data_path = os.path.join(full_dir, 'collected_data.json')
+            
+            workload_data = {}
+            if os.path.exists(collected_data_path):
+                try:
+                    with open(collected_data_path, 'r') as f:
+                        workload_data['collected_data'] = json.load(f)
+                    total_collected_data_records += 1
+                except Exception as e:
+                    print(f"Error reading {collected_data_path}: {e}")
+                    
+            if os.path.exists(run_history_path):
+                records = read_jsonl_records(run_history_path)
+                workload_data['run_history'] = records
+                total_run_history_records += len(records)
+                
+            if workload_data:
+                # Store it under the workload name
+                all_workloads[workload_dir] = workload_data
+                
+    # Write a single JSON file
     with open(output_path, 'w') as out:
         json.dump({
-            'count': len(all_records),
-            'files': sources,
-            'records': all_records,
+            'workload_count': len(all_workloads),
+            'total_run_history_records': total_run_history_records,
+            'total_collected_data_records': total_collected_data_records,
+            'workloads': all_workloads,
         }, out)
-    print(f"Combined {len(sources)} files, {len(all_records)} records -> {output_path}")
-    return all_records
+    print(f"Combined {len(all_workloads)} workloads -> {output_path}")
+    return all_workloads
 
 
 def main():
     # Project root (E2ETune-AI4DB)
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     # Output combined JSON in the same folder as this script
-    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'combined_runhistory.json')
-    combine_runhistories(base_dir, output_path)
+    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'combined_training_data_v1.json')
+    combine_workload_data(base_dir, output_path)
 
 
 if __name__ == "__main__":
