@@ -1,5 +1,6 @@
 import argparse
 import os
+import sys
 import yaml
 import json
 from datetime import datetime
@@ -15,7 +16,10 @@ from classes.Cost_Model import CostModel
 from classes.base_classes.Surrogate_Strategy import SurrogateFactory
 from classes.Global_Vars import TuningParameter
 from classes.base_classes.Database import Database
-from classes.Default_Data_Collector import DefaultDataCollector
+from classes.base_classes.Data_Collector import DefaultDataCollector
+from classes.DataCollectorOLAP import DataCollectorOLAP
+from classes.DataCollectorOLTP import DataCollectorOLTP
+from classes.BenchBase_Database import BenchBaseDatabase
 
 # from get_workload_features import process_olap_workload_features
 
@@ -104,16 +108,19 @@ if __name__ == "__main__":
         exit(1)
 
     all_files = os.listdir(workload_base_path)
+    db: Database
     if benchmark_config.type == "oltp":
         workloads = [
             f for f in all_files if benchmark_config.name in f and f.endswith(".xml")
         ]
+        db = BenchBaseDatabase(db_config=db_config, benchmark_config=benchmark_config, log_path=main_log_path)
     else:
         workloads = [
             f
             for f in all_files
             if f.startswith(benchmark_config.name) and f.endswith(".wg")
         ]
+        db = PostgresSQLDatabase(db_config=db_config, log_path=main_log_path)
 
     tuning_parameter = (
         TuningParameter.THROUGHPUT
@@ -157,7 +164,7 @@ if __name__ == "__main__":
     # ------------------------------------------------------------------
     logger.info(f"Phase 1: Real execution – up to {len(phase1_workloads)} workloads")
     utils.send_telegram(f"Phase 1 started: Real execution of representative workloads ({len(phase1_workloads)} workloads)")
-    db: Database = PostgresSQLDatabase(db_config=db_config, log_path=main_log_path)
+
     log_path = Path(
         f"logs/tuning/{benchmark_config.name}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
     )
@@ -169,7 +176,7 @@ if __name__ == "__main__":
             logger.info(
                 f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Skipping completed: {workload}"
             )
-            utils.send_telegram(f"Phase 1: Skipping completed workload: *{workload}*")
+            utils.send_telegram(f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Skipping completed: {workload}")
             continue
 
         workload_path = Path(workload_base_path) / workload
@@ -182,8 +189,11 @@ if __name__ == "__main__":
         )
         os.makedirs(output_dir, exist_ok=True)
 
-        utils.send_telegram(f"Phase 1: Starting default data collection for workload: *{workload}*")
-        ddc = DefaultDataCollector(
+        utils.send_telegram(f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Starting default data collection for workload: *{workload}*")
+        collector_cls: DefaultDataCollector = (
+            DataCollectorOLTP if benchmark_config.type == "oltp" else DataCollectorOLAP
+        )
+        ddc = collector_cls(
             workload_path=workload_path,
             db=db,
             benchmark=benchmark_config.name,
@@ -196,7 +206,7 @@ if __name__ == "__main__":
         try:
             logger.info("-" * 80)
             logger.info(f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Tuning: {workload}")
-            utils.send_telegram(f"Phase 1: Tuning started for workload: *{workload}*")
+            utils.send_telegram(f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Tuning started for workload: *{workload}*")
             tuner = build_tuner(
                 db,
                 script_config,
@@ -211,14 +221,14 @@ if __name__ == "__main__":
             logger.info(
                 f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Completed: {workload}"
             )
-            utils.send_telegram(f"Phase 1: Tuning completed for workload: *{workload}*")
+            utils.send_telegram(f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Tuning completed for workload: *{workload}*")
         except Exception as e:
             failed += 1
             logger.error(
                 f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Error tuning {workload}: {e}",
                 exc_info=True,
             )
-            utils.send_telegram(f"Phase 1: Error tuning workload: *{workload}* - {e}")
+            utils.send_telegram(f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Error tuning workload: *{workload}* - {e}")
             if total_workloads >= 10:
                 logger.error("Stopping due to error (large workload set)")
                 utils.send_telegram("Stopping E2ETune due to error (large workload set)")

@@ -1,2 +1,2 @@
 cd /home/benchbase/target/benchbase-$1
-java -jar benchbase.jar -b $2 -c /home/E2ETune-AI4DB/oltp_workloads/tpcc/sample_tpcc_config0.xml --create=true --load=true --execute=false
+java -jar benchbase.jar -b $2 -c /home/benchbase/target/benchbase-$1/config/$1/sample_$2_config.xml --create=true --load=true --clear=true --execute=false
