@@ -94,7 +94,16 @@ class HEBOTuner(Tuner):
             f"Default configuration performance: {default_performance:.6f}"
         )
 
-        default_config_df = self._get_tunable_knobs(default_config, params)
+        scaled_default_dict = {}
+        default_config_dict = default_config.to_dict() 
+        
+        for p in params:
+            name = p["name"]
+            real_val = default_config_dict[name] 
+            scaled_default_dict[name] = self._normalize_knob_value(name, real_val)
+            
+        default_config_df = pd.DataFrame([scaled_default_dict])
+
         default_performance_array = self._get_perf_ndarray(default_performance)
 
         hebo.observe(
@@ -166,10 +175,15 @@ class HEBOTuner(Tuner):
                 )
 
                 suggestion = hebo.suggest(n_suggestions=1)
-                config_dict = suggestion.iloc[0].to_dict()
+                raw_suggestion_dict = suggestion.iloc[0].to_dict()
+
+                # Convert HEBO's step-indices back to real database values
+                real_config_dict = {}
+                for name, step_index in raw_suggestion_dict.items():
+                    real_config_dict[name] = self._denormalize_knob_value(name, step_index)
 
                 self.workload_task.knob_config = KnobConfig.from_dict(
-                    config_dict, self.knob_settings
+                    real_config_dict, self.knob_settings
                 )
 
                 cur_objective = self.workload_runner.run_workload(self.workload_task, runs_per_iteration)[
@@ -248,24 +262,38 @@ class HEBOTuner(Tuner):
     def _make_params(self) -> List[dict]:
         params = []
         for knob in self.knob_settings.knobs:
+            # Calculate how many "steps" exist between min and max
+            # Example: min 60, max 600, step 60 -> (600-60)/60 = 9 steps
+            num_steps = (knob.max - knob.min) / knob.step
+            
             if knob.type == "integer":
-                params.append(
-                    {
-                        "name": knob.name,
-                        "type": "int",
-                        "lb": int(knob.min),
-                        "ub": int(knob.max),
-                    }
-                )
+                params.append({
+                    "name": knob.name,
+                    "type": "int",
+                    "lb": 0,
+                    "ub": int(num_steps),
+                })
             elif knob.type == "float":
-                params.append(
-                    {
-                        "name": knob.name,
-                        "type": "num",
-                        "lb": float(knob.min),
-                        "ub": float(knob.max),
-                    }
-                )
+                params.append({
+                    "name": knob.name,
+                    "type": "num",
+                    "lb": 0.0,
+                    "ub": float(num_steps),
+                })
         if not params:
-            raise ValueError("No valid knobs found for tuning.")
+            self.logger.warning("No tunable knobs found in the configuration!")
+            raise ValueError("No tunable knobs found in the configuration!")
         return params
+
+    def _denormalize_knob_value(self, knob_name: str, step_index: float) -> float:
+        """Converts a HEBO step index back to a real DB value."""
+        knob = next(k for k in self.knob_settings.knobs if k.name == knob_name)
+        # real_value = min + (index * step)
+        value = knob.min + (step_index * knob.step)
+        return int(value) if knob.type == "integer" else value
+
+    def _normalize_knob_value(self, knob_name: str, real_value: float) -> float:
+        """Converts a real DB value into a HEBO step index."""
+        knob = next(k for k in self.knob_settings.knobs if k.name == knob_name)
+        # index = (real_value - min) / step
+        return (real_value - knob.min) / knob.step
