@@ -1,0 +1,159 @@
+{
+  "max_connections": {
+    "mysql_knobs": [
+      {"name": "max_connections", "min": 1, "max": 100000}
+    ]
+  },
+
+  "wal_buffers": {
+    "mysql_knobs": [
+      {"name": "innodb_log_buffer_size", "min": 262144, "max": 4294967295}
+    ]
+  },
+ 
+  "shared_buffers": {
+    "mysql_knobs": [
+      {"name": "innodb_buffer_pool_size", "min": 5242880, "max": 9223372036854775807}
+    ]
+  },
+
+  "max_wal_size": {
+    "mysql_knobs": [
+      {"name": "innodb_log_file_size", "min": 4194304, "max": 18446744073709551615},
+      {"name": "innodb_redo_log_capacity", "min": 8388608, "max": 549755813888}
+    ]
+  },
+
+  "commit_delay": {
+    "mysql_knobs": [
+      {"name": "binlog_group_commit_sync_delay", "min": 0, "max": 1000000}
+    ]
+  },
+
+  "commit_siblings": {
+    "mysql_knobs": [
+      {"name": "binlog_group_commit_sync_no_delay_count", "min": 0, "max": 100000}
+    ]
+  },
+
+  "deadlock_timeout": {
+    "mysql_knobs": [
+      {"name": "innodb_lock_wait_timeout", "min": 1, "max": 1073741824}
+    ]
+  },
+
+  "default_statistics_target": {
+    "mysql_knobs": [
+      {"name": "innodb_stats_persistent_sample_pages", "min": 1, "max": 18446744073709551615}
+    ]
+  },
+
+  "effective_io_concurrency": {
+    "mysql_knobs": [
+      {"name": "innodb_read_io_threads", "min": 1, "max": 64},
+      {"name": "innodb_write_io_threads", "min": 1, "max": 64}
+    ]
+  },
+
+  "join_collapse_limit": {
+    "mysql_knobs": [
+      {"name": "optimizer_search_depth", "min": 0, "max": 62}
+    ]
+  },
+
+  "from_collapse_limit": {
+    "mysql_knobs": [
+      {"name": "optimizer_search_depth", "min": 0, "max": 62}
+    ]
+  },
+
+  "maintenance_work_mem": {
+    "mysql_knobs": [
+      {"name": "innodb_sort_buffer_size", "min": 65536, "max": 67108864},
+      {"name": "myisam_sort_buffer_size", "min": 4096, "max": 18446744073709551615}
+    ]
+  },
+
+  "work_mem": {
+    "mysql_knobs": [
+      {"name": "sort_buffer_size", "min": 32768, "max": 4294967295},
+      {"name": "join_buffer_size", "min": 128, "max": 4294967168}
+    ]
+  },
+
+  "temp_buffers": {
+    "mysql_knobs": [
+      {"name": "tmp_table_size", "min": 1024, "max": 18446744073709551615},
+      {"name": "temptable_max_ram", "min": 2097152, "max": 18446744073709551615}
+    ]
+  },
+
+  "temp_file_limit": {
+    "mysql_knobs": [
+      {"name": "max_heap_table_size", "min": 16384, "max": 18446744073709550592},
+      {"name": "temptable_max_mmap", "min": 0, "max": 18446744073709551615}
+    ]
+  },
+
+  "bgwriter_delay": {
+    "mysql_knobs": [
+      {"name": "innodb_page_cleaners", "min": 1, "max": 64}
+    ]
+  },
+
+  "bgwriter_lru_maxpages": {
+    "mysql_knobs": [
+      {"name": "innodb_lru_scan_depth", "min": 100, "max": 4294967295}
+    ]
+  },
+
+  "checkpoint_completion_target": {
+    "mysql_knobs": [
+      {"name": "innodb_max_dirty_pages_pct", "min": 0, "max": 99},
+      {"name": "innodb_io_capacity", "min": 100, "max": 4294967295}
+    ]
+  },
+
+  "wal_writer_delay": {
+    "mysql_knobs": [
+      {"name": "innodb_flush_log_at_timeout", "min": 0, "max": 2700}
+    ]
+  },
+
+  "autovacuum_max_workers": {
+    "mysql_knobs": [
+      {"name": "innodb_purge_threads", "min": 1, "max": 32}
+    ]
+  },
+
+  "autovacuum_vacuum_cost_delay": {
+    "mysql_knobs": [
+      {"name": "innodb_io_capacity", "min": 100, "max": 4294967295}
+    ]
+  },
+
+  "autovacuum_vacuum_cost_limit": {
+    "mysql_knobs": [
+      {"name": "innodb_io_capacity_max", "min": 100, "max": 4294967295}
+    ]
+  },
+
+  "autovacuum_naptime": {
+    "mysql_knobs": [
+      {"name": "innodb_purge_batch_size", "min": 1, "max": 5000},
+      {"name": "innodb_purge_threads", "min": 1, "max": 32}
+    ]
+  },
+
+  "effective_cache_size": {
+    "mysql_knobs": [
+      {"name": "innodb_buffer_pool_size", "min": 5242880, "max": 9223372036854775807}
+    ]
+  },
+
+  "backend_flush_after": {
+    "mysql_knobs": [
+      {"name": "innodb_flush_neighbors", "min": 0, "max": 2}
+    ]
+  }
+}
