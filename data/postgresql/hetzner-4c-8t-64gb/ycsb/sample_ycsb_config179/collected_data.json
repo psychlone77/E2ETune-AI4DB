@@ -1,0 +1,35 @@
+{
+    "internal_metrics": {
+        "xact_commit": 3.0,
+        "xact_rollback": 0.0,
+        "blks_read": 83.0,
+        "blks_hit": 977.0,
+        "tup_returned": 635.0,
+        "tup_fetched": 557.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 4982.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 40812544.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [],
+    "workload_features": {
+        "total_statements": 107.0,
+        "table_access_frequency": {
+            "usertable": 100.0
+        },
+        "read_count": 2.0,
+        "write_count": 98.0,
+        "read_write_ratio": 0.02040816326530612,
+        "avg_predicates_per_query": 0.24,
+        "operator_proportions": {
+            "DELETE": 0.028037383177570093,
+            "INSERT": 0.7102803738317757,
+            "SELECT": 0.08411214953271028,
+            "UPDATE": 0.17757009345794392
+        }
+    }
+}
