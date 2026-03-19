@@ -10,7 +10,7 @@ from classes.Global_Vars import TuningParameter
 from typing import List, Optional, Literal
 from pathlib import Path
 import utils
-
+import math
 import numpy as np
 import pandas as pd
 from math import ceil
@@ -189,6 +189,8 @@ class HEBOTuner(Tuner):
                 cur_objective = self.workload_runner.run_workload(self.workload_task, runs_per_iteration)[
                     self.tuning_parameter.value
                 ]
+                if math.isinf(cur_objective):
+                    cur_objective = abs(default_performance) * 10.0 if default_performance != 0 else 10000.0
                 self.logger.info(f"Performance: {cur_objective:.6f}")
 
 

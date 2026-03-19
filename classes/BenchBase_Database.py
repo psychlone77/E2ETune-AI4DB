@@ -309,16 +309,24 @@ class BenchBaseDatabase(Database):
             f"> {log_file} 2>&1"
         )
         self.logger.info(f"Running BenchBase benchmark: {benchmark_name}")
-        if os.system(command) != 0:
-            self.logger.error("BenchBase execution failed.")
-            return 0.0
-
-        time.sleep(5)
-        summary_path = self._find_and_archive_summary(results_dir)
-        if not summary_path:
-            self.logger.error("No summary.json found in BenchBase results.")
-            return 0.0
-        return self._parse_throughput(summary_path)
+        
+        try:
+            # Run with a reasonable timeout (e.g., 90 seconds for a 30s benchmark)
+            result = subprocess.run(
+                command, 
+                shell=True, 
+                timeout=90, 
+                capture_output=False # output is already redirected to log_file in the command string
+            )
+            
+            if result.returncode != 0:
+                self.logger.warning(f"BenchBase returned non-zero exit code: {result.returncode}")
+                return float("inf") # Or handle the error as appropriate
+                
+        except subprocess.TimeoutExpired:
+            self.logger.error("BenchBase execution timed out! Database likely became unresponsive.")
+            # Penalize this configuration so HEBO avoids it
+            return float("inf")
 
     def _copy_config_to_benchbase(
         self, workload_path, benchmark_name: str
@@ -363,6 +371,7 @@ class BenchBaseDatabase(Database):
             "wikipedia": {"scalefactor": "22", "rate": "unlimited"},
             "twitter": {"scalefactor": "80", "rate": "unlimited"},
             "smallbank": {"scalefactor": "45", "rate": "unlimited"},
+            "tpcc": {"scalefactor": "1", "rate": "unlimited"},
         }
         for tag, value in benchmark_overrides.get(benchmark, {}).items():
             content = re.sub(rf"<{tag}>.*?</{tag}>", f"<{tag}>{value}</{tag}>", content)
