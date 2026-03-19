@@ -5,6 +5,12 @@ import glob
 # Benchmarks to aggregate from the project root (e.g., E2ETune-AI4DB/job, E2ETune-AI4DB/tpch)
 BENCHMARK_DIRS = [
     'data/postgresql/hetzner-4c-8t-64gb/job',
+    'data/postgresql/hetzner-4c-8t-64gb/ssb',
+    'data/postgresql/hetzner-4c-8t-64gb/ssb_flat_tiny',
+    'data/postgresql/hetzner-4c-8t-64gb/tpcds',
+    'data/postgresql/hetzner-4c-8t-64gb/tpch',
+    'data/postgresql/hetzner-4c-8t-64gb/twitter',
+    'data/postgresql/hetzner-4c-8t-64gb/ycsb',
 ]
 
 
@@ -82,7 +88,7 @@ def main():
     # Project root (E2ETune-AI4DB)
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     # Output combined JSON in the same folder as this script
-    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'combined_training_data_v1.json')
+    output_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'combined_training_data_v2.json')
     combine_workload_data(base_dir, output_path)
 
 
