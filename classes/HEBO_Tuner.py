@@ -191,9 +191,15 @@ class HEBOTuner(Tuner):
                 ]
                 self.logger.info(f"Performance: {cur_objective:.6f}")
 
-                config_df = self._get_tunable_knobs(
-                    self.workload_task.knob_config, params
-                )
+
+                scaled_dict = {}
+                real_config_dict_for_obs = self.workload_task.knob_config.to_dict()
+                for p in params:
+                    name_p = p["name"]
+                    real_val = real_config_dict_for_obs[name_p]
+                    scaled_dict[name_p] = self._normalize_knob_value(name_p, real_val)
+                config_df = pd.DataFrame([scaled_dict])
+
                 performance_array = self._get_perf_ndarray(cur_objective)
                 hebo.observe(config_df, performance_array)
 
@@ -290,7 +296,11 @@ class HEBOTuner(Tuner):
         knob = next(k for k in self.knob_settings.knobs if k.name == knob_name)
         # real_value = min + (index * step)
         value = knob.min + (step_index * knob.step)
-        return int(value) if knob.type == "integer" else value
+        
+        # Ensure value is within bounds (HEBO sometimes suggests slightly out of bounds)
+        value = max(knob.min, min(value, knob.max))
+        
+        return int(max(knob.min, min(round(value), knob.max))) if knob.type == "integer" else float(value)
 
     def _normalize_knob_value(self, knob_name: str, real_value: float) -> float:
         """Converts a real DB value into a HEBO step index."""
