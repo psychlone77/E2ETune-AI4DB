@@ -346,12 +346,20 @@ class BenchBaseDatabase(Database):
             
             if result.returncode != 0:
                 self.logger.warning(f"BenchBase returned non-zero exit code: {result.returncode}")
-                return float("inf") # Or handle the error as appropriate
+                return 0.0
+            else:
+                self.logger.info("BenchBase execution completed successfully.")
+                summary_path = self._find_and_archive_summary(results_dir)
+                if summary_path:
+                    return self._parse_throughput(summary_path)
+                else:
+                    self.logger.error("Summary file not found after BenchBase execution.")
+                    return 0.0
                 
         except subprocess.TimeoutExpired:
             self.logger.error("BenchBase execution timed out! Database likely became unresponsive.")
             # Penalize this configuration so HEBO avoids it
-            return float("inf")
+            return 0.0
 
     def _copy_config_to_benchbase(
         self, workload_path, benchmark_name: str
