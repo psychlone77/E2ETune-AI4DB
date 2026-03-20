@@ -53,6 +53,31 @@ class BenchBaseDatabase(Database):
                 return
             except psycopg2.OperationalError as e:
                 self.logger.error(f"Connection attempt {attempt} failed: {e}")
+                
+                if attempt < max_retries:
+                    self.logger.info("Attempting to start PostgreSQL service...")
+                    try:
+                        subprocess.run(
+                            ["sudo", "systemctl", "start", "postgresql"],
+                            check=True,
+                            timeout=30,
+                            capture_output=True,
+                            text=True,
+                        )
+                        self.logger.info(
+                            "PostgreSQL service started. Waiting for it to be ready..."
+                        )
+                        time.sleep(3)
+                        continue
+                    except subprocess.CalledProcessError as start_error:
+                        self.logger.warning(
+                            f"Failed to start PostgreSQL service: {start_error}"
+                        )
+                    except Exception as start_error:
+                        self.logger.warning(
+                            f"Error starting PostgreSQL service: {start_error}"
+                        )
+                        
                 if attempt == max_retries:
                     raise ConnectionError("Could not connect to the database.")
                 time.sleep(2)
