@@ -401,7 +401,7 @@ class BenchBaseDatabase(Database):
 
         benchmark_overrides: Dict[str, Dict[str, str]] = {
             "ycsb": {"scalefactor": "3600", "rate": "70000"},
-            "wikipedia": {"scalefactor": "22", "rate": "unlimited"},
+            "wikipedia": {"scalefactor": "1", "rate": "unlimited"},
             "twitter": {"scalefactor": "80", "rate": "unlimited"},
             "smallbank": {"scalefactor": "45", "rate": "unlimited"},
             "tpcc": {"scalefactor": "1", "rate": "unlimited"},

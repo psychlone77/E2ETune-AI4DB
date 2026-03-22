@@ -1,0 +1,41 @@
+{
+    "internal_metrics": {
+        "xact_commit": 15343.0,
+        "xact_rollback": 713720.0,
+        "blks_read": 69507.0,
+        "blks_hit": 2965786.0,
+        "tup_returned": 54035.0,
+        "tup_fetched": 47426.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 6649.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 81387.0,
+        "disk_write_count": 12525.0,
+        "disk_read_bytes": 666722304.0,
+        "disk_write_bytes": 102604800.0
+    },
+    "query_plans": [
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)"
+    ],
+    "workload_features": {
+        "total_statements": 268.0,
+        "table_access_frequency": {
+            "accounts": 100.0,
+            "savings": 73.0,
+            "checking": 85.0
+        },
+        "read_count": 54.0,
+        "write_count": 46.0,
+        "read_write_ratio": 1.173913043478261,
+        "avg_predicates_per_query": 1.0,
+        "operator_proportions": {
+            "DELETE": 0.0037313432835820895,
+            "SELECT": 0.8059701492537313,
+            "UPDATE": 0.19029850746268656
+        }
+    }
+}
