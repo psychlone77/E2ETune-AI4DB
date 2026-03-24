@@ -6,11 +6,14 @@ import glob
 BENCHMARK_DIRS = [
     'data/postgresql/hetzner-4c-8t-64gb/job',
     'data/postgresql/hetzner-4c-8t-64gb/ssb',
+    'data/postgresql/hetzner-4c-8t-64gb/smallbank',
     'data/postgresql/hetzner-4c-8t-64gb/ssb_flat_tiny',
     'data/postgresql/hetzner-4c-8t-64gb/tpcds',
     'data/postgresql/hetzner-4c-8t-64gb/tpch',
     'data/postgresql/hetzner-4c-8t-64gb/twitter',
     'data/postgresql/hetzner-4c-8t-64gb/ycsb',
+    'data/postgresql/hetzner-4c-8t-64gb/tpcc',
+    'data/postgresql/hetzner-4c-8t-64gb/wikipedia',
 ]
 
 

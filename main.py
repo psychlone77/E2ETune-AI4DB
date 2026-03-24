@@ -237,66 +237,108 @@ if __name__ == "__main__":
     # ------------------------------------------------------------------
     # Phase 2: Surrogate model execution
     # ------------------------------------------------------------------
-    # if phase2_workloads:
-    #     logger.info("=" * 80)
-    #     logger.info(f"Phase 2: Surrogate-based tuning - up to {len(phase2_workloads)} workloads")
-    #     logger.info("=" * 80)
+    if phase2_workloads:
+        logger.info("=" * 80)
+        logger.info(f"Phase 2: Surrogate-based tuning - up to {len(phase2_workloads)} workloads")
+        logger.info("=" * 80)
 
-    #     strategy = SurrogateFactory.create_strategy("tree_ensemble")
-    #     cost_model = CostModel(strategy=strategy, knob_settings=knob_settings)
-    #     cost_model.load_model(surrogate_config.model_path)
+        strategy = SurrogateFactory.create_strategy("tree_ensemble")
+        cost_model = CostModel(strategy=strategy, knob_settings=knob_settings)
+        cost_model.load_model(surrogate_config.model_path)
 
-    #     wk_feature_dir = Path("data/workload_features") / benchmark_config.name
+        wk_feature_dir = Path("data/workload_features") / benchmark_config.name
 
-    #     for idx, workload in enumerate(phase2_workloads):
-    #         workload_id = os.path.splitext(workload)[0]
-    #         if workload_id in completed or workload in completed:
-    #             skipped += 1
-    #             logger.info(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Skipping completed: {workload}")
-    #             continue
+        for idx, workload in enumerate(phase2_workloads):
+            workload_id = os.path.splitext(workload)[0]
+            if workload_id in completed or workload in completed:
+                skipped += 1
+                logger.info(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Skipping completed: {workload}")
+                continue
 
-    #         workload_path = Path(workload_base_path) / workload
-    #         output_dir = (
-    #             Path("data")
-    #             / cli_args.dbengine
-    #             / cli_args.servername
-    #             / benchmark_config.name
-    #             / workload_id
-    #         )
-    #         os.makedirs(output_dir, exist_ok=True)
-    #         log_path = Path(
-    #             f"logs/tuning/{workload_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
-    #         )
+            workload_path = Path(workload_base_path) / workload
+            output_dir = (
+                Path("data")
+                / cli_args.dbengine
+                / cli_args.servername
+                / benchmark_config.name
+                / workload_id
+            )
+            os.makedirs(output_dir, exist_ok=True)
+            log_path = Path(
+                f"logs/tuning/{workload_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}.log"
+            )
 
-    #         # # Extract workload features required by the cost model
-    #         # process_olap_workload_features(
-    #         #     workload_file=str(workload_path),
-    #         #     benchmark_name=benchmark_config.name,
-    #         #     output_dir=wk_feature_dir,
-    #         #     workload_name=workload_id,
-    #         # )
+            # --- Start: Ported Default Data Collection from Phase 1 ---
+            utils.send_telegram(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Starting default data collection for surrogate: *{workload}*")
+            collector_cls: DefaultDataCollector = (
+                DataCollectorOLTP if benchmark_config.type == "oltp" else DataCollectorOLAP
+            )
+            ddc = collector_cls(
+                workload_path=workload_path,
+                db=db,
+                benchmark=benchmark_config.name,
+                output_dir=output_dir,
+                knob_settings_set=knob_settings,
+                log_path=log_path,
+            )
+            ddc.collect()
+            
+            # Load collected data to feed into the surrogate CostModel
+            collected_data_file = output_dir / "collected_data.json"
+            if collected_data_file.exists():
+                with open(collected_data_file, "r") as f:
+                    cdata = json.load(f)
+                
+                context_features = {}
+                # Extract internal metrics (im_)
+                for k, v in cdata.get("internal_metrics", {}).items():
+                    context_features[f"im_{k}"] = float(v) if v is not None else 0.0
+                
+                # Extract workload features (wf_, op_)
+                for k, v in cdata.get("workload_features", {}).items():
+                    if isinstance(v, dict):
+                        prefix = "op_" if "operator" in k.lower() else "tbl_"
+                        for sub_k, sub_v in v.items():
+                            # The model expects consistent naming, e.g. op_group_by
+                            formatted_k = sub_k.lower().replace(" ", "_") if prefix == "op_" else sub_k
+                            context_features[f"{prefix}{formatted_k}"] = float(sub_v) if sub_v is not None else 0.0
+                    else:
+                        context_features[f"wf_{k}"] = float(v) if v is not None else 0.0
+                
+                cost_model.workload_features[workload_id] = context_features
+            else:
+                logger.warning(f"No collected_data.json found for {workload_id}. Surrogate model will use zeroed context features.")
+            # --- End: Ported Default Data Collection ---
 
-    #         try:
-    #             logger.info("-" * 80)
-    #             logger.info(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Tuning (surrogate): {workload}")
-    #             tuner = build_tuner(
-    #                 cost_model,
-    #                 script_config,
-    #                 knob_settings,
-    #                 workload_path,
-    #                 output_dir,
-    #                 log_path,
-    #                 tuning_parameter,
-    #             )
-    #             tuner.tune()
-    #             successful += 1
-    #             logger.info(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Completed: {workload}")
-    #         except Exception as e:
-    #             failed += 1
-    #             logger.error(
-    #                 f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Error tuning {workload}: {e}",
-    #                 exc_info=True,
-    #             )
+            # Deprecated standalone feature extraction
+            # process_olap_workload_features(
+            #     workload_file=str(workload_path),
+            #     benchmark_name=benchmark_config.name,
+            #     output_dir=wk_feature_dir,
+            #     workload_name=workload_id,
+            # )
+
+            try:
+                logger.info("-" * 80)
+                logger.info(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Tuning (surrogate): {workload}")
+                tuner = build_tuner(
+                    cost_model,
+                    script_config,
+                    knob_settings,
+                    workload_path,
+                    output_dir,
+                    log_path,
+                    tuning_parameter,
+                )
+                tuner.tune()
+                successful += 1
+                logger.info(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Completed: {workload}")
+            except Exception as e:
+                failed += 1
+                logger.error(
+                    f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Error tuning {workload}: {e}",
+                    exc_info=True,
+                )
 
     # Summary
     logger.info("=" * 100)
