@@ -1,0 +1,49 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 81041.0,
+        "blks_hit": 209248244.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 197817.0,
+        "disk_write_count": 40163.0,
+        "disk_read_bytes": 3241033728.0,
+        "disk_write_bytes": 658030592.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=10629321.6)(OrderingOperation(GroupingOperation(TableAll_rt(cost=1.2); TableAll_ci(cost=29986.2); TableEq_ref_n(cost=1752682.4))))",
+        "QueryBlock(cost=321189.1)(OrderingOperation(TableAll_p(cost=292972.9)))",
+        "QueryBlock(cost=2034197.2)(OrderingOperation(GroupingOperation(TableAll_mk(cost=2282.5); TableEq_ref_k(cost=1128841.5))))",
+        "QueryBlock(cost=9780898.5)(OrderingOperation(GroupingOperation(TableAll_rt(cost=1.2); TableAll_ci(cost=29986.2); TableEq_ref_t(cost=904259.2))))"
+    ],
+    "workload_features": {
+        "total_statements": 4,
+        "table_access_frequency": {
+            "name": 1,
+            "cast_info": 2,
+            "role_type": 2,
+            "person_info": 1,
+            "keyword": 1,
+            "movie_keyword": 1,
+            "title": 1
+        },
+        "read_count": 4,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 3.75,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 1.0,
+            "sum_agg": 0.0,
+            "avg_agg": 0.0,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

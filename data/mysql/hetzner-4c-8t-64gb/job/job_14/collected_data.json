@@ -1,0 +1,58 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 107065.0,
+        "blks_hit": 90770673.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 179760.0,
+        "disk_write_count": 20893.0,
+        "disk_read_bytes": 2945187840.0,
+        "disk_write_bytes": 342310912.0
+    },
+    "query_plans": [
+        "TableAll_movie_companies(cost=234067.4)",
+        "QueryBlock(cost=349920.0)(OrderingOperation(GroupingOperation(TableAll_movie_companies(cost=234067.4); TableEq_ref_company_name(cost=64362.6))))",
+        "QueryBlock(cost=2073483.6)(OrderingOperation(GroupingOperation(TableAll_movie_keyword(cost=2282.5); TableEq_ref_title(cost=1168127.9))))",
+        "QueryBlock(cost=10612107.5)(GroupingOperation(TableRange_role_type(cost=1.1); TableAll_cast_info(cost=29986.8)))",
+        "QueryBlock(cost=4822628.0)(OrderingOperation(GroupingOperation(TableAll_cast_info(cost=3204619.8); TableEq_ref_title(cost=912533.5))))",
+        "QueryBlock(cost=6313882.2)(OrderingOperation(GroupingOperation(TableAll_cast_info(cost=3204619.8); TableEq_ref_name(cost=2403787.8))))",
+        "QueryBlock(cost=530135.2)(GroupingOperation(TableAll_movie_companies(cost=182577.4); TableEq_ref_company_name(cost=193087.7)))",
+        "QueryBlock(cost=6313882.2)(OrderingOperation(GroupingOperation(TableAll_cast_info(cost=3204619.8); TableEq_ref_name(cost=2403787.8))))",
+        "QueryBlock(cost=2073483.6)(OrderingOperation(GroupingOperation(TableAll_movie_keyword(cost=2282.5); TableEq_ref_title(cost=1168127.9))))",
+        "QueryBlock(cost=1160888.1)(GroupingOperation(TableAll_movie_companies(cost=2362.2); TableEq_ref_company_name(cost=643625.5)))",
+        "QueryBlock(cost=13600.4)(GroupingOperation(TableAll_movie_link(cost=24.2); TableEq_ref_title(cost=7656.8)))",
+        "QueryBlock(cost=6313882.2)(OrderingOperation(GroupingOperation(TableAll_cast_info(cost=3204619.8); TableEq_ref_name(cost=2403787.8))))"
+    ],
+    "workload_features": {
+        "total_statements": 12,
+        "table_access_frequency": {
+            "movie_companies": 4,
+            "company_name": 3,
+            "title": 4,
+            "movie_keyword": 2,
+            "role_type": 1,
+            "cast_info": 5,
+            "name": 3,
+            "movie_link": 1
+        },
+        "read_count": 12,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.0833,
+        "operator_proportions": {
+            "order_by": 0.5833333333333334,
+            "group_by": 0.9166666666666666,
+            "count_agg": 1.0,
+            "sum_agg": 0.0,
+            "avg_agg": 0.0,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}
