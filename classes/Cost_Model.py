@@ -3,15 +3,20 @@ import joblib
 import os
 import pandas as pd
 import numpy as np
+import sys
 import torch
 import torch.nn as nn
 from typing import List, Dict, Any
 
-from sklearn.preprocessing import StandardScaler
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
 
 from classes.base_classes.Knob_Settings import KnobSettingsSet
 from classes.base_classes.Workload_Runner import BenchmarkTask, WorkloadRunner
 from classes.base_classes.Surrogate_Strategy import SurrogateStrategy
+
+# Create a "fake" module entry for numpy._core
+if not hasattr(np, "_core"):
+    sys.modules["numpy._core"] = np.core
 
 # 1. Redefine the exact architecture from training
 class DualStreamCostNN(nn.Module):
@@ -56,7 +61,8 @@ class CostModelPredictor:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
         # Load columns
-        self.feature_columns = joblib.load(os.path.join(save_dir, "feature_columns.pkl"))
+        with open(os.path.join(save_dir, "feature_columns.json"), "r") as f:
+            self.feature_columns = json.load(f)
         
         # Identify column splits for the dual-stream
         self.knob_cols = [c for c in self.feature_columns if c.startswith('knob_')]
@@ -64,9 +70,22 @@ class CostModelPredictor:
         self.cols_to_minmax = [c for c in self.feature_columns if c.startswith('knob_') or c.startswith('im_')]
         self.other_cols = [c for c in self.feature_columns if not c.startswith('knob_') and not c.startswith('im_')]
         
-        # Load scalers
-        self.minmax_scaler = joblib.load(os.path.join(save_dir, "min_max_scaler.pkl"))
-        self.std_scaler = joblib.load(os.path.join(save_dir, "std_scaler.pkl"))
+        # Load scalers from JSON
+        with open(os.path.join(save_dir, "scalers_config.json"), "r") as f:
+            scaler_data = json.load(f)
+        
+        # Rehydrate the MinMaxScaler
+        self.minmax_scaler = MinMaxScaler()
+        self.minmax_scaler.min_ = np.array(scaler_data["minmax"]["min"])
+        self.minmax_scaler.scale_ = np.array(scaler_data["minmax"]["scale"])
+        self.minmax_scaler.data_min_ = np.array(scaler_data["minmax"]["data_min"])
+        self.minmax_scaler.data_max_ = np.array(scaler_data["minmax"]["data_max"])
+        
+        # Rehydrate the StandardScaler
+        self.std_scaler = StandardScaler()
+        self.std_scaler.mean_ = np.array(scaler_data["std"]["mean"])
+        self.std_scaler.scale_ = np.array(scaler_data["std"]["scale"])
+        self.std_scaler.var_ = np.array(scaler_data["std"]["var"])
         
         # Initialize and load model weights
         self.model = DualStreamCostNN(
@@ -148,9 +167,12 @@ class CostModel(WorkloadRunner):
         self.predictor = CostModelPredictor(save_dir=save_dir)
         self.is_trained = True
 
-    def run_workload(self, workload_task: BenchmarkTask) -> tuple[float, float]:
+    def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: int = 1) -> tuple[float, float]:
         """
         Run the workload via the Cost Model to return a performance tuple.
+        Args:
+            workload_task: The BenchmarkTask containing all necessary information to run the workload.
+            runs_per_iteration: The number of times to run the workload (unused for Cost Model, for interface compatibility).
         Returns:
             A tuple containing the [latency, -throughput] performance metrics.
         """
