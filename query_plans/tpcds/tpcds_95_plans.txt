@@ -1,0 +1,35 @@
+PostgreSQL Query Plan Summaries - tpcds_95
+================================================================================
+
+Query 1:
+Limit(cost=75321.7)(Sort(cost=75321.7)(Aggregate(cost=75321.6)(Gather Merge(cost=75321.3)(Sort(cost=74318.9)(Aggregate(cost=74318.8)(Hash Join(cost=68317.6)(Seq Scan(cost=63698.1); Hash(cost=1335.9)(Seq Scan(cost=1335.9)))))))))
+--------------------------------------------------------------------------------
+
+Query 2:
+Limit(cost=53105.3)(Sort(cost=53105.4)(Aggregate(cost=53103.8)(Gather Merge(cost=53101.9)(Sort(cost=52085.9)(Aggregate(cost=52083.6)(Hash Join(cost=49079.6)(Seq Scan(cost=43411.3); Hash(cost=3356.2)(Seq Scan(cost=3356.2)))))))))
+--------------------------------------------------------------------------------
+
+Query 3:
+Limit(cost=6989.5)(Sort(cost=6991.3)(Aggregate(cost=6977.7)(Gather Merge(cost=6963.4)(Sort(cost=5883.3)(Aggregate(cost=5847.8)(Hash Join(cost=5415.2)(Seq Scan(cost=3724.4); Hash(cost=1335.9)(Seq Scan(cost=1335.9)))))))))
+--------------------------------------------------------------------------------
+
+Query 4:
+Sort(cost=161630.1)(Aggregate(cost=161630.0)(Gather Merge(cost=161629.9)(Sort(cost=160628.8)(Aggregate(cost=160628.7)(Hash Join(cost=136160.0)(Seq Scan(cost=112424.3); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))
+--------------------------------------------------------------------------------
+
+Query 5:
+Limit(cost=68172.6)(Sort(cost=68172.6)(Aggregate(cost=68172.6)(Gather Merge(cost=68172.6)(Aggregate(cost=67172.3)(Sort(cost=67152.3)(Hash Join(cost=66902.9)(Seq Scan(cost=63698.1); Hash(cost=11.8)(Seq Scan(cost=11.8)))))))))
+--------------------------------------------------------------------------------
+
+Query 6:
+Sort(cost=25493.8)(Aggregate(cost=25493.8)(Gather Merge(cost=25493.8)(Aggregate(cost=24493.5)(Sort(cost=24493.5)(Hash Join(cost=24493.4)(Seq Scan(cost=21764.4); Hash(cost=1942.1)(Seq Scan(cost=1942.1))))))))
+--------------------------------------------------------------------------------
+
+Query 7:
+Limit(cost=25110.9)(Sort(cost=25110.9)(Aggregate(cost=25110.8)(Gather Merge(cost=25110.7)(Sort(cost=24109.0)(Aggregate(cost=24108.9)(Hash Join(cost=22610.2)(Seq Scan(cost=21764.4); Hash(cost=2.6)(Seq Scan(cost=2.6)))))))))
+--------------------------------------------------------------------------------
+
+Query 8:
+Limit(cost=74918.3)(Sort(cost=74918.3)(Aggregate(cost=74918.1)(Gather Merge(cost=74917.8)(Sort(cost=73915.0)(Aggregate(cost=73914.8)(Hash Join(cost=67913.6)(Seq Scan(cost=63698.1); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))))
+--------------------------------------------------------------------------------
+

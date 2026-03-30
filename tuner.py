@@ -18,7 +18,9 @@ from knob_config import parse_knob_config
 from Database import Database
 from stress_testing_tool import stress_testing_tool
 from benchbase_runner import BenchBaseRunner
+from get_query_plans import process_olap_workload
 import utils
+from pathlib import Path
 
 class EarlyStopSignal(BaseException):
     """Exception raised to stop SMAC optimization early."""
@@ -68,13 +70,23 @@ def default_run(workload_file: str, args: Dict[str, Any]) -> Dict[str, float]:
     db.reset_inner_metrics()
     db.restart_db()
     
+    # Process OLAP workload to extract query plans for surrogate model
+    qp_output_dir = Path("query_plans") / args['benchmark_config']['benchmark']
+    process_olap_workload(
+        db=db,
+        workload_path=workload_file,
+        output_dir=qp_output_dir,
+        workload_name=os.path.splitext(workload_name)[0],
+    )
+    
     logger.info(f"[Default Run] Running workload: {workload_file}")
     if args['benchmark_config'].get('tool', 'dwg') == 'benchbase':
         benchbase_runner = BenchBaseRunner(args, logger=logger)
         benchbase_runner.load_database(workload_file)
         benchbase_runner.run_benchmark(workload_file, args['benchmark_config'].get('log_path', 'logs/performance/workload_execution.log'))
     else:
-        db.run_workload_with_defaults(workload_file)
+        # db.run_workload_with_defaults(workload_file)
+        pass
 
     internal_metrics = db.fetch_inner_metrics()
     logger.info(f"[Default Run] Internal metrics collected: {len(internal_metrics)} metrics")
@@ -85,6 +97,7 @@ def default_run(workload_file: str, args: Dict[str, Any]) -> Dict[str, float]:
     with open(metrics_file, "w") as f:
         json.dump(internal_metrics, f, indent=4)
         logger.info(f"[Default Run] Internal metrics saved to: {metrics_file}")
+        
 
 class Tuner:
     """

@@ -1,0 +1,23 @@
+{
+    "workload": "tpcds_170",
+    "iterations": 100,
+    "best_cost": -2.7099078952496547,
+    "best_performance": 2.7099078952496547,
+    "configuration": {
+        "shared_buffers": 16891.0,
+        "work_mem": 24795.0,
+        "maintenance_work_mem": 1633456.0,
+        "effective_cache_size": 663011.0,
+        "max_connections": 200.0,
+        "wal_buffers": 3195.0,
+        "checkpoint_completion_target": 0.8704991927394563,
+        "checkpoint_timeout": 854.0,
+        "effective_io_concurrency": 8.0,
+        "join_collapse_limit": 15.0,
+        "from_collapse_limit": 13.0,
+        "bgwriter_delay": 589.0,
+        "bgwriter_lru_multiplier": 2.5596902968710005,
+        "default_statistics_target": 206.0,
+        "max_parallel_workers_per_gather": 2.0
+    }
+}

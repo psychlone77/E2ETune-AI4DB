@@ -12,6 +12,10 @@ class BenchBaseRunner:
         self.logger = logger or logging.getLogger(__name__)
 
     def load_database(self, workload_path):
+        """Load data into the database using BenchBase.
+        workload_path: path to the BenchBase XML config file.
+        Returns 0.0 on failure, else None.        
+        """
 
         benchbase_jar_dir = self.benchmark_config.get('benchbase_jar_dir', '/home/benchbase/target/benchbase-postgres')
         benchmark_name = self.benchmark_config.get('benchmark', 'tpcc')

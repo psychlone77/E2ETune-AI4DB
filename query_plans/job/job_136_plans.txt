@@ -1,0 +1,23 @@
+PostgreSQL Query Plan Summaries - job_136
+================================================================================
+
+Query 1:
+Sort(cost=2010116.0)(Aggregate(cost=2006397.9)(Gather Merge(cost=2002564.5)(Aggregate(cost=1969385.0)(Sort(cost=1926872.6)(Hash Join(cost=624466.4)(Seq Scan(cost=403743.6); Hash(cost=49202.0)(Seq Scan(cost=49202.0))))))))
+--------------------------------------------------------------------------------
+
+Query 2:
+Sort(cost=35710.0)(Aggregate(cost=35672.6)(Gather Merge(cost=35610.2)(Aggregate(cost=34395.2)(Sort(cost=34374.3)(Nested Loop(cost=34326.1)(Bitmap Heap Scan(cost=18481.4)(Bitmap Index Scan(cost=100.9)); Index Scan(cost=7.0)))))))
+--------------------------------------------------------------------------------
+
+Query 3:
+Sort(cost=79446.2)(Aggregate(cost=79446.2)(Sort(cost=79446.2)(Nested Loop(cost=79446.1)(Gather(cost=78409.6)(Seq Scan(cost=77409.6)); Index Scan(cost=1034.8)))))
+--------------------------------------------------------------------------------
+
+Query 4:
+Sort(cost=54162.1)(Aggregate(cost=54063.2)(Gather Merge(cost=53918.5)(Sort(cost=51704.0)(Aggregate(cost=51365.7)(Hash Join(cost=50943.5)(Seq Scan(cost=43303.5); Hash(cost=2626.1)(Seq Scan(cost=2626.1))))))))
+--------------------------------------------------------------------------------
+
+Query 5:
+Sort(cost=8687.9)(Aggregate(cost=8654.3)(Gather Merge(cost=8616.2)(Aggregate(cost=7420.6)(Sort(cost=7407.9)(Merge Join(cost=7364.6)(Index Scan(cost=92216.3); Sort(cost=509.8)(Bitmap Heap Scan(cost=289.0)(Bitmap Index Scan(cost=75.8)))))))))
+--------------------------------------------------------------------------------
+

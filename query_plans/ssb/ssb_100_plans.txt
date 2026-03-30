@@ -1,0 +1,11 @@
+PostgreSQL Query Plan Summaries - ssb_100
+================================================================================
+
+Query 1:
+Sort(cost=9530.1)(Aggregate(cost=9490.6)(Nested Loop(cost=9414.2)(Nested Loop(cost=8697.3)(Seq Scan(cost=76.3); Bitmap Heap Scan(cost=8596.0)(Bitmap Index Scan(cost=47.1))); Index Scan(cost=0.3))))
+--------------------------------------------------------------------------------
+
+Query 2:
+Sort(cost=111804.9)(Aggregate(cost=111800.2)(Gather Merge(cost=111780.2)(Aggregate(cost=110692.5)(Sort(cost=110602.3)(Hash Join(cost=110227.9)(Hash Join(cost=110090.4)(Seq Scan(cost=103445.3); Hash(cost=70.0)(Seq Scan(cost=70.0))); Hash(cost=53.0)(Seq Scan(cost=53.0))))))))
+--------------------------------------------------------------------------------
+

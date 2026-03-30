@@ -1,0 +1,11 @@
+PostgreSQL Query Plan Summaries - tpch_85
+================================================================================
+
+Query 1:
+Sort(cost=159924.0)(Aggregate(cost=159694.5)(Gather Merge(cost=159536.7)(Aggregate(cost=157679.3)(Sort(cost=157494.6)(Hash Join(cost=156963.2)(Seq Scan(cost=150010.6); Hash(cost=5451.2)(Seq Scan(cost=5451.2))))))))
+--------------------------------------------------------------------------------
+
+Query 2:
+Aggregate(cost=201522.6)(Gather Merge(cost=201522.5)(Sort(cost=200521.3)(Aggregate(cost=200521.2)(Hash Join(cost=200051.0)(Seq Scan(cost=35470.0); Hash(cost=143759.4)(Seq Scan(cost=143759.4)))))))
+--------------------------------------------------------------------------------
+

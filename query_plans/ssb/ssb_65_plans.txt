@@ -1,0 +1,11 @@
+PostgreSQL Query Plan Summaries - ssb_65
+================================================================================
+
+Query 1:
+Aggregate(cost=130039.9)(Gather Merge(cost=130039.0)(Sort(cost=129033.2)(Aggregate(cost=129032.5)(Hash Join(cost=115100.5)(Hash Join(cost=111102.1)(Seq Scan(cost=103445.3); Hash(cost=869.5)(Seq Scan(cost=869.5))); Hash(cost=73.2)(Seq Scan(cost=73.2)))))))
+--------------------------------------------------------------------------------
+
+Query 2:
+Aggregate(cost=291716.9)(Gather Merge(cost=281518.0)(Aggregate(cost=225119.5)(Sort(cost=213284.1)(Hash Join(cost=133923.0)(Hash Join(cost=126016.4)(Hash Join(cost=110101.3)(Seq Scan(cost=103445.3); Hash(cost=73.2)(Seq Scan(cost=73.2))); Hash(cost=4041.4)(Seq Scan(cost=4041.4))); Hash(cost=5975.2)(Aggregate(cost=5974.9)(Seq Scan(cost=5864.7))))))))
+--------------------------------------------------------------------------------
+

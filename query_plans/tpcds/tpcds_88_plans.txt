@@ -1,0 +1,15 @@
+PostgreSQL Query Plan Summaries - tpcds_88
+================================================================================
+
+Query 1:
+Sort(cost=71072.4)(Aggregate(cost=71072.2)(Sort(cost=71066.6)(Gather(cost=71030.0)(Hash Join(cost=69957.0)(Hash Join(cost=69954.7)(Seq Scan(cost=69699.1); Hash(cost=1.4)(Seq Scan(cost=1.4))); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))
+--------------------------------------------------------------------------------
+
+Query 2:
+Sort(cost=77703.7)(Aggregate(cost=77504.8)(Gather(cost=77088.2)(Aggregate(cost=74127.8)(Hash Join(cost=73936.6)(Seq Scan(cost=69699.1); Hash(cost=3797.4)(Seq Scan(cost=3797.4)))))))
+--------------------------------------------------------------------------------
+
+Query 3:
+Sort(cost=3278.7)(Aggregate(cost=3278.0)(Sort(cost=3275.2)(Hash Join(cost=3272.3)(Bitmap Heap Scan(cost=1729.5)(Bitmap Index Scan(cost=16.8)); Hash(cost=1500.0)(Seq Scan(cost=1500.0))))))
+--------------------------------------------------------------------------------
+

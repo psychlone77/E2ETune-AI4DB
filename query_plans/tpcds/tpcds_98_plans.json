@@ -1,0 +1,14 @@
+{
+  "workload": "tpcds_98",
+  "query_plans": [
+    "Aggregate(cost=1616.0)(Nested Loop(cost=1606.3)(Seq Scan(cost=1500.0); Index Only Scan(cost=7.2)))",
+    "Aggregate(cost=9833.1)(Gather(cost=9832.9)(Aggregate(cost=8831.9)(Nested Loop(cost=8821.8)(Seq Scan(cost=1388.8); Bitmap Heap Scan(cost=148.3)(Bitmap Index Scan(cost=4.7))))))",
+    "Aggregate(cost=4309.4)(Gather(cost=4309.3)(Aggregate(cost=3308.7)(Nested Loop(cost=3306.2)(Seq Scan(cost=1388.8); Bitmap Heap Scan(cost=318.8)(Bitmap Index Scan(cost=5.0))))))",
+    "Sort(cost=2403.5)(Aggregate(cost=2403.5)(Sort(cost=2403.5)(Seq Scan(cost=2403.4))))",
+    "Aggregate(cost=126336.6)(Gather Merge(cost=126336.6)(Aggregate(cost=125335.9)(Sort(cost=125331.8)(Hash Join(cost=125290.3)(Seq Scan(cost=112424.3); Hash(cost=16.9)(Index Scan(cost=16.9)))))))",
+    "Sort(cost=7321.8)(Aggregate(cost=7321.7)(Gather Merge(cost=7321.2)(Sort(cost=6318.4)(Aggregate(cost=6318.2)(Hash Join(cost=6301.4)(Seq Scan(cost=6288.5); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))",
+    "Sort(cost=23589.5)(Aggregate(cost=23589.0)(Gather Merge(cost=23586.6)(Aggregate(cost=22572.7)(Sort(cost=22564.7)(Seq Scan(cost=22513.8))))))",
+    "Sort(cost=5617.3)(Aggregate(cost=5617.0)(Gather Merge(cost=5616.1)(Sort(cost=4612.1)(Aggregate(cost=4611.1)(Hash Join(cost=3975.1)(Seq Scan(cost=3724.4); Hash(cost=1.4)(Seq Scan(cost=1.4))))))))"
+  ],
+  "count": 8
+}

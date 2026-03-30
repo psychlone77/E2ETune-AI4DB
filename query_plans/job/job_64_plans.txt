@@ -1,0 +1,11 @@
+PostgreSQL Query Plan Summaries - job_64
+================================================================================
+
+Query 1:
+Sort(cost=943.8)(Aggregate(cost=943.8)(Sort(cost=881.2)(Hash Join(cost=561.5)(Seq Scan(cost=463.0); Hash(cost=1.2)(Seq Scan(cost=1.2))))))
+--------------------------------------------------------------------------------
+
+Query 2:
+Sort(cost=36965.3)(Aggregate(cost=36965.3)(Sort(cost=36959.4)(Gather(cost=36941.8)(Hash Join(cost=35903.0)(Nested Loop(cost=35883.8)(Seq Scan(cost=33738.1); Index Scan(cost=9.9)); Hash(cost=2.5)(Seq Scan(cost=2.5)))))))
+--------------------------------------------------------------------------------
+

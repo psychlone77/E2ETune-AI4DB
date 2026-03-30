@@ -1,0 +1,111 @@
+{
+  
+  "innodb_purge_threads": {
+    "description": "The number of background threads devoted to the InnoDB purge operation.",
+    "min": 1,
+    "max": 32,
+    "pg_equivalent": "autovacuum_max_workers"
+  },
+  "max_connections": {
+    "description": "The maximum permitted number of simultaneous client connections.",
+    "min": 1,
+    "max": 100000,
+    "pg_equivalent": "max_connections"
+  },
+  "innodb_log_buffer_size": {
+    "description": "The size in bytes of the buffer that InnoDB uses to write to the log files on disk.",
+    "min": 262144,
+    "max": 4294967295,
+    "pg_equivalent": "wal_buffers"
+  },
+  "innodb_buffer_pool_size": {
+    "description": "The size in bytes of the buffer pool, the memory area where InnoDB caches table and index data.",
+    "min": 5242880,
+    "max": 9223372036854775807,
+    "pg_equivalent": "shared_buffers"
+  },
+  "innodb_page_cleaners": {
+    "description": "The number of page cleaner threads that flush dirty pages from buffer pool instances.",
+    "min": 1,
+    "max": 64,
+    "pg_equivalent": "bgwriter_delay"
+  },
+  "innodb_lru_scan_depth": {
+    "description": "Influences the algorithms and heuristics for the flush operation for the InnoDB buffer pool.",
+    "min": 100,
+    "max": 4294967295,
+    "pg_equivalent": "bgwriter_lru_maxpages"
+  },
+  "innodb_max_dirty_pages_pct": {
+    "description": "InnoDB tries to flush data from the buffer pool so that the percentage of dirty pages does not exceed this value.",
+    "min": 0,
+    "max": 99,
+    "pg_equivalent": "checkpoint_completion_target"
+  },
+  "innodb_log_file_size": {
+    "description": "The size in bytes of each log file in a log group.",
+    "min": 4194304,
+    "max": 18446744073709551615,
+    "pg_equivalent": "max_wal_size"
+  },
+  "binlog_group_commit_sync_delay": {
+    "description": "Controls how many microseconds the binary log commit waits before synchronizing the binary log file to disk.",
+    "min": 0,
+    "max": 1000000,
+    "pg_equivalent": "commit_delay"
+  },
+  "binlog_group_commit_sync_no_delay_count": {
+    "description": "Sets the maximum number of transactions to wait for before aborting the current binlog_group_commit_sync_delay wait.",
+    "min": 0,
+    "max": 1000000,
+    "pg_equivalent": "commit_siblings"
+  },
+  "innodb_lock_wait_timeout": {
+    "description": "The length of time in seconds an InnoDB transaction waits for a row lock before giving up.",
+    "min": 1,
+    "max": 1073741824,
+    "pg_equivalent": "deadlock_timeout"
+  },
+  "innodb_stats_persistent_sample_pages": {
+    "description": "The number of index pages to sample when estimating cardinality and other statistics.",
+    "min": 1,
+    "max": 18446744073709551615,
+    "pg_equivalent": "default_statistics_target"
+  },
+  "innodb_read_io_threads": {
+    "description": "The number of I/O threads for read operations in InnoDB.",
+    "min": 1,
+    "max": 64,
+    "pg_equivalent": "effective_io_concurrency"
+  },
+  "optimizer_search_depth": {
+    "description": "The maximum depth of search performed by the query optimizer. Values larger than the number of relations in a query result in better query plans, but take longer to generate an execution plan.",
+    "min": 0,
+    "max": 62,
+    "pg_equivalent": "join_collapse_limit"
+  },
+  "tmp_table_size": {
+    "description": "The maximum size of internal in-memory temporary tables.",
+    "min": 1024,
+    "max": 18446744073709551615,
+    "pg_equivalent": "temp_buffers"
+  },
+  "max_heap_table_size": {
+    "description": "This variable sets the maximum size to which user-created MEMORY tables are permitted to grow.",
+    "min": 16384,
+    "max": 18446744073709547520,
+    "pg_equivalent": "temp_file_limit"
+  },
+  "innodb_flush_log_at_timeout": {
+    "description": "Write and flush the logs every N seconds.",
+    "min": 1,
+    "max": 2700,
+    "pg_equivalent": "wal_writer_delay"
+  },
+  "sort_buffer_size": {
+    "description": "Each session that must perform a sort allocates a buffer of this size.",
+    "min": 32768,
+    "max": 4294967295,
+    "pg_equivalent": "work_mem"
+  }
+}

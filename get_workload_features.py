@@ -187,6 +187,123 @@ def save_features(features_data: Dict[str, Any], output_dir: Path, workload_name
     generator.save_to_text(str(text_file))
 
 
+def process_oltp_workload_features(benchmark_name: str):
+    """
+    Process OLTP workload features from captured queries.
+
+    Args:
+        benchmark_name: Name of benchmark (e.g., 'tpcc')
+    """
+    print(f"\n{'='*80}")
+    print(f"Extracting workload features for OLTP: {benchmark_name}")
+    print(f"{'='*80}\n")
+
+    # Path to captured queries directory
+    queries_dir = f"captured_queries/{benchmark_name}"
+
+    if not os.path.exists(queries_dir):
+        print(f"✗ Captured queries directory not found: {queries_dir}")
+        print("  Please run get_query_plans.py first to capture queries!")
+        return
+
+    # Find all captured query files
+    all_files = os.listdir(queries_dir)
+    query_files = [f for f in all_files if f.endswith("_queries.sql")]
+
+    # Sort in natural order
+    query_files = utils.natural_sort(query_files)
+
+    total_files = len(query_files)
+    print(f"Found {total_files} captured query files in {queries_dir}")
+
+    if total_files == 0:
+        print(f"✗ No query files found in {queries_dir}")
+        return
+
+    # Create output directory
+    output_dir = Path("workload_features") / benchmark_name
+
+    # Process each query file
+    successful = 0
+    failed = 0
+
+    for idx, query_file in enumerate(query_files, 1):
+        queries_file_path = os.path.join(queries_dir, query_file)
+        workload_id = Path(query_file).stem.replace("_queries", "")
+
+        try:
+            print(f"\n[Workload {idx}/{total_files}] Processing: {query_file}")
+            print("-" * 60)
+
+            # Extract features
+            features_data = extract_features_from_workload(
+                workload_file=queries_file_path, benchmark_name=benchmark_name
+            )
+
+            # Save features
+            save_features(features_data, output_dir, workload_id)
+
+            successful += 1
+            print(
+                f"✓ [Workload {idx}/{total_files}] Successfully processed: {workload_id}"
+            )
+
+        except Exception as e:
+            failed += 1
+            print(
+                f"✗ [Workload {idx}/{total_files}] Error processing {query_file}: {e}"
+            )
+            import traceback
+
+            traceback.print_exc()
+            continue
+
+    print(f"\n{'='*80}")
+    print(f"OLTP Feature Extraction Summary: {benchmark_name}")
+    print(f"{'='*80}")
+    print(f"Total query files: {total_files}")
+    print(f"Successfully processed: {successful}")
+    print(f"Failed: {failed}")
+    print(f"Output directory: {output_dir}")
+    print(f"{'='*80}")
+
+
+def process_olap_workload_features(
+    workload_file: str, benchmark_name: str, output_dir: Path, workload_name: str
+):
+    """
+    Process OLAP workload to extract features.
+    Args:
+        workload_file: Path to workload file
+        benchmark_name: Name of the benchmark
+        output_dir: Output directory path
+        workload_name: Name of the workload
+    """
+    # Check if features already exist
+    text_file = output_dir / f"{workload_name}_features.txt"
+    json_file = output_dir / f"{workload_name}_features.json"
+    if text_file.exists() and json_file.exists():
+        print(f"⏭ Features already exist for {workload_name}, skipping...\n")
+        return
+
+    try:
+        # Extract features
+        features_data = extract_features_from_workload(workload_file, benchmark_name)
+
+        if features_data:
+            # Save features
+            save_features(features_data, output_dir, workload_name)
+            print(f"✓ Successfully processed {workload_name}\n")
+        else:
+            print(f"⚠ No features extracted from {workload_name}\n")
+
+    except Exception as e:
+        print(f"✗ Error processing {workload_file}: {e}\n")
+        import traceback
+
+        traceback.print_exc()
+
+
 def main(benchmark_n: str = None, benchmark_t: str = None, database_name: str = None):
     """Main function to extract workload features."""
     # Load configuration from config.ini
@@ -237,24 +354,9 @@ def main(benchmark_n: str = None, benchmark_t: str = None, database_name: str = 
         workload_file = os.path.join(workload_dir, workload_file_name)
         workload_name = Path(workload_file_name).stem
 
-        try:
-            # Extract features
-            features_data = extract_features_from_workload(
-                workload_file, benchmark_name
-            )
-
-            if features_data:
-                # Save features
-                save_features(features_data, output_dir, workload_name)
-                print(f"✓ Successfully processed {workload_name}\n")
-            else:
-                print(f"⚠ No features extracted from {workload_name}\n")
-
-        except Exception as e:
-            print(f"✗ Error processing {workload_file}: {e}\n")
-            import traceback
-
-            traceback.print_exc()
+        process_olap_workload_features(
+            workload_file, benchmark_name, output_dir, workload_name
+        )
 
     print("\n" + "=" * 80)
     print("Workload feature extraction complete!")
@@ -268,6 +370,8 @@ if __name__ == "__main__":
         {"benchmark": "ssb", "type": "olap", "database": "ssb"},
         {"benchmark": "tpcds", "type": "olap", "database": "tpcds"},
         {"benchmark": "tpch", "type": "olap", "database": "dss"},
+        # OLTP workloads - process from captured queries
+        {"benchmark": "tpcc", "type": "oltp", "database": "tpcc"},
     ]
     for bench in benchmark_dict:
         print("\n" + "#" * 100)
@@ -275,8 +379,18 @@ if __name__ == "__main__":
             f"Starting workload feature extraction for benchmark: {bench['benchmark']} ({bench['type']})"
         )
         print("#" * 100 + "\n")
-        main(
-            benchmark_n=bench["benchmark"],
-            benchmark_t=bench["type"],
-            database_name=bench["database"],
-        )
+
+        if bench["type"] == "oltp":
+            # Process OLTP workload from captured queries
+            process_oltp_workload_features(benchmark_name=bench["benchmark"])
+        else:
+            # Process OLAP workload normally
+            main(
+                benchmark_n=bench["benchmark"],
+                benchmark_t=bench["type"],
+                database_name=bench["database"],
+            )
+
+    print("\n" + "#" * 100)
+    print("All workload feature extractions complete!")
+    print("#" * 100)

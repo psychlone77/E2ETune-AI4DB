@@ -1,0 +1,17 @@
+{
+  "workload": "tpcds_226",
+  "query_plans": [
+    "Sort(cost=1839.2)(Aggregate(cost=1837.6)(Seq Scan(cost=1587.0)))",
+    "Limit(cost=75321.7)(Sort(cost=75321.7)(Aggregate(cost=75321.6)(Gather Merge(cost=75321.3)(Sort(cost=74318.9)(Aggregate(cost=74318.8)(Hash Join(cost=68317.6)(Seq Scan(cost=63698.1); Hash(cost=1335.9)(Seq Scan(cost=1335.9)))))))))",
+    "Aggregate(cost=49193.8)(Sort(cost=49136.2)(Gather(cost=48655.2)(Hash Join(cost=46932.9)(Seq Scan(cost=43411.3); Hash(cost=1942.1)(Seq Scan(cost=1942.1))))))",
+    "Sort(cost=186098.8)(Aggregate(cost=186098.8)(Gather Merge(cost=186098.6)(Sort(cost=185097.4)(Aggregate(cost=185097.3)(Hash Join(cost=136160.0)(Seq Scan(cost=112424.3); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))",
+    "Sort(cost=27448.6)(Aggregate(cost=27448.5)(Sort(cost=27340.6)(Gather(cost=25733.1)(Hash Join(cost=22575.0)(Seq Scan(cost=21764.4); Hash(cost=12.5)(Seq Scan(cost=12.5)))))))",
+    "Aggregate(cost=46408.5)(Gather Merge(cost=46408.4)(Aggregate(cost=45408.2)(Sort(cost=45407.9)(Hash Join(cost=45406.3)(Seq Scan(cost=43411.3); Hash(cost=417.8)(Seq Scan(cost=417.8)))))))",
+    "Sort(cost=41280.7)(Aggregate(cost=41280.7)(Sort(cost=40741.1)(Hash Join(cost=28118.4)(Seq Scan(cost=25960.8); Hash(cost=2.5)(Seq Scan(cost=2.5))))))",
+    "Sort(cost=597116.9)(Aggregate(cost=597116.9)(Sort(cost=579499.4)(Hash Join(cost=244771.4)(Hash Join(cost=237900.6)(Seq Scan(cost=180936.5); Hash(cost=1.1)(Seq Scan(cost=1.1))); Hash(cost=478.3)(Index Only Scan(cost=478.3))))))",
+    "Sort(cost=222282.9)(Aggregate(cost=222282.3)(Sort(cost=216881.1)(Hash Join(cost=91160.6)(Seq Scan(cost=80501.0); Hash(cost=2693.0)(Seq Scan(cost=2693.0))))))",
+    "Aggregate(cost=69927.2)(Gather Merge(cost=69927.0)(Aggregate(cost=68925.4)(Sort(cost=68922.7)(Hash Join(cost=68898.6)(Seq Scan(cost=63698.1); Hash(cost=2049.6)(Seq Scan(cost=2049.6)))))))",
+    "Sort(cost=45120.8)(Aggregate(cost=45120.6)(Sort(cost=44039.6)(Hash Join(cost=4742.5)(Seq Scan(cost=4317.7); Hash(cost=1.4)(Seq Scan(cost=1.4))))))"
+  ],
+  "count": 11
+}

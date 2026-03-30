@@ -1,0 +1,9 @@
+{
+  "workload": "ssb_34",
+  "query_plans": [
+    "Limit(cost=121913.0)(Sort(cost=121927.9)(Aggregate(cost=121783.4)(Gather Merge(cost=121633.6)(Sort(cost=119250.4)(Aggregate(cost=118859.4)(Hash Join(cost=117851.6)(Seq Scan(cost=115948.0); Hash(cost=832.0)(Seq Scan(cost=832.0)))))))))",
+    "Sort(cost=45591.5)(Aggregate(cost=45564.1)(Gather Merge(cost=45552.7)(Sort(cost=44488.8)(Aggregate(cost=44461.4)(Nested Loop(cost=44354.2)(Seq Scan(cost=4923.6); Index Scan(cost=116.3)))))))",
+    "Sort(cost=128673.7)(Aggregate(cost=125712.4)(Gather(cost=124580.9)(Aggregate(cost=116037.7)(Hash Join(cost=111652.4)(Hash Join(cost=110081.7)(Seq Scan(cost=103445.3); Hash(cost=53.0)(Seq Scan(cost=53.0))); Hash(cost=76.3)(Seq Scan(cost=76.3)))))))"
+  ],
+  "count": 3
+}
