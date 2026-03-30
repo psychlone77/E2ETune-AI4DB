@@ -1,0 +1,216 @@
+{
+  "buffer_pool_size": {
+    "postgres": ["shared_buffers"],
+    "mysql": ["innodb_buffer_pool_size"],
+    "aggregation": "direct"
+  },
+  "cache_effective_size": {
+    "postgres": ["effective_cache_size"],
+    "mysql": ["innodb_buffer_pool_size"],
+    "aggregation": "direct_reuse"
+  },
+  "per_query_memory": {
+    "postgres": ["work_mem"],
+    "mysql": ["sort_buffer_size", "join_buffer_size"],
+    "aggregation": "sum"
+  },
+  "maintenance_memory": {
+    "postgres": ["maintenance_work_mem"],
+    "mysql": ["innodb_sort_buffer_size", "myisam_sort_buffer_size"],
+    "aggregation": "sum"
+  },
+  "temp_memory": {
+    "postgres": ["temp_buffers"],
+    "mysql": ["tmp_table_size", "temptable_max_ram"],
+    "aggregation": "sum"
+  },
+  "temp_file_limit": {
+    "postgres": ["temp_file_limit"],
+    "mysql": ["max_heap_table_size", "temptable_max_mmap"],
+    "aggregation": "sum"
+  },
+
+  "log_buffer_size": {
+    "postgres": ["wal_buffers"],
+    "mysql": ["innodb_log_buffer_size"],
+    "aggregation": "direct"
+  },
+  "log_capacity": {
+    "postgres": ["max_wal_size"],
+    "mysql": ["innodb_log_file_size", "innodb_redo_log_capacity"],
+    "aggregation": "max"
+  },
+  "log_flush_interval": {
+    "postgres": ["wal_writer_delay"],
+    "mysql": ["innodb_flush_log_at_timeout"],
+    "aggregation": "direct"
+  },
+  "commit_delay": {
+    "postgres": ["commit_delay"],
+    "mysql": ["binlog_group_commit_sync_delay"],
+    "aggregation": "direct"
+  },
+  "commit_batch_size": {
+    "postgres": ["commit_siblings"],
+    "mysql": ["binlog_group_commit_sync_no_delay_count"],
+    "aggregation": "direct"
+  },
+
+  "max_connections": {
+    "postgres": ["max_connections"],
+    "mysql": ["max_connections"],
+    "aggregation": "direct"
+  },
+  
+  "io_parallelism": {
+    "postgres": ["effective_io_concurrency"],
+    "mysql": ["innodb_read_io_threads", "innodb_write_io_threads"],
+    "aggregation": "sum"
+  },
+
+  "bgwriter_delay": {
+    "postgres": ["bgwriter_delay"],
+    "mysql": ["innodb_page_cleaners"],
+    "aggregation": "direct"
+  },
+  "bgwriter_lru_pages": {
+    "postgres": ["bgwriter_lru_maxpages"],
+    "mysql": ["innodb_lru_scan_depth"],
+    "aggregation": "direct"
+  },
+  "bgwriter_aggressiveness": {
+    "postgres": ["bgwriter_lru_multiplier"],
+    "mysql": [],
+    "aggregation": "none"
+  },
+  "checkpoint_completion_ratio": {
+    "postgres": ["checkpoint_completion_target"],
+    "mysql": ["innodb_max_dirty_pages_pct"],
+    "aggregation": "direct"
+  },
+  
+  "flush_behavior": {
+    "postgres": ["backend_flush_after"],
+    "mysql": ["innodb_flush_neighbors"],
+    "aggregation": "direct"
+  },
+
+  "cleanup_worker_count": {
+    "postgres": ["autovacuum_max_workers"],
+    "mysql": ["innodb_purge_threads"],
+    "aggregation": "direct"
+  },
+  "cleanup_interval": {
+    "postgres": ["autovacuum_naptime"],
+    "mysql": ["innodb_purge_batch_size", "innodb_purge_threads"],
+    "aggregation": "ratio"
+  },
+  "cleanup_cost_delay": {
+    "postgres": ["autovacuum_vacuum_cost_delay"],
+    "mysql": [ "innodb_io_capacity"],
+    "aggregation": "direct"
+  },
+  "vacuum_cost_delay": {
+    "postgres": ["vacuum_cost_delay"],
+    "mysql": [],
+    "aggregation": "none"
+  },
+  "cleanup_cost_limit": {
+    "postgres": ["autovacuum_vacuum_cost_limit"],
+    "mysql": ["innodb_io_capacity", "innodb_io_capacity_max"],
+    "aggregation": "max"
+  },
+  "vacuum_cost_limit": {
+    "postgres": ["vacuum_cost_limit"],
+    "mysql": [],
+    "aggregation": "none"
+  },
+  "cleanup_scale_factor": {
+    "postgres": ["autovacuum_vacuum_scale_factor"],
+    "mysql": [],
+    "aggregation": "none"
+  },
+  "cleanup_analyze_scale_factor": {
+    "postgres": ["autovacuum_analyze_scale_factor"],
+    "mysql": [],
+    "aggregation": "none"
+  },
+  "cleanup_threshold": {
+    "postgres": ["autovacuum_vacuum_threshold"],
+    "mysql": [],
+    "aggregation": "none"
+  },
+  "cleanup_analyze_threshold": {
+    "postgres": ["autovacuum_analyze_threshold"],
+    "mysql": [],
+    "aggregation": "none"
+  },
+  
+    "worker_threads": {
+        "postgres": ["max_wal_senders"],
+        "mysql": [],
+        "aggregation": "none"
+    },
+
+    "checkpoint_flush_threshold": {
+        "postgres": ["checkpoint_flush_after"],
+        "mysql": [],
+        "aggregation": "none"
+    },
+ 
+  "join_search_limit": {
+    "postgres": ["join_collapse_limit"],
+    "mysql": ["optimizer_search_depth"],
+    "aggregation": "direct"
+  },
+  "from_search_limit": {
+    "postgres": ["from_collapse_limit"],
+    "mysql": ["optimizer_search_depth"],
+    "aggregation": "direct"
+  },
+
+  "geqo_effort": {
+    "postgres": ["geqo_effort"],
+    "mysql": [],
+    "aggregation": "none"
+  },
+  "geqo_pool_size": {
+    "postgres": ["geqo_pool_size"],
+    "mysql": [],
+    "aggregation": "none"
+  },
+  "geqo_generations": {
+    "postgres": ["geqo_generations"],
+    "mysql": [],
+    "aggregation": "none"
+  },
+  "geqo_threshold": {
+    "postgres": ["geqo_threshold"],
+    "mysql": [],
+    "aggregation": "none"
+  },
+  "geqo_random_seed": {
+    "postgres": ["geqo_seed"],
+    "mysql": [],
+    "aggregation": "none"
+  },
+
+  "stats_target": {
+    "postgres": ["default_statistics_target"],
+    "mysql": ["innodb_stats_persistent_sample_pages"],
+    "aggregation": "direct"
+  },
+  "cursor_bias": {
+    "postgres": ["cursor_tuple_fraction"],
+    "mysql": [],
+    "aggregation": "none"
+  },
+
+  "deadlock_detection_time": {
+    "postgres": ["deadlock_timeout"],
+    "mysql": ["innodb_lock_wait_timeout"],
+    "aggregation": "direct"
+  }
+}
+
+
