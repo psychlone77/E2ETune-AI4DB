@@ -1,23 +1,23 @@
 {
     "internal_metrics": {
-        "xact_commit": 55.0,
+        "xact_commit": 62.0,
         "xact_rollback": 0.0,
-        "blks_read": 552211.0,
-        "blks_hit": 302746.0,
-        "tup_returned": 75576354.0,
-        "tup_fetched": 73167.0,
+        "blks_read": 561559.0,
+        "blks_hit": 5090.0,
+        "tup_returned": 78647116.0,
+        "tup_fetched": 2242.0,
         "tup_inserted": 0.0,
         "conflicts": 0.0,
         "tup_updated": 0.0,
         "tup_deleted": 0.0,
-        "disk_read_count": 552373.0,
+        "disk_read_count": 590517.0,
         "disk_write_count": 0.0,
-        "disk_read_bytes": 4525039616.0,
+        "disk_read_bytes": 4837515264.0,
         "disk_write_bytes": 0.0
     },
     "query_plans": [
-        "Sort(cost=601063.7)(Aggregate(cost=601063.7)(Gather Merge(cost=601063.6)(Sort(cost=600062.9)(Aggregate(cost=600062.9)(Hash Join(cost=592669.8)(Seq Scan(cost=403744.8); Hash(cost=2886.2)(Hash Join(cost=2886.2)(Seq Scan(cost=2419.6); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))))",
-        "Sort(cost=517389.7)(Aggregate(cost=517389.7)(Gather Merge(cost=517389.6)(Aggregate(cost=516388.8)(Sort(cost=516388.8)(Nested Loop(cost=516388.8)(Hash Join(cost=513025.5)(Seq Scan(cost=403744.8); Hash(cost=33738.1)(Seq Scan(cost=33738.1))); Index Scan(cost=0.5)))))))"
+        "Sort(cost=600226.2)(Aggregate(cost=600226.2)(Gather Merge(cost=600226.1)(Sort(cost=599225.4)(Aggregate(cost=599225.4)(Hash Join(cost=592249.8)(Seq Scan(cost=403803.6); Hash(cost=2888.3)(Hash Join(cost=2888.3)(Seq Scan(cost=2419.6); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))))",
+        "Sort(cost=532701.2)(Aggregate(cost=532700.9)(Gather Merge(cost=532700.0)(Aggregate(cost=531696.1)(Sort(cost=531695.8)(Hash Join(cost=531695.4)(Hash Join(cost=497911.8)(Seq Scan(cost=403803.6); Hash(cost=54443.8)(Seq Scan(cost=54443.8))); Hash(cost=33738.1)(Seq Scan(cost=33738.1))))))))"
     ],
     "workload_features": {
         "total_statements": 2,

@@ -1,0 +1,46 @@
+{
+    "internal_metrics": {
+        "xact_commit": 52.0,
+        "xact_rollback": 0.0,
+        "blks_read": 24260.0,
+        "blks_hit": 2202.0,
+        "tup_returned": 2082291.0,
+        "tup_fetched": 1249.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 54491.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 446390272.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=554193.7)(Aggregate(cost=554193.0)(Gather Merge(cost=554192.5)(Aggregate(cost=553189.9)(Sort(cost=553189.6)(Nested Loop(cost=553189.4)(Hash Join(cost=553184.6)(Seq Scan(cost=43303.7); Hash(cost=502812.2)(Hash Join(cost=502812.2)(Seq Scan(cost=403803.6); Hash(cost=59350.7)(Seq Scan(cost=59350.7))))); Index Scan(cost=0.4)))))))",
+        "Sort(cost=25.9)(Aggregate(cost=25.9)(Sort(cost=25.8)(Nested Loop(cost=25.8)(Index Scan(cost=17.4); Index Scan(cost=8.4)))))"
+    ],
+    "workload_features": {
+        "total_statements": 2,
+        "table_access_frequency": {
+            "char_name": 1,
+            "cast_info": 1,
+            "movie_keyword": 1,
+            "keyword": 1,
+            "person_info": 1,
+            "name": 1
+        },
+        "read_count": 2,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 4.5,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 1.0,
+            "sum_agg": 0.5,
+            "avg_agg": 0.0,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

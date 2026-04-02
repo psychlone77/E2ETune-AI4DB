@@ -1,0 +1,48 @@
+{
+    "internal_metrics": {
+        "xact_commit": 74.0,
+        "xact_rollback": 0.0,
+        "blks_read": 280980.0,
+        "blks_hit": 5935.0,
+        "tup_returned": 26462059.0,
+        "tup_fetched": 2604.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 311408.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 2551054336.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Limit(cost=360060.5)(Sort(cost=360178.4)(Aggregate(cost=359041.4)(Gather Merge(cost=355150.6)(Aggregate(cost=321489.3)(Sort(cost=314754.3)(Hash Join(cost=147388.8)(Hash Join(cost=126583.9)(Seq Scan(cost=43303.7); Hash(cost=49201.4)(Seq Scan(cost=49201.4))); Hash(cost=2290.7)(Seq Scan(cost=2290.7)))))))))",
+        "Sort(cost=521832.6)(Aggregate(cost=521832.6)(Sort(cost=521832.6)(Gather(cost=521832.5)(Nested Loop(cost=520832.5)(Hash Join(cost=520830.6)(Seq Scan(cost=403803.6); Hash(cost=77369.1)(Seq Scan(cost=77369.1))); Index Scan(cost=0.5))))))",
+        "Sort(cost=335871.1)(Aggregate(cost=335871.1)(Sort(cost=335767.2)(Gather(cost=334781.1)(Hash Join(cost=332397.6)(Hash Join(cost=332372.1)(Seq Scan(cost=49201.4); Hash(cost=256816.9)(Seq Scan(cost=256816.9))); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))"
+    ],
+    "workload_features": {
+        "total_statements": 3,
+        "table_access_frequency": {
+            "title": 3,
+            "movie_keyword": 1,
+            "keyword": 1,
+            "name": 1,
+            "cast_info": 1,
+            "kind_type": 1,
+            "movie_info": 1
+        },
+        "read_count": 3,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 3.6667,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 1.0,
+            "sum_agg": 0.0,
+            "avg_agg": 0.0,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}
