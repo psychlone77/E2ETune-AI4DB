@@ -232,6 +232,9 @@ class MySQLDatabase(Database):
             return False
 
     def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: Optional[int] = 1) -> tuple[float, float]:
+            if not self.connection.is_connected():
+                self.connect()
+
             # 1. Read the raw PostgreSQL script
             with open(workload_task.workload_path, "r") as f:
                 raw_sql_script = f.read()
