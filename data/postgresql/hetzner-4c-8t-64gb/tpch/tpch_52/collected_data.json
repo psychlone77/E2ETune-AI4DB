@@ -1,0 +1,49 @@
+{
+    "internal_metrics": {
+        "xact_commit": 94.0,
+        "xact_rollback": 0.0,
+        "blks_read": 3390162.0,
+        "blks_hit": 6500.0,
+        "tup_returned": 181914910.0,
+        "tup_fetched": 111542.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 3424800.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 28055961600.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=1378426.9)(Aggregate(cost=1378426.2)(Gather Merge(cost=1378425.4)(Sort(cost=1377419.6)(Aggregate(cost=1377418.9)(Hash Join(cost=1325871.7)(Hash Join(cost=1313210.2)(Hash Join(cost=1221192.8)(Seq Scan(cost=899879.9); Hash(cost=194043.0)(Seq Scan(cost=194043.0))); Hash(cost=25249.0)(Seq Scan(cost=25249.0))); Hash(cost=1.2)(Seq Scan(cost=1.2))))))))",
+        "Sort(cost=1480365.4)(Aggregate(cost=1480358.7)(Gather Merge(cost=1480354.0)(Sort(cost=1479314.7)(Aggregate(cost=1479308.0)(Hash Join(cost=1411147.4)(Hash Join(cost=1392795.9)(Hash Join(cost=1371869.7)(Hash Join(cost=1254549.5)(Seq Scan(cost=899879.9); Hash(cost=194043.0)(Seq Scan(cost=194043.0))); Hash(cost=25249.0)(Seq Scan(cost=25249.0))); Hash(cost=1.2)(Seq Scan(cost=1.2))); Hash(cost=11.7)(Seq Scan(cost=11.7))))))))",
+        "Sort(cost=1314554.1)(Aggregate(cost=1311725.2)(Gather Merge(cost=1306571.0)(Aggregate(cost=1280521.5)(Sort(cost=1271572.4)(Hash Join(cost=1193017.7)(Seq Scan(cost=881129.8); Hash(cost=228546.8)(Hash Join(cost=228546.8)(Seq Scan(cost=194043.0); Hash(cost=24094.9)(Bitmap Heap Scan(cost=24094.9)(Bitmap Index Scan(cost=1947.1)))))))))))",
+        "Sort(cost=900888.5)(Aggregate(cost=900888.5)(Sort(cost=900888.5)(Nested Loop(cost=900888.5)(Gather(cost=900880.0)(Seq Scan(cost=899879.9)); Index Scan(cost=8.4)))))",
+        "Sort(cost=221575.5)(Aggregate(cost=221575.5)(Gather Merge(cost=221575.3)(Sort(cost=220574.1)(Aggregate(cost=220574.1)(Seq Scan(cost=212793.0))))))"
+    ],
+    "workload_features": {
+        "total_statements": 5,
+        "table_access_frequency": {
+            "nation": 2,
+            "customer": 3,
+            "orders": 4,
+            "lineitem": 4,
+            "region": 1,
+            "part": 1
+        },
+        "read_count": 5,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.8,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.6,
+            "sum_agg": 0.6,
+            "avg_agg": 0.4,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

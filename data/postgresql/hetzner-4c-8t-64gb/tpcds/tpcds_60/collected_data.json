@@ -1,0 +1,60 @@
+{
+    "internal_metrics": {
+        "xact_commit": 100.0,
+        "xact_rollback": 0.0,
+        "blks_read": 125605.0,
+        "blks_hit": 6225.0,
+        "tup_returned": 5911646.0,
+        "tup_fetched": 4480.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 157089.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 1286873088.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=16.3)(Aggregate(cost=12.8)(Seq Scan(cost=11.0)))",
+        "Sort(cost=1545.2)(Aggregate(cost=1545.1)(Seq Scan(cost=1410.0)))",
+        "Sort(cost=4256.5)(Aggregate(cost=4254.3)(Seq Scan(cost=4018.0)))",
+        "Sort(cost=7930.4)(Aggregate(cost=7929.5)(Gather Merge(cost=7928.8)(Sort(cost=6920.9)(Aggregate(cost=6920.0)(Hash Join(cost=6342.0)(Seq Scan(cost=5989.0); Hash(cost=1.4)(Seq Scan(cost=1.4))))))))",
+        "Sort(cost=46146.5)(Aggregate(cost=46146.4)(Gather Merge(cost=46146.4)(Aggregate(cost=45146.2)(Sort(cost=45136.2)(Hash Join(cost=45022.0)(Seq Scan(cost=43411.4); Hash(cost=11.8)(Seq Scan(cost=11.8))))))))",
+        "Limit(cost=49188.1)(Aggregate(cost=23514.0)(Gather(cost=23514.0)(Aggregate(cost=22513.8)(Seq Scan(cost=21764.4)))); Gather Merge(cost=48988.1)(Sort(cost=24922.7)(Seq Scan(cost=22513.8))))",
+        "Sort(cost=74651.4)(Aggregate(cost=74651.3)(Gather Merge(cost=74651.1)(Sort(cost=73649.2)(Aggregate(cost=73649.1)(Hash Join(cost=67912.7)(Seq Scan(cost=63697.5); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))",
+        "Sort(cost=3.3)(Aggregate(cost=3.2)(Seq Scan(cost=2.9)))",
+        "Aggregate(cost=30673.1)(Gather Merge(cost=30435.7)(Sort(cost=27749.3)(Aggregate(cost=27262.3)(Hash Join(cost=24923.1)(Seq Scan(cost=21764.4); Hash(cost=1834.7)(Seq Scan(cost=1834.7)))))))",
+        "Limit(cost=13199.5)(Sort(cost=13224.5)(Aggregate(cost=12983.4)(Gather(cost=12761.3)(Aggregate(cost=10789.9)(Hash Join(cost=10692.7)(Seq Scan(cost=6588.0); Hash(cost=3356.2)(Seq Scan(cost=3356.2))))))))"
+    ],
+    "workload_features": {
+        "total_statements": 10,
+        "table_access_frequency": {
+            "warehouse": 1,
+            "item": 1,
+            "customer": 2,
+            "store_returns": 2,
+            "reason": 1,
+            "catalog_sales": 1,
+            "promotion": 1,
+            "web_sales": 3,
+            "store_sales": 1,
+            "store": 1,
+            "web_page": 1,
+            "date_dim": 1
+        },
+        "read_count": 10,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 0.7,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 0.9,
+            "count_agg": 0.5,
+            "sum_agg": 0.3,
+            "avg_agg": 0.2,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}
