@@ -3,6 +3,7 @@ import os
 import sys
 import yaml
 import json
+import concurrent.futures
 from datetime import datetime
 from pathlib import Path
 
@@ -144,9 +145,16 @@ if __name__ == "__main__":
         # fallback
         phase1_workloads = workloads[:REAL_TUNING_LIMIT]
 
-    # only keep workloads that actually exist in the folder just to be safe
-    phase1_workloads = [wk for wk in phase1_workloads if wk in workloads]
-    phase2_workloads = [w for w in workloads if w not in phase1_workloads]
+    force_surrogate = raw_config.get("tuning", {}).get("force_surrogate", False)
+
+    if force_surrogate:
+        logger.info("force_surrogate is enabled. Forcing all remaining workloads into Phase 2 (Surrogate).")
+        phase1_workloads = []
+        phase2_workloads = workloads
+    else:
+        # only keep workloads that actually exist in the folder just to be safe
+        phase1_workloads = [wk for wk in phase1_workloads if wk in workloads]
+        phase2_workloads = [w for w in workloads if w not in phase1_workloads]
 
     # Resume support: skip already-completed workloads
     completed = utils.get_completed_workloads(
@@ -201,7 +209,20 @@ if __name__ == "__main__":
             knob_settings_set=knob_settings,
             log_path=log_path,
         )
-        ddc.collect()
+        try:
+            with concurrent.futures.ThreadPoolExecutor(max_workers=1) as executor:
+                future = executor.submit(ddc.collect)
+                future.result(timeout=600)  # 10 minutes
+        except concurrent.futures.TimeoutError:
+            logger.error(f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Default data collection timed out after 10m for {workload}. Skipping.")
+            utils.send_telegram(f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Default data collection timed out for: *{workload}*. Skipping.")
+            skipped += 1
+            continue
+        except Exception as e:
+            logger.error(f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Default data collection failed for {workload}: {e}")
+            utils.send_telegram(f"[Phase-1 {idx + 1}/{len(phase1_workloads)}] Default data collection failed for: *{workload}* - {e}")
+            failed += 1
+            continue
 
         try:
             logger.info("-" * 80)
@@ -242,8 +263,7 @@ if __name__ == "__main__":
         logger.info(f"Phase 2: Surrogate-based tuning - up to {len(phase2_workloads)} workloads")
         logger.info("=" * 80)
 
-        strategy = SurrogateFactory.create_strategy("tree_ensemble")
-        cost_model = CostModel(strategy=strategy, knob_settings=knob_settings)
+        cost_model = CostModel(knob_settings=knob_settings)
         cost_model.load_model(surrogate_config.model_path)
 
         wk_feature_dir = Path("data/workload_features") / benchmark_config.name
@@ -281,7 +301,23 @@ if __name__ == "__main__":
                 knob_settings_set=knob_settings,
                 log_path=log_path,
             )
-            ddc.collect()
+            executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+            future = executor.submit(ddc.collect)
+            try:
+                future.result(timeout=600)  # 10 minutes
+                executor.shutdown(wait=False)
+            except concurrent.futures.TimeoutError:
+                executor.shutdown(wait=False)
+                logger.error(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Default data collection timed out after 10m for {workload}. Skipping.")
+                utils.send_telegram(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Default data collection timed out for: *{workload}*. Skipping.")
+                skipped += 1
+                continue
+            except Exception as e:
+                executor.shutdown(wait=False)
+                logger.error(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Default data collection failed for {workload}: {e}")
+                utils.send_telegram(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Default data collection failed for: *{workload}* - {e}")
+                failed += 1
+                continue
             
             # Load collected data to feed into the surrogate CostModel
             collected_data_file = output_dir / "collected_data.json"

@@ -81,6 +81,9 @@ class PostgresSQLDatabase(Database):
         """Set the database configuration knobs based on the provided knob configuration."""
         old_autocommit = self.connection.autocommit
         try:
+            # Ensure no active transaction before changing autocommit
+            self.connection.commit()
+            
             # ALTER SYSTEM cannot run inside a transaction block
             self.connection.autocommit = True
             with self.connection.cursor() as cursor:

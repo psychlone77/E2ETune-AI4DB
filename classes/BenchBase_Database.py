@@ -85,6 +85,7 @@ class BenchBaseDatabase(Database):
     def set_knobs(self, knob_config: KnobConfig):
         old_autocommit = self.connection.autocommit
         try:
+            self.connection.commit()
             self.connection.autocommit = True
             with self.connection.cursor() as cursor:
                 for knob in knob_config.knobs:
@@ -190,6 +191,7 @@ class BenchBaseDatabase(Database):
         """Extract query plans using auto_explain by tracking log file bytes before and after execution."""
         old_autocommit = self.connection.autocommit
         try:
+            self.connection.commit()
             self.connection.autocommit = True
             with self.connection.cursor() as cursor:
                 self.logger.info("Enabling auto_explain for query plan extraction.")
@@ -197,6 +199,10 @@ class BenchBaseDatabase(Database):
 
             self._restart_db()
 
+            try:
+                 self.connection.commit()
+            except Exception:
+                 pass
             self.connection.autocommit = True
             with self.connection.cursor() as cursor:
                 self.logger.info("Configuring auto_explain settings.")
