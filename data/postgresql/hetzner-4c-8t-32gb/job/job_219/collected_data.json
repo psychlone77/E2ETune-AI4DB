@@ -1,0 +1,49 @@
+{
+    "internal_metrics": {
+        "xact_commit": 65.0,
+        "xact_rollback": 0.0,
+        "blks_read": 1021591.0,
+        "blks_hit": 8686.0,
+        "tup_returned": 133155144.0,
+        "tup_fetched": 4366.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 1025111.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 8397709312.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=490414.7)(Aggregate(cost=490413.2)(Gather Merge(cost=490409.2)(Aggregate(cost=489375.5)(Sort(cost=489369.8)(Hash Join(cost=489326.0)(Seq Scan(cost=401121.0); Hash(cost=49250.5)(Seq Scan(cost=49250.5))))))))",
+        "Sort(cost=242782.7)(Aggregate(cost=242782.6)(Nested Loop(cost=242782.6)(Index Scan(cost=17.3); Materialize(cost=242510.6)(Gather(cost=242480.6)(Seq Scan(cost=240881.3))))))",
+        "Sort(cost=440843.3)(Aggregate(cost=440837.6)(Gather Merge(cost=440829.2)(Aggregate(cost=439786.3)(Sort(cost=439783.5)(Nested Loop(cost=439776.0)(Seq Scan(cost=438219.8); Index Scan(cost=8.4)))))))",
+        "Sort(cost=3475793.1)(Unique(cost=2583895.1)(Sort(cost=2522115.3)(Seq Scan(cost=697911.1))); Aggregate(cost=622822.5)(Merge Join(cost=596620.0)(Index Scan(cost=163964.1); Materialize(cost=400390.3)(Sort(cost=396023.2)(Hash Join(cost=186657.8)(CTE Scan(cost=79002.5); Hash(cost=79048.4)(Aggregate(cost=79048.4)(CTE Scan(cost=79002.5)))))))))",
+        "Sort(cost=572151.2)(Aggregate(cost=530913.7)(Sort(cost=503899.7)(Hash Join(cost=216300.5)(Seq Scan(cost=69693.3); Hash(cost=74097.5)(Seq Scan(cost=74097.5))))))"
+    ],
+    "workload_features": {
+        "total_statements": 5,
+        "table_access_frequency": {
+            "title": 3,
+            "cast_info": 3,
+            "movie_info": 1,
+            "name": 2,
+            "movie_actors": 2,
+            "movie_keyword": 1
+        },
+        "read_count": 5,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 2.4,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.8,
+            "sum_agg": 0.0,
+            "avg_agg": 0.2,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

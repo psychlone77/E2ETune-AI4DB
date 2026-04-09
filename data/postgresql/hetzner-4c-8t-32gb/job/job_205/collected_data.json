@@ -1,0 +1,45 @@
+{
+    "internal_metrics": {
+        "xact_commit": 64.0,
+        "xact_rollback": 0.0,
+        "blks_read": 346172.0,
+        "blks_hit": 3683.0,
+        "tup_returned": 32284296.0,
+        "tup_fetched": 2271.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 349455.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 2862735360.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Limit(cost=724031.8)(Sort(cost=724071.5)(Aggregate(cost=723688.1)(Gather Merge(cost=722575.1)(Aggregate(cost=716986.7)(Sort(cost=716539.5)(Hash Join(cost=715070.8)(Seq Scan(cost=401121.0); Hash(cost=258201.1)(Nested Loop(cost=258201.1)(Seq Scan(cost=240881.3); Index Scan(cost=6.9))))))))))",
+        "Sort(cost=296728.8)(Aggregate(cost=296728.8)(Gather Merge(cost=296728.7)(Aggregate(cost=295727.9)(Sort(cost=295605.6)(Hash Join(cost=294932.4)(Hash Join(cost=294860.8)(Seq Scan(cost=240881.3); Hash(cost=29661.4)(Seq Scan(cost=29661.4))); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))"
+    ],
+    "workload_features": {
+        "total_statements": 2,
+        "table_access_frequency": {
+            "title": 1,
+            "cast_info": 1,
+            "movie_info": 2,
+            "company_type": 1,
+            "movie_companies": 1
+        },
+        "read_count": 2,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 3.5,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 1.0,
+            "sum_agg": 0.0,
+            "avg_agg": 1.0,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

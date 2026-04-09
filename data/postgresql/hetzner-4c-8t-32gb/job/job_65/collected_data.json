@@ -1,0 +1,65 @@
+{
+    "internal_metrics": {
+        "xact_commit": 115.0,
+        "xact_rollback": 0.0,
+        "blks_read": 1968893.0,
+        "blks_hit": 77428.0,
+        "tup_returned": 206304447.0,
+        "tup_fetched": 192936.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 1969939.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 16137740288.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Aggregate(cost=257406.3)(Gather(cost=257406.2)(Aggregate(cost=256406.0)(Seq Scan(cost=256333.6))))",
+        "Aggregate(cost=54330.7)(Gather Merge(cost=54330.7)(Sort(cost=53329.9)(Aggregate(cost=53329.9)(Hash Join(cost=51064.2)(Seq Scan(cost=46607.2); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))",
+        "Sort(cost=308437.0)(Aggregate(cost=306008.6)(Gather Merge(cost=303413.6)(Aggregate(cost=280630.2)(Sort(cost=270261.7)(Seq Scan(cost=43303.7))))))",
+        "Sort(cost=251673.5)(Aggregate(cost=245831.7)(Gather Merge(cost=240026.1)(Aggregate(cost=190291.0)(Sort(cost=182744.2)(Hash Join(cost=48734.4)(Seq Scan(cost=29661.4); Hash(cost=4377.3)(Seq Scan(cost=4377.3))))))))",
+        "Sort(cost=3158755.0)(Aggregate(cost=3154953.8)(Gather Merge(cost=3151041.9)(Aggregate(cost=3117203.0)(Sort(cost=3041583.0)(Hash Join(cost=628224.5)(Seq Scan(cost=401121.0); Hash(cost=46607.2)(Seq Scan(cost=46607.2))))))))",
+        "Sort(cost=518468.6)(Aggregate(cost=518468.5)(Gather Merge(cost=518468.5)(Aggregate(cost=517468.3)(Sort(cost=517468.2)(Hash Join(cost=517468.2)(Seq Scan(cost=401121.0); Hash(cost=77393.4)(Seq Scan(cost=77393.4))))))))",
+        "Sort(cost=518468.6)(Aggregate(cost=518468.5)(Gather Merge(cost=518468.5)(Aggregate(cost=517468.3)(Sort(cost=517468.2)(Hash Join(cost=517468.2)(Seq Scan(cost=401121.0); Hash(cost=77393.4)(Seq Scan(cost=77393.4))))))))",
+        "Sort(cost=466093.8)(Aggregate(cost=462292.6)(Gather Merge(cost=458380.7)(Aggregate(cost=424541.8)(Sort(cost=413694.5)(Hash Join(cost=135195.5)(Seq Scan(cost=43303.7); Hash(cost=46607.2)(Seq Scan(cost=46607.2))))))))",
+        "Sort(cost=397016.5)(Aggregate(cost=393450.1)(Gather Merge(cost=389760.4)(Aggregate(cost=357787.3)(Sort(cost=347020.7)(Hash Join(cost=68521.7)(Seq Scan(cost=43303.7); Hash(cost=2290.7)(Seq Scan(cost=2290.7))))))))",
+        "Sort(cost=295644.8)(Aggregate(cost=291843.5)(Gather Merge(cost=287931.6)(Aggregate(cost=254092.8)(Sort(cost=247234.6)(Hash Join(cost=113224.8)(Seq Scan(cost=29661.4); Hash(cost=46607.2)(Seq Scan(cost=46607.2))))))))",
+        "Gather(cost=324954.1)(Hash Join(cost=320155.6)(Seq Scan(cost=256333.6); Hash(cost=49250.5)(Seq Scan(cost=49250.5))))",
+        "Sort(cost=12275.8)(Aggregate(cost=11586.5)(Merge Join(cost=10986.5)(Index Scan(cost=101837.0); Sort(cost=2768.6)(Seq Scan(cost=463.0)))))",
+        "Sort(cost=96966022.9)(Aggregate(cost=96962221.7)(Gather Merge(cost=96958309.7)(Aggregate(cost=96924470.9)(Sort(cost=95033257.0)(Merge Join(cost=9236902.8)(Sort(cost=3041583.0)(Hash Join(cost=628224.5)(Seq Scan(cost=401121.0); Hash(cost=46607.2)(Seq Scan(cost=46607.2)))); Materialize(cost=496791.1)(Sort(cost=489374.5)(Seq Scan(cost=81917.2)))))))))",
+        "Sort(cost=342524.3)(Aggregate(cost=340785.2)(Gather Merge(cost=339481.0)(Aggregate(cost=331790.5)(Sort(cost=331355.8)(Hash Join(cost=329135.4)(Seq Scan(cost=256333.6); Hash(cost=46607.2)(Seq Scan(cost=46607.2))))))))",
+        "Sort(cost=325312.5)(Aggregate(cost=324657.9)(Gather Merge(cost=324121.3)(Aggregate(cost=320368.1)(Sort(cost=320189.2)(Hash Join(cost=319351.9)(Seq Scan(cost=256333.6); Hash(cost=51893.8)(Seq Scan(cost=51893.8))))))))",
+        "Sort(cost=317796.2)(Aggregate(cost=317480.3)(Gather Merge(cost=317202.0)(Aggregate(cost=314774.7)(Sort(cost=314681.9)(Hash Join(cost=314277.1)(Seq Scan(cost=256333.6); Hash(cost=51893.8)(Seq Scan(cost=51893.8))))))))"
+    ],
+    "workload_features": {
+        "total_statements": 16,
+        "table_access_frequency": {
+            "movie_info": 5,
+            "title": 10,
+            "kind_type": 1,
+            "movie_keyword": 3,
+            "movie_companies": 2,
+            "company_name": 1,
+            "cast_info": 4,
+            "name": 2,
+            "keyword": 1,
+            "movie_link": 1,
+            "person_info": 1
+        },
+        "read_count": 16,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.8125,
+        "operator_proportions": {
+            "order_by": 0.8125,
+            "group_by": 0.875,
+            "count_agg": 0.9375,
+            "sum_agg": 0.0,
+            "avg_agg": 0.0,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

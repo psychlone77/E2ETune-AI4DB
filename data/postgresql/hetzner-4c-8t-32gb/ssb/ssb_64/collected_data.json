@@ -1,0 +1,49 @@
+{
+    "internal_metrics": {
+        "xact_commit": 78.0,
+        "xact_rollback": 0.0,
+        "blks_read": 405241.0,
+        "blks_hit": 7963.0,
+        "tup_returned": 30536069.0,
+        "tup_fetched": 3875.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 409935.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 3358187520.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=118518.7)(Aggregate(cost=118518.7)(Gather Merge(cost=118518.6)(Aggregate(cost=117518.4)(Sort(cost=117518.4)(Hash Join(cost=117518.4)(Seq Scan(cost=117461.3); Hash(cost=24.2)(Bitmap Heap Scan(cost=24.2)(Bitmap Index Scan(cost=12.9)))))))))",
+        "Sort(cost=117520.1)(Aggregate(cost=117518.7)(Gather Merge(cost=117517.8)(Aggregate(cost=116507.4)(Sort(cost=116504.2)(Hash Join(cost=116477.1)(Seq Scan(cost=104959.2); Hash(cost=4953.8)(Seq Scan(cost=4953.8))))))))",
+        "Sort(cost=115944.9)(Aggregate(cost=115480.4)(Gather Merge(cost=115305.4)(Sort(cost=112689.4)(Aggregate(cost=112224.8)(Hash Join(cost=111783.1)(Hash Join(cost=111611.3)(Seq Scan(cost=104959.2); Hash(cost=77.2)(Seq Scan(cost=77.2))); Hash(cost=49.0)(Seq Scan(cost=49.0))))))))",
+        "Aggregate(cost=116449.2)(Gather Merge(cost=116274.2)(Sort(cost=113658.3)(Aggregate(cost=113193.7)(Hash Join(cost=112844.9)(Hash Join(cost=111611.3)(Seq Scan(cost=104959.2); Hash(cost=77.2)(Seq Scan(cost=77.2))); Hash(cost=761.0)(Seq Scan(cost=761.0)))))))",
+        "Sort(cost=137505.9)(Aggregate(cost=132433.8)(Gather Merge(cost=131471.2)(Aggregate(cost=121813.0)(Sort(cost=120969.1)(Hash Join(cost=116230.3)(Hash Join(cost=116057.7)(Seq Scan(cost=104959.2); Hash(cost=4512.6)(Seq Scan(cost=4512.6))); Hash(cost=49.0)(Seq Scan(cost=49.0))))))))",
+        "Aggregate(cost=112340.5)(Sort(cost=112338.5)(Gather(cost=112332.5)(Hash Join(cost=111317.2)(Seq Scan(cost=111210.2); Hash(cost=74.0)(Seq Scan(cost=74.0))))))"
+    ],
+    "workload_features": {
+        "total_statements": 6,
+        "table_access_frequency": {
+            "lineorder": 6,
+            "customer": 2,
+            "part": 2,
+            "date_dim": 3,
+            "supplier": 2
+        },
+        "read_count": 6,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.6667,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.3333333333333333,
+            "sum_agg": 0.8333333333333334,
+            "avg_agg": 0.0,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}
