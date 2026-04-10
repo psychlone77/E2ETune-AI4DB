@@ -67,6 +67,8 @@ class MySQLDatabase(Database):
 
     def set_knobs(self, knob_config: KnobConfig):
         """Set database configuration using SET PERSIST_ONLY (MySQL 8.0+)."""
+        if not self.connection or not self.connection.is_connected():
+            self.connect()
         cursor = self.connection.cursor()
         try:
             for knob in knob_config.knobs:
@@ -84,6 +86,8 @@ class MySQLDatabase(Database):
 
     def fetch_internal_metrics(self) -> InternalMetrics:
         """Fetch internal metrics from performance_schema and Global Status."""
+        if not self.connection or not self.connection.is_connected():
+            self.connect()
         metrics: InternalMetrics
         with self.connection.cursor(dictionary=True) as cursor:
             try:
@@ -140,6 +144,9 @@ class MySQLDatabase(Database):
 
             plans: List[str] = []
 
+            if not self.connection or not self.connection.is_connected():
+                self.connect()
+
             with self.connection.cursor() as cursor:
                 for i, query in enumerate(workload_queries):
                     try:
@@ -162,6 +169,8 @@ class MySQLDatabase(Database):
     
     def reset_internal_metrics(self):
         """MySQL doesn't have a single 'reset' like PG; usually requires a restart or FLUSH."""
+        if not self.connection or not self.connection.is_connected():
+            self.connect()
         cursor = self.connection.cursor()
         try:
             cursor.execute("FLUSH STATUS;")
@@ -173,6 +182,8 @@ class MySQLDatabase(Database):
 
     def reset_knobs(self):
         """Clear all persisted variables."""
+        if not self.connection or not self.connection.is_connected():
+            self.connect()
         cursor = self.connection.cursor()
         try:
             cursor.execute("RESET PERSIST;")
@@ -232,7 +243,7 @@ class MySQLDatabase(Database):
             return False
 
     def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: Optional[int] = 1) -> tuple[float, float]:
-            if not self.connection.is_connected():
+            if not self.connection or not self.connection.is_connected():
                 self.connect()
 
             # 1. Read the raw PostgreSQL script

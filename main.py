@@ -13,6 +13,7 @@ from classes.base_classes.Knob_Settings import KnobSettingsSet
 from classes.base_classes.Workload_Runner import BenchmarkTask
 from classes.HEBO_Tuner import HEBOTuner
 from classes.PostgreSQL_Database import PostgresSQLDatabase
+from classes.MySQL_Database import MySQLDatabase
 from classes.Cost_Model import CostModel
 from classes.base_classes.Surrogate_Strategy import SurrogateFactory
 from classes.Global_Vars import TuningParameter
@@ -110,18 +111,25 @@ if __name__ == "__main__":
 
     all_files = os.listdir(workload_base_path)
     db: Database
+    import re
     if benchmark_config.type == "oltp":
         workloads = [
-            f for f in all_files if benchmark_config.name in f and f.endswith(".xml")
+            f for f in all_files if re.match(rf"^(?:sample_)?{benchmark_config.name}(?:_config)?\d*\.xml$", f) or re.match(rf"^{benchmark_config.name}(?:_\d+)?\.xml$", f)
         ]
         db = BenchBaseDatabase(db_config=db_config, benchmark_config=benchmark_config, log_path=main_log_path)
     else:
         workloads = [
             f
             for f in all_files
-            if f.startswith(benchmark_config.name) and f.endswith(".wg")
+            if re.match(rf"^{benchmark_config.name}(?:_\d+)?\.wg$", f)
         ]
-        db = PostgresSQLDatabase(db_config=db_config, log_path=main_log_path)
+        if cli_args.dbengine == "postgresql":
+            db = db = PostgresSQLDatabase(db_config=db_config, log_path=main_log_path)
+        elif cli_args.dbengine == "mysql":
+            db = MySQLDatabase(db_config=db_config, log_path=main_log_path)
+        else:
+            logger.error(f"Unsupported database engine: {cli_args.dbengine}")
+            exit(1)
 
     tuning_parameter = (
         TuningParameter.THROUGHPUT
@@ -289,38 +297,56 @@ if __name__ == "__main__":
             )
 
             # --- Start: Ported Default Data Collection from Phase 1 ---
-            utils.send_telegram(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Starting default data collection for surrogate: *{workload}*")
-            collector_cls: DefaultDataCollector = (
-                DataCollectorOLTP if benchmark_config.type == "oltp" else DataCollectorOLAP
-            )
-            ddc = collector_cls(
-                workload_path=workload_path,
-                db=db,
-                benchmark=benchmark_config.name,
-                output_dir=output_dir,
-                knob_settings_set=knob_settings,
-                log_path=log_path,
-            )
-            executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
-            future = executor.submit(ddc.collect)
-            try:
-                future.result(timeout=600)  # 10 minutes
-                executor.shutdown(wait=False)
-            except concurrent.futures.TimeoutError:
-                executor.shutdown(wait=False)
-                logger.error(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Default data collection timed out after 10m for {workload}. Skipping.")
-                utils.send_telegram(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Default data collection timed out for: *{workload}*. Skipping.")
-                skipped += 1
-                continue
-            except Exception as e:
-                executor.shutdown(wait=False)
-                logger.error(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Default data collection failed for {workload}: {e}")
-                utils.send_telegram(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Default data collection failed for: *{workload}* - {e}")
-                failed += 1
-                continue
+            collected_data_file = output_dir / "collected_data.json"
+            skip_collection = False
+            if collected_data_file.exists():
+                try:
+                    with open(collected_data_file, "r") as f:
+                        cdata = json.load(f)
+                    
+                    query_plans = cdata.get("query_plans", {})
+                    internal_metrics = cdata.get("internal_metrics", {})
+                    blks_read = internal_metrics.get("blks_read", 0)
+                    
+                    if query_plans and blks_read != 0:
+                        skip_collection = True
+                except Exception as e:
+                    logger.warning(f"Error reading {collected_data_file}: {e}")
+
+            if skip_collection:
+                logger.info(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Found valid existing collected_data.json for {workload}. Skipping default data collection.")
+            else:
+                utils.send_telegram(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Starting default data collection for surrogate: *{workload}*")
+                collector_cls: DefaultDataCollector = (
+                    DataCollectorOLTP if benchmark_config.type == "oltp" else DataCollectorOLAP
+                )
+                ddc = collector_cls(
+                    workload_path=workload_path,
+                    db=db,
+                    benchmark=benchmark_config.name,
+                    output_dir=output_dir,
+                    knob_settings_set=knob_settings,
+                    log_path=log_path,
+                )
+                executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
+                future = executor.submit(ddc.collect)
+                try:
+                    future.result(timeout=1800)  # 30 minutes
+                    executor.shutdown(wait=False)
+                except concurrent.futures.TimeoutError:
+                    executor.shutdown(wait=False)
+                    logger.error(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Default data collection timed out after 10m for {workload}. Skipping.")
+                    utils.send_telegram(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Default data collection timed out for: *{workload}*. Skipping.")
+                    skipped += 1
+                    continue
+                except Exception as e:
+                    executor.shutdown(wait=False)
+                    logger.error(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Default data collection failed for {workload}: {e}")
+                    utils.send_telegram(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Default data collection failed for: *{workload}* - {e}")
+                    failed += 1
+                    continue
             
             # Load collected data to feed into the surrogate CostModel
-            collected_data_file = output_dir / "collected_data.json"
             if collected_data_file.exists():
                 with open(collected_data_file, "r") as f:
                     cdata = json.load(f)
