@@ -1,21 +1,30 @@
 {
     "internal_metrics": {
-        "xact_commit": 0.0,
+        "xact_commit": 92.0,
         "xact_rollback": 0.0,
-        "blks_read": 0.0,
-        "blks_hit": 0.0,
-        "tup_returned": 0.0,
-        "tup_fetched": 0.0,
+        "blks_read": 26688879.0,
+        "blks_hit": 8066.0,
+        "tup_returned": 479896580.0,
+        "tup_fetched": 4255.0,
         "tup_inserted": 0.0,
         "conflicts": 0.0,
         "tup_updated": 0.0,
         "tup_deleted": 0.0,
-        "disk_read_count": 0.0,
+        "disk_read_count": 26839159.0,
         "disk_write_count": 0.0,
-        "disk_read_bytes": 0.0,
+        "disk_read_bytes": 219866390528.0,
         "disk_write_bytes": 0.0
     },
-    "query_plans": [],
+    "query_plans": [
+        "Sort(cost=3687647.5)(Aggregate(cost=3687647.4)(Gather Merge(cost=3687647.3)(Sort(cost=3686646.1)(Aggregate(cost=3686646.0)(Seq Scan(cost=3648870.6))))))",
+        "Aggregate(cost=3668777.6)(Gather Merge(cost=3668776.9)(Aggregate(cost=3667771.0)(Sort(cost=3666525.2)(Seq Scan(cost=3648870.6)))))",
+        "Sort(cost=3712386.7)(Aggregate(cost=3712386.1)(Gather Merge(cost=3712385.5)(Aggregate(cost=3711379.7)(Sort(cost=3711376.8)(Seq Scan(cost=3711360.9))))))",
+        "Sort(cost=3712361.0)(Aggregate(cost=3712361.0)(Sort(cost=3712361.0)(Gather(cost=3712361.0)(Seq Scan(cost=3711360.9)))))",
+        "Sort(cost=3704231.0)(Aggregate(cost=3694352.1)(Gather Merge(cost=3691627.9)(Aggregate(cost=3669664.6)(Sort(cost=3667095.7)(Seq Scan(cost=3648870.6))))))",
+        "Sort(cost=3712361.0)(Aggregate(cost=3712361.0)(Sort(cost=3712361.0)(Gather(cost=3712361.0)(Seq Scan(cost=3711360.9)))))",
+        "Sort(cost=5343396.8)(Aggregate(cost=4708921.6)(Gather Merge(cost=4638463.3)(Aggregate(cost=4117362.8)(Sort(cost=4077935.5)(Seq Scan(cost=3711360.9))))))",
+        "Sort(cost=3774851.4)(Aggregate(cost=3774851.4)(Sort(cost=3774851.3)(Gather(cost=3774851.3)(Seq Scan(cost=3773851.2)))))"
+    ],
     "workload_features": {
         "total_statements": 8,
         "table_access_frequency": {

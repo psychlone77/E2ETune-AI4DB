@@ -15,12 +15,7 @@
         "disk_read_bytes": 0.0,
         "disk_write_bytes": 0.0
     },
-    "query_plans": [
-        "Sort(cost=33503.8)(Aggregate(cost=33237.1)(Gather(cost=33077.7)(Aggregate(cost=31227.7)(Hash Join(cost=27424.5)(Hash Join(cost=26401.8)(Seq Scan(cost=25249.0); Hash(cost=1.2)(Seq Scan(cost=1.2))); Hash(cost=11.7)(Seq Scan(cost=11.7)))))))",
-        "Sort(cost=1001040.0)(Aggregate(cost=1001034.2)(Gather Merge(cost=1001029.3)(Sort(cost=999994.7)(Aggregate(cost=999988.9)(Hash Join(cost=971139.8)(Seq Scan(cost=899879.9); Hash(cost=29578.0)(Seq Scan(cost=29578.0))))))))",
-        "Sort(cost=1243188.5)(Aggregate(cost=1243188.4)(Gather Merge(cost=1243188.3)(Sort(cost=1242187.1)(Aggregate(cost=1242187.0)(Hash Join(cost=1213339.8)(Seq Scan(cost=899879.9); Hash(cost=194043.0)(Seq Scan(cost=194043.0))))))))",
-        "Limit(cost=975058.7)(Sort(cost=978808.7)(Aggregate(cost=942644.2)(Gather Merge(cost=893894.2)(Aggregate(cost=546619.7)(Sort(cost=502869.7)(Hash Join(cost=138159.0)(Hash Join(cost=132017.5)(Seq Scan(cost=124642.0); Hash(cost=1683.9)(Seq Scan(cost=1683.9))); Hash(cost=1.2)(Seq Scan(cost=1.2)))))))))"
-    ],
+    "query_plans": [],
     "workload_features": {
         "total_statements": 4,
         "table_access_frequency": {

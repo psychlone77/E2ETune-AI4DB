@@ -1,21 +1,30 @@
 {
     "internal_metrics": {
-        "xact_commit": 0.0,
+        "xact_commit": 85.0,
         "xact_rollback": 0.0,
-        "blks_read": 0.0,
-        "blks_hit": 0.0,
-        "tup_returned": 0.0,
-        "tup_fetched": 0.0,
+        "blks_read": 33360523.0,
+        "blks_hit": 9425.0,
+        "tup_returned": 599871652.0,
+        "tup_fetched": 4321.0,
         "tup_inserted": 0.0,
         "conflicts": 0.0,
         "tup_updated": 0.0,
         "tup_deleted": 0.0,
-        "disk_read_count": 0.0,
+        "disk_read_count": 33510982.0,
         "disk_write_count": 0.0,
-        "disk_read_bytes": 0.0,
+        "disk_read_bytes": 274521964544.0,
         "disk_write_bytes": 0.0
     },
-    "query_plans": [],
+    "query_plans": [
+        "Sort(cost=3650665.3)(Aggregate(cost=3650664.7)(Gather Merge(cost=3650664.0)(Aggregate(cost=3649658.2)(Sort(cost=3649580.9)(Seq Scan(cost=3648870.6))))))",
+        "Sort(cost=3713055.0)(Aggregate(cost=3713054.4)(Gather Merge(cost=3713053.8)(Aggregate(cost=3712048.0)(Sort(cost=3712001.0)(Seq Scan(cost=3711360.9))))))",
+        "Sort(cost=7825738.2)(Aggregate(cost=7825738.2)(Sort(cost=7716045.7)(Seq Scan(cost=4236279.6))))",
+        "Sort(cost=3688484.9)(Aggregate(cost=3688484.3)(Gather Merge(cost=3688483.8)(Sort(cost=3687478.0)(Aggregate(cost=3687477.4)(Seq Scan(cost=3680115.7))))))",
+        "Sort(cost=3743606.2)(Aggregate(cost=3743606.2)(Sort(cost=3743606.2)(Gather(cost=3743606.2)(Seq Scan(cost=3742606.1)))))",
+        "Sort(cost=3860808.6)(Aggregate(cost=3855673.7)(Gather Merge(cost=3854111.2)(Aggregate(cost=3838683.1)(Sort(cost=3834312.9)(Seq Scan(cost=3773851.2))))))",
+        "Sort(cost=8415358.2)(Aggregate(cost=8415352.4)(Gather Merge(cost=8415349.4)(Sort(cost=8414314.8)(Aggregate(cost=8414308.9)(Hash Join(cost=8289326.8)(Seq Scan(cost=3586380.3); Hash(cost=3773851.2)(Seq Scan(cost=3773851.2))))))))",
+        "Sort(cost=13360639.5)(Aggregate(cost=13351202.9)(Gather Merge(cost=13349463.2)(Aggregate(cost=13328382.2)(Sort(cost=13140041.4)(Hash Join(cost=8211970.8)(Seq Scan(cost=3586380.3); Hash(cost=3711360.9)(Seq Scan(cost=3711360.9))))))))"
+    ],
     "workload_features": {
         "total_statements": 8,
         "table_access_frequency": {

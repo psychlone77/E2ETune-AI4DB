@@ -1,21 +1,31 @@
 {
     "internal_metrics": {
-        "xact_commit": 0.0,
+        "xact_commit": 88.0,
         "xact_rollback": 0.0,
-        "blks_read": 0.0,
-        "blks_hit": 0.0,
-        "tup_returned": 0.0,
-        "tup_fetched": 0.0,
+        "blks_read": 30024843.0,
+        "blks_hit": 8302.0,
+        "tup_returned": 539882600.0,
+        "tup_fetched": 4061.0,
         "tup_inserted": 0.0,
         "conflicts": 0.0,
         "tup_updated": 0.0,
         "tup_deleted": 0.0,
-        "disk_read_count": 0.0,
+        "disk_read_count": 30176225.0,
         "disk_write_count": 0.0,
-        "disk_read_bytes": 0.0,
+        "disk_read_bytes": 247203635200.0,
         "disk_write_bytes": 0.0
     },
-    "query_plans": [],
+    "query_plans": [
+        "Sort(cost=3675055.6)(Aggregate(cost=3675055.6)(Gather Merge(cost=3675055.5)(Sort(cost=3674054.3)(Aggregate(cost=3674054.2)(Seq Scan(cost=3648870.6))))))",
+        "Aggregate(cost=3774858.7)(Gather Merge(cost=3774857.9)(Sort(cost=3773852.1)(Aggregate(cost=3773851.5)(Seq Scan(cost=3586380.3)))))",
+        "Sort(cost=3712361.0)(Aggregate(cost=3712361.0)(Sort(cost=3712361.0)(Gather(cost=3712361.0)(Seq Scan(cost=3711360.9)))))",
+        "Aggregate(cost=5507728.8)(Sort(cost=5443568.7)(Seq Scan(cost=4086302.8)))",
+        "Sort(cost=3649870.7)(Aggregate(cost=3649870.7)(Sort(cost=3649870.7)(Gather(cost=3649870.7)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3712440.9)(Gather Merge(cost=3712431.5)(Aggregate(cost=3711375.9)(Sort(cost=3711371.0)(Seq Scan(cost=3711360.9)))))",
+        "Sort(cost=3712361.0)(Aggregate(cost=3712361.0)(Sort(cost=3712361.0)(Gather(cost=3712361.0)(Seq Scan(cost=3711360.9)))))",
+        "Sort(cost=3712361.0)(Aggregate(cost=3712361.0)(Sort(cost=3712361.0)(Gather(cost=3712361.0)(Seq Scan(cost=3711360.9)))))",
+        "Sort(cost=3712462.0)(Aggregate(cost=3712442.8)(Gather Merge(cost=3712434.8)(Aggregate(cost=3711376.1)(Sort(cost=3711371.7)(Seq Scan(cost=3711360.9))))))"
+    ],
     "workload_features": {
         "total_statements": 9,
         "table_access_frequency": {

@@ -1,21 +1,27 @@
 {
     "internal_metrics": {
-        "xact_commit": 0.0,
+        "xact_commit": 82.0,
         "xact_rollback": 0.0,
-        "blks_read": 0.0,
-        "blks_hit": 0.0,
-        "tup_returned": 0.0,
-        "tup_fetched": 0.0,
+        "blks_read": 16681408.0,
+        "blks_hit": 4730.0,
+        "tup_returned": 299938931.0,
+        "tup_fetched": 2702.0,
         "tup_inserted": 0.0,
         "conflicts": 0.0,
         "tup_updated": 0.0,
         "tup_deleted": 0.0,
-        "disk_read_count": 0.0,
+        "disk_read_count": 16832725.0,
         "disk_write_count": 0.0,
-        "disk_read_bytes": 0.0,
+        "disk_read_bytes": 137893683200.0,
         "disk_write_bytes": 0.0
     },
-    "query_plans": [],
+    "query_plans": [
+        "Sort(cost=3809634.9)(Aggregate(cost=3809604.3)(Gather Merge(cost=3809585.6)(Sort(cost=3808441.2)(Aggregate(cost=3808410.7)(Seq Scan(cost=3805096.4))))))",
+        "Sort(cost=5332398.9)(Aggregate(cost=5128154.5)(Sort(cost=5014115.3)(Gather(cost=4246378.3)(Seq Scan(cost=3805096.4)))))",
+        "Sort(cost=6358940.8)(Aggregate(cost=6029688.3)(Gather Merge(cost=5774887.9)(Aggregate(cost=4791894.0)(Sort(cost=4664279.2)(Seq Scan(cost=3836341.5))))))",
+        "Sort(cost=5887780.1)(Aggregate(cost=5887779.5)(Sort(cost=5787342.4)(Seq Scan(cost=4461244.7))))",
+        "Sort(cost=7194957.9)(Aggregate(cost=6886234.2)(Sort(cost=6645503.8)(Seq Scan(cost=4536233.1))))"
+    ],
     "workload_features": {
         "total_statements": 5,
         "table_access_frequency": {

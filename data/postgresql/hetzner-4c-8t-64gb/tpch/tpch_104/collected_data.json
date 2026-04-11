@@ -15,11 +15,7 @@
         "disk_read_bytes": 0.0,
         "disk_write_bytes": 0.0
     },
-    "query_plans": [
-        "Sort(cost=28178.2)(Aggregate(cost=28154.0)(Gather Merge(cost=28134.9)(Sort(cost=27017.1)(Aggregate(cost=26992.9)(Hash Join(cost=26536.5)(Hash Join(cost=26401.6)(Seq Scan(cost=25249.0); Hash(cost=1.3)(Seq Scan(cost=1.3))); Hash(cost=11.7)(Seq Scan(cost=11.7))))))))",
-        "Sort(cost=390.1)(Aggregate(cost=387.4)(Sort(cost=385.1)(Nested Loop(cost=382.4)(Nested Loop(cost=345.0)(Index Scan(cost=16.9); Bitmap Heap Scan(cost=327.2)(Bitmap Index Scan(cost=5.0))); Index Scan(cost=0.5)))))",
-        "Sort(cost=1298578.9)(Aggregate(cost=1298578.8)(Gather Merge(cost=1298578.6)(Sort(cost=1297577.4)(Aggregate(cost=1297577.4)(Hash Join(cost=1287478.6)(Seq Scan(cost=824879.6); Hash(cost=203418.0)(Seq Scan(cost=203418.0))))))))"
-    ],
+    "query_plans": [],
     "workload_features": {
         "total_statements": 3,
         "table_access_frequency": {

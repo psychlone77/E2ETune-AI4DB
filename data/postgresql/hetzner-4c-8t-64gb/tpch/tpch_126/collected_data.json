@@ -15,10 +15,7 @@
         "disk_read_bytes": 0.0,
         "disk_write_bytes": 0.0
     },
-    "query_plans": [
-        "Sort(cost=31518.9)(Aggregate(cost=31518.6)(Nested Loop(cost=31272.3)(Nested Loop(cost=4303.4)(Nested Loop(cost=26.0)(Index Scan(cost=12.5); Materialize(cost=12.3)(Seq Scan(cost=12.3))); Bitmap Heap Scan(cost=3917.4)(Bitmap Index Scan(cost=534.4))); Index Scan(cost=1.7))))",
-        "Sort(cost=2206421.5)(Aggregate(cost=2200936.5)(Sort(cost=2142788.0)(Gather(cost=1569761.6)(Hash Join(cost=1248484.6)(Hash Join(cost=1185699.5)(Seq Scan(cost=899879.9); Hash(cost=208105.5)(Seq Scan(cost=208105.5))); Hash(cost=29578.0)(Seq Scan(cost=29578.0)))))))"
-    ],
+    "query_plans": [],
     "workload_features": {
         "total_statements": 2,
         "table_access_frequency": {

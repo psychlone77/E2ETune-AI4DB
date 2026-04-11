@@ -1,21 +1,23 @@
 {
     "internal_metrics": {
-        "xact_commit": 3.0,
-        "xact_rollback": 0.0,
-        "blks_read": 83.0,
-        "blks_hit": 977.0,
-        "tup_returned": 635.0,
-        "tup_fetched": 557.0,
-        "tup_inserted": 0.0,
+        "xact_commit": 110352.0,
+        "xact_rollback": 1.0,
+        "blks_read": 1455460.0,
+        "blks_hit": 1910543.0,
+        "tup_returned": 2793692.0,
+        "tup_fetched": 2783108.0,
+        "tup_inserted": 1086.0,
         "conflicts": 0.0,
-        "tup_updated": 0.0,
-        "tup_deleted": 0.0,
-        "disk_read_count": 799.0,
-        "disk_write_count": 0.0,
-        "disk_read_bytes": 6545408.0,
-        "disk_write_bytes": 0.0
+        "tup_updated": 17415.0,
+        "tup_deleted": 760.0,
+        "disk_read_count": 1579631.0,
+        "disk_write_count": 45642.0,
+        "disk_read_bytes": 12940337152.0,
+        "disk_write_bytes": 373899264.0
     },
-    "query_plans": [],
+    "query_plans": [
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)"
+    ],
     "workload_features": {
         "total_statements": 141.0,
         "table_access_frequency": {

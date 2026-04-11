@@ -15,19 +15,7 @@
         "disk_read_bytes": 0.0,
         "disk_write_bytes": 0.0
     },
-    "query_plans": [
-        "Sort(cost=29284.6)(Aggregate(cost=29284.0)(Gather Merge(cost=29283.5)(Sort(cost=28277.7)(Aggregate(cost=28277.1)(Hash Join(cost=26401.8)(Seq Scan(cost=25249.0); Hash(cost=1.2)(Seq Scan(cost=1.2))))))))",
-        "Sort(cost=33128.2)(Aggregate(cost=33126.7)(Gather Merge(cost=33120.3)(Sort(cost=32085.7)(Aggregate(cost=32079.9)(Seq Scan(cost=29578.0))))))",
-        "Sort(cost=213794.5)(Aggregate(cost=213794.4)(Gather Merge(cost=213794.3)(Sort(cost=212793.1)(Aggregate(cost=212793.0)(Seq Scan(cost=194043.0))))))",
-        "Sort(cost=473600.0)(Aggregate(cost=468688.2)(Gather Merge(cost=467488.2)(Aggregate(cost=452637.2)(Sort(cost=442037.2)(Hash Join(cost=132017.5)(Seq Scan(cost=124642.0); Hash(cost=1683.9)(Seq Scan(cost=1683.9))))))))",
-        "Sort(cost=28125.5)(Aggregate(cost=28125.5)(Gather Merge(cost=28125.3)(Sort(cost=27124.1)(Aggregate(cost=27124.1)(Seq Scan(cost=25249.0))))))",
-        "Sort(cost=16.0)(Aggregate(cost=15.4)(Hash Join(cost=15.0)(Seq Scan(cost=11.7); Hash(cost=1.2)(Seq Scan(cost=1.2)))))",
-        "Sort(cost=31898.9)(Aggregate(cost=31898.3)(Gather Merge(cost=31897.8)(Sort(cost=30892.0)(Aggregate(cost=30891.3)(Seq Scan(cost=30828.0))))))",
-        "Sort(cost=213793.9)(Aggregate(cost=213793.9)(Gather Merge(cost=213793.8)(Sort(cost=212793.1)(Aggregate(cost=212793.0)(Seq Scan(cost=194043.0))))))",
-        "Sort(cost=286.4)(Aggregate(cost=285.4)(Sort(cost=284.9)(Nested Loop(cost=284.0)(Index Scan(cost=17.9); Index Scan(cost=8.1)))))",
-        "Sort(cost=35449.4)(Aggregate(cost=35449.3)(Gather Merge(cost=35449.2)(Sort(cost=34448.1)(Aggregate(cost=34448.0)(Seq Scan(cost=32078.0))))))",
-        "Sort(cost=648685.1)(Aggregate(cost=535891.6)(Gather Merge(cost=519442.8)(Aggregate(cost=346488.7)(Sort(cost=335315.5)(Hash Join(cost=245525.8)(Seq Scan(cost=203418.0); Hash(cost=25249.0)(Seq Scan(cost=25249.0))))))))"
-    ],
+    "query_plans": [],
     "workload_features": {
         "total_statements": 25,
         "table_access_frequency": {
