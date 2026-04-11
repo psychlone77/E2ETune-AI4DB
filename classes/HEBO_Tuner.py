@@ -17,6 +17,8 @@ from math import ceil
 from hebo.design_space.design_space import DesignSpace
 from hebo.optimizers.hebo import HEBO
 
+import logging
+logging.getLogger("gpytorch").setLevel(logging.ERROR)
 
 class HEBOTuner(Tuner):
     def __init__(

@@ -17,6 +17,7 @@ class BenchmarkTask:
     knob_config: KnobConfig
     query_plans: Optional[Dict[str, Any]] = None
     internal_metrics: InternalMetrics = None
+    workload_features: Optional[Dict[str, Any]] = None
 
 
 class WorkloadRunner(ABC):
