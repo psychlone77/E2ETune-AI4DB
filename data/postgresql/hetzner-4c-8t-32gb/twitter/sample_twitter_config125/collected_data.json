@@ -1,0 +1,45 @@
+{
+    "internal_metrics": {
+        "xact_commit": 978269.0,
+        "xact_rollback": 0.0,
+        "blks_read": 922.0,
+        "blks_hit": 2656460.0,
+        "tup_returned": 764993.0,
+        "tup_fetched": 739318.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 109141.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 894083072.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)"
+    ],
+    "workload_features": {
+        "total_statements": 193.0,
+        "table_access_frequency": {
+            "tweets": 100.0,
+            "follows": 93.0,
+            "added_tweets": 0.0
+        },
+        "read_count": 100.0,
+        "write_count": 0.0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.93,
+        "operator_proportions": {
+            "INSERT": 0.0,
+            "SELECT": 1.0
+        }
+    }
+}
