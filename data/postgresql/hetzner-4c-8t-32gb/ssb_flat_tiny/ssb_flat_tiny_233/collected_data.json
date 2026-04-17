@@ -1,0 +1,64 @@
+{
+    "internal_metrics": {
+        "xact_commit": 168.0,
+        "xact_rollback": 0.0,
+        "blks_read": 83381886.0,
+        "blks_hit": 42355.0,
+        "tup_returned": 1499673618.0,
+        "tup_fetched": 11640.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 83534584.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 684315312128.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Aggregate(cost=3712362.3)(Gather Merge(cost=3712362.2)(Sort(cost=3711361.0)(Aggregate(cost=3711361.0)(Seq Scan(cost=3586380.3)))))",
+        "Aggregate(cost=3712368.1)(Gather Merge(cost=3712367.6)(Sort(cost=3711361.8)(Aggregate(cost=3711361.1)(Seq Scan(cost=3586380.3)))))",
+        "Aggregate(cost=3712362.3)(Gather Merge(cost=3712362.2)(Sort(cost=3711361.0)(Aggregate(cost=3711361.0)(Seq Scan(cost=3586380.3)))))",
+        "Aggregate(cost=3774852.6)(Gather Merge(cost=3774852.5)(Sort(cost=3773851.3)(Aggregate(cost=3773851.3)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3674453.1)(Gather Merge(cost=3674452.6)(Sort(cost=3673446.8)(Aggregate(cost=3673446.2)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3688715.9)(Gather Merge(cost=3688695.9)(Sort(cost=3687465.0)(Aggregate(cost=3687412.7)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3655120.6)(Gather Merge(cost=3655115.6)(Sort(cost=3654057.9)(Aggregate(cost=3654047.3)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3712406.2)(Gather Merge(cost=3712402.9)(Sort(cost=3711368.2)(Aggregate(cost=3711362.4)(Seq Scan(cost=3586380.3)))))",
+        "Aggregate(cost=3650280.6)(Gather Merge(cost=3650240.7)(Aggregate(cost=3648955.6)(Sort(cost=3648937.1)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3713129.7)(Gather Merge(cost=3713081.5)(Sort(cost=3711526.1)(Aggregate(cost=3711385.0)(Seq Scan(cost=3586380.3)))))",
+        "Aggregate(cost=8788102.7)(Gather Merge(cost=8786362.9)(Aggregate(cost=8765282.0)(Sort(cost=8514450.8)(Seq Scan(cost=3586380.3)))))",
+        "Aggregate(cost=3763982.8)(Gather Merge(cost=3763982.7)(Sort(cost=3762981.5)(Aggregate(cost=3762981.5)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3675055.0)(Gather Merge(cost=3675050.0)(Sort(cost=3673992.3)(Aggregate(cost=3673981.7)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3774852.6)(Gather Merge(cost=3774852.5)(Sort(cost=3773851.3)(Aggregate(cost=3773851.3)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3685195.4)(Gather Merge(cost=3685194.9)(Sort(cost=3684189.0)(Aggregate(cost=3684188.4)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3674711.4)(Gather Merge(cost=3674710.9)(Sort(cost=3673705.1)(Aggregate(cost=3673704.5)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3649870.7)(Sort(cost=3649870.7)(Gather(cost=3649870.7)(Seq Scan(cost=3648870.6))))",
+        "Aggregate(cost=3650280.6)(Gather Merge(cost=3650240.7)(Aggregate(cost=3648955.6)(Sort(cost=3648937.1)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3838110.3)(Gather Merge(cost=3838062.2)(Sort(cost=3836506.7)(Aggregate(cost=3836365.6)(Seq Scan(cost=3586380.3)))))",
+        "Aggregate(cost=3649963.6)(Gather Merge(cost=3649953.9)(Aggregate(cost=3648887.4)(Sort(cost=3648883.1)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3652452.6)(Gather Merge(cost=3652449.6)(Sort(cost=3651415.0)(Aggregate(cost=3651409.2)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3673795.0)(Gather Merge(cost=3673794.4)(Sort(cost=3672788.6)(Aggregate(cost=3672788.0)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3654970.6)(Gather Merge(cost=3654965.6)(Sort(cost=3653907.9)(Aggregate(cost=3653897.3)(Seq Scan(cost=3648870.6)))))",
+        "Aggregate(cost=3649870.7)(Sort(cost=3649870.7)(Gather(cost=3649870.7)(Seq Scan(cost=3648870.6))))",
+        "Aggregate(cost=3667694.2)(Gather Merge(cost=3667694.1)(Sort(cost=3666692.9)(Aggregate(cost=3666692.9)(Seq Scan(cost=3648870.6)))))"
+    ],
+    "workload_features": {
+        "total_statements": 25,
+        "table_access_frequency": {
+            "lineorder_flat": 25
+        },
+        "read_count": 25,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 0.72,
+        "operator_proportions": {
+            "order_by": 0.08,
+            "group_by": 1.0,
+            "count_agg": 0.4,
+            "sum_agg": 0.4,
+            "avg_agg": 0.2,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}
