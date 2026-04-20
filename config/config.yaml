@@ -3,24 +3,36 @@ database:
   port: 5432
   user: root
   password: databasefyp
-  name: ssb
+  name: benchbase
   data_path: /var/lib/postgresql/12/main
   pg_version: 12
   cluster_name: main
 
+# Mysql database configuration
+# database:
+#   host: localhost
+#   port: 3306
+#   user: root
+#   password: databasefyp
+#   name: tpcds
+#   data_path: /var/lib/mysql
+#   pg_version: 12
+#   cluster_name: main
+
 tuning:
   method: HEBO
   iterations: 100
-  sample_num: 30
-  config: knob_config/knob_config.json
+  sample_num: 44
+  config: knob_config/mysql_knob_config_op.json
+  force_surrogate: true
   
 benchmark:
-  type: olap
-  name: ssb
-  path: ./olap_workloads
+  type: oltp
+  name: smallbank
+  path: ./oltp_workloads/smallbank
   workload_execution: logs/performance/workload_execution.log
   performance_record_path: logs/performance_record
   benchbase_jar: /home/benchbase/target/benchbase-postgres/benchbase.jar
 
 surrogate:
-  model_path: /home/E2ETune-AI4DB/surrogate/cost_model.pkl
+  model_path: /home/E2ETune-AI4DB/surrogate/model_engine=postgresql_ram=32_fixed.joblib

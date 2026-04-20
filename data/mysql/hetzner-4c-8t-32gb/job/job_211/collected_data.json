@@ -1,0 +1,53 @@
+{
+    "internal_metrics": {
+        "xact_commit": 0.0,
+        "xact_rollback": 0.0,
+        "blks_read": 0.0,
+        "blks_hit": 0.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 0.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 0.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [],
+    "workload_features": {
+        "total_statements": 17,
+        "table_access_frequency": {
+            "title": 8,
+            "movie_keyword": 3,
+            "company_name": 2,
+            "movie_companies": 2,
+            "cast_info": 4,
+            "kind_type": 1,
+            "name": 1,
+            "movie_info": 1,
+            "movie_link": 1,
+            "person_info": 1,
+            "aka_title": 1,
+            "keyword": 1,
+            "role_type": 1,
+            "char_name": 1,
+            "comp_cast_type": 1,
+            "complete_cast": 1
+        },
+        "read_count": 17,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 0.6471,
+        "operator_proportions": {
+            "order_by": 0.8823529411764706,
+            "group_by": 0.8823529411764706,
+            "count_agg": 0.9411764705882353,
+            "sum_agg": 0.0,
+            "avg_agg": 0.058823529411764705,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

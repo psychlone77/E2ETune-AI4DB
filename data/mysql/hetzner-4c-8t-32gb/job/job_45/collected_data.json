@@ -1,0 +1,60 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 30290131.0,
+        "blks_hit": 542233089.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 31062587.0,
+        "disk_write_count": 88618.0,
+        "disk_read_bytes": 508929425408.0,
+        "disk_write_bytes": 1451917312.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=6472.6)(OrderingOperation(GroupingOperation(TableAll_ml(cost=2829.4); TableEq_ref_t(cost=3036.0))))",
+        "QueryBlock(cost=10765724.6)(OrderingOperation(GroupingOperation(TableAll_ci(cost=2773638.3); TableEq_ref_n(cost=6660071.9))))",
+        "QueryBlock(cost=1691287.3)(OrderingOperation(GroupingOperation(TableAll_kt(cost=1.0); TableAll_t(cost=16719.0))))",
+        "QueryBlock(cost=40070040.4)(OrderingOperation(GroupingOperation(TableAll_ci(cost=109609.4); TableEq_ref_cn(cost=33300359.0))))",
+        "QueryBlock(cost=5244382.6)(OrderingOperation(GroupingOperation(TableAll_mk(cost=8809.0); TableEq_ref_t(cost=4362978.0))))",
+        "QueryBlock(cost=7102685.0)(OrderingOperation(GroupingOperation(TableAll_ci(cost=3106641.9); TableEq_ref_n(cost=3330036.0))))",
+        "QueryBlock(cost=76700435.3)(OrderingOperation(GroupingOperation(TableAll_ci(cost=109609.4); TableEq_ref_t(cost=33300359.0); TableEq_ref_cn(cost=33300359.0))))",
+        "QueryBlock(cost=6171.5)(OrderingOperation(GroupingOperation(TableRange_lt(cost=2.2); TableAll_ml(cost=97.1))))",
+        "QueryBlock(cost=76700435.3)(OrderingOperation(GroupingOperation(TableAll_ci(cost=109609.4); TableEq_ref_t(cost=33300359.0); TableEq_ref_cn(cost=33300359.0))))",
+        "QueryBlock(cost=10765724.6)(OrderingOperation(GroupingOperation(TableAll_ci(cost=2773638.3); TableEq_ref_n(cost=6660071.9))))",
+        "QueryBlock(cost=3063175.0)(OrderingOperation(GroupingOperation(TableAll_mc(cost=9193.0); TableEq_ref_t(cost=2544985.0))))",
+        "QueryBlock(cost=15094771.2)(OrderingOperation(GroupingOperation(TableAll_ci(cost=109609.4); TableEq_ref_rt(cost=8325089.8))))"
+    ],
+    "workload_features": {
+        "total_statements": 12,
+        "table_access_frequency": {
+            "title": 6,
+            "movie_link": 2,
+            "name": 3,
+            "cast_info": 7,
+            "kind_type": 1,
+            "char_name": 3,
+            "movie_keyword": 1,
+            "link_type": 1,
+            "movie_companies": 1,
+            "role_type": 1
+        },
+        "read_count": 12,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.75,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 1.0,
+            "sum_agg": 0.0,
+            "avg_agg": 0.0,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

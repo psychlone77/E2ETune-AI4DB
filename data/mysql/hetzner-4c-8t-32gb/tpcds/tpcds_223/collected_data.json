@@ -1,0 +1,53 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 87048.0,
+        "blks_hit": 9132943.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 87835.0,
+        "disk_write_count": 261.0,
+        "disk_read_bytes": 1439088640.0,
+        "disk_write_bytes": 4276224.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=3376520.6)(OrderingOperation(GroupingOperation(TableAll_ss(cost=6161.2); TableEq_ref_d(cost=2798512.6))))",
+        "QueryBlock(cost=36225.5)(OrderingOperation(GroupingOperation(TableAll_i(cost=168.2); TableRef_sr(cost=4535.5))))",
+        "QueryBlock(cost=4571570.3)(OrderingOperation(GroupingOperation(TableAll_inv(cost=10159.8); TableEq_ref_w(cost=2534117.0))))",
+        "QueryBlock(cost=6.2)(OrderingOperation(TableAll_wp(cost=5.6)))",
+        "QueryBlock(cost=2207367.9)(OrderingOperation(GroupingOperation(TableAll_cs(cost=6079.8); TableEq_ref_d(cost=1827796.9))))",
+        "QueryBlock(cost=1292816.5)(OrderingOperation(GroupingOperation(BufferResult(TableAll_ss(cost=6161.2); TableEq_ref_s(cost=714808.5)))))"
+    ],
+    "workload_features": {
+        "total_statements": 6,
+        "table_access_frequency": {
+            "store_sales": 2,
+            "date_dim": 2,
+            "store_returns": 1,
+            "item": 1,
+            "inventory": 1,
+            "warehouse": 1,
+            "web_page": 1,
+            "catalog_sales": 1,
+            "store": 1
+        },
+        "read_count": 6,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.6667,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.5,
+            "sum_agg": 0.3333333333333333,
+            "avg_agg": 0.16666666666666666,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

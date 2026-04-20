@@ -1,0 +1,61 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 99390.0,
+        "blks_hit": 11956206.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 99911.0,
+        "disk_write_count": 266.0,
+        "disk_read_bytes": 1636941824.0,
+        "disk_write_bytes": 4358144.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=255108.0)(OrderingOperation(GroupingOperation(TableAll_i(cost=168.2); TableRef_ss(cost=6834.9))))",
+        "QueryBlock(cost=4571570.3)(OrderingOperation(GroupingOperation(TableAll_inv(cost=10159.8); TableEq_ref_w(cost=2534117.0))))",
+        "QueryBlock(cost=1292816.5)(OrderingOperation(GroupingOperation(BufferResult(TableAll_ss(cost=6161.2); TableEq_ref_s(cost=714808.5)))))",
+        "QueryBlock(cost=846434.9)(OrderingOperation(GroupingOperation(TableAll_cs(cost=6079.8); TableEq_ref_c(cost=466864.0))))",
+        "QueryBlock(cost=337326.5)(OrderingOperation(GroupingOperation(TableAll_ws(cost=3728.0); TableEq_ref_ca(cost=185332.5))))",
+        "QueryBlock(cost=846434.9)(OrderingOperation(GroupingOperation(TableAll_cs(cost=6079.8); TableEq_ref_p(cost=466864.0))))",
+        "QueryBlock(cost=29983.8)(OrderingOperation(GroupingOperation(BufferResult(TableRange_ib(cost=1.1); TableAll_c(cost=360.8)))))",
+        "QueryBlock(cost=1292816.5)(OrderingOperation(GroupingOperation(BufferResult(TableAll_ss(cost=6161.2); TableEq_ref_hd(cost=714808.5)))))",
+        "QueryBlock(cost=32964.8)(OrderingOperation(GroupingOperation(TableAll_wr(cost=232.8); TableEq_ref_r(cost=18184.5))))"
+    ],
+    "workload_features": {
+        "total_statements": 9,
+        "table_access_frequency": {
+            "store_sales": 3,
+            "item": 1,
+            "inventory": 1,
+            "warehouse": 1,
+            "store": 1,
+            "catalog_sales": 2,
+            "customer": 2,
+            "web_sales": 1,
+            "customer_address": 1,
+            "promotion": 1,
+            "income_band": 1,
+            "household_demographics": 1,
+            "web_returns": 1,
+            "reason": 1
+        },
+        "read_count": 9,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 0.5556,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.6666666666666666,
+            "sum_agg": 0.3333333333333333,
+            "avg_agg": 0.1111111111111111,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

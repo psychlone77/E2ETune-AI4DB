@@ -2,22 +2,22 @@
     "internal_metrics": {
         "xact_commit": 1.0,
         "xact_rollback": 0.0,
-        "blks_read": 24378.0,
-        "blks_hit": 3220545.0,
+        "blks_read": 26076.0,
+        "blks_hit": 3224802.0,
         "tup_returned": 0.0,
         "tup_fetched": 0.0,
         "tup_inserted": 0.0,
         "conflicts": 0.0,
         "tup_updated": 0.0,
         "tup_deleted": 0.0,
-        "disk_read_count": 268500.0,
-        "disk_write_count": 254.0,
-        "disk_read_bytes": 4399104000.0,
-        "disk_write_bytes": 4161536.0
+        "disk_read_count": 274484.0,
+        "disk_write_count": 267.0,
+        "disk_read_bytes": 4497145856.0,
+        "disk_write_bytes": 4374528.0
     },
     "query_plans": [
-        "QueryBlock(cost=8789389978.3)(OrderingOperation(GroupingOperation(TableAll_cct(cost=0.5); TableAll_cc(cost=12074.4); TableAll_ci(cost=277521.8))))",
-        "QueryBlock(cost=2796742986674.0)(OrderingOperation(GroupingOperation(TableAll_mc(cost=187342.0); TableAll_ci(cost=25226101.9); TableEq_ref_cn(cost=3232694.4))))"
+        "QueryBlock(cost=8789393678.1)(OrderingOperation(GroupingOperation(TableAll_cct(cost=1.2); TableAll_cc(cost=12076.1); TableAll_ci(cost=281219.2))))",
+        "QueryBlock(cost=2796743376937.0)(OrderingOperation(GroupingOperation(TableAll_mc(cost=187342.0); TableAll_ci(cost=25562185.6); TableEq_ref_cn(cost=3286873.6))))"
     ],
     "workload_features": {
         "total_statements": 2,

@@ -36,6 +36,11 @@ def main():
         default="hetzner-4c-8t-32gb",
         help="Server specifications for tuning (default: hetzner-4c-8t-64gb)",
     )
+    parser.add_argument(
+        "--skip-configs",
+        action="store_true",
+        help="Skip running diverse configs and only collect default data",
+    )
     cli_args = parser.parse_args()
 
     # Load typed configuration
@@ -50,11 +55,11 @@ def main():
     knob_settings = KnobSettingsSet.from_json_file(knob_config_path)
 
     olap_workloads = [
-        # {"database.name": "imdb", "benchmark.name": "job", "benchmark.path": "./olap_workloads"},
-        {"database.name": "ssb", "benchmark.name": "ssb", "benchmark.path": "./olap_workloads"},
-        {"database.name": "ssb", "benchmark.name": "ssb_flat_tiny", "benchmark.path": "./olap_workloads"},
-        {"database.name": "tpch", "benchmark.name": "tpch", "benchmark.path": "./olap_workloads"},
-        {"database.name": "tpcds", "benchmark.name": "tpcds", "benchmark.path": "./olap_workloads"},
+        {"database.name": "benchbase", "benchmark.name": "twitter", "benchmark.path": "./oltp_workloads/twitter"},
+        # {"database.name": "ssb", "benchmark.name": "ssb", "benchmark.path": "./olap_workloads"},
+        # {"database.name": "ssb", "benchmark.name": "ssb_flat_tiny", "benchmark.path": "./olap_workloads"},
+        # {"database.name": "tpch", "benchmark.name": "tpch", "benchmark.path": "./olap_workloads"},
+        # {"database.name": "tpcds", "benchmark.name": "tpcds", "benchmark.path": "./olap_workloads"},
     ]
 
     # Load the configs
@@ -108,7 +113,7 @@ def main():
 
         benchmark_configs = diverse_configs.get(benchmark_config.name, {})
 
-        from main import build_tuner, DefaultDataCollector, BenchBaseDatabase # Assuming this exists or similar setup
+        from main import build_tuner, DefaultDataCollector, DataCollectorOLAP, DataCollectorOLTP
         
         # We will just simulate the saving for all found workloads in benchmark config
         for workload_name, configs in benchmark_configs.items():
@@ -124,6 +129,33 @@ def main():
             workload_path = Path(benchmark_config.path) / workload_file
             if not workload_path.exists():
                 logger.warning(f"Could not find workload file: {workload_path}. Skipping.")
+                continue
+
+            output_dir = (
+                Path("data")
+                / cli_args.dbengine
+                / cli_args.servername
+                / benchmark_config.name
+                / workload_name
+            )
+            os.makedirs(output_dir, exist_ok=True)
+
+            logger.info(f"Starting default data collection for workload: {workload_name}")
+            collector_cls: DefaultDataCollector = (
+                DataCollectorOLTP if benchmark_config.type == "oltp" else DataCollectorOLAP
+            )
+            ddc = collector_cls(
+                workload_path=workload_path,
+                db=db,
+                benchmark=benchmark_config.name,
+                output_dir=output_dir,
+                knob_settings_set=knob_settings,
+                log_path=log_path,
+            )
+            ddc.collect()
+            logger.info(f"Finished default data collection for workload: {workload_name}")
+
+            if cli_args.skip_configs:
                 continue
 
             logger.info(f"Running {len(configs)} configs for {workload_name}")

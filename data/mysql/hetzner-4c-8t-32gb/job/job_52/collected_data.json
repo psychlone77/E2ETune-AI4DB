@@ -1,0 +1,67 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 16132230.0,
+        "blks_hit": 867503595.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 16923421.0,
+        "disk_write_count": 3737346.0,
+        "disk_read_bytes": 277273329664.0,
+        "disk_write_bytes": 61232676864.0
+    },
+    "query_plans": [
+        "TableAll_movie_info(cost=1678037.3)",
+        "QueryBlock(cost=40075887.0)(GroupingOperation(TableAll_cast_info(cost=115456.0); TableEq_ref_role_type(cost=33300359.0)))",
+        "QueryBlock(cost=4513060.4)(OrderingOperation(GroupingOperation(TableAll_movie_keyword(cost=8809.0); TableEq_ref_title(cost=3631655.8))))",
+        "QueryBlock(cost=3063175.0)(OrderingOperation(GroupingOperation(TableAll_movie_companies(cost=9193.0); TableEq_ref_company_name(cost=2544985.0))))",
+        "QueryBlock(cost=7108531.7)(OrderingOperation(GroupingOperation(TableAll_cast_info(cost=3112488.5); TableEq_ref_name(cost=3330036.0))))",
+        "QueryBlock(cost=7108531.7)(OrderingOperation(GroupingOperation(TableAll_cast_info(cost=3112488.5); TableEq_ref_name(cost=3330036.0))))",
+        "QueryBlock(cost=31367.3)(OrderingOperation(GroupingOperation(TableAll_movie_link(cost=24.2); TableEq_ref_title(cost=25271.1))))",
+        "QueryBlock(cost=1688484.8)(OrderingOperation(GroupingOperation(TableAll_kind_type(cost=1.0); TableAll_title(cost=13916.5))))",
+        "QueryBlock(cost=34494082.0)(OrderingOperation(GroupingOperation(TableAll_cast_info(cost=115456.0); TableEq_ref_title(cost=27718554.0))))",
+        "QueryBlock(cost=2636584.7)(OrderingOperation(GroupingOperation(TableAll_movie_companies(cost=9193.0); TableEq_ref_title(cost=2118394.7))))",
+        "QueryBlock(cost=5244382.6)(OrderingOperation(GroupingOperation(TableAll_movie_keyword(cost=8809.0); TableEq_ref_keyword(cost=4362978.0))))",
+        "QueryBlock(cost=16884157.0)(OrderingOperation(GroupingOperation(TableAll_movie_info(cost=101145.0); TableEq_ref_title(cost=13531687.6))))",
+        "QueryBlock(cost=3679035.6)(OrderingOperation(GroupingOperation(TableAll_person_info(cost=29244.0); TableEq_ref_name(cost=3041493.0))))",
+        "QueryBlock(cost=4513060.4)(OrderingOperation(GroupingOperation(TableAll_movie_keyword(cost=8809.0); TableEq_ref_title(cost=3631655.8))))",
+        "QueryBlock(cost=7108531.7)(OrderingOperation(GroupingOperation(TableAll_cast_info(cost=3112488.5); TableEq_ref_name(cost=3330036.0))))",
+        "QueryBlock(cost=16884157.0)(OrderingOperation(GroupingOperation(TableAll_movie_info(cost=101145.0); TableEq_ref_title(cost=13531687.6))))",
+        "QueryBlock(cost=31367.3)(OrderingOperation(GroupingOperation(TableAll_movie_link(cost=24.2); TableEq_ref_title(cost=25271.1))))"
+    ],
+    "workload_features": {
+        "total_statements": 17,
+        "table_access_frequency": {
+            "movie_info": 3,
+            "role_type": 1,
+            "cast_info": 5,
+            "title": 9,
+            "movie_keyword": 3,
+            "company_name": 1,
+            "movie_companies": 2,
+            "name": 4,
+            "movie_link": 2,
+            "kind_type": 1,
+            "keyword": 1,
+            "person_info": 1
+        },
+        "read_count": 17,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 0.5294,
+        "operator_proportions": {
+            "order_by": 0.8823529411764706,
+            "group_by": 0.9411764705882353,
+            "count_agg": 1.0,
+            "sum_agg": 0.0,
+            "avg_agg": 0.0,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

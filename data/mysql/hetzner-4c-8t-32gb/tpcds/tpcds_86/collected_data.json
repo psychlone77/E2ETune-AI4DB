@@ -1,0 +1,66 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 110065.0,
+        "blks_hit": 22650305.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 110445.0,
+        "disk_write_count": 260.0,
+        "disk_read_bytes": 1809530880.0,
+        "disk_write_bytes": 4259840.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=2293548.4)(OrderingOperation(GroupingOperation(TableAll_store_sales(cost=6161.2); TableEq_ref_customer(cost=714808.5); TableEq_ref_customer_demographics(cost=714808.5))))",
+        "QueryBlock(cost=2.5)(TableRange_item(cost=2.2))",
+        "QueryBlock(cost=0.8)(TableAll_call_center(cost=0.7))",
+        "QueryBlock(cost=3373324.7)(OrderingOperation(GroupingOperation(TableAll_store_sales(cost=6161.2); TableEq_ref_date_dim(cost=2795316.7))))",
+        "QueryBlock(cost=4571570.3)(OrderingOperation(GroupingOperation(TableAll_inventory(cost=10159.8); TableEq_ref_warehouse(cost=2534117.0))))",
+        "QueryBlock(cost=138059.0)(OrderingOperation(GroupingOperation(TableAll_reason(cost=3.4); TableAll_store_returns(cost=906.9); TableEq_ref_store(cost=7573.3))))",
+        "QueryBlock(cost=2858890.1)(OrderingOperation(GroupingOperation(TableAll_catalog_sales(cost=6079.8); TableEq_ref_promotion(cost=466864.0); TableEq_ref_date_dim(cost=1825709.6))))",
+        "QueryBlock(cost=1136217.3)(OrderingOperation(GroupingOperation(TableAll_web_sales(cost=3728.0); TableEq_ref_web_site(cost=185332.5); TableEq_ref_date_dim(cost=724757.8))))",
+        "QueryBlock(cost=160779.0)(OrderingOperation(GroupingOperation(TableAll_reason(cost=3.4); TableAll_store_returns(cost=906.9); TableEq_ref_time_dim(cost=30293.3))))",
+        "QueryBlock(cost=66759.5)(OrderingOperation(GroupingOperation(TableAll_customer(cost=360.8); TableEq_ref_household_demographics(cost=24684.8); TableAll_income_band(cost=28.6))))"
+    ],
+    "workload_features": {
+        "total_statements": 10,
+        "table_access_frequency": {
+            "customer": 2,
+            "store_sales": 2,
+            "customer_demographics": 1,
+            "item": 1,
+            "call_center": 1,
+            "date_dim": 3,
+            "inventory": 1,
+            "warehouse": 1,
+            "store": 1,
+            "store_returns": 2,
+            "reason": 2,
+            "catalog_sales": 1,
+            "promotion": 1,
+            "web_site": 1,
+            "web_sales": 1,
+            "time_dim": 1,
+            "household_demographics": 1,
+            "income_band": 1
+        },
+        "read_count": 10,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 2.0,
+        "operator_proportions": {
+            "order_by": 0.8,
+            "group_by": 1.0,
+            "count_agg": 0.6,
+            "sum_agg": 0.3,
+            "avg_agg": 0.1,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}
