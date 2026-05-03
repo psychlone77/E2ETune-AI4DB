@@ -1,0 +1,59 @@
+Time
+#
+Log Message
+9.9s	1	0.00s - Debugger warning: It seems that frozen modules are being used, which may
+9.9s	2	0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+9.9s	3	0.00s - to python to disable frozen modules.
+9.9s	4	0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+10.8s	5	0.00s - Debugger warning: It seems that frozen modules are being used, which may
+10.8s	6	0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+10.8s	7	0.00s - to python to disable frozen modules.
+10.8s	8	0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+25.0s	9	INFO: Preprocessing functions defined
+25.0s	10	INFO: Dataset and sampler defined
+25.0s	11	INFO: GRL defined
+25.0s	12	INFO: SAINT encoder defined
+25.0s	13	INFO: Regression head and domain classifier defined
+25.0s	14	INFO: DANNCostModel defined
+25.1s	15	INFO: evaluate_on_raw_dataframe ready
+25.1s	16	INFO: compute_lambda defined
+25.1s	17	INFO: Training helpers defined
+25.1s	18	INFO: Main training function defined
+25.1s	19	INFO: run_ablation_suite ready
+25.2s	20	Starting run baseline_70ca141e_42
+26.7s	21	Data shape: (10320, 125)
+27.8s	22	INFO: Converted qp_emb_vector from JSON strings
+27.8s	23	INFO: Log-scaling 29 feature columns
+27.8s	24	WARN: Dropped 6 zero-variance features: ['conflicts', 'read_write_ratio', 'tup_deleted', 'tup_inserted', 'tup_updated']
+28.1s	25	INFO: Expanded 384 query plan embedding dimensions
+28.1s	26	WARN: Dropped 2 rows with non-finite cost values before normalization
+28.1s	27	INFO: Fitted encoders: 2 DB engines, 2 hardware configs
+28.1s	28	INFO: Fitting scaler on 5932 source domain samples
+28.1s	29	
+28.1s	30	INFO: Cost normalization mode: GLOBAL
+28.1s	31	   mu=5.1764, sigma=8.8434
+28.1s	32	   Normalized overall: mu=-0.0000, sigma=1.0000
+28.1s	33	   Range: [-0.6984, 12.1607]
+28.1s	34	   Normalized MySQL domains (0,1): mu=1.1342, sigma=1.7231
+28.1s	35	   Normalized PostgreSQL domains (2,3): mu=-0.2945, sigma=0.2610
+28.1s	36	   Per-engine normalized mean/std:
+28.1s	37	              mean     std
+28.1s	38	db_engine                 
+28.1s	39	mysql       1.1342  1.7231
+28.1s	40	postgresql -0.2945  0.2610
+817.1s	41	Epoch 01/30 | TrLoss: 0.07 | SrcMSE(Norm): 0.048 | TgtMSE(Norm): 2.763 | SrcRMSE: 2 (MAPE: 176.6%) | TgtRMSE: 13 (MAPE: 150.4%) | DomAcc: 0.070
+3921.6s	42	Epoch 05/30 | TrLoss: 0.08 | SrcMSE(Norm): 0.017 | TgtMSE(Norm): 2.917 | SrcRMSE: 1 (MAPE: 69.8%) | TgtRMSE: 13 (MAPE: 158.8%) | DomAcc: 0.245
+7700.7s	43	Epoch 10/30 | TrLoss: 0.14 | SrcMSE(Norm): 0.010 | TgtMSE(Norm): 3.854 | SrcRMSE: 1 (MAPE: 66.3%) | TgtRMSE: 15 (MAPE: 128.6%) | DomAcc: 0.359
+11353.0s	44	Epoch 15/30 | TrLoss: 0.14 | SrcMSE(Norm): 0.008 | TgtMSE(Norm): 3.408 | SrcRMSE: 1 (MAPE: 34.0%) | TgtRMSE: 15 (MAPE: 156.5%) | DomAcc: 0.152
+15005.1s	45	Epoch 20/30 | TrLoss: 0.14 | SrcMSE(Norm): 0.004 | TgtMSE(Norm): 3.916 | SrcRMSE: 1 (MAPE: 35.2%) | TgtRMSE: 15 (MAPE: 179.1%) | DomAcc: 0.315
+18850.8s	46	Epoch 25/30 | TrLoss: 0.15 | SrcMSE(Norm): 0.005 | TgtMSE(Norm): 3.955 | SrcRMSE: 1 (MAPE: 39.8%) | TgtRMSE: 15 (MAPE: 162.6%) | DomAcc: 0.362
+22571.1s	47	Epoch 30/30 | TrLoss: 0.14 | SrcMSE(Norm): 0.004 | TgtMSE(Norm): 3.735 | SrcRMSE: 1 (MAPE: 33.2%) | TgtRMSE: 14 (MAPE: 175.8%) | DomAcc: 0.413
+22600.0s	48	DONE - run_tag=baseline_70ca141e_42 cfg_hash=70ca141e
+22604.0s	49	/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+22604.0s	50	  cells[i][c] = re.sub('\\\\\|', '|', cell)
+22604.2s	51	/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+22604.2s	52	  text = re.sub(r'_', '\_', text) # Escape underscores in display text
+22604.8s	53	[NbConvertApp] Converting notebook __notebook__.ipynb to notebook
+22605.1s	54	[NbConvertApp] Writing 72533 bytes to __notebook__.ipynb
+22607.5s	55	[NbConvertApp] Converting notebook __notebook__.ipynb to html
+22608.5s	56	[NbConvertApp] Writing 544737 bytes to __results__.html

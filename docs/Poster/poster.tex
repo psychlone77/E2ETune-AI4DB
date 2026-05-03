@@ -1,0 +1,395 @@
+%% ============================================================
+%%  Gen-Knob Tuner FYP Poster  (Portrait, ~65 x 100 cm)
+%%  Compile:  pdflatex poster.tex   (two passes)
+%% ============================================================
+\documentclass[final,t]{beamer}
+
+\mode<presentation>{}
+
+\usepackage[size=custom,width=70,height=132,orientation=portrait,scale=1.0]{beamerposter}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{graphicx}
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{tikz}
+\usepackage[dvipsnames]{xcolor}
+\usepackage{pifont}
+\usepackage{microtype}
+\usepackage{ragged2e}
+\usepackage{hhline}
+\usepackage{colortbl}
+
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning,calc,fit,backgrounds}
+
+% ============================================================
+%  Colour palette (UoM inspired)
+% ============================================================
+\definecolor{MoraMaroon}{HTML}{5A1D1F}
+\definecolor{MoraGold}{HTML}{C8A04A}
+\definecolor{DeepBlue}{HTML}{1F4E79}
+\definecolor{DeepGreen}{HTML}{2E7D32}
+\definecolor{AccentRed}{HTML}{B71C1C}
+\definecolor{SoftGray}{HTML}{F5F3EE}
+\definecolor{PaperBG}{HTML}{FAFAF7}
+\definecolor{DarkInk}{HTML}{1C1C1C}
+\definecolor{PaleBand}{HTML}{EFE6D4}
+
+% ============================================================
+%  Beamer colour / font setup
+% ============================================================
+\setbeamercolor{background canvas}{bg=PaperBG}
+\setbeamercolor{block title}{bg=MoraMaroon,fg=white}
+\setbeamercolor{block body}{bg=white,fg=DarkInk}
+\setbeamercolor{block alerted title}{bg=MoraGold,fg=MoraMaroon}
+\setbeamercolor{block alerted body}{bg=SoftGray,fg=DarkInk}
+\setbeamerfont{block title}{size=\large,series=\bfseries}
+\setbeamerfont{block alerted title}{size=\large,series=\bfseries}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{itemize items}{\color{MoraMaroon}\raisebox{0.2ex}{\footnotesize\ding{228}}}
+
+% Custom block look: rounded, with left accent bar
+\setbeamertemplate{block begin}{
+  \par\vskip0.4ex
+  \begin{beamercolorbox}[rounded=false,sep=0.45em,ht=2.1em,leftskip=1em]{block title}%
+    \usebeamerfont{block title}\insertblocktitle%
+  \end{beamercolorbox}%
+  \nointerlineskip%
+  \begin{beamercolorbox}[rounded=false,sep=0.75em]{block body}%
+    \justifying\setlength{\parskip}{0.25em}%
+}
+\setbeamertemplate{block end}{\end{beamercolorbox}\vskip0.8em}
+
+\setbeamertemplate{block alerted begin}{
+  \par\vskip0.4ex
+  \begin{beamercolorbox}[rounded=false,sep=0.45em,ht=2.1em,leftskip=1em]{block alerted title}%
+    \usebeamerfont{block alerted title}\insertblocktitle%
+  \end{beamercolorbox}%
+  \nointerlineskip%
+  \begin{beamercolorbox}[rounded=false,sep=0.75em]{block alerted body}%
+    \justifying\setlength{\parskip}{0.25em}%
+}
+\setbeamertemplate{block alerted end}{\end{beamercolorbox}\vskip0.8em}
+
+% ============================================================
+%  Helper commands
+% ============================================================
+\newcommand{\tick}{\textcolor{DeepGreen}{\ding{51}}}
+\newcommand{\cross}{\textcolor{AccentRed}{\ding{55}}}
+\newcommand{\Hi}[1]{\textbf{\color{MoraMaroon}#1}}
+\newcommand{\KW}[1]{\textbf{\color{DeepBlue}#1}}
+\newcommand{\OK}[1]{\textbf{\color{DeepGreen}#1}}
+
+% ============================================================
+%  Column widths (two columns)
+% ============================================================
+\newlength{\sepwidth}
+\newlength{\colwidth}
+\setlength{\sepwidth}{0.020\paperwidth}
+\setlength{\colwidth}{0.470\paperwidth}
+\newcommand{\sepcol}{\begin{column}{\sepwidth}\end{column}}
+
+% ============================================================
+%  Custom header (title bar)
+% ============================================================
+\setbeamertemplate{headline}{
+  \begin{beamercolorbox}[wd=\paperwidth]{block title}
+    \begin{tikzpicture}[remember picture,overlay]
+      % Background maroon bar
+      \fill[MoraMaroon] (0,0) rectangle (\paperwidth, -9);
+      % Gold accent stripe
+      \fill[MoraGold] (0,-9) rectangle (\paperwidth, -9.4);
+
+      % Left logo
+      \node[anchor=north west,inner sep=0pt] at (0.8,-0.9)
+        {\includegraphics[width=5.5cm]{figures/uom_logo.png}};
+
+      % Right badge
+      \node[anchor=north east,text=white,align=right,inner sep=0pt] at (\paperwidth-1,-1.5) {%
+        \fontsize{22}{26}\selectfont\bfseries Department of Computer Science \& Engineering\\[2pt]
+        \fontsize{18}{22}\selectfont\mdseries University of Moratuwa, Sri Lanka\\[3pt]
+        \fontsize{18}{22}\selectfont\itshape Final Year Project  $\cdot$  2025/2026};
+
+      % Title, centered
+      \node[anchor=center,text=white,align=center] at (\paperwidth/2,-5.3) {%
+        \fontsize{44}{52}\selectfont\bfseries Gen-Knob Tuner for Relational Databases\\[6pt]
+        \fontsize{26}{30}\selectfont\mdseries\itshape
+        Domain-Adapted Cost Modelling for Cross-Engine, Cross-Hardware Database Knob Tuning};
+
+      % Authors + supervisors
+      \node[anchor=south,text=white,align=center] at (\paperwidth/2,-8.7) {%
+        \fontsize{19}{22}\selectfont\bfseries
+        Madara Mendis  \textbar{}  Madushan Suriyabandara  \textbar{}  Nisith Dissanayake  \textbar{}  Nithika Dias
+        \hspace{1.5em}%
+        \fontsize{16}{20}\selectfont\mdseries\itshape
+        Supervisors: Dr.\ Srinath Perera (External) $\cdot$ Dr.\ Buddhika Karunaratne (Internal)};
+    \end{tikzpicture}
+    \vspace{9.5cm}
+  \end{beamercolorbox}
+}
+
+\setbeamertemplate{footline}{
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.8em,center]{}
+    \color{white}\fontsize{14}{16}\selectfont
+    \tikz[overlay,remember picture]{\fill[MoraMaroon] (current page.south west) rectangle ([yshift=2.8em]current page.south east);}%
+    \bfseries Gen-Knob Tuner \textbullet{} University of Moratuwa \textbullet{} FYP 2025/2026
+    \hfill
+    \mdseries Contact: \texttt{\{madara.22, madushan.22, nisith.22, nithika.22\}@cse.mrt.ac.lk}
+    \hfill
+  \end{beamercolorbox}
+}
+
+% ============================================================
+\title{Gen-Knob Tuner}
+\author{FYP Team}
+\institute{University of Moratuwa}
+\date{}
+% ============================================================
+
+\begin{document}
+\begin{frame}[t,fragile]
+
+\begin{columns}[t]
+\sepcol
+
+% =============================================================
+% =============== LEFT COLUMN =================================
+% =============================================================
+\begin{column}{\colwidth}
+
+% --- Abstract (alerted / highlighted) ---
+\begin{alertblock}{\ding{74}\ \ Abstract}
+\justifying
+\small
+Database performance depends critically on \Hi{hundreds of configuration knobs}
+whose optimal values vary across workloads, engines and hardware.
+State-of-the-art LLM tuners such as \KW{E2ETune} achieve $\sim$51\% speedups
+but demand large GPU clusters and tens of thousands of costly workload replays per engine.
+\textbf{Gen-Knob Tuner} rebuilds this pipeline around a \Hi{domain-adapted surrogate cost model}
+that transfers knowledge across \textit{PostgreSQL $\leftrightarrow$ MySQL} and
+\textit{32\,GB $\leftrightarrow$ 64\,GB RAM} domains, cutting labelling effort by \OK{$\sim$95\%}
+while staying runnable on \KW{commodity CPU hardware}.
+We contribute: (i) a representativeness-aware \Hi{HDBSCAN + Gemini-embedding} workload
+selection compressing 2{,}279 workloads to 120, (ii) an \Hi{engine-flag LightGBM}
+cost model whose \textit{Joint Weighted Training} reaches \textbf{MAPE\,=\,4.81\%} on MySQL with 15.8$\times$ less
+data, and (iii) a first \Hi{DANN + SSDA} ablation on 10{,}190 samples quantifying when
+adversarial domain invariance helps vs.\ hurts.
+\end{alertblock}
+
+% --- Problem & Motivation ---
+\begin{block}{1.\ \ Problem \& Motivation}
+\justifying
+\small
+Modern RDBMS expose $\geq$150 tunable knobs ($>\!10^{100}$ configurations). Existing AI-driven tuners inherit three painful costs:
+
+\vspace{0.15em}
+\begin{itemize}
+\setlength{\itemsep}{0.1em}
+  \item \cross\ \textbf{Label cost}: HEBO needs $\approx$100 DB replays \emph{per workload} $\times$ thousands of workloads.
+  \item \cross\ \textbf{Hardware cost}: E2ETune fine-tunes Mistral-7B on 8$\times$A100 GPUs --- inaccessible for most labs.
+  \item \cross\ \textbf{Portability cost}: PostgreSQL-trained models collapse on MySQL / different RAM (concept shift).
+\end{itemize}
+
+\vspace{0.15em}
+\Hi{Goal:} \emph{an accurate, explainable, CPU-deployable knob-tuning stack in which a single high-quality
+source domain transfers to new engines and servers with minimal labelled data.}
+\end{block}
+
+% --- Three-Phase Pipeline ---
+\begin{block}{2.\ \ Gen-Knob Tuner Pipeline}
+\centering
+\includegraphics[width=\textwidth]{figures/pipeline.pdf}\\[0.2em]
+\justifying
+\small
+Each phase is \Hi{data-efficient by design}: clustering reduces replay cost,
+the surrogate cost model replaces costly HEBO evaluations, and RAG-augmented prompts
+ground the fine-tuned LM in the PostgreSQL manual for trustworthy knob JSON at inference.
+\end{block}
+
+% --- Workload Clustering ---
+\begin{block}{3.\ \ Representativeness-Aware Workload Selection}
+\justifying
+\small
+From \textbf{10 benchmarks} (JOB, SSB, SSB-Flat, TPC-H, TPC-DS, TPC-C, SmallBank, Twitter, Wikipedia, YCSB)
+we start with 2{,}279 synthetic workloads. SQL literals are replaced with \texttt{?} placeholders to isolate
+\emph{structural} signal, then embedded via Google \KW{gemini-embedding-001} (768-d)
+and clustered with \KW{HDBSCAN} --- a density-based algorithm that tolerates noise and
+auto-selects cluster count. 12 representatives per benchmark are drawn cluster-proportionally.
+
+\vspace{0.1em}
+\centering
+\includegraphics[width=\textwidth]{figures/clustering.pdf}
+
+\vspace{0.2em}
+\justifying\small
+\textbf{Why it matters:} naively tuning every workload would require $\sim$228k HEBO evaluations.
+Our selection collapses this to \OK{12{,}000 labelled points} that drive the cost model,
+which then labels the remaining 2{,}154 workloads virtually
+--- a \Hi{$\approx$95\% reduction in physical DB replays} (from $\approx$1{,}900h to $\approx$122h of compute).
+\end{block}
+
+% --- DANN architecture ---
+\begin{block}{4.\ \ Domain-Adversarial Cost Model (DANN)}
+\justifying
+\small
+To generalise across \textit{concept shift} (MySQL vs.\ PostgreSQL) and \textit{covariate shift} (32\,GB vs.\ 64\,GB RAM)
+we adopt \KW{Ganin \& Lempitsky's DANN}. A shared feature extractor $G_f$ is regularised by a
+\Hi{Gradient Reversal Layer (GRL)} that negates gradients by $-\lambda$, producing a latent $z$
+that confuses the \textit{Domain Classifier} $G_d$ while still minimising the regression loss through $G_y$.
+Semantic normalisation maps \texttt{shared\_buffers}\,$\rightarrow$\,\texttt{memory\_buffer\_size}
+so both engines share one feature schema.
+
+\vspace{0.2em}
+\centering
+\includegraphics[width=0.95\textwidth]{figures/dann_arch.pdf}
+\end{block}
+
+\end{column}
+\sepcol
+
+
+% =============================================================
+% =============== RIGHT COLUMN ================================
+% =============================================================
+\begin{column}{\colwidth}
+
+% --- Experimental setup (benchmarks + knobs) ---
+\begin{block}{5.\ \ Experimental Setup}
+\justifying\small
+\begin{center}
+\renewcommand{\arraystretch}{1.1}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}l c c c c@{}}
+\toprule
+\rowcolor{PaleBand}
+\textbf{Benchmark} & \textbf{Type} & \textbf{Tables} & \textbf{Queries} & \textbf{Synth.\ workloads} \\
+\midrule
+JOB (IMDb)       & OLAP & 21 & 113 & 243 \\
+SSB / SSB-Flat   & OLAP &  5 &  13 & 239 \\
+TPC-H            & OLAP &  8 &  22 & 232 \\
+TPC-DS           & OLAP & 24 &  99 & 271 \\
+TPC-C, SmallBank, Twitter, Wiki, YCSB & OLTP & -- & -- & $\approx$240 ea. \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\textbf{Servers:} Intel Xeon E3-1275v5 (64\,GB) + Intel Core i7-7700 (32\,GB), PostgreSQL 12.2 and MySQL 8.0. \textbf{Knobs:} 15 high-impact PostgreSQL (\texttt{shared\_buffers}, \texttt{work\_mem}, \texttt{effective\_cache\_size}, \ldots) + 10 MySQL analogues. \textbf{Features:} 15 internal metrics + 32-d PCA of EXPLAIN-plan embed + 10 workload descriptors $=$ \Hi{65-d vector}. \textbf{Labels:} 100 \KW{HEBO} iterations per workload.
+\end{block}
+
+% --- Regression results ---
+\begin{block}{6.\ \ Results --- Cost Model Accuracy}
+\textbf{A.\ PostgreSQL base model \ (5-fold \textsc{GroupKFold} on unseen workloads; 217 workloads, 20{,}758 samples)}
+
+\vspace{0.1em}
+\centering
+\includegraphics[width=0.93\textwidth]{figures/postgres_algos.pdf}
+
+\justifying\small
+\textbf{LightGBM} wins across RMSE and MAPE while remaining $10\times$ smaller than an MLP surrogate; its importance ranking also aligns with DBA intuition (\texttt{work\_mem}, \texttt{shared\_buffers}, \texttt{effective\_cache\_size} dominate).
+
+\vspace{0.3em}
+\textbf{B.\ Cross-engine transfer  (PostgreSQL $\rightarrow$ MySQL, 1{,}314 MySQL samples)}
+\vspace{0.1em}
+\centering
+\includegraphics[width=0.93\textwidth]{figures/transfer_learning.pdf}
+
+\justifying\small
+\vspace{-0.3em}
+\begin{itemize}
+\setlength{\itemsep}{0.1em}
+\item \Hi{MySQL-only}: poor (MAPE 12.3\%, $\rho$=0.47) --- too little data to learn on its own.
+\item \KW{Residual Adapter}: freezes PG model, learns only $\Delta$-latency correction. \tick\ Halves MAPE.
+\item \OK{Joint Weighted Training}: upweights MySQL rows by $19.96\times$; best overall (MAPE 4.81\%, $\rho$=0.61).
+\end{itemize}
+\end{block}
+
+% --- DANN ablation results ---
+\begin{block}{7.\ \ Results --- DANN Ablation Study}
+\justifying\small
+We ablate \textbf{normalisation} (Global vs.\ Per-Engine) against \textbf{adaptation objective}
+on 10{,}190 samples split across 4 domains (MySQL-32, MySQL-64, PostgreSQL-32, PostgreSQL-64;
+MySQL mean cost 16.6, PostgreSQL 2.57 --- a $\sim$6.5$\times$ scale gap).
+
+\vspace{0.3em}
+\begin{center}
+\renewcommand{\arraystretch}{1.18}
+\footnotesize
+\begin{tabularx}{\textwidth}{@{}l l c c c@{}}
+\toprule
+\rowcolor{PaleBand}
+\textbf{Norm.} & \textbf{Experiment} & \textbf{RMSE} & \textbf{MAPE (\%)} & \textbf{Spearman} \\
+\midrule
+\multirow{3}{*}{Global}
+  & (A) Source-only DANN      & 46.31 & 108.12 & 0.732 \\
+  & (B) SSDA 10\% labels      & \textbf{45.69} & 246.18 & 0.631 \\
+  & (C) Supervised baseline   & 45.70 & \textbf{180.59} & 0.779 \\
+\midrule
+\multirow{3}{*}{Per-Engine}
+  & (A) Source-only DANN      & 109.99 & 1041.05 & 0.804 \\
+  & (B) SSDA 10\% labels      & 47.06 & 203.71 & 0.726 \\
+  & \cellcolor{SoftGray}(C) Supervised $\bigstar$ & \cellcolor{SoftGray}\textbf{46.37} & \cellcolor{SoftGray}\textbf{99.90} & \cellcolor{SoftGray}\textbf{0.843} \\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+\vspace{0.1em}
+\centering
+\includegraphics[width=0.93\textwidth]{figures/dann_ablation.pdf}
+
+\justifying\small
+\textbf{Key findings:}
+\begin{itemize}
+\setlength{\itemsep}{0.1em}
+\item \tick\ \Hi{Per-engine normalisation + supervised training} gives the strongest ranking ($\rho$\,=\,0.843) --- critical for Top-K config selection.
+\item \tick\ Global normalisation favours \KW{SSDA} when engines share scale; \textbf{10\% labelled MySQL data} beats source-only DANN on every run.
+\item \cross\ Source-only DANN is \textit{unstable} under per-engine norm (MAPE $>$ 1000\%) --- adversarial invariance alone cannot bridge a 6.5$\times$ scale gap.
+\item \tick\ Higher domain-classifier accuracy does \emph{not} imply better regression --- \textit{decision} we avoid over-regularising $G_f$.
+\end{itemize}
+\end{block}
+
+% --- Contributions & Conclusion combined ---
+\begin{alertblock}{8.\ \ Key Contributions \& Take-aways}
+\small
+\justifying
+\begin{itemize}
+\setlength{\itemsep}{0.2em}
+  \item \tick\ \Hi{Representativeness-aware labelling} (HDBSCAN + Gemini): Silhouette \textbf{0.828}, \OK{$-$95\% HEBO cost}.
+  \item \tick\ \Hi{Engine-flag LightGBM} cost model: $\rho$\,=\,\textbf{0.942} on PostgreSQL; \textbf{Joint Weighted Training} achieves first sub-5\% MAPE cross-engine transfer (\textbf{4.81\%}).
+  \item \tick\ First systematic \Hi{DANN + SSDA ablation} on a DB-cost-model task --- per-engine norm $\bigstar$ wins ($\rho$\,=\,0.843).
+  \item \tick\ End-to-end runnable on \Hi{a single CPU} --- knob JSON in $<$5\,s via a quantised 1.5B SLM + RAG over PG docs.
+\end{itemize}
+
+\vspace{0.3em}
+\textbf{Take-away:}\ Adversarial DANN is best when the target engine has \emph{zero} labels and scales are close;
+otherwise \Hi{per-engine normalisation + a small weighted sample} of the target engine matches or beats it at a fraction of the complexity.
+\end{alertblock}
+
+% --- Future work + References (compact) ---
+\begin{block}{9.\ \ Future Work \ \ \& \ \ Selected References}
+\small
+\justifying
+\textbf{Short term:}\ Full SFT of Qwen-2.5 (7B) / DeepSeek-R1 (1.5B) on cost-model-guided labels; RAG validation of generated knob JSON. \quad
+\textbf{Long term:}\ Real-time dynamic tuning and integration with learned indexing / cardinality estimation; adaptation to distributed DBs (CockroachDB, TiDB).
+
+\vspace{0.3em}
+\fontsize{11}{13}\selectfont
+\textbf{[1]}\ X.\ Huang \emph{et al.}, E2ETune, \emph{arXiv:2404.11581}, 2024. \ 
+\textbf{[2]}\ Y.\ Ganin \& V.\ Lempitsky, Unsupervised Domain Adaptation by Backprop, \emph{ICML}, 2015. \
+\textbf{[3]}\ A.\ Cowen-Rivers \emph{et al.}, HEBO, \emph{JAIR}, 2022. \
+\textbf{[4]}\ D.\ Van Aken \emph{et al.}, OtterTune, \emph{SIGMOD}, 2017. \
+\textbf{[5]}\ R.\ Campello \emph{et al.}, HDBSCAN, \emph{PAKDD}, 2013. \
+\textbf{[6]}\ G.\ Ke \emph{et al.}, LightGBM, \emph{NeurIPS}, 2017.
+\end{block}
+
+\end{column}
+\sepcol
+\end{columns}
+
+\end{frame}
+\end{document}

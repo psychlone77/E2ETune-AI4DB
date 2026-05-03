@@ -1,0 +1,32 @@
+V5 (Version 25) - 5-fold CV with domain embedding + wider head + alpha_target=3.0
+
+Config: n_epochs=150, batch_size=256, lr=3e-4, per_engine normalization, log_target=True, use_sampler=True
+labeled_target_frac=1.0, 5-fold stratified CV, robust MAPE
+Changes from V4: domain_emb(8d), wider head(512->256->128), alpha_target=3.0, patience=40, CORAL warmup 30%
+
+RESULT: WORSE THAN V4
+- alpha_target=3.0 was too aggressive (hurt PostgreSQL domains)
+- Wider head was over-parameterized for ~8K training samples
+- Initial loss jumped from 0.77 -> 1.54
+
+CROSS-VALIDATION RESULTS (5-fold):
+Pooled MAPE:     7.01% +/- 0.45%
+Pooled RMSE:     1.2923 +/- 0.1467
+Pooled Spearman: 0.9938 +/- 0.0011
+
+Per-domain results:
+  Domain 0 (MySQL-32GB):   MAPE=6.94% +/- 0.36% | RMSE=2.5591 +/- 0.5961 | Spearman=0.9786 +/- 0.0045 | n~282
+  Domain 1 (MySQL-64GB):   MAPE=12.97% +/- 3.23% | RMSE=2.9667 +/- 0.9294 | Spearman=0.9747 +/- 0.0103 | n~144
+  Domain 2 (PG-32GB):      MAPE=8.35% +/- 0.96% | RMSE=0.5149 +/- 0.0686 | Spearman=0.9896 +/- 0.0027 | n~242
+  Domain 3 (PG-64GB):      MAPE=6.25% +/- 0.32% | RMSE=0.2509 +/- 0.0399 | Spearman=0.9959 +/- 0.0017 | n~1396
+
+Total training time: 246.1 minutes (4.1 hours)
+
+Per-fold results:
+  Fold 1: MAPE=6.42%, Spearman=0.9948 (best epoch 112)
+  Fold 2: MAPE=7.02%, Spearman=0.9924 (best epoch 88, early stopped at 128)
+  Fold 3: MAPE=6.64%, Spearman=0.9932 (best epoch 123)
+  Fold 4: MAPE=7.31%, Spearman=0.9951 (best epoch 124)
+  Fold 5: MAPE=7.66%, Spearman=0.9933 (best epoch 81, early stopped at 121)
+
+CONCLUSION: Reverted to V4 architecture for V6 (true DANN with GRL).

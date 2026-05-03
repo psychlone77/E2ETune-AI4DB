@@ -1,0 +1,26 @@
+V3.2 (Version 22) - CORAL + Huber + 100% labeled target + eval.py log1p bugfix
+
+Config: n_epochs=100, batch_size=256, lr=5e-4, per_engine normalization, log_target=True, use_sampler=True
+labeled_target_frac=1.0 (ALL target labels used)
+
+Training Progress:
+Epoch 001/100 | TrLoss: 0.7362 | MacroMSE: 1.1550 | SrcMAPE: 79.2% | TgtMAPE: 76.6% | λ_coral: 0.0000
+Epoch 005/100 | TrLoss: 0.1339 | MacroMSE: 0.1347 | SrcMAPE: 54.9% | TgtMAPE: 39.2% | λ_coral: 0.0000
+Epoch 010/100 | TrLoss: 0.0551 | MacroMSE: 0.0756 | SrcMAPE: 27.1% | TgtMAPE: 32.2% | λ_coral: 0.0000
+Epoch 020/100 | TrLoss: 0.0246 | MacroMSE: 0.0355 | SrcMAPE: 15.3% | TgtMAPE: 18.8% | λ_coral: 0.0000
+Epoch 040/100 | TrLoss: 0.0157 | MacroMSE: 0.0239 | SrcMAPE: 12.2% | TgtMAPE: 17.7% | λ_coral: 0.0317
+Epoch 060/100 | TrLoss: 0.0095 | MacroMSE: 0.0226 | SrcMAPE: 9.3%  | TgtMAPE: 15.7% | λ_coral: 0.0500
+Epoch 080/100 | TrLoss: 0.0085 | MacroMSE: 0.0200 | SrcMAPE: 7.2%  | TgtMAPE: 15.0% | λ_coral: 0.0500
+Epoch 100/100 | TrLoss: 0.0078 | MacroMSE: 0.0202 | SrcMAPE: 6.8%  | TgtMAPE: 15.0% | λ_coral: 0.0500
+
+Best epoch: 77 | Best macro-val MSE: 0.019789
+Training took 40.0 minutes
+
+=== TEST SET RESULTS ===
+Pooled MAPE: 6.40%
+Pooled RMSE: 1.2920
+Pooled Spearman: 0.9953
+  Domain 0: RMSE=2.5478, MAPE=9.07%, Spearman=0.9682, n=211
+  Domain 1: RMSE=3.2563, MAPE=12.07%, Spearman=0.9857, n=107
+  Domain 2: RMSE=0.3458, MAPE=5.54%, Spearman=0.9900, n=182
+  Domain 3: RMSE=0.2283, MAPE=5.56%, Spearman=0.9946, n=1046

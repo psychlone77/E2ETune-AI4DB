@@ -1,0 +1,81 @@
+Time
+#
+Log Message
+7.2s	1	0.00s - Debugger warning: It seems that frozen modules are being used, which may
+7.2s	2	0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+7.2s	3	0.00s - to python to disable frozen modules.
+7.2s	4	0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+7.8s	5	0.00s - Debugger warning: It seems that frozen modules are being used, which may
+7.8s	6	0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off
+7.8s	7	0.00s - to python to disable frozen modules.
+7.8s	8	0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.
+18.7s	9	INFO: Preprocessing functions defined
+18.7s	10	INFO: Dataset and sampler defined
+18.7s	11	INFO: RSD defined
+18.7s	12	INFO: SAINT encoder defined
+18.7s	13	INFO: Regression head defined
+18.7s	14	INFO: DANNCostModel defined
+18.8s	15	INFO: evaluate_on_raw_dataframe ready
+18.8s	16	INFO: compute_lambda defined
+18.8s	17	INFO: Training helpers defined
+18.8s	18	INFO: Main training function defined
+18.8s	19	INFO: run_ablation_suite ready
+18.9s	20	Starting run baseline_520636a8_42
+20.3s	21	Data shape: (10320, 125)
+21.4s	22	INFO: Converted qp_emb_vector from JSON strings
+21.4s	23	INFO: Log-scaling 29 feature columns
+21.4s	24	WARN: Dropped 6 zero-variance features: ['conflicts', 'read_write_ratio', 'tup_deleted', 'tup_inserted', 'tup_updated']
+21.7s	25	INFO: Expanded 384 query plan embedding dimensions
+21.7s	26	WARN: Dropped 2 rows with non-finite cost values before normalization
+21.7s	27	INFO: Fitted encoders: 2 DB engines, 2 hardware configs
+21.7s	28	INFO: Fitting RobustScaler on all 8770 samples
+21.7s	29	
+21.7s	30	INFO: Cost normalization mode: PER_ENGINE
+21.7s	31	   mysql: n=1808, mu=2.2302, sigma=1.1861
+21.7s	32	   postgresql: n=6962, mu=1.0734, sigma=0.6386
+21.7s	33	   Normalized overall: mu=0.0000, sigma=0.9999
+21.7s	34	   Range: [-1.8803, 2.3916]
+21.7s	35	   Normalized MySQL domains (0,1): mu=0.0000, sigma=1.0000
+21.7s	36	   Normalized PostgreSQL domains (2,3): mu=0.0000, sigma=1.0000
+21.7s	37	   Per-engine normalized mean/std:
+21.7s	38	            mean  std
+21.7s	39	db_engine            
+21.7s	40	mysql        0.0  1.0
+21.7s	41	postgresql   0.0  1.0
+45.7s	42	Epoch 01/50 | TrLoss: 0.78 | SrcMSE(Norm): 0.584 | TgtMSE(Norm): 2.288 | MacroValMSE: 1.862 | SrcRMSE: 2 (MAPE: 52.8%) | TgtRMSE: 14 (MAPE: 179.2%) | DomAcc: 0.137
+118.2s	43	Epoch 05/50 | TrLoss: 0.08 | SrcMSE(Norm): 0.079 | TgtMSE(Norm): 1.441 | MacroValMSE: 1.100 | SrcRMSE: 1 (MAPE: 26.6%) | TgtRMSE: 15 (MAPE: 299.2%) | DomAcc: 0.137
+208.2s	44	Epoch 10/50 | TrLoss: 0.02 | SrcMSE(Norm): 0.030 | TgtMSE(Norm): 1.538 | MacroValMSE: 1.161 | SrcRMSE: 0 (MAPE: 22.3%) | TgtRMSE: 12 (MAPE: 223.2%) | DomAcc: 0.137
+297.1s	45	Epoch 15/50 | TrLoss: 0.01 | SrcMSE(Norm): 0.026 | TgtMSE(Norm): 1.239 | MacroValMSE: 0.936 | SrcRMSE: 0 (MAPE: 14.2%) | TgtRMSE: 12 (MAPE: 236.1%) | DomAcc: 0.137
+385.8s	46	Epoch 20/50 | TrLoss: 0.01 | SrcMSE(Norm): 0.015 | TgtMSE(Norm): 1.402 | MacroValMSE: 1.055 | SrcRMSE: 0 (MAPE: 10.7%) | TgtRMSE: 13 (MAPE: 242.6%) | DomAcc: 0.137
+475.6s	47	Epoch 25/50 | TrLoss: 0.01 | SrcMSE(Norm): 0.021 | TgtMSE(Norm): 1.451 | MacroValMSE: 1.094 | SrcRMSE: 0 (MAPE: 18.0%) | TgtRMSE: 13 (MAPE: 249.6%) | DomAcc: 0.137
+493.5s	48	/tmp/ipykernel_16/2341072468.py:382: RuntimeWarning: Mean of empty slice
+493.5s	49	  tgt_mse = np.nanmean(
+493.5s	50	/tmp/ipykernel_16/2341072468.py:388: RuntimeWarning: Mean of empty slice
+493.5s	51	  tgt_rmse = np.nanmean([val_all.get(f"rmse_domain_{d}_all", float("nan")) for d in [0, 1, 2]])
+493.5s	52	/tmp/ipykernel_16/2341072468.py:389: RuntimeWarning: Mean of empty slice
+493.5s	53	  tgt_mape = np.nanmean([val_all.get(f"mape_domain_{d}_all", float("nan")) for d in [0, 1, 2]])
+493.5s	54	/tmp/ipykernel_16/2341072468.py:393: RuntimeWarning: Mean of empty slice
+493.5s	55	  macro_val_mse = np.nanmean(all_val_mses)
+493.5s	56	
+493.5s	57	/tmp/ipykernel_16/2341072468.py:382: RuntimeWarning: Mean of empty slice
+493.5s	58	  tgt_mse = np.nanmean(
+493.5s	59	/tmp/ipykernel_16/2341072468.py:388: RuntimeWarning: Mean of empty slice
+493.5s	60	  tgt_rmse = np.nanmean([val_all.get(f"rmse_domain_{d}_all", float("nan")) for d in [0, 1, 2]])
+493.5s	61	/tmp/ipykernel_16/2341072468.py:389: RuntimeWarning: Mean of empty slice
+493.5s	62	  tgt_mape = np.nanmean([val_all.get(f"mape_domain_{d}_all", float("nan")) for d in [0, 1, 2]])
+493.5s	63	/tmp/ipykernel_16/2341072468.py:393: RuntimeWarning: Mean of empty slice
+493.5s	64	  macro_val_mse = np.nanmean(all_val_mses)
+564.1s	65	Epoch 30/50 | TrLoss: nan | SrcMSE(Norm): nan | TgtMSE(Norm): nan | MacroValMSE: nan | SrcRMSE: nan (MAPE: nan%) | TgtRMSE: nan (MAPE: nan%) | DomAcc: 0.137
+653.0s	66	Epoch 35/50 | TrLoss: nan | SrcMSE(Norm): nan | TgtMSE(Norm): nan | MacroValMSE: nan | SrcRMSE: nan (MAPE: nan%) | TgtRMSE: nan (MAPE: nan%) | DomAcc: 0.137
+741.7s	67	Epoch 40/50 | TrLoss: nan | SrcMSE(Norm): nan | TgtMSE(Norm): nan | MacroValMSE: nan | SrcRMSE: nan (MAPE: nan%) | TgtRMSE: nan (MAPE: nan%) | DomAcc: 0.137
+830.6s	68	Epoch 45/50 | TrLoss: nan | SrcMSE(Norm): nan | TgtMSE(Norm): nan | MacroValMSE: nan | SrcRMSE: nan (MAPE: nan%) | TgtRMSE: nan (MAPE: nan%) | DomAcc: 0.137
+919.3s	69	Epoch 50/50 | TrLoss: nan | SrcMSE(Norm): nan | TgtMSE(Norm): nan | MacroValMSE: nan | SrcRMSE: nan (MAPE: nan%) | TgtRMSE: nan (MAPE: nan%) | DomAcc: 0.137
+920.2s	70	DONE - run_tag=baseline_520636a8_42 cfg_hash=520636a8
+924.0s	71	/usr/local/lib/python3.12/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\|'
+924.0s	72	  cells[i][c] = re.sub('\\\\\|', '|', cell)
+924.2s	73	/usr/local/lib/python3.12/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\_'
+924.2s	74	  text = re.sub(r'_', '\_', text) # Escape underscores in display text
+924.8s	75	[NbConvertApp] Converting notebook __notebook__.ipynb to notebook
+925.1s	76	[NbConvertApp] Writing 75439 bytes to __notebook__.ipynb
+927.6s	77	[NbConvertApp] Converting notebook __notebook__.ipynb to html
+928.6s	78	[NbConvertApp] Writing 554001 bytes to __results__.html

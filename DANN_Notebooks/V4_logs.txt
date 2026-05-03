@@ -1,0 +1,24 @@
+V4 (Version 24) - 5-fold CV with robust MAPE
+
+Config: n_epochs=100, batch_size=256, lr=5e-4, per_engine normalization, log_target=True, use_sampler=True
+labeled_target_frac=1.0, 5-fold stratified CV, robust MAPE (threshold=1% median, cap=200%)
+
+CROSS-VALIDATION RESULTS (5-fold):
+Pooled MAPE:     6.66% ± 1.76%
+Pooled RMSE:     1.3090 ± 0.1109
+Pooled Spearman: 0.9932 ± 0.0015
+
+Per-domain results (mean ± std across 5 folds):
+  Domain 0 (MySQL-32GB):   MAPE=7.33% ± 0.62% | RMSE=2.5461 ± 0.5485 | Spearman=0.9788 ± 0.0027 | n≈282
+  Domain 1 (MySQL-64GB):   MAPE=12.41% ± 2.51% | RMSE=3.0825 ± 0.9339 | Spearman=0.9725 ± 0.0172 | n≈144
+  Domain 2 (PG-32GB):      MAPE=7.24% ± 1.17% | RMSE=0.4858 ± 0.0542 | Spearman=0.9893 ± 0.0037 | n≈242
+  Domain 3 (PG-64GB):      MAPE=5.92% ± 2.22% | RMSE=0.2607 ± 0.0582 | Spearman=0.9952 ± 0.0029 | n≈1396
+
+Per-fold results:
+  Fold 1: MAPE=6.18%, Spearman=0.9955 (best epoch 80)
+  Fold 2: MAPE=5.43%, Spearman=0.9942 (best epoch 78) -- BEST FOLD
+  Fold 3: MAPE=5.37%, Spearman=0.9911 (best epoch 79)
+  Fold 4: MAPE=10.10%, Spearman=0.9919 (best epoch 28, early stopped at 58)
+  Fold 5: MAPE=6.22%, Spearman=0.9934 (best epoch 78)
+
+Total training time: 193.6 minutes (3.2 hours)
