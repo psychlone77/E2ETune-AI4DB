@@ -1,0 +1,17 @@
+[2026-04-04 23:51:20,341:run_diverse_configs.py#L81:INFO]: ====================================================================================================
+[2026-04-04 23:51:20,341:run_diverse_configs.py#L82:INFO]: E2ETune: Running Diverse Configs for job
+[2026-04-04 23:51:20,341:run_diverse_configs.py#L83:INFO]: ====================================================================================================
+[2026-04-04 23:51:20,341:run_diverse_configs.py#L84:INFO]: Config: config/config.yaml
+[2026-04-04 23:51:20,341:run_diverse_configs.py#L85:INFO]: Host: localhost  DB: imdb
+[2026-04-04 23:51:20,342:run_diverse_configs.py#L86:INFO]: Benchmark: job  Type: olap
+[2026-04-04 23:51:20,342:run_diverse_configs.py#L87:INFO]: Workload path: ./olap_workloads
+[2026-04-04 23:51:20,342:run_diverse_configs.py#L88:INFO]: ====================================================================================================
+[2026-04-04 23:51:22,416:run_diverse_configs.py#L128:INFO]: Running 10 configs for job_147
+[2026-04-04 23:51:22,416:run_diverse_configs.py#L136:INFO]: Running config 1/10 for job_147
+[2026-04-04 23:51:22,416:MySQL_Database.py#L242:INFO]: Transpiling workload from PostgreSQL to MySQL syntax...
+[2026-04-04 23:51:22,502:MySQL_Database.py#L79:INFO]: MySQL knobs persisted to mysqld-auto.cnf. Restarting to apply...
+[2026-04-04 23:51:22,502:MySQL_Database.py#L189:INFO]: Restarting MySQL service...
+[2026-04-04 23:51:26,681:MySQL_Database.py#L199:INFO]: Waiting for MySQL to become available...
+[2026-04-04 23:51:26,716:MySQL_Database.py#L217:INFO]: MySQL is back up! (Took 0.04s)
+[2026-04-04 23:51:26,717:MySQL_Database.py#L32:INFO]: Closed old MySQL connection.
+[2026-04-04 23:51:26,774:MySQL_Database.py#L267:INFO]: Executing transpiled workload olap_workloads/job_147.wg (2 queries)...

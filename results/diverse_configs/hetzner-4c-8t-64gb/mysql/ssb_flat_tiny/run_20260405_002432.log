@@ -1,0 +1,13 @@
+[2026-04-05 00:24:32,511:run_diverse_configs.py#L82:INFO]: ====================================================================================================
+[2026-04-05 00:24:32,511:run_diverse_configs.py#L83:INFO]: E2ETune: Running Diverse Configs for ssb_flat_tiny
+[2026-04-05 00:24:32,511:run_diverse_configs.py#L84:INFO]: ====================================================================================================
+[2026-04-05 00:24:32,511:run_diverse_configs.py#L85:INFO]: Config: config/config.yaml
+[2026-04-05 00:24:32,511:run_diverse_configs.py#L86:INFO]: Host: localhost  DB: tpcc
+[2026-04-05 00:24:32,511:run_diverse_configs.py#L87:INFO]: Benchmark: ssb_flat_tiny  Type: olap
+[2026-04-05 00:24:32,511:run_diverse_configs.py#L88:INFO]: Workload path: ./oltp_workloads
+[2026-04-05 00:24:32,511:run_diverse_configs.py#L89:INFO]: ====================================================================================================
+[2026-04-05 00:24:32,568:MySQL_Database.py#L53:ERROR]: Connection attempt 1 failed: 1049 (42000): Unknown database 'tpcc'
+[2026-04-05 00:24:32,568:MySQL_Database.py#L57:INFO]: Attempting to start MySQL service...
+[2026-04-05 00:24:35,188:MySQL_Database.py#L53:ERROR]: Connection attempt 2 failed: 1049 (42000): Unknown database 'tpcc'
+[2026-04-05 00:24:35,189:MySQL_Database.py#L57:INFO]: Attempting to start MySQL service...
+[2026-04-05 00:24:37,758:MySQL_Database.py#L53:ERROR]: Connection attempt 3 failed: 1049 (42000): Unknown database 'tpcc'
