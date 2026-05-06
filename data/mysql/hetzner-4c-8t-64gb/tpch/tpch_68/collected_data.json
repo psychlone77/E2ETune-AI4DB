@@ -1,0 +1,49 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 39776.0,
+        "blks_hit": 3635726.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 147684.0,
+        "disk_write_count": 252.0,
+        "disk_read_bytes": 2419654656.0,
+        "disk_write_bytes": 4128768.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=1837904.5)(OrderingOperation(GroupingOperation(TableAll_orders(cost=5597.5); TableEq_ref_customer(cost=654338.8); TableAll_nation(cost=158.5))))",
+        "QueryBlock(cost=45876.3)(OrderingOperation(GroupingOperation(TableAll_part(cost=40207.9); TableRef_partsupp(cost=3692.6))))",
+        "QueryBlock(cost=1262923.8)(OrderingOperation(GroupingOperation(TableAll_lineitem(cost=1172805.3); TableEq_ref_supplier(cost=32165.8); TableAll_nation(cost=54.3))))",
+        "QueryBlock(cost=267333.0)(OrderingOperation(TableAll_orders(cost=238257.1)))"
+    ],
+    "workload_features": {
+        "total_statements": 4,
+        "table_access_frequency": {
+            "nation": 2,
+            "customer": 1,
+            "orders": 2,
+            "part": 1,
+            "partsupp": 1,
+            "supplier": 1,
+            "lineitem": 1
+        },
+        "read_count": 4,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 2.25,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.75,
+            "sum_agg": 0.5,
+            "avg_agg": 0.5,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

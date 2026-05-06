@@ -1,0 +1,60 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 68654.0,
+        "blks_hit": 48380450.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 101330.0,
+        "disk_write_count": 12937.0,
+        "disk_read_bytes": 1660190720.0,
+        "disk_write_bytes": 211959808.0
+    },
+    "query_plans": [
+        "TableAll_title(cost=252229.9)",
+        "TableAll_title(cost=252229.9)",
+        "TableAll_title(cost=252229.9)",
+        "TableAll_title(cost=235138.4)",
+        "TableAll_title(cost=235138.4)",
+        "TableAll_title(cost=235138.4)",
+        "TableAll_movie_companies(cost=234067.4)",
+        "TableAll_movie_companies(cost=234067.4)",
+        "TableAll_movie_companies(cost=234067.4)",
+        "QueryBlock(cost=349942.0)(TableAll_mc(cost=234067.4); TableEq_ref_t(cost=64384.5))",
+        "QueryBlock(cost=349942.0)(TableAll_mc(cost=234067.4); TableEq_ref_t(cost=64384.5))",
+        "QueryBlock(cost=349942.0)(TableAll_mc(cost=234067.4); TableEq_ref_t(cost=64384.5))",
+        "QueryBlock(cost=484701.3)(OrderingOperation(GroupingOperation(TableAll_mc(cost=234067.4); TableEq_ref_c(cost=199143.9))))",
+        "QueryBlock(cost=484701.3)(OrderingOperation(GroupingOperation(TableAll_mc(cost=234067.4); TableEq_ref_c(cost=199143.9))))",
+        "QueryBlock(cost=484701.3)(OrderingOperation(GroupingOperation(TableAll_mc(cost=234067.4); TableEq_ref_c(cost=199143.9))))",
+        "QueryBlock(cost=2034582.4)(OrderingOperation(GroupingOperation(TableAll_mk(cost=2282.5); TableEq_ref_t(cost=1129226.7))))",
+        "QueryBlock(cost=2034197.2)(OrderingOperation(GroupingOperation(TableAll_mk(cost=2282.5); TableEq_ref_k(cost=1128841.5))))"
+    ],
+    "workload_features": {
+        "total_statements": 17,
+        "table_access_frequency": {
+            "title": 10,
+            "movie_companies": 9,
+            "company_name": 3,
+            "movie_keyword": 2,
+            "keyword": 1
+        },
+        "read_count": 17,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.2353,
+        "operator_proportions": {
+            "order_by": 0.29411764705882354,
+            "group_by": 0.29411764705882354,
+            "count_agg": 0.8235294117647058,
+            "sum_agg": 0.0,
+            "avg_agg": 0.17647058823529413,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

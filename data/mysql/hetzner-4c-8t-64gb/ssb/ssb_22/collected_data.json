@@ -1,0 +1,65 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 51543.0,
+        "blks_hit": 201657219.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 79612.0,
+        "disk_write_count": 365.0,
+        "disk_read_bytes": 1304363008.0,
+        "disk_write_bytes": 5980160.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=1131904.3)(OrderingOperation(GroupingOperation(TableRange_lo(cost=495208.3); TableEq_ref_c(cost=353720.0))))",
+        "QueryBlock(cost=1131904.3)(OrderingOperation(GroupingOperation(TableRange_lo(cost=495208.3); TableEq_ref_p(cost=353720.0))))",
+        "QueryBlock(cost=198827.0)(OrderingOperation(GroupingOperation(TableAll_d(cost=233.1); TableRef_lo(cost=141834.7))))",
+        "QueryBlock(cost=198827.0)(OrderingOperation(GroupingOperation(TableAll_d(cost=233.1); TableRef_lo(cost=141834.7))))",
+        "QueryBlock(cost=1889154.9)(OrderingOperation(GroupingOperation(TableAll_s(cost=3.8); TableRef_lo(cost=1349250.9))))",
+        "QueryBlock(cost=2438553.9)(GroupingOperation(TableIndex_lo(cost=8688.0); TableEq_ref_c(cost=1349925.5)))",
+        "QueryBlock(cost=570476.3)(GroupingOperation(TableAll_d(cost=5.5); TableRef_lo(cost=2879.0)))",
+        "QueryBlock(cost=646042.7)(GroupingOperation(TableAll_p(cost=360.8); TableRef_lo(cost=51897.8)))",
+        "QueryBlock(cost=542541.6)(GroupingOperation(TableAll_s(cost=3.8); TableRef_lo(cost=2637.5)))",
+        "QueryBlock(cost=548658.2)(TableAll_lo(cost=8688.0))",
+        "QueryBlock(cost=548658.2)(TableAll_lo(cost=8688.0))",
+        "QueryBlock(cost=57280.2)(GroupingOperation(TableAll_d(cost=233.1); TableRef_lo(cost=287.9)))",
+        "QueryBlock(cost=57280.2)(GroupingOperation(TableAll_d(cost=233.1); TableRef_lo(cost=287.9)))",
+        "QueryBlock(cost=57280.2)(GroupingOperation(TableAll_d(cost=233.1); TableRef_lo(cost=287.9)))",
+        "TableAll_lo(cost=8688.0)",
+        "QueryBlock(cost=2028902.7)(GroupingOperation(TableAll_p(cost=360.8); TableRef_lo(cost=1434757.8)))",
+        "QueryBlock(cost=2438553.9)(GroupingOperation(TableAll_lo(cost=8688.0); TableEq_ref_c(cost=1349925.5)))",
+        "QueryBlock(cost=1889154.9)(GroupingOperation(TableAll_s(cost=3.8); TableRef_lo(cost=1349250.9)))",
+        "QueryBlock(cost=1985944.4)(GroupingOperation(TableAll_d(cost=5.5); TableRef_lo(cost=1418347.1)))",
+        "QueryBlock(cost=1985944.4)(GroupingOperation(TableAll_d(cost=5.5); TableRef_lo(cost=1418347.1)))",
+        "QueryBlock(cost=1985944.4)(GroupingOperation(TableAll_d(cost=5.5); TableRef_lo(cost=1418347.1)))",
+        "QueryBlock(cost=1985944.4)(GroupingOperation(TableAll_d(cost=5.5); TableRef_lo(cost=1418347.1)))"
+    ],
+    "workload_features": {
+        "total_statements": 22,
+        "table_access_frequency": {
+            "lineorder": 22,
+            "customer": 3,
+            "part": 3,
+            "date_dim": 10,
+            "supplier": 3
+        },
+        "read_count": 22,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 0.4091,
+        "operator_proportions": {
+            "order_by": 0.22727272727272727,
+            "group_by": 0.9545454545454546,
+            "count_agg": 0.4090909090909091,
+            "sum_agg": 0.22727272727272727,
+            "avg_agg": 0.36363636363636365,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

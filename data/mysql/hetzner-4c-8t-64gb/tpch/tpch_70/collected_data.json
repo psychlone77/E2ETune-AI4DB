@@ -1,0 +1,71 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 37072.0,
+        "blks_hit": 52655242.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 163603.0,
+        "disk_write_count": 257.0,
+        "disk_read_bytes": 2680471552.0,
+        "disk_write_bytes": 4210688.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=369955.2)(GroupingOperation(TableAll_r(cost=0.2); TableAll_c(cost=905.7); TableEq_ref_n(cost=73809.8)))",
+        "QueryBlock(cost=30429.2)(TableAll_c(cost=905.2))",
+        "QueryBlock(cost=40603.8)(TableAll_p(cost=1017.5))",
+        "QueryBlock(cost=699549.4)(OrderingOperation(GroupingOperation(TableAll_ps(cost=4335.0); TableEq_ref_s(cost=386230.2))))",
+        "QueryBlock(cost=267333.0)(TableAll_o(cost=238254.2))",
+        "QueryBlock(cost=2086403.4)(OrderingOperation(GroupingOperation(TableAll_l(cost=1056995.6); TableEq_ref_o(cost=321689.9); TableEq_ref_c(cost=321689.9))))",
+        "QueryBlock(cost=40603.8)(TableAll_p(cost=1017.5))",
+        "QueryBlock(cost=2987135.2)(GroupingOperation(TableAll_l(cost=1056995.6); TableEq_ref_o(cost=321689.9); TableEq_ref_c(cost=321689.9); TableEq_ref_n(cost=321689.9); TableEq_ref_r(cost=321689.9)))",
+        "QueryBlock(cost=5239370.2)(OrderingOperation(GroupingOperation(TableAll_l(cost=27472.0); TableEq_ref_s(cost=2895499.0))))",
+        "QueryBlock(cost=5239370.2)(GroupingOperation(TableAll_l(cost=27472.0); TableEq_ref_p(cost=2895499.0)))",
+        "QueryBlock(cost=3800762.2)(GroupingOperation(TableAll_o(cost=5597.5); TableEq_ref_c(cost=654338.8)))",
+        "QueryBlock(cost=24807.0)(GroupingOperation(TableAll_r(cost=0.2); TableAll_s(cost=56.3); TableEq_ref_n(cost=4950.0)))",
+        "QueryBlock(cost=40603.8)(TableAll_p(cost=36205.8))",
+        "QueryBlock(cost=267333.0)(TableAll_o(cost=238254.2))",
+        "QueryBlock(cost=2086403.4)(GroupingOperation(TableAll_l(cost=1056995.6); TableEq_ref_o(cost=321689.9); TableEq_ref_c(cost=321689.9)))",
+        "QueryBlock(cost=8966.2)(GroupingOperation(TableAll_s(cost=56.2); TableEq_ref_n(cost=4950.0)))",
+        "QueryBlock(cost=40603.8)(TableAll_p(cost=1017.5))",
+        "QueryBlock(cost=1957087.7)(GroupingOperation(TableIndex_p(cost=1017.5); TableRef_ps(cost=99577.3); TableEq_ref_s(cost=394979.7); TableEq_ref_n(cost=394979.7); TableEq_ref_r(cost=394979.7)))",
+        "QueryBlock(cost=369108.8)(OrderingOperation(GroupingOperation(TableAll_o(cost=238254.2); TableEq_ref_c(cost=72697.0))))",
+        "QueryBlock(cost=699549.4)(OrderingOperation(GroupingOperation(TableAll_ps(cost=4335.0); TableEq_ref_s(cost=386230.2))))",
+        "QueryBlock(cost=297959.5)(GroupingOperation(TableAll_p(cost=1017.5); TableRef_ps(cost=99363.8)))",
+        "QueryBlock(cost=133762.8)(GroupingOperation(TableAll_c(cost=905.2); TableEq_ref_n(cost=73809.8)))",
+        "QueryBlock(cost=2987135.2)(GroupingOperation(TableAll_l(cost=1056995.6); TableEq_ref_o(cost=321689.9); TableEq_ref_c(cost=321689.9); TableEq_ref_n(cost=321689.9); TableEq_ref_r(cost=321689.9)))",
+        "QueryBlock(cost=40603.8)(TableAll_p(cost=36205.8))",
+        "QueryBlock(cost=13743560.4)(GroupingOperation(TableAll_o(cost=5597.5); TableEq_ref_c(cost=654338.8); TableRef_l(cost=660661.0)))"
+    ],
+    "workload_features": {
+        "total_statements": 25,
+        "table_access_frequency": {
+            "region": 5,
+            "nation": 7,
+            "customer": 10,
+            "part": 8,
+            "supplier": 6,
+            "partsupp": 4,
+            "orders": 9,
+            "lineitem": 7
+        },
+        "read_count": 25,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 0.48,
+        "operator_proportions": {
+            "order_by": 0.2,
+            "group_by": 1.0,
+            "count_agg": 0.48,
+            "sum_agg": 0.32,
+            "avg_agg": 0.2,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

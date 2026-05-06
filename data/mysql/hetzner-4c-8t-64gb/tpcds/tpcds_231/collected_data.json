@@ -1,0 +1,53 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 13325.0,
+        "blks_hit": 5902600.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 68289.0,
+        "disk_write_count": 251.0,
+        "disk_read_bytes": 1118846976.0,
+        "disk_write_bytes": 4112384.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=5100.9)(TableAll_customer_address(cost=3616.3))",
+        "QueryBlock(cost=324.1)(GroupingOperation(TableRange_store_sales(cost=60.0); TableEq_ref_store(cost=146.8)))",
+        "QueryBlock(cost=30301.8)(GroupingOperation(TableAll_store_returns(cost=28714.5); TableEq_ref_customer_address(cost=881.9)))",
+        "QueryBlock(cost=5148306.4)(OrderingOperation(GroupingOperation(TableAll_inventory(cost=6897.5); TableEq_ref_item(cost=2856338.2))))",
+        "QueryBlock(cost=196713.2)(GroupingOperation(TableAll_warehouse(cost=0.2); TableAll_catalog_sales(cost=122442.6)))",
+        "QueryBlock(cost=1196938.1)(OrderingOperation(GroupingOperation(TableAll_store_sales(cost=177941.3); TableEq_ref_date_dim(cost=846104.3))))"
+    ],
+    "workload_features": {
+        "total_statements": 6,
+        "table_access_frequency": {
+            "customer_address": 2,
+            "store_sales": 2,
+            "store": 1,
+            "store_returns": 1,
+            "inventory": 1,
+            "item": 1,
+            "catalog_sales": 1,
+            "warehouse": 1,
+            "date_dim": 1
+        },
+        "read_count": 6,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.6667,
+        "operator_proportions": {
+            "order_by": 0.3333333333333333,
+            "group_by": 1.0,
+            "count_agg": 0.5,
+            "sum_agg": 0.3333333333333333,
+            "avg_agg": 0.16666666666666666,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

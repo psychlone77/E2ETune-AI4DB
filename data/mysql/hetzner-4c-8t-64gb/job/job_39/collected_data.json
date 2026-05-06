@@ -1,0 +1,65 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 111237.0,
+        "blks_hit": 66649911.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 295161.0,
+        "disk_write_count": 278.0,
+        "disk_read_bytes": 4835917824.0,
+        "disk_write_bytes": 4554752.0
+    },
+    "query_plans": [
+        "TableAll_movie_keyword(cost=318358.1)",
+        "QueryBlock(cost=724762.0)(GroupingOperation(TableRange_keyword(cost=3.3); TableAll_movie_keyword(cost=318375.4)))",
+        "QueryBlock(cost=928048.1)(GroupingOperation(TableAll_movie_keyword(cost=318358.1); TableEq_ref_title(cost=338768.0)))",
+        "QueryBlock(cost=63012297146.8)(TableRange_keyword(cost=3.3); TableAll_movie_keyword(cost=318375.4); TableAll_movie_info(cost=11821266.2); TableEq_ref_title(cost=33876.8))",
+        "QueryBlock(cost=1106415.5)(TableAll_title(cost=4414.3); TableEq_ref_<subquery2>(cost=0.0))",
+        "QueryBlock(cost=190913591380.0)(TableAll_<subquery2>(cost=0.0); TableAll_movie_info(cost=4635675.0))",
+        "QueryBlock(cost=2866929678488.8)(GroupingOperation(TableRange_keyword(cost=3.3); TableAll_movie_keyword(cost=318375.4); TableAll_cast_info(cost=274014.7)))",
+        "QueryBlock(cost=5256038870012.5)(GroupingOperation(TableAll_movie_keyword(cost=318358.1); TableAll_cast_info(cost=107454.1); TableEq_ref_name(cost=2506295.1)))",
+        "QueryBlock(cost=3972372.7)(GroupingOperation(TableAll_movie_companies(cost=2362.2); TableEq_ref_<subquery2>(cost=0.0); TableEq_ref_title(cost=33876.8)))",
+        "QueryBlock(cost=383619717076.1)(GroupingOperation(TableAll_movie_keyword(cost=318358.1); TableAll_movie_companies(cost=8465.6); TableEq_ref_company_name(cost=218702.9)))",
+        "QueryBlock(cost=2406268308.0)(GroupingOperation(TableRange_keyword(cost=3.3); TableAll_movie_keyword(cost=318375.4); TableAll_movie_link(cost=221.6)))",
+        "QueryBlock(cost=605586.2)(GroupingOperation(TableAll_movie_link(cost=24.2); TableEq_ref_<subquery2>(cost=0.0); TableEq_ref_title(cost=7401.8)))",
+        "QueryBlock(cost=114557487166.2)(GroupingOperation(TableRange_keyword(cost=3.3); TableAll_movie_keyword(cost=318375.4); TableAll_movie_info(cost=11821266.2)))",
+        "QueryBlock(cost=190913640718.3)(GroupingOperation(TableAll_<subquery2>(cost=0.0); TableAll_movie_info(cost=4635675.0); TableEq_ref_title(cost=35245.1)))",
+        "QueryBlock(cost=494351229700760000.0)(GroupingOperation(TableRange_keyword(cost=3.3); TableAll_movie_keyword(cost=318375.4); TableAll_person_info(cost=2648739.7); TableAll_cast_info(cost=218591009064.5)))",
+        "QueryBlock(cost=7167322868028.7)(GroupingOperation(TableAll_person_info(cost=289837.8); TableEq_ref_<subquery2>(cost=0.0); TableEq_ref_name(cost=222759.7)))",
+        "QueryBlock(cost=40547549997523999391744.0)(GroupingOperation(TableAll_movie_link(cost=24.2); TableEq_ref_title(cost=7401.8); TableEq_ref_<subquery2>(cost=0.0); TableAll_movie_info(cost=39203727309215.9); TableAll_movie_companies(cost=10089831644854000.0); TableAll_cast_info(cost=32971664509213001908224.0)))"
+    ],
+    "workload_features": {
+        "total_statements": 17,
+        "table_access_frequency": {
+            "movie_keyword": 17,
+            "keyword": 6,
+            "title": 7,
+            "movie_info": 5,
+            "cast_info": 5,
+            "name": 2,
+            "movie_companies": 3,
+            "company_name": 1,
+            "movie_link": 3,
+            "person_info": 2
+        },
+        "read_count": 17,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.8824,
+        "operator_proportions": {
+            "order_by": 0.0,
+            "group_by": 0.7647058823529411,
+            "count_agg": 0.8823529411764706,
+            "sum_agg": 0.0,
+            "avg_agg": 0.058823529411764705,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

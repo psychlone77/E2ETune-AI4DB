@@ -1,0 +1,60 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 160974.0,
+        "blks_hit": 35327880.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 318894.0,
+        "disk_write_count": 2565.0,
+        "disk_read_bytes": 5224759296.0,
+        "disk_write_bytes": 42024960.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=10612107.5)(GroupingOperation(TableRange_role_type(cost=1.1); TableAll_cast_info(cost=29986.8)))",
+        "QueryBlock(cost=1.4)(TableRange_aka_name(cost=1.1))",
+        "QueryBlock(cost=87845.1)(TableAll_aka_name(cost=61964.9))",
+        "QueryBlock(cost=87845.1)(TableAll_aka_name(cost=61964.9))",
+        "QueryBlock(cost=260774.4)(OrderingOperation(TableAll_title(cost=235138.4)))",
+        "QueryBlock(cost=1434471.9)(TableAll_movie_info(cost=25149.2))",
+        "QueryBlock(cost=24190.9)(OrderingOperation(TableAll_company_name(cost=601.0)))",
+        "QueryBlock(cost=2034197.2)(OrderingOperation(GroupingOperation(TableAll_movie_keyword(cost=2282.5); TableEq_ref_keyword(cost=1128841.5))))",
+        "QueryBlock(cost=402241.9)(TableAll_name(cost=323053.9))",
+        "QueryBlock(cost=259812.5)(TableAll_movie_companies(cost=2362.2))",
+        "QueryBlock(cost=321189.1)(TableAll_person_info(cost=7675.9))"
+    ],
+    "workload_features": {
+        "total_statements": 11,
+        "table_access_frequency": {
+            "cast_info": 1,
+            "role_type": 1,
+            "aka_name": 3,
+            "title": 1,
+            "movie_info": 1,
+            "company_name": 1,
+            "keyword": 1,
+            "movie_keyword": 1,
+            "name": 1,
+            "movie_companies": 1,
+            "person_info": 1
+        },
+        "read_count": 11,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 0.5455,
+        "operator_proportions": {
+            "order_by": 0.2727272727272727,
+            "group_by": 1.0,
+            "count_agg": 0.9090909090909091,
+            "sum_agg": 0.0,
+            "avg_agg": 0.09090909090909091,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

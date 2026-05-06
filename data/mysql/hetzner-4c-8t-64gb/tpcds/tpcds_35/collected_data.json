@@ -1,0 +1,67 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 21809.0,
+        "blks_hit": 6206013.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 72627.0,
+        "disk_write_count": 261.0,
+        "disk_read_bytes": 1189920768.0,
+        "disk_write_bytes": 4276224.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=719.6)(TableIndex_household_demographics(cost=648.3))",
+        "QueryBlock(cost=2.2)(TableIndex_income_band(cost=0.2))",
+        "QueryBlock(cost=46.2)(TableRange_catalog_sales(cost=23.6))",
+        "QueryBlock(cost=5719575.2)(GroupingOperation(TableAll_warehouse(cost=0.2); TableAll_inventory(cost=6898.0)))",
+        "QueryBlock(cost=1.4)(TableAll_store(cost=0.2))",
+        "QueryBlock(cost=3062319.1)(GroupingOperation(TableAll_store_sales(cost=5022.8); TableEq_ref_date_dim(cost=2538566.8)))",
+        "QueryBlock(cost=1903.0)(TableAll_item(cost=168.2))",
+        "QueryBlock(cost=10213.1)(TableAll_customer(cost=360.8))",
+        "QueryBlock(cost=605239.5)(GroupingOperation(TableAll_catalog_sales(cost=3533.2); TableEq_ref_promotion(cost=334281.2)))",
+        "QueryBlock(cost=6.2)(TableAll_web_page(cost=0.2))",
+        "QueryBlock(cost=86081.0)(GroupingOperation(TableAll_call_center(cost=0.2); TableAll_catalog_returns(cost=313.1)))",
+        "QueryBlock(cost=129090.9)(GroupingOperation(TableAll_store_returns(cost=489.0); TableEq_ref_reason(cost=71445.5)))",
+        "QueryBlock(cost=516.0)(GroupingOperation(TableRange_catalog_sales(cost=23.6); TableEq_ref_date_dim(cost=221.2)))"
+    ],
+    "workload_features": {
+        "total_statements": 13,
+        "table_access_frequency": {
+            "household_demographics": 1,
+            "income_band": 1,
+            "catalog_sales": 3,
+            "inventory": 1,
+            "warehouse": 1,
+            "store": 1,
+            "store_sales": 1,
+            "date_dim": 2,
+            "item": 1,
+            "customer": 1,
+            "promotion": 1,
+            "web_page": 1,
+            "call_center": 1,
+            "catalog_returns": 1,
+            "reason": 1,
+            "store_returns": 1
+        },
+        "read_count": 13,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 0.8462,
+        "operator_proportions": {
+            "order_by": 0.0,
+            "group_by": 1.0,
+            "count_agg": 0.5384615384615384,
+            "sum_agg": 0.3076923076923077,
+            "avg_agg": 0.15384615384615385,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}
