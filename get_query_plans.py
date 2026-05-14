@@ -218,6 +218,10 @@ def configure_postgres_logging(db: Database) -> bool:
     """
     conn = db.get_conn()
     old_autocommit = conn.autocommit
+    try:
+        conn.commit()
+    except Exception:
+        pass
     conn.autocommit = True  # ALTER SYSTEM cannot run in a transaction block
     cursor = conn.cursor()
 
@@ -250,6 +254,10 @@ def disable_postgres_logging(db: Database) -> bool:
     """
     conn = db.get_conn()
     old_autocommit = conn.autocommit
+    try:
+        conn.commit()
+    except Exception:
+        pass
     conn.autocommit = True  # ALTER SYSTEM cannot run in a transaction block
     cursor = conn.cursor()
 

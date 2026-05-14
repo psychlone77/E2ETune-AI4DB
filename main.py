@@ -66,8 +66,8 @@ if __name__ == "__main__":
     )
     parser.add_argument(
         "--servername",
-        default="hetzner-4c-8t-64gb",
-        help="Server specifications for tuning (default: hetzner-4c-8t-64gb)",
+        default="hetzner-4c-8t-32gb",
+        help="Server specifications for tuning (default: hetzner-4c-8t-32gb)",
     )
     cli_args = parser.parse_args()
 
@@ -278,10 +278,10 @@ if __name__ == "__main__":
 
         for idx, workload in enumerate(phase2_workloads):
             workload_id = os.path.splitext(workload)[0]
-            if workload_id in completed or workload in completed:
-                skipped += 1
-                logger.info(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Skipping completed: {workload}")
-                continue
+            # if workload_id in completed or workload in completed:
+            #     skipped += 1
+            #     logger.info(f"[Phase-2 {idx + 1}/{len(phase2_workloads)}] Skipping completed: {workload}")
+            #     continue
 
             workload_path = Path(workload_base_path) / workload
             output_dir = (
@@ -298,7 +298,20 @@ if __name__ == "__main__":
 
             # --- Start: Ported Default Data Collection from Phase 1 ---
             collected_data_file = output_dir / "collected_data.json"
-            skip_collection = False
+            best_config_file = output_dir / "best_config.json"
+
+            if best_config_file.exists():
+                ## if the best config file configuration contains autovacuum_analyze_scale_factor skip
+                try:
+                    with open(best_config_file, "r") as f:
+                        best_config = json.load(f)
+                    if "autovacuum_analyze_scale_factor" in best_config.get("configuration", {}):
+                        continue
+                except Exception as e:
+                    logger.warning(f"Error reading {best_config_file}: {e}")
+
+
+            skip_collection = True
             if collected_data_file.exists():
                 try:
                     with open(collected_data_file, "r") as f:
@@ -331,7 +344,7 @@ if __name__ == "__main__":
                 executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
                 future = executor.submit(ddc.collect)
                 try:
-                    future.result(timeout=1800)  # 30 minutes
+                    future.result(timeout=600)  # 30 minutes
                     executor.shutdown(wait=False)
                 except concurrent.futures.TimeoutError:
                     executor.shutdown(wait=False)
@@ -371,14 +384,6 @@ if __name__ == "__main__":
             else:
                 logger.warning(f"No collected_data.json found for {workload_id}. Surrogate model will use zeroed context features.")
             # --- End: Ported Default Data Collection ---
-
-            # Deprecated standalone feature extraction
-            # process_olap_workload_features(
-            #     workload_file=str(workload_path),
-            #     benchmark_name=benchmark_config.name,
-            #     output_dir=wk_feature_dir,
-            #     workload_name=workload_id,
-            # )
 
             try:
                 logger.info("-" * 80)
