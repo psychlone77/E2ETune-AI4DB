@@ -206,74 +206,68 @@ class PostgresSQLDatabase(Database):
         self.logger.info("Internal metrics have been reset.")
 
     def reset_knobs(self):
-        with self.connection.cursor() as cursor:
-            try:
+        old_autocommit = self.connection.autocommit
+        try:
+            self.connection.commit()
+            self.connection.autocommit = True
+            with self.connection.cursor() as cursor:
                 cursor.execute("ALTER SYSTEM RESET ALL;")
                 cursor.execute("SELECT pg_reload_conf();")
-                self.connection.commit()
-            except Exception as e:
-                self.logger.error(f"Error resetting database knobs: {e}")
-            finally:
-                cursor.close()
+        except Exception as e:
+            self.logger.error(f"Error resetting database knobs: {e}")
+        finally:
+            self.connection.autocommit = old_autocommit
         self.logger.info("Database knobs have been reset.")
 
     def restart_db(self, stop_timeout: int = 30, start_timeout: int = 30) -> bool:
         try:
-            pg_ver = str(self.db_config.pg_version)
-            cluster = self.db_config.cluster_name
-            base_cmd = ["sudo", "pg_ctlcluster", pg_ver, cluster]
-            data_dir = self.db_config.data_path
-            auto_conf_path = f"{data_dir}/postgresql.auto.conf"
+            is_remote = self.db_config.host not in ["localhost", "127.0.0.1"]
+            
+            if is_remote and self.db_config.ssh_user:
+                ssh_base = ["ssh"]
+                if self.db_config.ssh_password:
+                    ssh_base = ["sshpass", "-p", self.db_config.ssh_password, "ssh"]
+                if self.db_config.ssh_key_path:
+                    ssh_base.extend(["-i", self.db_config.ssh_key_path])
+                ssh_base.extend([
+                    "-o", "StrictHostKeyChecking=no",
+                    "-o", "UserKnownHostsFile=/dev/null",
+                    f"{self.db_config.ssh_user}@{self.db_config.host}"
+                ])
+                restart_cmd = ssh_base + ["sudo", "systemctl", "restart", "postgresql"]
+            else:
+                restart_cmd = ["sudo", "systemctl", "restart", "postgresql"]
 
-            print(f"Stopping PostgreSQL {pg_ver}/{cluster}...")
-            subprocess.run(base_cmd + ["stop"], check=True, timeout=stop_timeout)
-            time.sleep(2)
-
-            print(f"Starting PostgreSQL {pg_ver}/{cluster}...")
+            print("Restarting PostgreSQL...")
             result = subprocess.run(
-                base_cmd + ["start"],
+                restart_cmd,
                 capture_output=True,
                 text=True,
                 timeout=start_timeout,
             )
 
             if result.returncode != 0:
-                print(f"Start failed: {result.stderr}")
-                print(f"Removing auto.conf and retrying...")
+                print(f"Restart failed: {result.stderr}")
+                return False
 
-                # Remove the auto.conf file that contains the problematic settings
-                try:
-                    subprocess.run(
-                        ["sudo", "rm", "-f", auto_conf_path], check=True, timeout=5
-                    )
-                    print(f"Removed {auto_conf_path}")
-                except Exception as e:
-                    print(f"Failed to remove auto.conf: {e}")
-
-                time.sleep(1)
-                result = subprocess.run(
-                    base_cmd + ["start"],
-                    capture_output=True,
-                    text=True,
-                    timeout=start_timeout,
-                )
-
-                if result.returncode != 0:
-                    print(f"Second start attempt also failed: {result.stderr}")
-                    return False
-
+            time.sleep(2)
             self.connect()
             return True
         except Exception as e:
             print(f"Failed to restart PostgreSQL: {e}")
             return False
 
-    def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: Optional[int] = 1) -> tuple[float, float]:
+    def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: Optional[int] = 1, default_run: Optional[bool] = False) -> tuple[float, float]:
+        
         num_queries = 0
         with open(workload_task.workload_path, "r") as f:
             sql_script = f.read()
             num_queries = sql_script.count(";")
-        self.set_knobs(workload_task.knob_config)
+        if default_run:
+            self.reset_knobs()
+            self.restart_db()
+        else:
+            self.set_knobs(workload_task.knob_config)
         self.logger.info(f"Executing workload {workload_task.workload_path}...")
         with self.connection.cursor() as cursor:
             try:
@@ -309,6 +303,9 @@ class PostgresSQLDatabase(Database):
 
         with self.connection.cursor() as cursor:
             for i, query in enumerate(workload_queries):
+                # Skip queries that are just comments or empty
+                if not any(not line.strip().startswith('--') for line in query.split('\n') if line.strip()):
+                    continue
                 try:
                     self.logger.info(
                         f"Explaining query {i + 1}/{len(workload_queries)}"
@@ -321,6 +318,7 @@ class PostgresSQLDatabase(Database):
                     formatted_plan = self._format_query_plan(plan_json)
                     plans.append(formatted_plan)
                 except Exception as e:
+                    self.connection.rollback()
                     self.logger.error(f"Error explaining query {i + 1}: {e}")
                     self.logger.debug(f"Query (truncated): {query[:100]}...")
 

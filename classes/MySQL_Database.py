@@ -199,9 +199,25 @@ class MySQLDatabase(Database):
         try:
             self.logger.info("Restarting MySQL service...")
             
+            is_remote = self.db_config.host not in ["localhost", "127.0.0.1"]
+            if is_remote and self.db_config.ssh_user:
+                ssh_base = ["ssh"]
+                if self.db_config.ssh_password:
+                    ssh_base = ["sshpass", "-p", self.db_config.ssh_password, "ssh"]
+                if self.db_config.ssh_key_path:
+                    ssh_base.extend(["-i", self.db_config.ssh_key_path])
+                ssh_base.extend([
+                    "-o", "StrictHostKeyChecking=no",
+                    "-o", "UserKnownHostsFile=/dev/null",
+                    f"{self.db_config.ssh_user}@{self.db_config.host}"
+                ])
+                cmd = ssh_base + ["sudo", "systemctl", "restart", "mysql"]
+            else:
+                cmd = ["sudo", "systemctl", "restart", "mysql"]
+
             # 1. Trigger the restart
             subprocess.run(
-                ["sudo", "systemctl", "restart", "mysql"], 
+                cmd, 
                 check=True, 
                 timeout=stop_timeout + start_timeout
             )
@@ -242,7 +258,7 @@ class MySQLDatabase(Database):
             self.logger.error(f"Failed to restart MySQL: {e}")
             return False
 
-    def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: Optional[int] = 1) -> tuple[float, float]:
+    def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: Optional[int] = 1, default_run: Optional[bool] = False) -> tuple[float, float]:
             if not self.connection or not self.connection.is_connected():
                 self.connect()
 
@@ -274,7 +290,13 @@ class MySQLDatabase(Database):
                 # If transpilation fails, we cannot run the workload
                 return float("inf"), 0.0
             
-            self.set_knobs(workload_task.knob_config)
+            if default_run:
+                self.logger.info("Resetting knobs to default for default run...")
+                self.reset_knobs()
+                self.restart_db()
+                self.logger.info("Default knobs reset and MySQL restarted for default run.")
+            else:
+                self.set_knobs(workload_task.knob_config)
             self.logger.info(f"Executing transpiled workload {workload_task.workload_path} ({num_queries} queries)...")
             
             # 3. Execute the MySQL script

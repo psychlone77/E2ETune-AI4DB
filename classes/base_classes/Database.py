@@ -36,7 +36,7 @@ class Database(WorkloadRunner):
         pass
 
     @abstractmethod
-    def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: Optional[int] = 1) -> tuple[float, float]:
+    def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: Optional[int] = 1, default_run: Optional[bool] = False) -> tuple[float, float]:
         pass
 
     @abstractmethod

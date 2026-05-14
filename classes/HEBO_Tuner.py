@@ -172,9 +172,9 @@ class HEBOTuner(Tuner):
 
         try:
             for iteration in range(self.tuning_config.iterations):
-                self.logger.info(
-                    f"[HEBO Iteration {iteration + 1}/{self.tuning_config.iterations}]"
-                )
+                # self.logger.info(
+                #     f"[HEBO Iteration {iteration + 1}/{self.tuning_config.iterations}]"
+                # )
 
                 suggestion = hebo.suggest(n_suggestions=1)
                 raw_suggestion_dict = suggestion.iloc[0].to_dict()
@@ -193,7 +193,7 @@ class HEBOTuner(Tuner):
                 ]
                 if math.isinf(cur_objective):
                     cur_objective = abs(default_performance) * 10.0 if default_performance != 0 else 10000.0
-                self.logger.info(f"Performance: {cur_objective:.6f}")
+                # self.logger.info(f"Performance: {cur_objective:.6f}")
 
 
                 scaled_dict = {}
@@ -231,7 +231,7 @@ class HEBOTuner(Tuner):
                     best_config = self.workload_task.knob_config
                     best_objective = cur_objective
 
-                self.logger.info("-" * 80)
+                # self.logger.info("-" * 80)
 
         except Exception as e:
             self.logger.error(f"[HEBO] Error during optimization: {e}", exc_info=True)

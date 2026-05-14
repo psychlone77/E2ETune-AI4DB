@@ -26,10 +26,14 @@ class DatabaseConfig:
     data_path: str
     pg_version: int
     cluster_name: str
+    ssh_user: str = None
+    ssh_password: str = None
+    ssh_key_path: str = None
 
     @classmethod
     def from_dict(cls, config: Dict[str, Any]) -> "DatabaseConfig":
         """Create a DatabaseConfig instance from dictionary."""
+        ssh_config = config.get("ssh", {})
         return cls(
             host=config["host"],
             port=int(config["port"]),
@@ -39,6 +43,9 @@ class DatabaseConfig:
             data_path=config["data_path"],
             pg_version=int(config["pg_version"]),
             cluster_name=config["cluster_name"],
+            ssh_user=ssh_config.get("user"),
+            ssh_password=ssh_config.get("password"),
+            ssh_key_path=ssh_config.get("key_path"),
         )
 
 
