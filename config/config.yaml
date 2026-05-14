@@ -1,12 +1,31 @@
+# database:
+#   host: localhost
+#   port: 5432
+#   user: root
+#   password: databasefyp
+#   name: imdb
+#   data_path: /var/lib/postgresql/12/main
+#   pg_version: 12
+#   cluster_name: main
+#   ssh:
+#     user: root
+#     # password: mysshpassword
+#     key_path: /home/E2ETune-AI4DB/config/key.pem
+
+# Mysql database configuration
 database:
   host: localhost
-  port: 5432
+  port: 3306
   user: root
   password: databasefyp
-  name: benchbase
+  name: ssb
   data_path: /var/lib/postgresql/12/main
   pg_version: 12
   cluster_name: main
+  ssh:
+    user: root
+    # password: mysshpassword
+    key_path: /home/E2ETune-AI4DB/config/key.pem
 
 # Mysql database configuration
 # database:
@@ -22,9 +41,8 @@ database:
 tuning:
   method: HEBO
   iterations: 100
-  sample_num: 44
-  config: knob_config/mysql_knob_config_op.json
-  force_surrogate: true
+  sample_num: 30
+  config: knob_config/knob_config.json
   
 benchmark:
   type: oltp
@@ -35,4 +53,4 @@ benchmark:
   benchbase_jar: /home/benchbase/target/benchbase-postgres/benchbase.jar
 
 surrogate:
-  model_path: /home/E2ETune-AI4DB/surrogate/model_engine=postgresql_ram=32_fixed.joblib
+  model_path: /home/E2ETune-AI4DB/surrogate/cost_model.pkl

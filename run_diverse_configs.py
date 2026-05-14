@@ -33,7 +33,7 @@ def main():
     )
     parser.add_argument(
         "--servername",
-        default="hetzner-4c-8t-32gb",
+        default="hetzner-4c-8t-64gb",
         help="Server specifications for tuning (default: hetzner-4c-8t-64gb)",
     )
     parser.add_argument(
