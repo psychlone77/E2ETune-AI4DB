@@ -1,0 +1,60 @@
+{
+    "internal_metrics": {
+        "xact_commit": 73.0,
+        "xact_rollback": 549227.0,
+        "blks_read": 350.0,
+        "blks_hit": 8861.0,
+        "tup_returned": 11757.0,
+        "tup_fetched": 4717.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 154780.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 1267957760.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)",
+        "(Sort Sort Key: pkn.nspname, pkc.relname, con.conname, pos.n ->  Nested Loop Join Filter: (fkc.relnamespace = fkn.oid) ->  Nested Loop ->  Nested Loop ->  Nested Loop Join Filter: (con.confkey[pos.n] = pka.attnum) ->  Function Scan on generate_series pos ->  Materialize ->  Nested Loop ->  Nested Loop ->  Nested Loop ->  Nested Loop ->  Seq Scan on pg_constraint con Filter: (contype = 'f'::\"char\") ->  Index Scan using pg_class_oid_index on pg_class pkc Index Cond: (oid = con.confrelid) ->  Index Scan using pg_namespace_oid_index on pg_namespace pkn Index Cond: (oid = pkc.relnamespace) ->  Index Scan using pg_class_oid_index on pg_class pkic Index Cond: (oid = con.conindid) Filter: ((relkind = 'i'::\"char\") OR (relkind = 'I'::\"char\")) ->  Index Scan using pg_attribute_relid_attnum_index on pg_attribute pka Index Cond: (attrelid = pkc.oid) ->  Index Scan using pg_attribute_relid_attnum_index on pg_attribute fka Index Cond: ((attrelid = con.conrelid) AND (attnum = (con.conkey)[pos.n])) ->  Index Scan using pg_class_oid_index on pg_class fkc Index Cond: (oid = fka.attrelid) Filter: (relname = 'customer'::name) ->  Seq Scan on pg_namespace fkn Filter: (nspname = 'public'::name))"
+    ],
+    "workload_features": {
+        "total_statements": 627.0,
+        "table_access_frequency": {
+            "warehouse": 72.0,
+            "district": 87.0,
+            "customer": 85.0,
+            "item": 59.0,
+            "stock": 74.0,
+            "order_line": 87.0,
+            "oorder": 72.0,
+            "new_order": 62.0,
+            "history": 13.0
+        },
+        "read_count": 25.0,
+        "write_count": 75.0,
+        "read_write_ratio": 0.3333333333333333,
+        "avg_predicates_per_query": 3.46,
+        "operator_proportions": {
+            "DELETE": 0.004784688995215311,
+            "INSERT": 0.30303030303030304,
+            "SELECT": 0.4529505582137161,
+            "UPDATE": 0.23923444976076555
+        }
+    }
+}

@@ -1,0 +1,52 @@
+{
+    "internal_metrics": {
+        "xact_commit": 89.0,
+        "xact_rollback": 0.0,
+        "blks_read": 355293.0,
+        "blks_hit": 4136.0,
+        "tup_returned": 47765250.0,
+        "tup_fetched": 188782.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 356597.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 2921242624.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=51374.5)(Aggregate(cost=51374.4)(Sort(cost=51374.4)(Gather(cost=51374.4)(Hash Join(cost=50374.3)(Seq Scan(cost=50372.3); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))",
+        "Sort(cost=42655.8)(Aggregate(cost=42655.8)(Gather Merge(cost=42655.7)(Sort(cost=41655.0)(Aggregate(cost=41655.0)(Hash Join(cost=35539.8)(Seq Scan(cost=29661.4); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))",
+        "Sort(cost=1712563.8)(Aggregate(cost=1646703.8)(Gather Merge(cost=1593922.3)(Aggregate(cost=1218011.8)(Sort(cost=1173947.3)(Hash Join(cost=607704.7)(Hash Join(cost=453833.4)(Seq Scan(cost=401121.0); Hash(cost=1.2)(Seq Scan(cost=1.2))); Hash(cost=73047.5)(Seq Scan(cost=73047.5))))))))",
+        "Sort(cost=9005.1)(Aggregate(cost=8911.7)(Merge Join(cost=8786.7)(Index Scan(cost=101837.0); Sort(cost=881.2)(Hash Join(cost=561.5)(Seq Scan(cost=463.0); Hash(cost=1.2)(Seq Scan(cost=1.2)))))))"
+    ],
+    "workload_features": {
+        "total_statements": 4,
+        "table_access_frequency": {
+            "kind_type": 1,
+            "movie_keyword": 1,
+            "company_type": 1,
+            "movie_companies": 1,
+            "name": 1,
+            "cast_info": 1,
+            "role_type": 1,
+            "title": 1,
+            "movie_link": 1,
+            "link_type": 1
+        },
+        "read_count": 4,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 2.5,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 1.0,
+            "sum_agg": 0.5,
+            "avg_agg": 0.5,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

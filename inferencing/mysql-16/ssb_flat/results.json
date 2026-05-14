@@ -1,0 +1,55 @@
+{
+    "workload": "mysql/ssb_flat/ssb_flat.sql",
+    "default_performance": {
+        "latency_s": 6.700025831277554,
+        "throughput_ops_per_s": 0.14925315591049312
+    },
+    "best_performance": {
+        "config_index": 1,
+        "latency_s": 5.0898010822442865,
+        "latency_improvement_percent": 24.033112551839686,
+        "throughput_ops_per_s": 0.19647133234508687,
+        "throughput_improvement_percent": 31.636300181759918,
+        "actual_config": {
+            "innodb_log_buffer_size": 131281715,
+            "innodb_buffer_pool_size": 15387391427,
+            "innodb_redo_log_capacity": 3891132252,
+            "binlog_group_commit_sync_delay": 45500,
+            "binlog_group_commit_sync_no_delay_count": 455,
+            "innodb_lock_wait_timeout": 146,
+            "innodb_stats_persistent_sample_pages": 475,
+            "innodb_read_io_threads": 5,
+            "innodb_write_io_threads": 5,
+            "optimizer_search_depth": 28,
+            "innodb_sort_buffer_size": 31583109,
+            "myisam_sort_buffer_size": 252664873,
+            "sort_buffer_size": 30796677,
+            "join_buffer_size": 30796677,
+            "tmp_table_size": 253419848,
+            "max_heap_table_size": 253419848,
+            "temptable_max_ram": 5470714593,
+            "temptable_max_mmap": 4885525299,
+            "innodb_page_cleaners": 5,
+            "innodb_lru_scan_depth": 5171,
+            "innodb_max_dirty_pages_pct": 46,
+            "innodb_io_capacity": 2930,
+            "innodb_io_capacity_max": 6550,
+            "innodb_flush_log_at_timeout": 28,
+            "innodb_purge_threads": 5,
+            "innodb_purge_batch_size": 555,
+            "innodb_flush_neighbors": 1
+        }
+    },
+    "all_configs_performance": [
+        {
+            "config_index": 0,
+            "latency_s": Infinity,
+            "throughput_ops_per_s": 0.0
+        },
+        {
+            "config_index": 1,
+            "latency_s": 5.0898010822442865,
+            "throughput_ops_per_s": 0.19647133234508687
+        }
+    ]
+}

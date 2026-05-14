@@ -67,4 +67,4 @@ class KnobSettingsSet:
 
     def get_default_knob_settings(self) -> KnobConfig:
         """Get dictionary of all default values."""
-        return KnobConfig.from_dict({knob.name: knob.default for knob in self.knobs})
+        return KnobConfig.from_dict({knob.name: knob.default for knob in self.knobs}, self)

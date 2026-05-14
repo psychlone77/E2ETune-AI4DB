@@ -1,24 +1,53 @@
+# database:
+#   host: localhost
+#   port: 5432
+#   user: root
+#   password: databasefyp
+#   name: imdb
+#   data_path: /var/lib/postgresql/12/main
+#   pg_version: 12
+#   cluster_name: main
+#   ssh:
+#     user: root
+#     # password: mysshpassword
+#     key_path: /home/E2ETune-AI4DB/config/key.pem
+
+# Mysql database configuration
 database:
   host: localhost
-  port: 5555
+  port: 3306
   user: root
   password: databasefyp
   name: ssb
   data_path: /var/lib/postgresql/12/main
   pg_version: 12
   cluster_name: main
+  ssh:
+    user: root
+    # password: mysshpassword
+    key_path: /home/E2ETune-AI4DB/config/key.pem
+
+# Mysql database configuration
+# database:
+#   host: localhost
+#   port: 3306
+#   user: root
+#   password: databasefyp
+#   name: tpcds
+#   data_path: /var/lib/mysql
+#   pg_version: 12
+#   cluster_name: main
 
 tuning:
   method: HEBO
-  sample_num: 5
-  suggest_num: 100
-  early_stop_plateau: 40
+  iterations: 100
+  sample_num: 30
   config: knob_config/knob_config.json
   
 benchmark:
-  type: olap
-  name: tpch
-  path: ./olap_workloads
+  type: oltp
+  name: smallbank
+  path: ./oltp_workloads/smallbank
   workload_execution: logs/performance/workload_execution.log
   performance_record_path: logs/performance_record
   benchbase_jar: /home/benchbase/target/benchbase-postgres/benchbase.jar

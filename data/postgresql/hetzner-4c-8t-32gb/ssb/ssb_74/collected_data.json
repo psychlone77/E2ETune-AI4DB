@@ -1,0 +1,49 @@
+{
+    "internal_metrics": {
+        "xact_commit": 75.0,
+        "xact_rollback": 0.0,
+        "blks_read": 405225.0,
+        "blks_hit": 7650.0,
+        "tup_returned": 30508781.0,
+        "tup_fetched": 3949.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 410049.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 3359121408.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Limit(cost=119444.6)(Sort(cost=119445.6)(Aggregate(cost=119435.5)(Gather Merge(cost=119428.5)(Aggregate(cost=118385.0)(Sort(cost=118380.8)(Hash Join(cost=118373.2)(Seq Scan(cost=117461.3); Hash(cost=873.5)(Seq Scan(cost=873.5)))))))))",
+        "Sort(cost=123111.4)(Aggregate(cost=123090.4)(Gather Merge(cost=123083.1)(Aggregate(cost=122039.7)(Sort(cost=122036.4)(Hash Join(cost=122028.8)(Seq Scan(cost=117461.3); Hash(cost=4512.6)(Seq Scan(cost=4512.6))))))))",
+        "Sort(cost=115859.2)(Aggregate(cost=115851.1)(Gather Merge(cost=115846.1)(Sort(cost=114799.9)(Aggregate(cost=114791.7)(Hash Join(cost=114508.4)(Seq Scan(cost=114335.8); Hash(cost=49.0)(Seq Scan(cost=49.0))))))))",
+        "Aggregate(cost=112323.6)(Gather Merge(cost=112323.3)(Aggregate(cost=111320.2)(Sort(cost=111319.3)(Hash Join(cost=111317.2)(Seq Scan(cost=111210.2); Hash(cost=74.0)(Seq Scan(cost=74.0)))))))",
+        "Sort(cost=112551.7)(Aggregate(cost=112551.7)(Gather Merge(cost=112551.7)(Aggregate(cost=111551.4)(Sort(cost=111550.8)(Hash Join(cost=111547.9)(Seq Scan(cost=104959.2); Hash(cost=24.2)(Bitmap Heap Scan(cost=24.2)(Bitmap Index Scan(cost=12.9)))))))))",
+        "Sort(cost=117409.4)(Aggregate(cost=117401.3)(Gather Merge(cost=117395.3)(Sort(cost=116349.1)(Aggregate(cost=116340.9)(Hash Join(cost=116057.7)(Seq Scan(cost=104959.2); Hash(cost=4512.6)(Seq Scan(cost=4512.6))))))))"
+    ],
+    "workload_features": {
+        "total_statements": 6,
+        "table_access_frequency": {
+            "customer": 2,
+            "lineorder": 6,
+            "part": 2,
+            "supplier": 1,
+            "date_dim": 1
+        },
+        "read_count": 6,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.6667,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.3333333333333333,
+            "sum_agg": 0.5,
+            "avg_agg": 0.16666666666666666,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

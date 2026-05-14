@@ -1,0 +1,50 @@
+{
+    "internal_metrics": {
+        "xact_commit": 74.0,
+        "xact_rollback": 0.0,
+        "blks_read": 1140228.0,
+        "blks_hit": 4877.0,
+        "tup_returned": 60964828.0,
+        "tup_fetched": 3291.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 1243437.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 10186235904.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=297323.2)(Aggregate(cost=297322.5)(Gather Merge(cost=297322.0)(Sort(cost=296316.2)(Aggregate(cost=296315.6)(Hash Join(cost=277565.4)(Hash Join(cost=266051.3)(Seq Scan(cost=194043.0); Hash(cost=25249.0)(Seq Scan(cost=25249.0))); Hash(cost=1.2)(Seq Scan(cost=1.2))))))))",
+        "Sort(cost=267899.6)(Aggregate(cost=267277.0)(Gather Merge(cost=266114.5)(Aggregate(cost=258799.8)(Sort(cost=249339.9)(Hash Join(cost=131865.7)(Seq Scan(cost=124642.0); Hash(cost=1772.2)(Seq Scan(cost=1772.2))))))))",
+        "Sort(cost=33915.8)(Aggregate(cost=33915.7)(Gather Merge(cost=33914.8)(Sort(cost=32909.0)(Aggregate(cost=32908.3)(Seq Scan(cost=32078.0))))))",
+        "Sort(cost=213793.1)(Aggregate(cost=213793.1)(Sort(cost=213793.1)(Gather(cost=213793.1)(Seq Scan(cost=212793.0)))))",
+        "Limit(cost=941069.6)(Sort(cost=941069.6)(Nested Loop(cost=941069.6)(Nested Loop(cost=941061.2)(Gather(cost=938380.2)(Seq Scan(cost=937380.1)); Seq Scan(cost=1931.0)); Index Scan(cost=8.4))))"
+    ],
+    "workload_features": {
+        "total_statements": 5,
+        "table_access_frequency": {
+            "nation": 1,
+            "customer": 1,
+            "orders": 2,
+            "supplier": 2,
+            "partsupp": 1,
+            "part": 2,
+            "lineitem": 1
+        },
+        "read_count": 5,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.4,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 0.8,
+            "count_agg": 0.6,
+            "sum_agg": 0.2,
+            "avg_agg": 0.4,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

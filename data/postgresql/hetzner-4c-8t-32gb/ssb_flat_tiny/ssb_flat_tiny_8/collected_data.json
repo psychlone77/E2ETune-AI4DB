@@ -1,0 +1,47 @@
+{
+    "internal_metrics": {
+        "xact_commit": 93.0,
+        "xact_rollback": 0.0,
+        "blks_read": 36695534.0,
+        "blks_hit": 11677.0,
+        "tup_returned": 659859731.0,
+        "tup_fetched": 4885.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 36845434.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 301837795328.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=3743648.2)(Aggregate(cost=3743638.6)(Gather Merge(cost=3743634.0)(Aggregate(cost=3742612.0)(Sort(cost=3742609.4)(Seq Scan(cost=3742606.1))))))",
+        "Sort(cost=3681177.4)(Aggregate(cost=3681163.2)(Gather Merge(cost=3681155.1)(Aggregate(cost=3680124.2)(Sort(cost=3680120.8)(Seq Scan(cost=3680115.7))))))",
+        "Sort(cost=3748084.9)(Aggregate(cost=3748084.9)(Gather Merge(cost=3748084.7)(Sort(cost=3747083.5)(Aggregate(cost=3747083.5)(Seq Scan(cost=3711360.9))))))",
+        "Sort(cost=8404613.1)(Aggregate(cost=8029285.8)(Gather Merge(cost=7983026.0)(Aggregate(cost=7784265.4)(Sort(cost=7762848.8)(Hash Join(cost=7617727.9)(Seq Scan(cost=3586380.3); Hash(cost=3648870.6)(Seq Scan(cost=3648870.6))))))))",
+        "Sort(cost=17162462.8)(Aggregate(cost=16020972.6)(Gather Merge(cost=15781009.8)(Aggregate(cost=14395126.8)(Sort(cost=13960194.2)(Hash Join(cost=8263198.1)(Seq Scan(cost=3586380.3); Hash(cost=3648870.6)(Seq Scan(cost=3648870.6))))))))",
+        "Sort(cost=7323903.4)(Aggregate(cost=7315714.4)(Gather Merge(cost=7314204.4)(Aggregate(cost=7306090.5)(Sort(cost=7305397.1)(Hash Join(cost=7303022.5)(Seq Scan(cost=3586380.3); Hash(cost=3648870.6)(Seq Scan(cost=3648870.6))))))))",
+        "Sort(cost=3756761.0)(Aggregate(cost=3756760.9)(Gather Merge(cost=3756760.8)(Sort(cost=3755759.1)(Aggregate(cost=3755759.0)(Seq Scan(cost=3711360.9))))))",
+        "Sort(cost=3837343.1)(Aggregate(cost=3837343.0)(Gather Merge(cost=3837342.8)(Sort(cost=3836341.7)(Aggregate(cost=3836341.6)(Seq Scan(cost=3586380.3))))))"
+    ],
+    "workload_features": {
+        "total_statements": 8,
+        "table_access_frequency": {
+            "lineorder_flat": 11
+        },
+        "read_count": 8,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.625,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.75,
+            "sum_agg": 1.0,
+            "avg_agg": 0.375,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

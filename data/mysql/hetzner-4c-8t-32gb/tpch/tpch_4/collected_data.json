@@ -1,0 +1,51 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 135968.0,
+        "blks_hit": 22950283.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 169011.0,
+        "disk_write_count": 252.0,
+        "disk_read_bytes": 2769076224.0,
+        "disk_write_bytes": 4128768.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=3135596.2)(OrderingOperation(GroupingOperation(TableAll_o(cost=5821.8); TableEq_ref_c(cost=680385.8); TableEq_ref_n(cost=680385.8); TableEq_ref_r(cost=680385.8))))",
+        "QueryBlock(cost=69098.8)(OrderingOperation(GroupingOperation(TableAll_p(cost=36205.8); TableRef_ps(cost=11041.0))))",
+        "QueryBlock(cost=494524.7)(OrderingOperation(GroupingOperation(TableAll_o(cost=250760.6); TableRef_l(cost=68815.5); TableEq_ref_s(cost=27358.0))))",
+        "QueryBlock(cost=1311039.4)(OrderingOperation(GroupingOperation(BufferResult(TableAll_l(cost=1205576.9); TableEq_ref_o(cost=32957.0); TableEq_ref_c(cost=32957.0)))))",
+        "QueryBlock(cost=3987150.5)(OrderingOperation(GroupingOperation(TableAll_l(cost=823275.3); TableEq_ref_p(cost=988711.0); TableEq_ref_ps(cost=988711.0))))"
+    ],
+    "workload_features": {
+        "total_statements": 5,
+        "table_access_frequency": {
+            "region": 1,
+            "nation": 1,
+            "customer": 2,
+            "orders": 3,
+            "part": 2,
+            "partsupp": 2,
+            "supplier": 1,
+            "lineitem": 3
+        },
+        "read_count": 5,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 2.0,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.8,
+            "sum_agg": 0.8,
+            "avg_agg": 0.2,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

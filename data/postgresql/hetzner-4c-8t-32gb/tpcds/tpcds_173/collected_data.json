@@ -1,0 +1,47 @@
+{
+    "internal_metrics": {
+        "xact_commit": 60.0,
+        "xact_rollback": 0.0,
+        "blks_read": 122844.0,
+        "blks_hit": 4804.0,
+        "tup_returned": 15080930.0,
+        "tup_fetched": 2494.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 155742.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 1275838464.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=11954.3)(Aggregate(cost=11480.0)(Hash Join(cost=11102.1)(Seq Scan(cost=7666.1); Hash(cost=2592.1)(Seq Scan(cost=2592.1)))))",
+        "Aggregate(cost=69204.1)(Gather Merge(cost=69203.7)(Aggregate(cost=68201.8)(Sort(cost=68201.2)(Hash Join(cost=68199.5)(Seq Scan(cost=68198.0); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))",
+        "Sort(cost=134968.1)(Aggregate(cost=134684.9)(Gather(cost=134247.7)(Aggregate(cost=130557.1)(Hash Join(cost=129225.2)(Hash Join(cost=127337.9)(Seq Scan(cost=112424.1); Hash(cost=2049.6)(Seq Scan(cost=2049.6))); Hash(cost=1335.9)(Seq Scan(cost=1335.9)))))))"
+    ],
+    "workload_features": {
+        "total_statements": 3,
+        "table_access_frequency": {
+            "date_dim": 2,
+            "store_returns": 1,
+            "store": 1,
+            "store_sales": 1,
+            "item": 1,
+            "inventory": 1
+        },
+        "read_count": 3,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 2.3333,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.6666666666666666,
+            "sum_agg": 1.0,
+            "avg_agg": 0.6666666666666666,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

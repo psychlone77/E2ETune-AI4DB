@@ -1,0 +1,61 @@
+{
+    "internal_metrics": {
+        "xact_commit": 77.0,
+        "xact_rollback": 0.0,
+        "blks_read": 334066.0,
+        "blks_hit": 7450.0,
+        "tup_returned": 24310585.0,
+        "tup_fetched": 4574.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 366638.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 3003498496.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Limit(cost=70699.6)(Sort(cost=70699.6)(Aggregate(cost=70699.6)(Sort(cost=70699.6)(Nested Loop(cost=70699.6)(Gather(cost=70698.3)(Seq Scan(cost=69698.2)); Seq Scan(cost=1.1))))))",
+        "Limit(cost=47423.1)(Sort(cost=47423.1)(Aggregate(cost=47423.1)(Sort(cost=47423.1)(Nested Loop(cost=47423.1)(Gather(cost=47414.8)(Seq Scan(cost=46414.7)); Index Scan(cost=8.3))))))",
+        "Aggregate(cost=17.0)(Sort(cost=17.0)(Index Scan(cost=16.9)))",
+        "Sort(cost=151328.5)(Aggregate(cost=151324.9)(Gather Merge(cost=151322.9)(Sort(cost=150299.8)(Aggregate(cost=150296.2)(Hash Join(cost=125826.7)(Seq Scan(cost=112424.1); Hash(cost=11.0)(Seq Scan(cost=11.0))))))))",
+        "Sort(cost=1545.2)(Aggregate(cost=1545.2)(Seq Scan(cost=1410.0)))",
+        "Sort(cost=1574.0)(Aggregate(cost=1524.5)(Seq Scan(cost=1500.0)))",
+        "Sort(cost=47423.0)(Aggregate(cost=47423.0)(Sort(cost=47423.0)(Nested Loop(cost=47423.0)(Gather(cost=47414.8)(Seq Scan(cost=46414.7)); Index Scan(cost=8.2)))))",
+        "Sort(cost=70296.3)(Aggregate(cost=70281.2)(Gather Merge(cost=70274.4)(Aggregate(cost=69196.1)(Sort(cost=69164.1)(Hash Join(cost=68792.8)(Seq Scan(cost=63697.5); Hash(cost=1942.1)(Seq Scan(cost=1942.1))))))))",
+        "Aggregate(cost=2.9)(Sort(cost=2.9)(Seq Scan(cost=2.9)))",
+        "Sort(cost=24264.7)(Aggregate(cost=24264.7)(Sort(cost=24264.7)(Nested Loop(cost=24264.7)(Gather(cost=24263.2)(Seq Scan(cost=23263.2)); Seq Scan(cost=1.2)))))"
+    ],
+    "workload_features": {
+        "total_statements": 10,
+        "table_access_frequency": {
+            "store_sales": 2,
+            "store": 1,
+            "catalog_sales": 2,
+            "customer": 1,
+            "customer_address": 1,
+            "inventory": 1,
+            "warehouse": 1,
+            "item": 2,
+            "promotion": 1,
+            "date_dim": 1,
+            "web_page": 1,
+            "web_sales": 1,
+            "ship_mode": 1
+        },
+        "read_count": 10,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.1,
+        "operator_proportions": {
+            "order_by": 0.8,
+            "group_by": 1.0,
+            "count_agg": 0.5,
+            "sum_agg": 0.4,
+            "avg_agg": 0.1,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

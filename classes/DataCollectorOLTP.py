@@ -1,0 +1,85 @@
+from typing import Any, Dict, List
+from pathlib import Path
+import json
+
+from classes.base_classes.Data_Collector import DefaultDataCollector
+from classes.base_classes.Internal_Metrics import InternalMetrics
+from classes.base_classes.Database import Database
+from classes.base_classes.Knob_Settings import KnobSettingsSet
+from classes.WFE_OLTP import WorkloadFeatureExtractorOLTP
+
+
+class DataCollectorOLTP(DefaultDataCollector):
+    def __init__(
+        self,
+        workload_path: Path,
+        db: Database,
+        benchmark: str,
+        output_dir: Path,
+        knob_settings_set: KnobSettingsSet,
+        log_path: Path | None = None,
+    ):
+        super().__init__(
+            workload_path=workload_path,
+            db=db,
+            benchmark=benchmark,
+            output_dir=output_dir,
+            knob_settings_set=knob_settings_set,
+            log_path=log_path,
+        )
+        self.wfe = WorkloadFeatureExtractorOLTP(self.benchmark)
+
+    def _collect_internal_metrics(self) -> InternalMetrics:
+        try:
+            return self.db.fetch_internal_metrics()
+        except Exception as e:
+            self.log_path.error(f"Error collecting internal metrics: {e}")
+            return InternalMetrics(
+                xact_commit=0.0,
+                xact_rollback=0.0,
+                blks_read=0.0,
+                blks_hit=0.0,
+                tup_returned=0.0,
+                tup_fetched=0.0,
+                tup_inserted=0.0,
+                conflicts=0.0,
+                tup_updated=0.0,
+                tup_deleted=0.0,
+                disk_read_count=0.0,
+                disk_write_count=0.0,
+                disk_read_bytes=0.0,
+                disk_write_bytes=0.0,
+            )
+
+    def _collect_query_plans(self) -> List[str]:
+        try:
+            return self.db.extract_query_plans(self.workload_path)
+        except Exception as e:
+            self.log_path.error(f"Error collecting query plans: {e}")
+            return []
+
+    def _collect_workload_features(self) -> Dict[str, Any]:
+        return self.wfe.extract(self.workload_path)
+
+    def collect(self) -> None:
+        self.log_path.info(
+            f"Starting OLTP data collection for workload: {self.workload_path}"
+        )
+
+        self.db.set_knobs(self.knob_settings_set.get_default_knob_settings())
+        self.db.reset_internal_metrics()
+
+        query_plans = self._collect_query_plans()
+        internal_metrics = self._collect_internal_metrics()
+        workload_features = self._collect_workload_features()
+
+        output_data = {
+            "internal_metrics": internal_metrics,
+            "query_plans": query_plans,
+            "workload_features": workload_features,
+        }
+        output_file = self.output_dir / "collected_data.json"
+        with open(output_file, "w") as f:
+            json.dump(output_data, f, indent=4)
+
+        self.log_path.info(f"Data collection completed and saved to: {output_file}")

@@ -1,0 +1,59 @@
+{
+    "internal_metrics": {
+        "xact_commit": 0.0,
+        "xact_rollback": 0.0,
+        "blks_read": 0.0,
+        "blks_hit": 0.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 0.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 0.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Aggregate(cost=2.6)(Hash Join(cost=2.4)(Seq Scan(cost=1.2); Hash(cost=1.1)(Seq Scan(cost=1.1))))",
+        "Aggregate(cost=5523.9)(Gather Merge(cost=5523.8)(Sort(cost=4522.6)(Aggregate(cost=4522.6)(Seq Scan(cost=4210.0)))))",
+        "Aggregate(cost=34089.0)(Gather Merge(cost=34086.0)(Sort(cost=33051.3)(Aggregate(cost=33045.5)(Hash Join(cost=31377.3)(Seq Scan(cost=20784.3); Hash(cost=4930.3)(Seq Scan(cost=4930.3)))))))",
+        "Aggregate(cost=1327786.1)(Sort(cost=1297706.5)(Hash Join(cost=320793.2)(Hash Join(cost=304586.1)(Seq Scan(cost=172516.2); Hash(cost=38960.4)(Index Only Scan(cost=38960.4))); Hash(cost=322.0)(Seq Scan(cost=322.0)))))",
+        "Aggregate(cost=36940.9)(Gather Merge(cost=36940.8)(Sort(cost=35939.6)(Aggregate(cost=35939.5)(Seq Scan(cost=35470.0)))))",
+        "Aggregate(cost=211592.9)(Gather Merge(cost=211592.2)(Sort(cost=210586.4)(Aggregate(cost=210585.8)(Hash Join(cost=206833.3)(Hash Join(cost=205679.9)(Hash Join(cost=199703.7)(Seq Scan(cost=150011.2); Hash(cost=32345.0)(Seq Scan(cost=32345.0))); Hash(cost=4210.0)(Seq Scan(cost=4210.0))); Hash(cost=1.2)(Seq Scan(cost=1.2)))))))",
+        "Aggregate(cost=205150.7)(Sort(cost=204028.1)(Gather(cost=179676.0)(Hash Join(cost=156228.8)(Seq Scan(cost=150011.2); Hash(cost=4930.3)(Seq Scan(cost=4930.3))))))",
+        "Aggregate(cost=28990.0)(Gather(cost=28565.0)(Aggregate(cost=25565.0)(Hash Join(cost=22106.7)(Seq Scan(cost=20784.3); Hash(cost=322.0)(Seq Scan(cost=322.0))))))",
+        "Aggregate(cost=156525.2)(Aggregate(cost=34907.7)(Gather(cost=34907.7)(Aggregate(cost=33907.5)(Seq Scan(cost=32345.0)))); Sort(cost=117617.4)(Hash Join(cost=58783.5)(Seq Scan(cost=44845.0); Hash(cost=5085.0)(Seq Scan(cost=5085.0)))))",
+        "Aggregate(cost=254440.0)(Gather Merge(cost=248940.0)(Aggregate(cost=201770.1)(Sort(cost=197752.3)(Hash Join(cost=161050.1)(Seq Scan(cost=150011.2); Hash(cost=4930.3)(Seq Scan(cost=4930.3)))))))",
+        "Aggregate(cost=499878.3)(Sort(cost=495359.3)(Gather(cost=298655.8)(Hash Join(cost=207277.9)(Hash Join(cost=206120.7)(Hash Join(cost=204963.0)(Hash Join(cost=198983.2)(Seq Scan(cost=150011.2); Hash(cost=32345.0)(Seq Scan(cost=32345.0))); Hash(cost=4210.0)(Seq Scan(cost=4210.0))); Hash(cost=1.2)(Seq Scan(cost=1.2))); Hash(cost=1.1)(Seq Scan(cost=1.1))))))",
+        "Aggregate(cost=215433.1)(Gather Merge(cost=212869.1)(Aggregate(cost=198715.5)(Sort(cost=197433.4)(Hash Join(cost=192790.2)(Hash Join(cost=187649.4)(Seq Scan(cost=150011.2); Hash(cost=35470.0)(Seq Scan(cost=35470.0))); Hash(cost=4210.0)(Seq Scan(cost=4210.0)))))))",
+        "Aggregate(cost=290201.5)(Sort(cost=286770.5)(Hash Join(cost=204720.9)(Seq Scan(cost=202522.8); Hash(cost=322.0)(Seq Scan(cost=322.0)))))"
+    ],
+    "workload_features": {
+        "total_statements": 13,
+        "table_access_frequency": {
+            "region": 2,
+            "nation": 3,
+            "customer": 5,
+            "part": 3,
+            "partsupp": 2,
+            "supplier": 3,
+            "lineitem": 7,
+            "orders": 7
+        },
+        "read_count": 13,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.1538,
+        "operator_proportions": {
+            "order_by": 0.0,
+            "group_by": 1.0,
+            "count_agg": 0.5384615384615384,
+            "sum_agg": 0.38461538461538464,
+            "avg_agg": 0.15384615384615385,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

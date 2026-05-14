@@ -1,0 +1,68 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 507569.0,
+        "blks_hit": 391052390.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 1211658.0,
+        "disk_write_count": 255730.0,
+        "disk_read_bytes": 19851804672.0,
+        "disk_write_bytes": 4189880320.0
+    },
+    "query_plans": [
+        "TableAll_title(cost=231376.4)",
+        "TableAll_title(cost=231376.4)",
+        "TableAll_title(cost=231376.4)",
+        "TableAll_title(cost=231376.4)",
+        "TableAll_title(cost=231376.4)",
+        "TableAll_title(cost=231376.4)",
+        "TableAll_movie_info(cost=1564781.0)",
+        "TableAll_movie_info(cost=1564781.0)",
+        "TableAll_movie_info(cost=1564781.0)",
+        "TableAll_person_info(cost=302978.4)",
+        "TableAll_person_info(cost=302978.4)",
+        "TableAll_person_info(cost=302978.4)",
+        "TableAll_person_info(cost=302978.4)",
+        "TableAll_person_info(cost=302978.4)",
+        "TableAll_person_info(cost=302978.4)",
+        "TableAll_person_info(cost=302978.4)",
+        "TableAll_person_info(cost=302978.4)",
+        "TableAll_person_info(cost=302978.4)",
+        "QueryBlock(cost=5083617.8)(OrderingOperation(GroupingOperation(TableAll_mk(cost=8809.0); TableEq_ref_t(cost=4202213.2))))",
+        "QueryBlock(cost=2969398.7)(OrderingOperation(GroupingOperation(TableAll_mc(cost=9193.0); TableEq_ref_t(cost=2451208.7))))",
+        "QueryBlock(cost=40075887.0)(OrderingOperation(GroupingOperation(TableAll_ci(cost=115456.0); TableEq_ref_n(cost=33300359.0))))",
+        "QueryBlock(cost=35337.6)(OrderingOperation(GroupingOperation(TableAll_ml(cost=24.2); TableEq_ref_t(cost=29241.3))))"
+    ],
+    "workload_features": {
+        "total_statements": 22,
+        "table_access_frequency": {
+            "title": 9,
+            "movie_info": 3,
+            "person_info": 9,
+            "movie_keyword": 1,
+            "movie_companies": 1,
+            "name": 1,
+            "cast_info": 1,
+            "movie_link": 1
+        },
+        "read_count": 22,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.0,
+        "operator_proportions": {
+            "order_by": 0.18181818181818182,
+            "group_by": 0.18181818181818182,
+            "count_agg": 0.8636363636363636,
+            "sum_agg": 0.0,
+            "avg_agg": 0.13636363636363635,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

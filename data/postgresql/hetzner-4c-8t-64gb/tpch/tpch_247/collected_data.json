@@ -1,0 +1,47 @@
+{
+    "internal_metrics": {
+        "xact_commit": 88.0,
+        "xact_rollback": 0.0,
+        "blks_read": 2383948.0,
+        "blks_hit": 1974245.0,
+        "tup_returned": 58043504.0,
+        "tup_fetched": 2842043.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 2487019.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 20373659648.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=1262207.6)(Aggregate(cost=1262207.6)(Sort(cost=1259437.6)(Gather(cost=1225572.6)(Hash Join(cost=1202413.1)(Seq Scan(cost=899879.9); Hash(cost=264093.5)(Hash Join(cost=264093.5)(Seq Scan(cost=194043.0); Hash(cost=23544.0)(Nested Loop(cost=23544.0)(Nested Loop(cost=26.0)(Index Scan(cost=12.5); Materialize(cost=12.3)(Seq Scan(cost=12.3))); Bitmap Heap Scan(cost=23158.0)(Bitmap Index Scan(cost=531.1)))))))))))",
+        "Sort(cost=924856.1)(Aggregate(cost=923218.3)(Sort(cost=920886.5)(Gather(cost=907093.7)(Nested Loop(cost=894964.4)(Seq Scan(cost=31453.0); Index Scan(cost=86.3))))))",
+        "Aggregate(cost=337429.6)(Gather Merge(cost=337429.5)(Aggregate(cost=336428.3)(Sort(cost=336397.0)(Nested Loop(cost=335987.9)(Seq Scan(cost=212793.0); Index Scan(cost=9.6))))))"
+    ],
+    "workload_features": {
+        "total_statements": 3,
+        "table_access_frequency": {
+            "region": 1,
+            "nation": 1,
+            "customer": 1,
+            "orders": 2,
+            "lineitem": 3,
+            "part": 1
+        },
+        "read_count": 3,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 3.6667,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 1.0,
+            "sum_agg": 0.3333333333333333,
+            "avg_agg": 0.3333333333333333,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

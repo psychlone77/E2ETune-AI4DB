@@ -1,0 +1,43 @@
+{
+    "internal_metrics": {
+        "xact_commit": 3.0,
+        "xact_rollback": 0.0,
+        "blks_read": 83.0,
+        "blks_hit": 977.0,
+        "tup_returned": 635.0,
+        "tup_fetched": 557.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 158549.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 1298833408.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [],
+    "workload_features": {
+        "total_statements": 501.0,
+        "table_access_frequency": {
+            "warehouse": 99.0,
+            "district": 100.0,
+            "customer": 99.0,
+            "item": 1.0,
+            "stock": 2.0,
+            "order_line": 2.0,
+            "oorder": 1.0,
+            "new_order": 1.0,
+            "history": 98.0
+        },
+        "read_count": 1.0,
+        "write_count": 99.0,
+        "read_write_ratio": 0.010101010101010102,
+        "avg_predicates_per_query": 3.01,
+        "operator_proportions": {
+            "DELETE": 0.0,
+            "INSERT": 0.20159680638722555,
+            "SELECT": 0.4031936127744511,
+            "UPDATE": 0.39520958083832336
+        }
+    }
+}

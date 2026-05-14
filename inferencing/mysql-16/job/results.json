@@ -1,0 +1,51 @@
+{
+    "workload": "mysql/job/job.sql",
+    "default_performance": {
+        "latency_s": 50.104906811774,
+        "throughput_ops_per_s": 0.021229210875968598
+    },
+    "best_performance": {
+        "config_index": 0,
+        "latency_s": 30.215756603629526,
+        "latency_improvement_percent": 39.6950148672281,
+        "throughput_ops_per_s": 0.03309531557054837,
+        "throughput_improvement_percent": 55.89517558569344,
+        "actual_config": {
+            "max_connections": 211,
+            "innodb_log_buffer_size": 206779187,
+            "innodb_buffer_pool_size": 4207054684,
+            "innodb_redo_log_capacity": 520931738,
+            "binlog_group_commit_sync_delay": 5000,
+            "binlog_group_commit_sync_no_delay_count": 50,
+            "innodb_lock_wait_timeout": 116,
+            "innodb_stats_persistent_sample_pages": 675,
+            "innodb_read_io_threads": 2,
+            "innodb_write_io_threads": 2,
+            "optimizer_search_depth": 16,
+            "innodb_sort_buffer_size": 45004882,
+            "myisam_sort_buffer_size": 35232154,
+            "sort_buffer_size": 44218450,
+            "join_buffer_size": 17374904,
+            "tmp_table_size": 149401108,
+            "max_heap_table_size": 149401108,
+            "temptable_max_ram": 3537979310,
+            "temptable_max_mmap": 536870912,
+            "innodb_page_cleaners": 2,
+            "innodb_lru_scan_depth": 1024,
+            "innodb_max_dirty_pages_pct": 38,
+            "innodb_io_capacity": 1730,
+            "innodb_io_capacity_max": 5550,
+            "innodb_flush_log_at_timeout": 22,
+            "innodb_purge_threads": 2,
+            "innodb_purge_batch_size": 150,
+            "innodb_flush_neighbors": 0
+        }
+    },
+    "all_configs_performance": [
+        {
+            "config_index": 0,
+            "latency_s": 30.215756603629526,
+            "throughput_ops_per_s": 0.03309531557054837
+        }
+    ]
+}

@@ -1,0 +1,58 @@
+{
+    "internal_metrics": {
+        "xact_commit": 100.0,
+        "xact_rollback": 0.0,
+        "blks_read": 217998.0,
+        "blks_hit": 4840.0,
+        "tup_returned": 18737434.0,
+        "tup_fetched": 3489.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 250159.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 2049302528.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=70699.6)(Aggregate(cost=70699.6)(Sort(cost=70699.6)(Nested Loop(cost=70699.6)(Gather(cost=70698.3)(Seq Scan(cost=69698.2)); Seq Scan(cost=1.1)))))",
+        "Sort(cost=47036.7)(Aggregate(cost=47036.5)(Gather Merge(cost=47036.2)(Aggregate(cost=46033.8)(Sort(cost=46031.5)(Nested Loop(cost=46018.4)(Seq Scan(cost=44913.0); Index Scan(cost=3.7)))))))",
+        "Sort(cost=151326.6)(Aggregate(cost=151325.7)(Gather Merge(cost=151322.9)(Sort(cost=150299.8)(Aggregate(cost=150296.2)(Hash Join(cost=125826.7)(Seq Scan(cost=112424.1); Hash(cost=11.0)(Seq Scan(cost=11.0))))))))",
+        "Aggregate(cost=25494.7)(Sort(cost=25494.6)(Gather(cost=25494.4)(Hash Join(cost=24493.4)(Seq Scan(cost=21764.4); Hash(cost=1942.1)(Seq Scan(cost=1942.1))))))",
+        "Sort(cost=47426.6)(Aggregate(cost=47426.6)(Sort(cost=47426.5)(Nested Loop(cost=47426.5)(Gather(cost=47414.8)(Seq Scan(cost=46414.7)); Seq Scan(cost=11.8)))))",
+        "Sort(cost=7596.4)(Aggregate(cost=7596.4)(Sort(cost=7596.4)(Nested Loop(cost=7596.4)(Gather(cost=7588.1)(Seq Scan(cost=6588.0)); Index Scan(cost=8.3)))))",
+        "Sort(cost=5039.9)(Aggregate(cost=5039.8)(Sort(cost=5039.8)(Nested Loop(cost=5039.8)(Seq Scan(cost=5038.0); Seq Scan(cost=1.4)))))"
+    ],
+    "workload_features": {
+        "total_statements": 7,
+        "table_access_frequency": {
+            "store_sales": 1,
+            "store": 1,
+            "catalog_sales": 2,
+            "item": 1,
+            "inventory": 1,
+            "warehouse": 1,
+            "web_sales": 1,
+            "date_dim": 1,
+            "promotion": 1,
+            "store_returns": 1,
+            "time_dim": 1,
+            "catalog_returns": 1,
+            "reason": 1
+        },
+        "read_count": 7,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.5714,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.7142857142857143,
+            "sum_agg": 0.8571428571428571,
+            "avg_agg": 0.14285714285714285,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

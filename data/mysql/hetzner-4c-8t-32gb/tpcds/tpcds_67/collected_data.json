@@ -1,0 +1,56 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 98716.0,
+        "blks_hit": 35313368.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 99236.0,
+        "disk_write_count": 594.0,
+        "disk_read_bytes": 1625882624.0,
+        "disk_write_bytes": 9732096.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=3360541.3)(OrderingOperation(GroupingOperation(TableAll_store_sales(cost=6161.2); TableEq_ref_date_dim(cost=2782533.2))))",
+        "QueryBlock(cost=358853.7)(OrderingOperation(GroupingOperation(TableRange_date_dim(cost=72.9); TableAll_web_sales(cost=3728.2); TableEq_ref_customer_address(cost=64747.4))))",
+        "QueryBlock(cost=4571570.3)(OrderingOperation(GroupingOperation(TableAll_inventory(cost=10159.8); TableEq_ref_warehouse(cost=2534117.0))))",
+        "QueryBlock(cost=1292816.5)(OrderingOperation(GroupingOperation(TableAll_store_sales(cost=6161.2); TableEq_ref_store(cost=714808.5))))",
+        "QueryBlock(cost=846434.9)(OrderingOperation(GroupingOperation(TableAll_catalog_sales(cost=6079.8); TableEq_ref_promotion(cost=466864.0))))",
+        "QueryBlock(cost=255108.0)(OrderingOperation(GroupingOperation(TableAll_item(cost=168.2); TableRef_store_sales(cost=6834.9))))",
+        "QueryBlock(cost=6.2)(OrderingOperation(TableAll_web_page(cost=5.7)))"
+    ],
+    "workload_features": {
+        "total_statements": 7,
+        "table_access_frequency": {
+            "store_sales": 3,
+            "date_dim": 2,
+            "web_sales": 1,
+            "customer_address": 1,
+            "inventory": 1,
+            "warehouse": 1,
+            "store": 1,
+            "catalog_sales": 1,
+            "promotion": 1,
+            "item": 1,
+            "web_page": 1
+        },
+        "read_count": 7,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.1429,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.5714285714285714,
+            "sum_agg": 0.7142857142857143,
+            "avg_agg": 0.2857142857142857,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

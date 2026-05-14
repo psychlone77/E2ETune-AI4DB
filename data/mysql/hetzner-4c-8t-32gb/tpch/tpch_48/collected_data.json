@@ -1,0 +1,54 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 151449.0,
+        "blks_hit": 113911463.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 169068.0,
+        "disk_write_count": 166571.0,
+        "disk_read_bytes": 2770010112.0,
+        "disk_write_bytes": 2729099264.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=134646.1)(OrderingOperation(GroupingOperation(TableAll_customer(cost=905.2); TableEq_ref_nation(cost=74300.5))))",
+        "QueryBlock(cost=372409.0)(GroupingOperation(TableAll_region(cost=0.2); TableAll_customer(cost=905.7); TableEq_ref_nation(cost=74300.5)))",
+        "QueryBlock(cost=297084.8)(OrderingOperation(GroupingOperation(TableAll_part(cost=1017.5); TableRef_partsupp(cost=99379.4))))",
+        "QueryBlock(cost=839235.3)(OrderingOperation(GroupingOperation(BufferResult(TableAll_orders(cost=250760.6); TableRef_lineitem(cost=68815.5); TableEq_ref_supplier(cost=273579.9)))))",
+        "QueryBlock(cost=1230516.1)(GroupingOperation(TableAll_orders(cost=5821.8); TableEq_ref_customer(cost=680385.8)))",
+        "QueryBlock(cost=1680158.1)(OrderingOperation(GroupingOperation(TableAll_lineitem(cost=1086931.5); TableEq_ref_part(cost=329570.3))))",
+        "QueryBlock(cost=978611.3)(OrderingOperation(GroupingOperation(TableAll_orders(cost=226266.7); TableEq_ref_customer(cost=129273.3); TableEq_ref_nation(cost=129273.3); TableRef_lineitem(cost=130749.4))))",
+        "QueryBlock(cost=3987150.5)(OrderingOperation(GroupingOperation(TableAll_lineitem(cost=823275.3); TableEq_ref_supplier(cost=988711.0); TableEq_ref_part(cost=988711.0))))"
+    ],
+    "workload_features": {
+        "total_statements": 8,
+        "table_access_frequency": {
+            "nation": 3,
+            "customer": 4,
+            "region": 1,
+            "part": 3,
+            "partsupp": 1,
+            "supplier": 2,
+            "lineitem": 4,
+            "orders": 3
+        },
+        "read_count": 8,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 0.625,
+        "operator_proportions": {
+            "order_by": 0.75,
+            "group_by": 1.0,
+            "count_agg": 0.375,
+            "sum_agg": 0.5,
+            "avg_agg": 0.25,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

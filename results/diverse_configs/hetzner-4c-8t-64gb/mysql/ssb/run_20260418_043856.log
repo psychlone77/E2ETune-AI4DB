@@ -1,0 +1,13 @@
+[2026-04-18 04:38:56,256:run_diverse_configs.py#L82:INFO]: ====================================================================================================
+[2026-04-18 04:38:56,256:run_diverse_configs.py#L83:INFO]: E2ETune: Running Diverse Configs for ssb
+[2026-04-18 04:38:56,256:run_diverse_configs.py#L84:INFO]: ====================================================================================================
+[2026-04-18 04:38:56,256:run_diverse_configs.py#L85:INFO]: Config: config/config.yaml
+[2026-04-18 04:38:56,256:run_diverse_configs.py#L86:INFO]: Host: localhost  DB: ssb
+[2026-04-18 04:38:56,256:run_diverse_configs.py#L87:INFO]: Benchmark: ssb  Type: olap
+[2026-04-18 04:38:56,256:run_diverse_configs.py#L88:INFO]: Workload path: ./olap_workloads
+[2026-04-18 04:38:56,256:run_diverse_configs.py#L89:INFO]: ====================================================================================================
+[2026-04-18 04:38:56,315:MySQL_Database.py#L53:ERROR]: Connection attempt 1 failed: 1049 (42000): Unknown database 'ssb'
+[2026-04-18 04:38:56,315:MySQL_Database.py#L57:INFO]: Attempting to start MySQL service...
+[2026-04-18 04:38:59,033:MySQL_Database.py#L53:ERROR]: Connection attempt 2 failed: 1049 (42000): Unknown database 'ssb'
+[2026-04-18 04:38:59,033:MySQL_Database.py#L57:INFO]: Attempting to start MySQL service...
+[2026-04-18 04:39:01,734:MySQL_Database.py#L53:ERROR]: Connection attempt 3 failed: 1049 (42000): Unknown database 'ssb'

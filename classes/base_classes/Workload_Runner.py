@@ -17,6 +17,7 @@ class BenchmarkTask:
     knob_config: KnobConfig
     query_plans: Optional[Dict[str, Any]] = None
     internal_metrics: InternalMetrics = None
+    workload_features: Optional[Dict[str, Any]] = None
 
 
 class WorkloadRunner(ABC):
@@ -27,10 +28,11 @@ class WorkloadRunner(ABC):
     """
 
     @abstractmethod
-    def run_workload(self, workload_task: BenchmarkTask) -> tuple[float, float]:
+    def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: Optional[int] = 1) -> tuple[float, float]:
         """Run the workload with the given configuration and return the average latency and the negative throughput.
         Args:
             workload_task: The BenchmarkTask containing all necessary information to run the workload.
+            runs_per_iteration: The number of times to run the workload for each configuration.
         Returns:
             A tuple containing the [average_latency, -throughput_ps] performance metrics.
 
@@ -38,7 +40,7 @@ class WorkloadRunner(ABC):
         ```
         workload_task = BenchmarkTask(...)
         runner = WorkloadRunner()
-        average_latency, throughput_ps = runner.run_workload(workload_task)
+        average_latency, throughput_ps = runner.run_workload(workload_task, runs_per_iteration=3)
         print(f"average_latency: {average_latency}, -Throughput_ps: {throughput_ps}")
         """
         pass

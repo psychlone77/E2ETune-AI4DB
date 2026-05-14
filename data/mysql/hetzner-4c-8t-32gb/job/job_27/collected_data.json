@@ -1,0 +1,72 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 514207.0,
+        "blks_hit": 373019002.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 1260562.0,
+        "disk_write_count": 48084.0,
+        "disk_read_bytes": 20653047808.0,
+        "disk_write_bytes": 787808256.0
+    },
+    "query_plans": [
+        "TableAll_title(cost=247249.4)",
+        "TableAll_title(cost=231300.3)",
+        "QueryBlock(cost=1968396.6)(TableAll_movie_keyword(cost=5056.6); TableEq_ref_keyword(cost=1090744.5))",
+        "QueryBlock(cost=3060376.9)(OrderingOperation(GroupingOperation(TableAll_movie_companies(cost=9178.7); TableEq_ref_company_name(cost=2542201.2))))",
+        "QueryBlock(cost=1968396.6)(OrderingOperation(GroupingOperation(TableAll_movie_keyword(cost=5056.6); TableEq_ref_keyword(cost=1090744.5))))",
+        "QueryBlock(cost=6346.9)(OrderingOperation(GroupingOperation(TableAll_movie_link(cost=2829.4); TableEq_ref_title(cost=2910.3))))",
+        "QueryBlock(cost=7108531.7)(OrderingOperation(GroupingOperation(TableAll_cast_info(cost=3112488.5); TableEq_ref_name(cost=3330036.0))))",
+        "QueryBlock(cost=3448259.8)(OrderingOperation(GroupingOperation(TableAll_movie_info(cost=1564781.0); TableEq_ref_title(cost=1558346.4))))",
+        "QueryBlock(cost=3060376.9)(GroupingOperation(TableAll_movie_companies(cost=9178.7); TableEq_ref_company_name(cost=2542201.2)))",
+        "QueryBlock(cost=5059966.8)(OrderingOperation(GroupingOperation(TableAll_movie_keyword(cost=5056.6); TableEq_ref_title(cost=4182314.6))))",
+        "QueryBlock(cost=7108531.7)(OrderingOperation(GroupingOperation(TableAll_cast_info(cost=3112488.5); TableEq_ref_name(cost=3330036.0))))",
+        "QueryBlock(cost=3448259.8)(OrderingOperation(GroupingOperation(TableAll_movie_info(cost=1564781.0); TableEq_ref_title(cost=1558346.4))))",
+        "QueryBlock(cost=3060376.9)(GroupingOperation(TableAll_movie_companies(cost=9178.7); TableEq_ref_company_name(cost=2542201.2)))",
+        "QueryBlock(cost=5059966.8)(OrderingOperation(GroupingOperation(TableAll_movie_keyword(cost=5056.6); TableEq_ref_title(cost=4182314.6))))",
+        "QueryBlock(cost=7108531.7)(OrderingOperation(GroupingOperation(TableAll_cast_info(cost=3112488.5); TableEq_ref_name(cost=3330036.0))))",
+        "QueryBlock(cost=3448259.8)(OrderingOperation(GroupingOperation(TableAll_movie_info(cost=1564781.0); TableEq_ref_title(cost=1558346.4))))",
+        "QueryBlock(cost=3060376.9)(GroupingOperation(TableAll_movie_companies(cost=9178.7); TableEq_ref_company_name(cost=2542201.2)))",
+        "QueryBlock(cost=5059966.8)(OrderingOperation(GroupingOperation(TableAll_movie_keyword(cost=5056.6); TableEq_ref_title(cost=4182314.6))))",
+        "QueryBlock(cost=7108531.7)(OrderingOperation(GroupingOperation(TableAll_cast_info(cost=3112488.5); TableEq_ref_name(cost=3330036.0))))",
+        "QueryBlock(cost=3448259.8)(OrderingOperation(GroupingOperation(TableAll_movie_info(cost=1564781.0); TableEq_ref_title(cost=1558346.4))))",
+        "TableAll_title(cost=247249.4)",
+        "TableAll_title(cost=231300.3)",
+        "QueryBlock(cost=1968396.6)(TableAll_movie_keyword(cost=5056.6); TableEq_ref_keyword(cost=1090744.5))",
+        "QueryBlock(cost=3060376.9)(OrderingOperation(GroupingOperation(TableAll_movie_companies(cost=9178.7); TableEq_ref_company_name(cost=2542201.2))))",
+        "QueryBlock(cost=1968396.6)(OrderingOperation(GroupingOperation(TableAll_movie_keyword(cost=5056.6); TableEq_ref_keyword(cost=1090744.5))))"
+    ],
+    "workload_features": {
+        "total_statements": 25,
+        "table_access_frequency": {
+            "title": 12,
+            "movie_keyword": 7,
+            "keyword": 4,
+            "company_name": 5,
+            "movie_companies": 5,
+            "movie_link": 1,
+            "name": 4,
+            "cast_info": 4,
+            "movie_info": 4
+        },
+        "read_count": 25,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.08,
+        "operator_proportions": {
+            "order_by": 0.64,
+            "group_by": 0.76,
+            "count_agg": 0.92,
+            "sum_agg": 0.0,
+            "avg_agg": 0.08,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

@@ -1,0 +1,49 @@
+{
+    "internal_metrics": {
+        "xact_commit": 84.0,
+        "xact_rollback": 0.0,
+        "blks_read": 2371604.0,
+        "blks_hit": 724349.0,
+        "tup_returned": 94051653.0,
+        "tup_fetched": 689969.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 2406122.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 19710951424.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Aggregate(cost=1222623.5)(Gather Merge(cost=1222623.4)(Sort(cost=1221622.2)(Aggregate(cost=1221622.1)(Hash Join(cost=1209678.4)(Seq Scan(cost=899879.9); Hash(cost=194043.0)(Seq Scan(cost=194043.0)))))))",
+        "Sort(cost=387073.2)(Aggregate(cost=386852.4)(Gather Merge(cost=386735.8)(Aggregate(cost=384907.5)(Sort(cost=384635.6)(Hash Join(cost=382935.9)(Seq Scan(cost=212793.0); Hash(cost=158919.3)(Nested Loop(cost=158919.3)(Nested Loop(cost=66278.0)(Seq Scan(cost=30828.0); Index Scan(cost=7.2)); Index Scan(cost=4.7)))))))))",
+        "Sort(cost=1116644.5)(Aggregate(cost=1116601.0)(Gather Merge(cost=1116573.4)(Aggregate(cost=1115377.1)(Sort(cost=1115011.1)(Hash Join(cost=1110988.4)(Hash Join(cost=1110898.1)(Hash Join(cost=1110809.3)(Seq Scan(cost=25249.0); Hash(cost=1083680.1)(Nested Loop(cost=1083680.1)(Hash Join(cost=972618.9)(Hash Join(cost=970417.7)(Seq Scan(cost=937380.1); Hash(cost=30828.0)(Seq Scan(cost=30828.0))); Hash(cost=1683.9)(Seq Scan(cost=1683.9))); Index Scan(cost=3.9)))); Hash(cost=1.2)(Seq Scan(cost=1.2))); Hash(cost=11.7)(Seq Scan(cost=11.7))))))))"
+    ],
+    "workload_features": {
+        "total_statements": 3,
+        "table_access_frequency": {
+            "orders": 3,
+            "lineitem": 3,
+            "part": 2,
+            "partsupp": 1,
+            "customer": 1,
+            "supplier": 1,
+            "nation": 1,
+            "region": 1
+        },
+        "read_count": 3,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 3.0,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.3333333333333333,
+            "sum_agg": 0.6666666666666666,
+            "avg_agg": 0.0,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

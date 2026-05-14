@@ -1,0 +1,44 @@
+{
+    "internal_metrics": {
+        "xact_commit": 57.0,
+        "xact_rollback": 0.0,
+        "blks_read": 572314.0,
+        "blks_hit": 36112.0,
+        "tup_returned": 624286.0,
+        "tup_fetched": 623004.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 607283.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 4974862336.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Aggregate(cost=26.2)(Sort(cost=26.1)(Nested Loop(cost=26.1)(Index Scan(cost=17.4); Index Scan(cost=8.6))))",
+        "Aggregate(cost=59857.0)(Gather Merge(cost=59850.8)(Sort(cost=58821.9)(Aggregate(cost=58817.2)(Merge Join(cost=58495.9)(Index Scan(cost=816890.7); Sort(cost=1805.2)(Bitmap Heap Scan(cost=1603.4)(Bitmap Index Scan(cost=135.3))))))))"
+    ],
+    "workload_features": {
+        "total_statements": 2,
+        "table_access_frequency": {
+            "part": 1,
+            "partsupp": 1,
+            "supplier": 1,
+            "orders": 1
+        },
+        "read_count": 2,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 2.5,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 1.0,
+            "sum_agg": 1.0,
+            "avg_agg": 1.0,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

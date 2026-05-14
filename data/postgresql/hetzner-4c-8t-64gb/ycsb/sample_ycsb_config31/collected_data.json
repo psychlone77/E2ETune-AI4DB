@@ -1,0 +1,37 @@
+{
+    "internal_metrics": {
+        "xact_commit": 102678.0,
+        "xact_rollback": 0.0,
+        "blks_read": 89425.0,
+        "blks_hit": 5163213.0,
+        "tup_returned": 139138.0,
+        "tup_fetched": 132401.0,
+        "tup_inserted": 9094.0,
+        "conflicts": 0.0,
+        "tup_updated": 6791.0,
+        "tup_deleted": 4520.0,
+        "disk_read_count": 229509.0,
+        "disk_write_count": 22089.0,
+        "disk_read_bytes": 1880137728.0,
+        "disk_write_bytes": 180953088.0
+    },
+    "query_plans": [
+        "(from pg_catalog.generate_series(pg_catalog.array_lower($1,1), pg_catalog.array_upper($1,1), 1) as g(s) Function Scan on generate_series g)"
+    ],
+    "workload_features": {
+        "total_statements": 103.0,
+        "table_access_frequency": {
+            "usertable": 100.0
+        },
+        "read_count": 9.0,
+        "write_count": 91.0,
+        "read_write_ratio": 0.0989010989010989,
+        "avg_predicates_per_query": 0.97,
+        "operator_proportions": {
+            "DELETE": 0.32038834951456313,
+            "INSERT": 0.08737864077669903,
+            "SELECT": 0.11650485436893204,
+            "UPDATE": 0.47572815533980584
+        }
+    }
+}

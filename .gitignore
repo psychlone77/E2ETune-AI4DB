@@ -1,12 +1,20 @@
 venv/
+.venv/
+.mypy_cache/
 __pycache__
 .env
+clustering
+stress_test_results
+logs
 
 # Surrogate model files (too large for GitHub)
 surrogate/*.pkl
 surrogate/*.joblib
 surrogate/*.h5
 surrogate/*.pth
+surrogate/bridge_env/
 
 .vscode
 .idea
+
+*.pem

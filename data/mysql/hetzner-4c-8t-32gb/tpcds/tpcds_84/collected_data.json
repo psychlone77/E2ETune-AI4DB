@@ -1,0 +1,63 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 103252.0,
+        "blks_hit": 24876664.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 104024.0,
+        "disk_write_count": 1000.0,
+        "disk_read_bytes": 1704329216.0,
+        "disk_write_bytes": 16384000.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=255108.0)(OrderingOperation(GroupingOperation(TableAll_i(cost=168.2); TableRef_ss(cost=6834.9))))",
+        "QueryBlock(cost=1292816.5)(OrderingOperation(GroupingOperation(TableAll_ss(cost=6161.2); TableEq_ref_s(cost=714808.5))))",
+        "QueryBlock(cost=2375485.8)(GroupingOperation(TableAll_w(cost=0.2); TableAll_inv(cost=686242.7)))",
+        "QueryBlock(cost=21307.7)(OrderingOperation(GroupingOperation(TableAll_i(cost=168.2); TableRef_cr(cost=4463.1))))",
+        "QueryBlock(cost=846434.9)(OrderingOperation(GroupingOperation(TableAll_cs(cost=6079.8); TableEq_ref_p(cost=466864.0))))",
+        "QueryBlock(cost=137225.4)(OrderingOperation(GroupingOperation(TableAll_sr(cost=905.5); TableEq_ref_c(cost=75733.2))))",
+        "QueryBlock(cost=410673.4)(OrderingOperation(GroupingOperation(TableAll_cs(cost=130583.0); TableEq_ref_c(cost=155605.8))))",
+        "QueryBlock(cost=1292816.5)(OrderingOperation(GroupingOperation(TableAll_ss(cost=6161.2); TableEq_ref_hd(cost=714808.5))))",
+        "QueryBlock(cost=32964.8)(OrderingOperation(GroupingOperation(TableAll_wr(cost=232.8); TableEq_ref_r(cost=18184.5))))",
+        "QueryBlock(cost=2206276.2)(OrderingOperation(GroupingOperation(TableAll_inv(cost=685958.1); TableEq_ref_i(cost=844621.2))))",
+        "QueryBlock(cost=164340.9)(OrderingOperation(GroupingOperation(TableAll_ws(cost=53152.5); TableEq_ref_c(cost=61771.3))))"
+    ],
+    "workload_features": {
+        "total_statements": 11,
+        "table_access_frequency": {
+            "store_sales": 3,
+            "item": 3,
+            "store": 1,
+            "inventory": 2,
+            "warehouse": 1,
+            "catalog_returns": 1,
+            "catalog_sales": 2,
+            "promotion": 1,
+            "store_returns": 1,
+            "customer": 3,
+            "household_demographics": 1,
+            "web_returns": 1,
+            "reason": 1,
+            "web_sales": 1
+        },
+        "read_count": 11,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 0.7273,
+        "operator_proportions": {
+            "order_by": 0.9090909090909091,
+            "group_by": 1.0,
+            "count_agg": 0.36363636363636365,
+            "sum_agg": 0.5454545454545454,
+            "avg_agg": 0.18181818181818182,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

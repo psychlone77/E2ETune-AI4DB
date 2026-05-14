@@ -1,5 +1,8 @@
 from dataclasses import dataclass
-from typing import List, Union
+from typing import List, Union, TYPE_CHECKING
+
+if TYPE_CHECKING:
+    from classes.base_classes.Knob_Settings import KnobSettingsSet
 
 
 @dataclass
@@ -34,8 +37,32 @@ class KnobConfig:
     knobs: List[Knob]
 
     @classmethod
-    def from_dict(cls, config_dict: dict) -> "KnobConfig":
-        knobs = [Knob(name=key, value=value) for key, value in config_dict.items()]
+    def from_dict(cls, config_dict: dict, knob_settings: "KnobSettingsSet" = None) -> "KnobConfig":
+        """Create a KnobConfig from a dictionary, converting values to proper types.
+        
+        Args:
+            config_dict: Dictionary mapping knob names to values
+            knob_settings: Optional KnobSettingsSet to determine proper types
+            
+        Returns:
+            KnobConfig with properly typed values
+        """
+        knobs = []
+        for name, value in config_dict.items():
+            # Convert to proper type based on knob settings
+            if knob_settings is not None:
+                try:
+                    knob_setting = knob_settings.get_knob(name)
+                    if knob_setting.type == "integer":
+                        value = int(round(value))
+                    elif knob_setting.type == "float":
+                        value = float(value)
+                except KeyError:
+                    # Knob not found in settings, keep original value
+                    pass
+            
+            knobs.append(Knob(name=name, value=value))
+        
         return cls(knobs=knobs)
 
     def to_dict(self) -> dict:
@@ -43,3 +70,4 @@ class KnobConfig:
 
     def items(self):
         return self.to_dict().items()
+        

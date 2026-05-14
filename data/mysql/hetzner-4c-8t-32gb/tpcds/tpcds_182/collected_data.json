@@ -1,0 +1,55 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 52890.0,
+        "blks_hit": 1478026.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 55240.0,
+        "disk_write_count": 268.0,
+        "disk_read_bytes": 905052160.0,
+        "disk_write_bytes": 4390912.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=89465.3)(OrderingOperation(GroupingOperation(TableAll_i(cost=527.4); TableRef_ws(cost=17704.3))))",
+        "QueryBlock(cost=415389.5)(OrderingOperation(GroupingOperation(TableAll_ss(cost=301031.6); TableEq_ref_s(cost=95298.3))))",
+        "QueryBlock(cost=7.0)(OrderingOperation(GroupingOperation(TableAll_w(cost=3.7); TableEq_ref_wp(cost=2.7))))",
+        "QueryBlock(cost=36090.8)(OrderingOperation(GroupingOperation(TableRange_r(cost=3.3); TableAll_sr(cost=33058.1))))",
+        "QueryBlock(cost=5498142.8)(OrderingOperation(GroupingOperation(TableRange_inv(cost=512754.9); TableEq_ref_i(cost=3971741.1))))",
+        "QueryBlock(cost=10173.3)(OrderingOperation(GroupingOperation(TableAll_wr(cost=7264.1); TableEq_ref_c(cost=2424.4))))"
+    ],
+    "workload_features": {
+        "total_statements": 6,
+        "table_access_frequency": {
+            "web_sales": 1,
+            "item": 2,
+            "store_sales": 1,
+            "store": 1,
+            "web_site": 1,
+            "web_page": 1,
+            "store_returns": 1,
+            "reason": 1,
+            "inventory": 1,
+            "web_returns": 1,
+            "customer": 1
+        },
+        "read_count": 6,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 3.0,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.8333333333333334,
+            "sum_agg": 0.8333333333333334,
+            "avg_agg": 0.3333333333333333,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

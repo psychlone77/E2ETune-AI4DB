@@ -1,0 +1,46 @@
+{
+    "internal_metrics": {
+        "xact_commit": 0.0,
+        "xact_rollback": 0.0,
+        "blks_read": 0.0,
+        "blks_hit": 0.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 0.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 0.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=42894.7)(Aggregate(cost=42894.3)(Gather Merge(cost=42893.8)(Sort(cost=41890.3)(Aggregate(cost=41890.0)(Hash Join(cost=41310.4)(Hash Join(cost=41012.8)(Hash Join(cost=40714.8)(Seq Scan(cost=35470.0); Hash(cost=4210.0)(Seq Scan(cost=4210.0))); Hash(cost=1.2)(Seq Scan(cost=1.2))); Hash(cost=1.1)(Seq Scan(cost=1.1))))))))",
+        "Sort(cost=347300.8)(Aggregate(cost=346860.7)(Sort(cost=336891.4)(Gather(cost=264322.8)(Hash Join(cost=208355.5)(Hash Join(cost=197794.3)(Seq Scan(cost=150011.2); Hash(cost=34688.8)(Seq Scan(cost=34688.8))); Hash(cost=4930.3)(Seq Scan(cost=4930.3)))))))"
+    ],
+    "workload_features": {
+        "total_statements": 2,
+        "table_access_frequency": {
+            "customer": 1,
+            "orders": 2,
+            "nation": 1,
+            "region": 1,
+            "part": 1,
+            "lineitem": 1
+        },
+        "read_count": 2,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 2.5,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 1.0,
+            "sum_agg": 1.0,
+            "avg_agg": 0.5,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

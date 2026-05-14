@@ -1,0 +1,60 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 20644.0,
+        "blks_hit": 6798130.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 76444.0,
+        "disk_write_count": 260.0,
+        "disk_read_bytes": 1252458496.0,
+        "disk_write_bytes": 4259840.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=1172164.4)(OrderingOperation(GroupingOperation(TableAll_store_sales(cost=5022.8); TableEq_ref_customer_address(cost=648412.0))))",
+        "QueryBlock(cost=1903.0)(OrderingOperation(TableAll_item(cost=1883.7)))",
+        "QueryBlock(cost=1149435.8)(OrderingOperation(GroupingOperation(TableAll_warehouse(cost=0.7); TableAll_inventory(cost=6899.7))))",
+        "QueryBlock(cost=841191.8)(OrderingOperation(GroupingOperation(TableAll_web_sales(cost=1883.0); TableEq_ref_date_dim(cost=696903.8))))",
+        "QueryBlock(cost=605239.5)(OrderingOperation(GroupingOperation(TableAll_catalog_sales(cost=3533.2); TableEq_ref_promotion(cost=334281.2))))",
+        "QueryBlock(cost=14608.4)(OrderingOperation(GroupingOperation(TableAll_call_center(cost=0.8); TableAll_catalog_returns(cost=313.1))))",
+        "QueryBlock(cost=848485.5)(OrderingOperation(GroupingOperation(TableAll_store(cost=1.1); TableAll_store_sales(cost=5029.8))))",
+        "QueryBlock(cost=32235.5)(OrderingOperation(GroupingOperation(TableAll_web_returns(cost=152.2); TableEq_ref_web_page(cost=17824.0))))"
+    ],
+    "workload_features": {
+        "total_statements": 8,
+        "table_access_frequency": {
+            "store_sales": 2,
+            "customer_address": 1,
+            "item": 1,
+            "inventory": 1,
+            "warehouse": 1,
+            "web_sales": 1,
+            "date_dim": 1,
+            "catalog_sales": 1,
+            "promotion": 1,
+            "catalog_returns": 1,
+            "call_center": 1,
+            "store": 1,
+            "web_returns": 1,
+            "web_page": 1
+        },
+        "read_count": 8,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.875,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.5,
+            "sum_agg": 0.375,
+            "avg_agg": 0.125,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

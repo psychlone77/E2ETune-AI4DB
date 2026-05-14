@@ -1,0 +1,68 @@
+{
+    "internal_metrics": {
+        "xact_commit": 149.0,
+        "xact_rollback": 0.0,
+        "blks_read": 1598217.0,
+        "blks_hit": 15472.0,
+        "tup_returned": 139176648.0,
+        "tup_fetched": 192088.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 1598453.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 13094526976.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Aggregate(cost=50952.2)(Gather(cost=50952.2)(Aggregate(cost=49952.0)(Seq Scan(cost=49250.5))))",
+        "Aggregate(cost=50361.0)(Gather(cost=50361.0)(Aggregate(cost=49360.8)(Seq Scan(cost=49250.5))))",
+        "Aggregate(cost=50264.8)(Gather(cost=50264.8)(Aggregate(cost=49264.6)(Seq Scan(cost=49250.5))))",
+        "Aggregate(cost=50952.2)(Gather(cost=50952.2)(Aggregate(cost=49952.0)(Seq Scan(cost=49250.5))))",
+        "Aggregate(cost=50361.1)(Gather(cost=50361.0)(Aggregate(cost=49360.8)(Seq Scan(cost=49250.5))))",
+        "Aggregate(cost=50264.8)(Gather(cost=50264.8)(Aggregate(cost=49264.6)(Seq Scan(cost=49250.5))))",
+        "Aggregate(cost=241887.8)(Gather(cost=241887.8)(Aggregate(cost=240887.6)(Seq Scan(cost=240881.3))))",
+        "Aggregate(cost=241887.8)(Gather(cost=241887.8)(Aggregate(cost=240887.6)(Seq Scan(cost=240881.3))))",
+        "Aggregate(cost=241899.6)(Gather(cost=241899.5)(Aggregate(cost=240899.4)(Seq Scan(cost=240881.3))))",
+        "Aggregate(cost=68708.4)(Gather(cost=68708.4)(Aggregate(cost=67708.1)(Seq Scan(cost=67702.2))))",
+        "Aggregate(cost=68827.8)(Gather(cost=68827.7)(Aggregate(cost=67827.5)(Seq Scan(cost=67702.2))))",
+        "Aggregate(cost=68755.3)(Gather(cost=68755.3)(Aggregate(cost=67755.1)(Seq Scan(cost=67702.2))))",
+        "Aggregate(cost=68702.4)(Gather(cost=68702.4)(Aggregate(cost=67702.2)(Seq Scan(cost=67702.2))))",
+        "Aggregate(cost=68702.4)(Gather(cost=68702.4)(Aggregate(cost=67702.2)(Seq Scan(cost=67702.2))))",
+        "Aggregate(cost=68702.4)(Gather(cost=68702.4)(Aggregate(cost=67702.2)(Seq Scan(cost=67702.2))))",
+        "Aggregate(cost=68702.4)(Gather(cost=68702.4)(Aggregate(cost=67702.2)(Seq Scan(cost=67702.2))))",
+        "Aggregate(cost=68702.4)(Gather(cost=68702.4)(Aggregate(cost=67702.2)(Seq Scan(cost=67702.2))))",
+        "Aggregate(cost=68702.4)(Gather(cost=68702.4)(Aggregate(cost=67702.2)(Seq Scan(cost=67702.2))))",
+        "Sort(cost=466093.8)(Aggregate(cost=462292.6)(Gather Merge(cost=458380.7)(Aggregate(cost=424541.8)(Sort(cost=413694.5)(Hash Join(cost=135195.5)(Seq Scan(cost=43303.7); Hash(cost=46607.2)(Seq Scan(cost=46607.2))))))))",
+        "Sort(cost=295644.8)(Aggregate(cost=291843.5)(Gather Merge(cost=287931.6)(Aggregate(cost=254092.8)(Sort(cost=247234.6)(Hash Join(cost=113224.8)(Seq Scan(cost=29661.4); Hash(cost=46607.2)(Seq Scan(cost=46607.2))))))))",
+        "Sort(cost=3558090.5)(Aggregate(cost=3494081.9)(Gather Merge(cost=3449420.6)(Aggregate(cost=3073510.2)(Sort(cost=2983072.2)(Hash Join(cost=671157.7)(Seq Scan(cost=401121.0); Hash(cost=73047.5)(Seq Scan(cost=73047.5))))))))",
+        "Sort(cost=12275.8)(Aggregate(cost=11586.5)(Merge Join(cost=10986.5)(Index Scan(cost=101837.0); Sort(cost=2768.6)(Seq Scan(cost=463.0)))))"
+    ],
+    "workload_features": {
+        "total_statements": 22,
+        "table_access_frequency": {
+            "title": 9,
+            "movie_info": 3,
+            "person_info": 9,
+            "movie_keyword": 1,
+            "movie_companies": 1,
+            "name": 1,
+            "cast_info": 1,
+            "movie_link": 1
+        },
+        "read_count": 22,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.0,
+        "operator_proportions": {
+            "order_by": 0.18181818181818182,
+            "group_by": 0.18181818181818182,
+            "count_agg": 0.8636363636363636,
+            "sum_agg": 0.0,
+            "avg_agg": 0.13636363636363635,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

@@ -1,0 +1,49 @@
+{
+    "internal_metrics": {
+        "xact_commit": 0.0,
+        "xact_rollback": 0.0,
+        "blks_read": 0.0,
+        "blks_hit": 0.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 0.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 0.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=6503.1)(Aggregate(cost=6501.6)(Gather Merge(cost=6495.6)(Sort(cost=5460.9)(Aggregate(cost=5455.1)(Seq Scan(cost=5138.7))))))",
+        "Sort(cost=41158.6)(Aggregate(cost=41158.5)(Gather Merge(cost=41158.3)(Sort(cost=40157.1)(Aggregate(cost=40157.1)(Hash Join(cost=39225.0)(Seq Scan(cost=33907.5); Hash(cost=4210.0)(Seq Scan(cost=4210.0))))))))",
+        "Aggregate(cost=19491495.9)(Sort(cost=19041495.8)(Hash Join(cost=680971.1)(Seq Scan(cost=5085.0); Hash(cost=386.1)(Hash Join(cost=386.1)(Hash Join(cost=354.3)(Seq Scan(cost=322.0); Hash(cost=1.2)(Seq Scan(cost=1.2))); Hash(cost=1.1)(Seq Scan(cost=1.1)))))))",
+        "Sort(cost=162810.8)(Aggregate(cost=162810.2)(Gather Merge(cost=162809.4)(Sort(cost=161803.5)(Aggregate(cost=161802.9)(Hash Join(cost=156993.2)(Seq Scan(cost=150011.2); Hash(cost=4930.3)(Seq Scan(cost=4930.3))))))))"
+    ],
+    "workload_features": {
+        "total_statements": 4,
+        "table_access_frequency": {
+            "part": 2,
+            "customer": 2,
+            "orders": 1,
+            "region": 1,
+            "nation": 1,
+            "supplier": 1,
+            "lineitem": 1
+        },
+        "read_count": 4,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.25,
+        "operator_proportions": {
+            "order_by": 0.75,
+            "group_by": 1.0,
+            "count_agg": 1.0,
+            "sum_agg": 0.5,
+            "avg_agg": 0.25,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

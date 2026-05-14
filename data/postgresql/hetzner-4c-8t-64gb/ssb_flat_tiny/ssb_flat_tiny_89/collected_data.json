@@ -1,0 +1,45 @@
+{
+    "internal_metrics": {
+        "xact_commit": 79.0,
+        "xact_rollback": 0.0,
+        "blks_read": 20017265.0,
+        "blks_hit": 6536.0,
+        "tup_returned": 359923842.0,
+        "tup_fetched": 3961.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 20168153.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 165217509376.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=3819545.3)(Aggregate(cost=3819545.3)(Gather Merge(cost=3819545.1)(Sort(cost=3818544.0)(Aggregate(cost=3818543.9)(Seq Scan(cost=3711360.9))))))",
+        "Sort(cost=3766441.1)(Aggregate(cost=3764552.4)(Gather Merge(cost=3763739.9)(Sort(cost=3756968.7)(Aggregate(cost=3755080.0)(Seq Scan(cost=3711360.9))))))",
+        "Sort(cost=3810497.5)(Aggregate(cost=3810496.8)(Gather Merge(cost=3810496.1)(Sort(cost=3809490.3)(Aggregate(cost=3809489.6)(Seq Scan(cost=3711360.9))))))",
+        "Sort(cost=3857783.7)(Aggregate(cost=3857374.0)(Gather Merge(cost=3857186.5)(Sort(cost=3854743.7)(Aggregate(cost=3854334.0)(Seq Scan(cost=3711360.9))))))",
+        "Sort(cost=3758864.3)(Aggregate(cost=3758362.8)(Gather Merge(cost=3758137.8)(Sort(cost=3755406.4)(Aggregate(cost=3754905.0)(Seq Scan(cost=3711360.9))))))",
+        "Sort(cost=3857783.7)(Aggregate(cost=3857374.0)(Gather Merge(cost=3857186.5)(Sort(cost=3854743.7)(Aggregate(cost=3854334.0)(Seq Scan(cost=3711360.9))))))"
+    ],
+    "workload_features": {
+        "total_statements": 6,
+        "table_access_frequency": {
+            "lineorder_flat": 6
+        },
+        "read_count": 6,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 2.0,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.8333333333333334,
+            "sum_agg": 1.0,
+            "avg_agg": 0.16666666666666666,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

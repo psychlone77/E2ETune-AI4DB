@@ -1,0 +1,52 @@
+{
+    "internal_metrics": {
+        "xact_commit": 0.0,
+        "xact_rollback": 0.0,
+        "blks_read": 0.0,
+        "blks_hit": 0.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 0.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 0.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Sort(cost=14208.8)(Aggregate(cost=14208.8)(Nested Loop(cost=14062.6)(Nested Loop(cost=3963.0)(Seq Scan(cost=1.3); Bitmap Heap Scan(cost=3901.7)(Bitmap Index Scan(cost=113.4))); Index Scan(cost=1.6))))",
+        "Sort(cost=28636.0)(Aggregate(cost=28634.5)(Gather Merge(cost=28629.6)(Sort(cost=27595.0)(Aggregate(cost=27589.2)(Hash Join(cost=27229.9)(Seq Scan(cost=20784.3); Hash(cost=5347.0)(Seq Scan(cost=5347.0))))))))",
+        "Sort(cost=436.2)(Aggregate(cost=436.1)(Hash Join(cost=386.1)(Hash Join(cost=354.3)(Seq Scan(cost=322.0); Hash(cost=1.2)(Seq Scan(cost=1.2))); Hash(cost=1.1)(Seq Scan(cost=1.1)))))",
+        "Sort(cost=210696.0)(Aggregate(cost=210695.9)(Gather Merge(cost=210695.8)(Sort(cost=209694.6)(Aggregate(cost=209694.5)(Hash Join(cost=205837.1)(Hash Join(cost=199833.3)(Seq Scan(cost=150011.2); Hash(cost=32345.0)(Seq Scan(cost=32345.0))); Hash(cost=4210.0)(Seq Scan(cost=4210.0))))))))",
+        "Sort(cost=162681.8)(Aggregate(cost=162478.5)(Gather Merge(cost=162203.5)(Sort(cost=158895.0)(Aggregate(cost=158205.6)(Hash Join(cost=157190.6)(Seq Scan(cost=156262.6); Hash(cost=322.0)(Seq Scan(cost=322.0))))))))",
+        "Sort(cost=37424.0)(Aggregate(cost=37423.9)(Gather Merge(cost=37423.8)(Sort(cost=36422.6)(Aggregate(cost=36422.6)(Seq Scan(cost=35470.0))))))"
+    ],
+    "workload_features": {
+        "total_statements": 6,
+        "table_access_frequency": {
+            "nation": 2,
+            "customer": 2,
+            "orders": 3,
+            "part": 1,
+            "partsupp": 1,
+            "region": 1,
+            "supplier": 2,
+            "lineitem": 2
+        },
+        "read_count": 6,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.6667,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.6666666666666666,
+            "sum_agg": 0.16666666666666666,
+            "avg_agg": 0.16666666666666666,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

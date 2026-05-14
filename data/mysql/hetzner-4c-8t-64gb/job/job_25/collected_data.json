@@ -1,0 +1,56 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 120044.0,
+        "blks_hit": 1402850703.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 298923.0,
+        "disk_write_count": 217502.0,
+        "disk_read_bytes": 4897554432.0,
+        "disk_write_bytes": 3563552768.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=15951304.5)(OrderingOperation(GroupingOperation(TableAll_c(cost=29984.0); TableEq_ref_t(cost=8866574.3))))",
+        "QueryBlock(cost=15951304.5)(OrderingOperation(GroupingOperation(TableAll_c(cost=29984.0); TableEq_ref_t(cost=8866574.3))))",
+        "QueryBlock(cost=7673188.7)(OrderingOperation(GroupingOperation(TableAll_ci(cost=2381683.7); TableEq_ref_cn(cost=2940158.2))))",
+        "QueryBlock(cost=2040359.8)(OrderingOperation(GroupingOperation(TableAll_mk(cost=2282.5); TableEq_ref_t(cost=1135004.1))))",
+        "QueryBlock(cost=6103.8)(OrderingOperation(GroupingOperation(TableAll_ml(cost=2096.0); TableEq_ref_t(cost=2231.9))))",
+        "QueryBlock(cost=7672214.1)(OrderingOperation(GroupingOperation(TableAll_ci(cost=2381683.7); TableEq_ref_n(cost=2939183.6))))",
+        "QueryBlock(cost=350271.4)(OrderingOperation(GroupingOperation(TableAll_mc(cost=234067.4); TableEq_ref_t(cost=64713.9))))",
+        "QueryBlock(cost=6386335.4)(OrderingOperation(GroupingOperation(TableAll_mi(cost=25149.2); TableEq_ref_t(cost=3542540.9))))",
+        "QueryBlock(cost=9790993919169.0)(OrderingOperation(GroupingOperation(TableAll_mc(cost=2362.2); TableEq_ref_t(cost=647139.2); TableAll_c(cost=8782068173316.6))))",
+        "QueryBlock(cost=79768084339.4)(OrderingOperation(GroupingOperation(TableAll_mc(cost=234067.4); TableEq_ref_t(cost=64713.9); TableAll_mk(cost=66852559828.3))))"
+    ],
+    "workload_features": {
+        "total_statements": 10,
+        "table_access_frequency": {
+            "title": 8,
+            "cast_info": 5,
+            "char_name": 1,
+            "movie_keyword": 2,
+            "movie_link": 1,
+            "name": 1,
+            "movie_companies": 3,
+            "movie_info": 1
+        },
+        "read_count": 10,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 2.5,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 0.9,
+            "sum_agg": 0.0,
+            "avg_agg": 0.1,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

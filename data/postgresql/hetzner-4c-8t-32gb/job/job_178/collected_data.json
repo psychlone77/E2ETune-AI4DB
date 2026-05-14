@@ -1,0 +1,51 @@
+{
+    "internal_metrics": {
+        "xact_commit": 72.0,
+        "xact_rollback": 0.0,
+        "blks_read": 930475.0,
+        "blks_hit": 7004.0,
+        "tup_returned": 126110833.0,
+        "tup_fetched": 3180.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 933349.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 7645995008.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [
+        "Limit(cost=575173.6)(Sort(cost=575230.3)(Aggregate(cost=574682.7)(Gather Merge(cost=572808.5)(Aggregate(cost=556075.6)(Sort(cost=552730.4)(Hash Join(cost=489799.8)(Seq Scan(cost=401121.0); Hash(cost=49250.5)(Seq Scan(cost=49250.5)))))))))",
+        "Limit(cost=1879316.0)(Sort(cost=1880669.3)(Aggregate(cost=1867617.6)(Gather Merge(cost=1822956.3)(Aggregate(cost=1447045.9)(Sort(cost=1405063.9)(Hash Join(cost=607105.1)(Seq Scan(cost=438219.8); Hash(cost=73047.5)(Seq Scan(cost=73047.5)))))))))",
+        "Limit(cost=394416.6)(Sort(cost=394528.3)(Aggregate(cost=393450.1)(Gather Merge(cost=389760.4)(Aggregate(cost=357787.3)(Sort(cost=347020.7)(Hash Join(cost=68521.7)(Seq Scan(cost=43303.7); Hash(cost=2290.7)(Seq Scan(cost=2290.7)))))))))",
+        "Limit(cost=1212134.4)(Sort(cost=1214704.1)(Aggregate(cost=1189922.7)(Gather Merge(cost=1129287.1)(Aggregate(cost=788310.6)(Sort(cost=766219.9)(Hash Join(cost=551247.8)(Seq Scan(cost=438219.8); Hash(cost=49523.6)(Seq Scan(cost=49523.6)))))))))",
+        "Limit(cost=41976.6)(Sort(cost=41976.6)(Aggregate(cost=41976.6)(Gather Merge(cost=41976.5)(Sort(cost=40975.6)(Aggregate(cost=40975.5)(Hash Join(cost=35539.8)(Seq Scan(cost=29661.4); Hash(cost=1.0)(Seq Scan(cost=1.0)))))))))"
+    ],
+    "workload_features": {
+        "total_statements": 5,
+        "table_access_frequency": {
+            "title": 1,
+            "cast_info": 3,
+            "name": 1,
+            "keyword": 1,
+            "movie_keyword": 1,
+            "char_name": 1,
+            "company_type": 1,
+            "movie_companies": 1
+        },
+        "read_count": 5,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.6,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 1.0,
+            "sum_agg": 0.0,
+            "avg_agg": 0.0,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

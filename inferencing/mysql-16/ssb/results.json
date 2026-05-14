@@ -1,0 +1,85 @@
+{
+    "workload": "mysql/ssb/ssb.sql",
+    "default_performance": {
+        "latency_s": 6.342571885038454,
+        "throughput_ops_per_s": 0.15766474832692215
+    },
+    "best_performance": {
+        "config_index": 0,
+        "latency_s": 2.699379422343694,
+        "latency_improvement_percent": 57.44030227373089,
+        "throughput_ops_per_s": 0.3704555171913423,
+        "throughput_improvement_percent": 134.9640747995187,
+        "actual_config": {
+            "innodb_log_buffer_size": 257110835,
+            "innodb_buffer_pool_size": 15387391427,
+            "innodb_redo_log_capacity": 8051873628,
+            "binlog_group_commit_sync_delay": 95500,
+            "binlog_group_commit_sync_no_delay_count": 955,
+            "innodb_lock_wait_timeout": 296,
+            "innodb_stats_persistent_sample_pages": 975,
+            "innodb_read_io_threads": 8,
+            "innodb_write_io_threads": 8,
+            "optimizer_search_depth": 59,
+            "innodb_sort_buffer_size": 65137541,
+            "myisam_sort_buffer_size": 521100329,
+            "sort_buffer_size": 64351109,
+            "join_buffer_size": 64351109,
+            "tmp_table_size": 513466696,
+            "max_heap_table_size": 513466696,
+            "temptable_max_ram": 10302552801,
+            "temptable_max_mmap": 10254234419,
+            "innodb_page_cleaners": 8,
+            "innodb_lru_scan_depth": 10291,
+            "innodb_max_dirty_pages_pct": 86,
+            "innodb_io_capacity": 5930,
+            "innodb_io_capacity_max": 11550,
+            "innodb_flush_log_at_timeout": 58,
+            "innodb_purge_threads": 8,
+            "innodb_purge_batch_size": 1055,
+            "innodb_flush_neighbors": 2
+        }
+    },
+    "all_configs_performance": [
+        {
+            "config_index": 0,
+            "latency_s": 2.699379422343694,
+            "throughput_ops_per_s": 0.3704555171913423
+        },
+        {
+            "config_index": 1,
+            "latency_s": 3.7152434545927324,
+            "throughput_ops_per_s": 0.2691613651223351
+        },
+        {
+            "config_index": 2,
+            "latency_s": 2.7055452817048016,
+            "throughput_ops_per_s": 0.3696112597937692
+        },
+        {
+            "config_index": 3,
+            "latency_s": 2.700477975707215,
+            "throughput_ops_per_s": 0.3703048160346929
+        },
+        {
+            "config_index": 4,
+            "latency_s": 2.9103837985402117,
+            "throughput_ops_per_s": 0.3435972947971946
+        },
+        {
+            "config_index": 5,
+            "latency_s": Infinity,
+            "throughput_ops_per_s": 0.0
+        },
+        {
+            "config_index": 6,
+            "latency_s": 2.9768614165771465,
+            "throughput_ops_per_s": 0.3359242705862403
+        },
+        {
+            "config_index": 7,
+            "latency_s": 2.7317928625270724,
+            "throughput_ops_per_s": 0.36605996513035033
+        }
+    ]
+}

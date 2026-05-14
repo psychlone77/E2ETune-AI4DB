@@ -1,0 +1,254 @@
+{
+    "max_connections": {
+        "describe": "The maximum permitted number of simultaneous client connections. Capped at 500.",
+        "type": "integer",
+        "min": 51,
+        "max": 501,
+        "default": 500,
+        "step": 10,
+        "pg_equivalent": "max_connections"
+    },
+    "innodb_log_buffer_size": {
+        "describe": "The size in bytes of the buffer that InnoDB uses to write to the log files on disk.",
+        "type": "integer",
+        "min": 16777216,
+        "max": 268435456,
+        "default": 67108864,
+        "step": 16777216,
+        "pg_equivalent": "wal_buffers"
+    },
+    "innodb_buffer_pool_size": {
+        "describe": "The size in bytes of the memory area where InnoDB caches table and index data. Max ~19.6GB.",
+        "type": "integer",
+        "min": 134217728,
+        "max": 21076410368,
+        "default": 17179869184,
+        "step": 536870912,
+        "pg_equivalent": "shared_buffers"
+    },
+    "innodb_redo_log_capacity": {
+        "describe": "The amount of disk space occupied by redo log files. Capped at ~8GB.",
+        "type": "integer",
+        "min": 104857600,
+        "max": 8426340352,
+        "default": 4294967296,
+        "step": 268435456,
+        "pg_equivalent": "max_wal_size"
+    },
+    "binlog_group_commit_sync_delay": {
+        "describe": "Controls how many microseconds the binary log commit waits before synchronizing.",
+        "type": "integer",
+        "min": 0,
+        "max": 100000,
+        "default": 0,
+        "step": 5000,
+        "pg_equivalent": "commit_delay"
+    },
+    "binlog_group_commit_sync_no_delay_count": {
+        "describe": "Sets the maximum number of transactions to wait for.",
+        "type": "integer",
+        "min": 0,
+        "max": 1000,
+        "default": 0,
+        "step": 20,
+        "pg_equivalent": "commit_siblings"
+    },
+    "innodb_lock_wait_timeout": {
+        "describe": "The length of time in seconds an InnoDB transaction waits for a row lock.",
+        "type": "integer",
+        "min": 10,
+        "max": 310,
+        "default": 50,
+        "step": 10,
+        "pg_equivalent": "deadlock_timeout"
+    },
+    "innodb_stats_persistent_sample_pages": {
+        "describe": "The number of index pages to sample when estimating cardinality.",
+        "type": "integer",
+        "min": 20,
+        "max": 1020,
+        "default": 20,
+        "step": 50,
+        "pg_equivalent": "default_statistics_target"
+    },
+    "innodb_read_io_threads": {
+        "describe": "The number of I/O threads for read operations in InnoDB. Capped at 8 (Hardware limit).",
+        "type": "integer",
+        "min": 2,
+        "max": 8,
+        "default": 8,
+        "step": 1,
+        "pg_equivalent": "effective_io_concurrency"
+    },
+    "innodb_write_io_threads": {
+        "describe": "The number of I/O threads for write operations in InnoDB. Capped at 8 (Hardware limit).",
+        "type": "integer",
+        "min": 2,
+        "max": 8,
+        "default": 8,
+        "step": 1,
+        "pg_equivalent": "effective_io_concurrency"
+    },
+    "optimizer_search_depth": {
+        "describe": "The maximum depth of search performed by the query optimizer.",
+        "type": "integer",
+        "min": 0,
+        "max": 62,
+        "default": 62,
+        "step": 1,
+        "pg_equivalent": "join_collapse_limit"
+    },
+    "innodb_sort_buffer_size": {
+        "describe": "Specifies the size of the buffer used for sorting data during creation of an InnoDB index.",
+        "type": "integer",
+        "min": 1048576,
+        "max": 68157440,
+        "default": 4194304,
+        "step": 1048576,
+        "pg_equivalent": "maintenance_work_mem"
+    },
+    "myisam_sort_buffer_size": {
+        "describe": "The size of the buffer that is allocated when sorting MyISAM indexes.",
+        "type": "integer",
+        "min": 8388608,
+        "max": 545259520,
+        "default": 33554432,
+        "step": 16777216,
+        "pg_equivalent": "maintenance_work_mem"
+    },
+    "sort_buffer_size": {
+        "describe": "Each session that must perform a sort allocates a buffer of this size. Capped at 64MB per connection.",
+        "type": "integer",
+        "min": 262144,
+        "max": 67371008,
+        "default": 1048576,
+        "step": 1048576,
+        "pg_equivalent": "work_mem"
+    },
+    "join_buffer_size": {
+        "describe": "Minimum size of the buffer used for plain index scans and joins. Capped at 64MB per connection.",
+        "type": "integer",
+        "min": 262144,
+        "max": 67371008,
+        "default": 1048576,
+        "step": 1048576,
+        "pg_equivalent": "work_mem"
+    },
+    "tmp_table_size": {
+        "describe": "The maximum size of internal in-memory temporary tables. Capped at 512MB.",
+        "type": "integer",
+        "min": 16777216,
+        "max": 536870912,
+        "default": 134217728,
+        "step": 16777216,
+        "pg_equivalent": "temp_buffers"
+    },
+    "max_heap_table_size": {
+        "describe": "Sets the maximum size to which user-created MEMORY tables are permitted to grow. Capped at 512MB.",
+        "type": "integer",
+        "min": 16777216,
+        "max": 536870912,
+        "default": 134217728,
+        "step": 16777216,
+        "pg_equivalent": "temp_file_limit"
+    },
+    "temptable_max_ram": {
+        "describe": "Maximum amount of RAM that can be occupied by the TempTable storage engine. Capped at ~10GB.",
+        "type": "integer",
+        "min": 1073741824,
+        "max": 10737418240,
+        "default": 2147483648,
+        "step": 536870912,
+        "pg_equivalent": "temp_buffers"
+    },
+    "temptable_max_mmap": {
+        "describe": "Maximum amount of memory from memory-mapped files the TempTable engine can allocate. Capped at ~10GB.",
+        "type": "integer",
+        "min": 0,
+        "max": 10737418240,
+        "default": 2147483648,
+        "step": 536870912,
+        "pg_equivalent": "temp_file_limit"
+    },
+    "innodb_page_cleaners": {
+        "describe": "The number of page cleaner threads that flush dirty pages. Capped at 8 (Hardware limit).",
+        "type": "integer",
+        "min": 2,
+        "max": 8,
+        "default": 8,
+        "step": 1,
+        "pg_equivalent": "bgwriter_delay"
+    },
+    "innodb_lru_scan_depth": {
+        "describe": "Influences the algorithms and heuristics for the flush operation.",
+        "type": "integer",
+        "min": 512,
+        "max": 10752,
+        "default": 2048,
+        "step": 512,
+        "pg_equivalent": "bgwriter_lru_maxpages"
+    },
+    "innodb_max_dirty_pages_pct": {
+        "describe": "InnoDB tries to flush data so the percentage of dirty pages does not exceed this value.",
+        "type": "integer",
+        "min": 10,
+        "max": 90,
+        "default": 75,
+        "step": 10,
+        "pg_equivalent": "checkpoint_completion_target"
+    },
+    "innodb_io_capacity": {
+        "describe": "Sets an upper limit on the I/O activity performed by InnoDB background tasks.",
+        "type": "integer",
+        "min": 200,
+        "max": 6200,
+        "default": 4000,
+        "step": 500,
+        "pg_equivalent": "checkpoint_completion_target"
+    },
+    "innodb_io_capacity_max": {
+        "describe": "If flushing activity falls behind, InnoDB can flush more aggressively.",
+        "type": "integer",
+        "min": 2000,
+        "max": 12000,
+        "default": 8000,
+        "step": 1000,
+        "pg_equivalent": "autovacuum_vacuum_cost_limit"
+    },
+    "innodb_flush_log_at_timeout": {
+        "describe": "Write and flush the logs every N seconds.",
+        "type": "integer",
+        "min": 1,
+        "max": 61,
+        "default": 1,
+        "step": 10,
+        "pg_equivalent": "wal_writer_delay"
+    },
+    "innodb_purge_threads": {
+        "describe": "The number of background threads devoted to the InnoDB purge operation. Capped at 8 (Hardware limit).",
+        "type": "integer",
+        "min": 2,
+        "max": 8,
+        "default": 8,
+        "step": 1,
+        "pg_equivalent": "autovacuum_max_workers"
+    },
+    "innodb_purge_batch_size": {
+        "describe": "The number of undo log pages that purge parses and processes in one batch.",
+        "type": "integer",
+        "min": 100,
+        "max": 1100,
+        "default": 300,
+        "step": 100,
+        "pg_equivalent": "autovacuum_naptime"
+    },
+    "innodb_flush_neighbors": {
+        "describe": "Specifies whether flushing a page from the buffer pool also flushes other dirty pages. (0=Off, 1=Contiguous, 2=All)",
+        "type": "integer",
+        "min": 0,
+        "max": 2,
+        "default": 0,
+        "step": 1,
+        "pg_equivalent": "backend_flush_after"
+    }
+}

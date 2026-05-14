@@ -1,0 +1,102 @@
+{
+    "workload": "postgres/tpch/tpch.sql",
+    "default_performance": {
+        "latency_s": 5.526133699832778,
+        "throughput_ops_per_s": 0.1809583434491026
+    },
+    "best_performance": {
+        "config_index": 6,
+        "latency_s": 4.015055174155063,
+        "latency_improvement_percent": 27.344226682815158,
+        "throughput_ops_per_s": 0.24906257987113273,
+        "throughput_improvement_percent": 37.635311599315955,
+        "actual_config": {
+            "max_wal_senders": 38,
+            "autovacuum_max_workers": 71,
+            "max_connections": 2262,
+            "wal_buffers": 111411,
+            "shared_buffers": 7471155,
+            "autovacuum_analyze_scale_factor": 45.0,
+            "autovacuum_analyze_threshold": 1610612735,
+            "autovacuum_naptime": 2040109,
+            "autovacuum_vacuum_cost_delay": 14,
+            "autovacuum_vacuum_cost_limit": 499,
+            "autovacuum_vacuum_scale_factor": 15.0,
+            "autovacuum_vacuum_threshold": 322122547,
+            "backend_flush_after": 90,
+            "bgwriter_delay": 3506,
+            "bgwriter_flush_after": 243,
+            "bgwriter_lru_maxpages": 375809638,
+            "bgwriter_lru_multiplier": 2,
+            "checkpoint_completion_target": 0.05,
+            "checkpoint_flush_after": 38,
+            "checkpoint_timeout": 38896,
+            "commit_delay": 95000,
+            "commit_siblings": 350,
+            "cursor_tuple_fraction": 0.15,
+            "deadlock_timeout": 1610612736,
+            "default_statistics_target": 6500,
+            "effective_cache_size": 966367642,
+            "effective_io_concurrency": 150,
+            "from_collapse_limit": 1610612736,
+            "geqo_effort": 6,
+            "geqo_generations": 536870912,
+            "geqo_pool_size": 966367641,
+            "geqo_seed": 0.05,
+            "geqo_threshold": 966367642,
+            "join_collapse_limit": 1395864371,
+            "maintenance_work_mem": 107375155,
+            "temp_buffers": 3538999,
+            "temp_file_limit": 1073741823,
+            "vacuum_cost_delay": 95,
+            "vacuum_cost_limit": 7500,
+            "vacuum_cost_page_dirty": 2500,
+            "vacuum_cost_page_hit": 7500,
+            "vacuum_cost_page_miss": 6500,
+            "wal_writer_delay": 2501,
+            "work_mem": 393277
+        }
+    },
+    "all_configs_performance": [
+        {
+            "config_index": 0,
+            "latency_s": 4.914921932216537,
+            "throughput_ops_per_s": 0.2034620312980269
+        },
+        {
+            "config_index": 1,
+            "latency_s": 4.886065862729754,
+            "throughput_ops_per_s": 0.2046636349353913
+        },
+        {
+            "config_index": 2,
+            "latency_s": 4.338917738463926,
+            "throughput_ops_per_s": 0.23047221917464203
+        },
+        {
+            "config_index": 3,
+            "latency_s": 4.5472444958347635,
+            "throughput_ops_per_s": 0.21991340050353383
+        },
+        {
+            "config_index": 4,
+            "latency_s": 4.34666568572682,
+            "throughput_ops_per_s": 0.2300614016126678
+        },
+        {
+            "config_index": 5,
+            "latency_s": 4.315673292884113,
+            "throughput_ops_per_s": 0.23171355478850716
+        },
+        {
+            "config_index": 6,
+            "latency_s": 4.015055174155063,
+            "throughput_ops_per_s": 0.24906257987113273
+        },
+        {
+            "config_index": 7,
+            "latency_s": 4.044836361475877,
+            "throughput_ops_per_s": 0.24722879014940438
+        }
+    ]
+}

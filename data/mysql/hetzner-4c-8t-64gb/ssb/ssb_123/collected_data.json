@@ -1,0 +1,73 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 63743.0,
+        "blks_hit": 8233184.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 65208.0,
+        "disk_write_count": 248.0,
+        "disk_read_bytes": 1068367872.0,
+        "disk_write_bytes": 4063232.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=84452.9)(GroupingOperation(TableAll_c(cost=2747.6); TableRef_lo(cost=2187.0)))",
+        "QueryBlock(cost=221107.9)(GroupingOperation(TableAll_p(cost=18253.7); TableRef_lo(cost=143475.8)))",
+        "QueryBlock(cost=189098.9)(GroupingOperation(TableAll_s(cost=183.8); TableRef_lo(cost=134925.1)))",
+        "QueryBlock(cost=84452.9)(GroupingOperation(TableAll_c(cost=2747.6); TableRef_lo(cost=2187.0)))",
+        "QueryBlock(cost=84497.4)(GroupingOperation(TableAll_p(cost=18253.7); TableRef_lo(cost=6865.2)))",
+        "QueryBlock(cost=189098.9)(GroupingOperation(TableAll_s(cost=183.8); TableRef_lo(cost=134925.1)))",
+        "QueryBlock(cost=57280.2)(GroupingOperation(TableAll_d(cost=233.1); TableRef_lo(cost=287.9)))",
+        "QueryBlock(cost=280314.2)(GroupingOperation(TableAll_c(cost=2747.6); TableRef_lo(cost=198048.2)))",
+        "QueryBlock(cost=84497.4)(GroupingOperation(TableAll_p(cost=18253.7); TableRef_lo(cost=6865.2)))",
+        "QueryBlock(cost=55114.2)(GroupingOperation(TableAll_s(cost=183.8); TableRef_lo(cost=940.4)))",
+        "QueryBlock(cost=57280.2)(GroupingOperation(TableAll_d(cost=233.1); TableRef_lo(cost=287.9)))",
+        "QueryBlock(cost=280314.2)(GroupingOperation(TableAll_c(cost=2747.6); TableRef_lo(cost=198048.2)))",
+        "QueryBlock(cost=84497.4)(GroupingOperation(TableAll_p(cost=18253.7); TableRef_lo(cost=6865.2)))",
+        "QueryBlock(cost=189098.9)(GroupingOperation(TableAll_s(cost=183.8); TableRef_lo(cost=134925.1)))",
+        "QueryBlock(cost=57280.2)(GroupingOperation(TableAll_d(cost=233.1); TableRef_lo(cost=287.9)))",
+        "QueryBlock(cost=155.4)(GroupingOperation(TableConst_c(cost=0.0); TableRef_lo(cost=111.0)))",
+        "QueryBlock(cost=84497.4)(GroupingOperation(TableAll_p(cost=18253.7); TableRef_lo(cost=6865.2)))",
+        "QueryBlock(cost=1060.5)(GroupingOperation(TableConst_s(cost=0.0); TableRef_lo(cost=757.5)))",
+        "QueryBlock(cost=57280.2)(GroupingOperation(TableAll_d(cost=233.1); TableRef_lo(cost=287.9)))",
+        "QueryBlock(cost=79.8)(GroupingOperation(TableConst_c(cost=0.0); TableRef_lo(cost=57.0)))",
+        "QueryBlock(cost=2.2)(GroupingOperation(TableConst_p(cost=0.0); TableRef_lo(cost=0.3)))",
+        "QueryBlock(cost=189098.9)(GroupingOperation(TableAll_s(cost=183.8); TableRef_lo(cost=134925.1)))",
+        "QueryBlock(cost=198827.0)(GroupingOperation(TableAll_d(cost=233.1); TableRef_lo(cost=141834.7)))",
+        "QueryBlock(cost=84452.9)(GroupingOperation(TableAll_c(cost=2747.6); TableRef_lo(cost=2187.0)))",
+        "QueryBlock(cost=13.3)(GroupingOperation(TableConst_p(cost=0.0); TableRef_lo(cost=9.5)))",
+        "QueryBlock(cost=55114.2)(GroupingOperation(TableAll_s(cost=183.8); TableRef_lo(cost=940.4)))",
+        "QueryBlock(cost=57280.2)(GroupingOperation(TableAll_d(cost=233.1); TableRef_lo(cost=287.9)))",
+        "QueryBlock(cost=0.3)(GroupingOperation(TableConst_c(cost=0.0); TableRef_lo(cost=0.2)))",
+        "QueryBlock(cost=2.8)(GroupingOperation(TableConst_p(cost=0.0); TableRef_lo(cost=0.3)))",
+        "QueryBlock(cost=189098.9)(GroupingOperation(TableAll_s(cost=183.8); TableRef_lo(cost=134925.1)))"
+    ],
+    "workload_features": {
+        "total_statements": 30,
+        "table_access_frequency": {
+            "customer": 8,
+            "lineorder": 30,
+            "part": 8,
+            "supplier": 8,
+            "date_dim": 6
+        },
+        "read_count": 30,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.0,
+        "operator_proportions": {
+            "order_by": 0.0,
+            "group_by": 1.0,
+            "count_agg": 0.5333333333333333,
+            "sum_agg": 0.26666666666666666,
+            "avg_agg": 0.2,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

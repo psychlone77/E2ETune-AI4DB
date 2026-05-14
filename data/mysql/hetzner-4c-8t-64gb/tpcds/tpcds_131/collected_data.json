@@ -1,0 +1,72 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 22026.0,
+        "blks_hit": 31364898.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 75833.0,
+        "disk_write_count": 271.0,
+        "disk_read_bytes": 1242447872.0,
+        "disk_write_bytes": 4440064.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=0.8)(TableAll_warehouse(cost=0.2))",
+        "QueryBlock(cost=5100.9)(TableAll_customer_address(cost=152.2))",
+        "QueryBlock(cost=1903.0)(TableAll_item(cost=1883.7))",
+        "QueryBlock(cost=3062319.1)(GroupingOperation(TableAll_store_sales(cost=5022.8); TableEq_ref_date_dim(cost=2538566.8)))",
+        "QueryBlock(cost=1.4)(TableAll_store(cost=1.3))",
+        "QueryBlock(cost=2622.6)(TableAll_item(cost=1885.6); TableRef_web_sales(cost=46.6))",
+        "QueryBlock(cost=3.2)(TableAll_web_site(cost=2.4))",
+        "QueryBlock(cost=1.4)(TableAll_store(cost=1.2))",
+        "QueryBlock(cost=8895.2)(GroupingOperation(TableAll_i(cost=1845.1); TableRef_ss(cost=177.5)))",
+        "QueryBlock(cost=3062319.1)(GroupingOperation(TableAll_store_sales(cost=5022.8); TableEq_ref_date_dim(cost=2538566.8)))",
+        "QueryBlock(cost=2058389.4)(GroupingOperation(TableAll_store_sales(cost=5022.8); TableEq_ref_time_dim(cost=1534637.0)))",
+        "QueryBlock(cost=44696.6)(GroupingOperation(TableAll_customer(cost=360.8); TableEq_ref_customer_address(cost=24631.0)))",
+        "QueryBlock(cost=841191.8)(GroupingOperation(TableAll_web_sales(cost=1883.0); TableEq_ref_date_dim(cost=696903.8)))",
+        "QueryBlock(cost=7181.4)(GroupingOperation(TableAll_i(cost=1845.1); TableRef_cs(cost=169.2)))",
+        "QueryBlock(cost=1172164.4)(GroupingOperation(TableAll_ss(cost=5022.8); TableEq_ref_p(cost=648412.0)))",
+        "QueryBlock(cost=5719575.2)(GroupingOperation(TableAll_warehouse(cost=0.2); TableAll_inventory(cost=6898.0)))",
+        "QueryBlock(cost=316262.1)(GroupingOperation(TableAll_store(cost=1.3); TableAll_store_sales(cost=5022.8)))",
+        "QueryBlock(cost=1579686.8)(GroupingOperation(TableAll_catalog_sales(cost=3533.2); TableEq_ref_date_dim(cost=1308728.5)))",
+        "QueryBlock(cost=4301.6)(GroupingOperation(TableAll_i(cost=1845.1); TableRef_ws(cost=155.2)))",
+        "QueryBlock(cost=841191.8)(GroupingOperation(TableAll_web_sales(cost=1883.0); TableEq_ref_date_dim(cost=696903.8)))",
+        "QueryBlock(cost=322294.2)(GroupingOperation(TableAll_ws(cost=1883.0); TableEq_ref_p(cost=178006.2)))"
+    ],
+    "workload_features": {
+        "total_statements": 21,
+        "table_access_frequency": {
+            "warehouse": 2,
+            "customer_address": 2,
+            "item": 5,
+            "date_dim": 5,
+            "store_sales": 6,
+            "store": 3,
+            "web_sales": 5,
+            "web_site": 1,
+            "time_dim": 1,
+            "customer": 1,
+            "catalog_sales": 2,
+            "promotion": 2,
+            "inventory": 1
+        },
+        "read_count": 21,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 1.0476,
+        "operator_proportions": {
+            "order_by": 0.0,
+            "group_by": 0.9523809523809523,
+            "count_agg": 0.7142857142857143,
+            "sum_agg": 0.19047619047619047,
+            "avg_agg": 0.09523809523809523,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}

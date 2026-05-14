@@ -26,10 +26,14 @@ class DatabaseConfig:
     data_path: str
     pg_version: int
     cluster_name: str
+    ssh_user: str = None
+    ssh_password: str = None
+    ssh_key_path: str = None
 
     @classmethod
     def from_dict(cls, config: Dict[str, Any]) -> "DatabaseConfig":
         """Create a DatabaseConfig instance from dictionary."""
+        ssh_config = config.get("ssh", {})
         return cls(
             host=config["host"],
             port=int(config["port"]),
@@ -39,6 +43,9 @@ class DatabaseConfig:
             data_path=config["data_path"],
             pg_version=int(config["pg_version"]),
             cluster_name=config["cluster_name"],
+            ssh_user=ssh_config.get("user"),
+            ssh_password=ssh_config.get("password"),
+            ssh_key_path=ssh_config.get("key_path"),
         )
 
 
@@ -48,25 +55,23 @@ class TuningConfig:
 
     Attributes:
         method: Name of the tuning method (e.g., 'hebo', 'random').
+        iterations: Number of tuning iterations to run.
         sample_num: Number of samples to draw during tuning.
-        suggest_num: Number of suggestions to propose each iteration.
         early_stop_plateau: Number of iterations without improvement
             before early stopping.
     """
 
     method: str
+    iterations: int
     sample_num: int
-    suggest_num: int
-    early_stop_plateau: int
 
     @classmethod
     def from_dict(cls, config: Dict[str, Any]) -> "TuningConfig":
         """Create a TuningConfig instance from dictionary."""
         return cls(
             method=config["method"],
+            iterations=int(config["iterations"]),
             sample_num=int(config["sample_num"]),
-            suggest_num=int(config["suggest_num"]),
-            early_stop_plateau=int(config["early_stop_plateau"]),
         )
 
 

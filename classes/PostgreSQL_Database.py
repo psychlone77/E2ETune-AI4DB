@@ -1,11 +1,13 @@
 import subprocess
+import re
+import json
 
 from classes.base_classes.Database import Database
 from classes.base_classes.Knob_Config import KnobConfig
 from classes.base_classes.Workload_Runner import BenchmarkTask
 from classes.base_classes.Script_Config import DatabaseConfig
 from classes.base_classes.Internal_Metrics import InternalMetrics
-from typing import Optional
+from typing import Any, Dict, List, Optional
 import utils
 import psycopg2
 import time
@@ -18,6 +20,7 @@ class PostgresSQLDatabase(Database):
     """
 
     def __init__(self, db_config: DatabaseConfig, log_path: Optional[Path] = None):
+        self.connection = None
         self.db_config: DatabaseConfig = db_config
         self.logger = utils.get_logger(log_path)
         self.connect(3)
@@ -37,23 +40,67 @@ class PostgresSQLDatabase(Database):
                 )
                 self.logger.info("Connection established.")
                 self.connection = connection
+                return None
             except psycopg2.OperationalError as e:
                 self.logger.error(f"Connection attempt {attempt} failed: {e}")
+
+                # Try to start PostgreSQL service if connection failed
+                if attempt < max_retries:
+                    self.logger.info("Attempting to start PostgreSQL service...")
+                    try:
+                        subprocess.run(
+                            ["sudo", "systemctl", "start", "postgresql"],
+                            check=True,
+                            timeout=30,
+                            capture_output=True,
+                            text=True,
+                        )
+                        self.logger.info(
+                            "PostgreSQL service started. Waiting for it to be ready..."
+                        )
+                        time.sleep(3)
+                    except subprocess.CalledProcessError as start_error:
+                        self.logger.warning(
+                            f"Failed to start PostgreSQL service: {start_error}"
+                        )
+                    except Exception as start_error:
+                        self.logger.warning(
+                            f"Error starting PostgreSQL service: {start_error}"
+                        )
+
                 if attempt == max_retries:
                     self.logger.error(
                         "Max retries reached. Could not connect to the database."
                     )
                     raise ConnectionError("Could not connect to the database.")
+
+                time.sleep(2)
         return None
 
     def set_knobs(self, knob_config: KnobConfig):
         """Set the database configuration knobs based on the provided knob configuration."""
-        with self.connection.cursor() as cursor:
-            for knob in knob_config.knobs:
-                cursor.execute(f"ALTER SYSTEM SET {knob.name} TO '{knob.value}';")
-                self.restart_db()
+        old_autocommit = self.connection.autocommit
+        try:
+            # Ensure no active transaction before changing autocommit
             self.connection.commit()
-        self.logger.info("Database knobs have been set.")
+            
+            # ALTER SYSTEM cannot run inside a transaction block
+            self.connection.autocommit = True
+            with self.connection.cursor() as cursor:
+                for knob in knob_config.knobs:
+                    cursor.execute(f"ALTER SYSTEM SET {knob.name} = %s;", (knob.value,))
+
+            # Restart DB to apply changes
+            if not self.restart_db():
+                self.logger.warning(
+                    "Database restart failed - configuration may be invalid. Continuing with previous/default settings."
+                )
+            else:
+                self.logger.info(
+                    "Database knobs have been set and DB restarted successfully."
+                )
+        finally:
+            self.connection.autocommit = old_autocommit
 
     def fetch_internal_metrics(self) -> InternalMetrics:
         """Fetch internal metrics from the database."""
@@ -159,89 +206,156 @@ class PostgresSQLDatabase(Database):
         self.logger.info("Internal metrics have been reset.")
 
     def reset_knobs(self):
-        with self.connection.cursor() as cursor:
-            try:
+        old_autocommit = self.connection.autocommit
+        try:
+            self.connection.commit()
+            self.connection.autocommit = True
+            with self.connection.cursor() as cursor:
                 cursor.execute("ALTER SYSTEM RESET ALL;")
                 cursor.execute("SELECT pg_reload_conf();")
-                self.connection.commit()
-            except Exception as e:
-                self.logger.error(f"Error resetting database knobs: {e}")
-            finally:
-                cursor.close()
+        except Exception as e:
+            self.logger.error(f"Error resetting database knobs: {e}")
+        finally:
+            self.connection.autocommit = old_autocommit
         self.logger.info("Database knobs have been reset.")
 
     def restart_db(self, stop_timeout: int = 30, start_timeout: int = 30) -> bool:
         try:
-            print(f"Stopping PostgreSQL {self.pg_version}/{self.cluster_name}...")
-            subprocess.run(
-                [
-                    "sudo",
-                    "pg_ctlcluster",
-                    str(self.pg_version),
-                    self.cluster_name,
-                    "stop",
-                ],
-                check=True,
-                timeout=stop_timeout,
-            )
-            time.sleep(2)
+            is_remote = self.db_config.host not in ["localhost", "127.0.0.1"]
+            
+            if is_remote and self.db_config.ssh_user:
+                ssh_base = ["ssh"]
+                if self.db_config.ssh_password:
+                    ssh_base = ["sshpass", "-p", self.db_config.ssh_password, "ssh"]
+                if self.db_config.ssh_key_path:
+                    ssh_base.extend(["-i", self.db_config.ssh_key_path])
+                ssh_base.extend([
+                    "-o", "StrictHostKeyChecking=no",
+                    "-o", "UserKnownHostsFile=/dev/null",
+                    f"{self.db_config.ssh_user}@{self.db_config.host}"
+                ])
+                restart_cmd = ssh_base + ["sudo", "systemctl", "restart", "postgresql"]
+            else:
+                restart_cmd = ["sudo", "systemctl", "restart", "postgresql"]
 
-            print(f"Starting PostgreSQL {self.pg_version}/{self.cluster_name}...")
+            print("Restarting PostgreSQL...")
             result = subprocess.run(
-                [
-                    "sudo",
-                    "pg_ctlcluster",
-                    str(self.pg_version),
-                    self.cluster_name,
-                    "start",
-                ],
+                restart_cmd,
                 capture_output=True,
                 text=True,
                 timeout=start_timeout,
             )
 
             if result.returncode != 0:
-                print("Start failed. Removing auto.conf and retrying...")
-                self.remove_auto_conf()
-                time.sleep(1)
-                subprocess.run(
-                    [
-                        "sudo",
-                        "pg_ctlcluster",
-                        str(self.pg_version),
-                        self.cluster_name,
-                        "start",
-                    ],
-                    check=True,
-                    timeout=start_timeout,
-                )
+                print(f"Restart failed: {result.stderr}")
+                return False
 
+            time.sleep(2)
+            self.connect()
             return True
         except Exception as e:
             print(f"Failed to restart PostgreSQL: {e}")
             return False
 
-    def run_workload(self, workload_task: BenchmarkTask) -> tuple[float, float]:
+    def run_workload(self, workload_task: BenchmarkTask, runs_per_iteration: Optional[int] = 1, default_run: Optional[bool] = False) -> tuple[float, float]:
+        
         num_queries = 0
         with open(workload_task.workload_path, "r") as f:
             sql_script = f.read()
             num_queries = sql_script.count(";")
-        self.set_knobs(workload_task.knob_config)
+        if default_run:
+            self.reset_knobs()
+            self.restart_db()
+        else:
+            self.set_knobs(workload_task.knob_config)
+        self.logger.info(f"Executing workload {workload_task.workload_path}...")
         with self.connection.cursor() as cursor:
             try:
-                start = time.perf_counter()
-                cursor.execute(sql_script)
-                self.connection.commit()
-                end = time.perf_counter()
+                sum_latency = 0.0
+                sum_throughput = 0.0
+                for _ in range(runs_per_iteration):
+                    start = time.perf_counter()
+                    cursor.execute(sql_script)
+                    self.connection.commit()
+                    end = time.perf_counter()
+                    sum_latency += (
+                        (end - start) / num_queries if num_queries > 0 else 0.0
+                    )
+                    sum_throughput += num_queries / (end - start) if end > start else 0.0
                 self.logger.info(
                     f"Workload {workload_task.workload_path} executed successfully."
                 )
-                average_latency = (
-                    (end - start) / num_queries if num_queries > 0 else 0.0
-                )
-                throughput_ps = num_queries / (end - start) if end > start else 0.0
+                average_latency = sum_latency / runs_per_iteration
+                throughput_ps = sum_throughput / runs_per_iteration
                 return average_latency, -throughput_ps
             except Exception as e:
                 self.logger.error(f"Error executing workload: {e}")
                 self.connection.rollback()
                 return float("inf"), 0.0
+
+    def extract_query_plans(self, workload_path: Path) -> List[str]:
+        with open(workload_path, "r") as f:
+            sql_script = f.read()
+
+        workload_queries = [q.strip() for q in sql_script.split(";") if q.strip()]
+
+        plans: List[str] = []
+
+        with self.connection.cursor() as cursor:
+            for i, query in enumerate(workload_queries):
+                # Skip queries that are just comments or empty
+                if not any(not line.strip().startswith('--') for line in query.split('\n') if line.strip()):
+                    continue
+                try:
+                    self.logger.info(
+                        f"Explaining query {i + 1}/{len(workload_queries)}"
+                    )
+                    cursor.execute(f"EXPLAIN (FORMAT JSON) {query}")
+                    row = cursor.fetchone()
+                    self.connection.commit()
+                    # EXPLAIN JSON result is a single JSON array; row[0] is that array
+                    plan_json = row[0][0]  # [{"Plan": {...}}] -> take first element
+                    formatted_plan = self._format_query_plan(plan_json)
+                    plans.append(formatted_plan)
+                except Exception as e:
+                    self.connection.rollback()
+                    self.logger.error(f"Error explaining query {i + 1}: {e}")
+                    self.logger.debug(f"Query (truncated): {query[:100]}...")
+
+        return plans
+
+    @staticmethod
+    def _format_query_plan(plan_json: Dict[str, Any]) -> str:
+        """
+        Parse and format a query plan into a compact summary string.
+        Handles raw JSON strings (with '+' line continuations), lists, or dicts.
+
+        Returns a compact representation: NodeType(cost=X.X)(child1; child2; ...)
+        """
+        # Clean and parse if the input is a raw JSON string
+        if isinstance(plan_json, str):
+            cleaned = re.sub(r"\+\s*\n", "", plan_json)
+            cleaned = re.sub(r"\s+", " ", cleaned).strip()
+            plan_json = json.loads(cleaned)
+
+        # Unwrap list wrapper: [{"Plan": {...}}] -> {"Plan": {...}}
+        if isinstance(plan_json, list) and len(plan_json) > 0:
+            plan_json = plan_json[0]
+
+        def extract_node_summary(node: Dict[str, Any]) -> str:
+            if not isinstance(node, dict):
+                return ""
+            node_type = node.get("Node Type", "Unknown")
+            total_cost = node.get("Total Cost", 0)
+            summary = f"{node_type}(cost={total_cost:.1f})"
+            plans = node.get("Plans", [])
+            if plans:
+                child_summaries = [
+                    s for s in (extract_node_summary(c) for c in plans) if s
+                ]
+                if child_summaries:
+                    summary += "(" + "; ".join(child_summaries) + ")"
+            return summary
+
+        plan_node = plan_json.get("Plan", {}) if isinstance(plan_json, dict) else {}
+        return extract_node_summary(plan_node)

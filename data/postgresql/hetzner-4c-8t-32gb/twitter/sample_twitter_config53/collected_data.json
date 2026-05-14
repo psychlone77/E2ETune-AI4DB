@@ -1,0 +1,35 @@
+{
+    "internal_metrics": {
+        "xact_commit": 3.0,
+        "xact_rollback": 0.0,
+        "blks_read": 83.0,
+        "blks_hit": 977.0,
+        "tup_returned": 635.0,
+        "tup_fetched": 557.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 117328.0,
+        "disk_write_count": 0.0,
+        "disk_read_bytes": 961150976.0,
+        "disk_write_bytes": 0.0
+    },
+    "query_plans": [],
+    "workload_features": {
+        "total_statements": 158.0,
+        "table_access_frequency": {
+            "tweets": 80.0,
+            "follows": 40.0,
+            "added_tweets": 38.0
+        },
+        "read_count": 62.0,
+        "write_count": 38.0,
+        "read_write_ratio": 1.631578947368421,
+        "avg_predicates_per_query": 0.82,
+        "operator_proportions": {
+            "INSERT": 0.4810126582278481,
+            "SELECT": 0.5189873417721519
+        }
+    }
+}

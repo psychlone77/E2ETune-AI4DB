@@ -1,0 +1,49 @@
+{
+    "internal_metrics": {
+        "xact_commit": 1.0,
+        "xact_rollback": 0.0,
+        "blks_read": 161544.0,
+        "blks_hit": 111620445.0,
+        "tup_returned": 0.0,
+        "tup_fetched": 0.0,
+        "tup_inserted": 0.0,
+        "conflicts": 0.0,
+        "tup_updated": 0.0,
+        "tup_deleted": 0.0,
+        "disk_read_count": 290870.0,
+        "disk_write_count": 265.0,
+        "disk_read_bytes": 4765614080.0,
+        "disk_write_bytes": 4341760.0
+    },
+    "query_plans": [
+        "QueryBlock(cost=5359744489548.5)(OrderingOperation(GroupingOperation(BufferResult(TableAll_mi(cost=1293539.6); TableEq_ref_t(cost=359603.7); TableAll_ci(cost=4807441474362.2)))))",
+        "QueryBlock(cost=3637877.5)(OrderingOperation(GroupingOperation(BufferResult(TableAll_mk(cost=2282.5); TableEq_ref_k(cost=1128841.5); TableEq_ref_t(cost=1152143.7)))))",
+        "QueryBlock(cost=17456817.3)(OrderingOperation(GroupingOperation(BufferResult(TableAll_ci(cost=29984.0); TableEq_ref_t(cost=9000468.1); TableEq_ref_n(cost=979727.9)))))",
+        "QueryBlock(cost=17457142.2)(OrderingOperation(GroupingOperation(BufferResult(TableAll_ci(cost=29984.0); TableEq_ref_t(cost=9000468.1); TableEq_ref_cn(cost=980052.8)))))"
+    ],
+    "workload_features": {
+        "total_statements": 4,
+        "table_access_frequency": {
+            "title": 4,
+            "cast_info": 3,
+            "movie_info": 1,
+            "keyword": 1,
+            "movie_keyword": 1,
+            "name": 1,
+            "char_name": 1
+        },
+        "read_count": 4,
+        "write_count": 0,
+        "read_write_ratio": null,
+        "avg_predicates_per_query": 2.75,
+        "operator_proportions": {
+            "order_by": 1.0,
+            "group_by": 1.0,
+            "count_agg": 1.0,
+            "sum_agg": 0.25,
+            "avg_agg": 0.75,
+            "min_agg": 0.0,
+            "max_agg": 0.0
+        }
+    }
+}
