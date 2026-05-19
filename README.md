@@ -1,185 +1,134 @@
-The source code for E2ETune
+# E2ETune-AI4DB
 
-## Useful Commands
+E2ETune-AI4DB is an end-to-end database tuning and evaluation workspace built around an abstraction-first design. The core logic lives under `classes/`, where database runners, workload collectors, surrogate models, tuners, and workload feature extractors are separated behind shared base classes so the system can be extended to another database engine without rewriting the entire pipeline.
 
-- Start PostgreSQL
+## Repository Shape
 
-  ```
-  sudo systemctl start postgresql
-  ```
+The most important parts of the codebase are:
 
-## Environment Installation
+* `main.py` for the main two-phase tuning workflow.
+* `classes/` for the abstraction layer and engine-specific implementations.
+* `inferencing/` for replaying and evaluating candidate knob configurations.
+* `run_diverse_configs.py` for replaying precomputed diverse configurations.
+* `config/config.yaml` for the primary runtime configuration.
 
-1. Preparations: Python == 3.7
+## Requirements
 
-2. Install packages
-
-   ```
-   pip install -r requirements.txt
-   ```
-
-3. Download and install PostgreSQL 12.2
-
-   ```
-   sudo apt-get update
-   sudo apt-get install postgresql postgresql-client
-   ```
-
-## Training Data Construction
-
-### Workload Preparation
-
-+ **OLAP Workloads**: Our generated OLAP workloads are under `olap_workloads`fold, one can replay them by execute the files on PG.
-
-+ **OLTP Workloads**: Install `benchbase` to execute OLTP workloads, refer to https://github.com/cmu-db/benchbase.
-
-  ```bash
-  git clone --depth 1 https://github.com/cmu-db/benchbase.git
-  cd benchbase
-  ./mvnw clean package -P postgres
-  ```
-
-  This produces artifacts in the `target` folder, which can be extracted,
-
-  ```bash
-  cd target
-  tar xvzf benchbase-postgres.tgz
-  cd benchbase-postgres
-  ```
-
-  Inside this folder, you can run BenchBase. For example, to execute the `tpcc` benchmark,
-
-  ```bash
-  java -jar benchbase.jar -b tpcc -c config/postgres/sample_tpcc_config.xml --create=true --load=true --execute=true
-  ```
-
-  A full list of options can be displayed,
-
-  ```bash
-  java -jar benchbase.jar -h
-  ```
-
-  We realise our generated OLTP workloads in `oltp_workloads` fold by configuration files of `benchbase`, one can move the fold into `benchbase/target/benchbase-postgres/config/postgres` and execute them as follows (take `tpcc` as an example):
-
-  ```bash
-  cd /your/path/benchbase/target/benchbase-postgres
-  java -jar benchbase.jar -b tpcc -c config/postgres/sample_tpcc_config0.xml --clear=true --create=true --load=true --execute=true --directory /your/results/path
-  ```
-
-### Label Collection
-
-Collect optimal configuration under your environment by HEBO method as follow
-
-1. Fill the Configuration File `config/config.ini`, such as the database and host configuration, as follows.
-
-   ```
-   [database_config]
-   host = localhost
-   port = 5432
-   user = 
-   password = 
-   database = 
-   data_path = 
-   
-   [ssh_config]
-   host = 
-   port = 
-   user = 
-   password = 
-   ```
-
-2. Run the workload tuning process as follows
-
-   ```bash
-   # Run OLAP workload
-   python main.py --workload tpch_0.wg --host localhost --database tpch --datapath /your/DB/data/path --method HEBO
-   # Run OLTP workload
-   python main.py --workload sample_tpcc_config0.xml  --host localhost --database tpcc --datapath /your/DB/data/path --method HEBO
-   ```
-
-## Fine-tuning LM
-
-### Prepare the data
-
-Change the data format to 
+Install Python dependencies with:
 
 ```bash
-bash post_process/run.sh
+pip install -r requirements.txt
 ```
 
-### Fine-tuning
+External components are still required for execution:
 
-Install following https://github.com/hiyouga/LLaMA-Factory and fine-tune LM as follow
+* PostgreSQL for OLAP/PG-based runs.
+* MySQL for MySQL-backed runs.
+* BenchBase for OLTP workload execution.
+
+For BenchBase, build the PostgreSQL profile as usual:
 
 ```bash
-deepspeed --include localhost:0,1,2,3,4,5,6,7 --master_port=12333 src/train.py \
-    --deepspeed ds_config.json \
-    --stage sft \
-    --model_name_or_path /nvme/shared_ckpt/mistral-7b-instruct-v0.2 \
-    --do_train \
-    --dataset PO \
-    --template mistral \
-    --finetuning_type full \
-    --output_dir /nvme/yzh/LLaMA-Factory/random \
-    --overwrite_cache \
-    --per_device_train_batch_size 1 \
-    --gradient_accumulation_steps 4 \
-    --lr_scheduler_type cosine \
-    --report_to wandb \
-    --logging_steps 1 \
-    --save_strategy 'epoch' \
-    --learning_rate 2e-5 \
-    --num_train_epochs 10.0 \
-    --plot_loss \
-    --max_length 8192 \
-    --cutoff_len 8192 \
-    --bf16
-
+git clone --depth 1 https://github.com/cmu-db/benchbase.git
+cd benchbase
+./mvnw clean package -P postgres
 ```
 
-## Knob Tuning via Fine-tuned LM
+## Configuration
 
-Restore the inference results of LM as the following format
+The current workflow uses only `config/config.yaml`.
 
-```json
- [
- 		{"database": "tpch",
-     "workload": "twitter/sample_twitter_config.xml",
-     "instruction": "You are an expert in database, you are to optimize the parameters of database, please output in json format, for each field, output one of \"00% to 10%\", \"10% to 20%\", \"20% to 30%\", \"40% to 50%\", \"50% to 60%\", \"60% to 70%\", \"70% to 80%\", \"80% to 90%\", \"90% to 100%\"",
-     "input": "workload features: size of workload: 15.0; read ratio: 1.0; group by ratio: 0.8; order by ratio: 0.87; .... ",
-     "model_outputs": [
-            {"max_wal_senders": "40% to 50%", "autovacuum_max_workers": "40% to 50%"....},
-            {"max_wal_senders": "10% to 20%", ....},
-            {"max_wal_senders": "50% to 60%", ....},
-            {"max_wal_senders": "30% to 40%", ....},
-            {"max_wal_senders": "80% to 90%", ....},
-            {"max_wal_senders": "90% to 100%", ....}
-        ]
-    },
-    
-]   
+That file controls:
+
+* database connection details
+* benchmark name, type, and workload directory
+* tuning method and iteration settings
+* surrogate model path
+* knob definition file
+
+The tuning code also depends on:
+
+* `knob_config/` for knob ranges
+* `representative_workloads_sampled.json` for Phase 1 workload sampling
+* `10_diverse_configs_all.json` for the diverse-config replay flow
+
+## Abstraction Layer
+
+The repo is structured so the concrete database logic sits behind reusable interfaces:
+
+* `classes/base_classes/Database.py` defines the shared database contract.
+* `classes/base_classes/Data_Collector.py` defines the common collection flow.
+* `classes/base_classes/Tuner.py` and `classes/HEBO_Tuner.py` separate tuning policy from database execution.
+* `classes/base_classes/Workload_Runner.py` provides workload task definitions used across scripts.
+* `classes/base_classes/Surrogate_Strategy.py` and `classes/Cost_Model.py` isolate surrogate behavior.
+
+Engine-specific implementations such as `classes/PostgreSQL_Database.py`, `classes/MySQL_Database.py`, and `classes/BenchBase_Database.py` plug into the same flow. That makes it straightforward to add another database by implementing the same base contracts and wiring the new backend into the entry point.
+
+## Main Tuning Flow
+
+`main.py` is the primary entry point. It scans the benchmark workload folder and then runs:
+
+* Phase 1: real execution on representative workloads sampled from `representative_workloads_sampled.json`
+* Phase 2: surrogate-based tuning for the remaining workloads
+
+It also resumes from existing performance records and can be forced into surrogate-only mode through the YAML tuning config.
+
+Example:
+
+```bash
+python main.py --config config/config.yaml --dbengine postgresql --servername hetzner-4c-8t-32gb
 ```
 
-Then run the `model_output_test.py` to evaluate the configurations recommended by LM by executing on actual database
+Outputs are written to:
 
-``` bash
-python model_output_test.py --host localhost --datapath /your/DB/data/path
+* `data/{dbengine}/{servername}/{benchmark}/{workload}/`
+* `logs/tuning/`
+
+## Inferencing Utilities
+
+The `inferencing/` folder contains scripts for collecting workload data and replaying candidate configurations against a live database.
+
+* `inferencing/collect_data.py` collects internal metrics, query plans, and workload features for one SQL file.
+* `inferencing/evaluate_config.py` compares the default config against one chosen best config.
+* `inferencing/evaluate_all_configs.py` replays a full JSON list of candidate knob buckets and tracks the best one.
+
+Examples:
+
+```bash
+python inferencing/collect_data.py path/to/workload.sql
+python inferencing/evaluate_config.py path/to/workload.sql
+python inferencing/evaluate_all_configs.py --sql_file path/to/workload.sql --configs_json path/to/configs.json
 ```
 
-## Load the Open-source Fine-tuned Model
+## Diverse Config Replay
 
-We've open-sourced our fine-tuned model weights. You can easily load and use this model directly with the `transformers` library:
+`run_diverse_configs.py` replays precomputed diverse knob settings from `10_diverse_configs_all.json`.
 
-```python
-from transformers import AutoModel, AutoTokenizer
-
-model_name = "springhxm/E2ETune"
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModel.from_pretrained(model_name)
-
-# example
-inputs = tokenizer("You are an expert in database, you are to optimize the parameters of database...", return_tensors="pt")
-outputs = model(**inputs)
+```bash
+python run_diverse_configs.py --config config/config.yaml --dbengine mysql --servername hetzner-4c-8t-64gb
 ```
 
-For more model details, please see https://huggingface.co/springhxm/E2ETune.
+Use `--skip-configs` if you only want default data collection without running the replayed configurations.
+
+## Fine-Tuning and Model Artifacts
+
+The `llm_tuning/` folder contains notebook-based experiments for fine-tuning and adapter-based inference. Those notebooks assume the broader LLaMA-Factory / Hugging Face workflow described in the notebook cells themselves.
+
+The published base model is available at:
+
+* `springhxm/E2ETune`
+
+## Output Folders
+
+The most important generated folders are:
+
+* `data/` for collected tuning artifacts
+* `logs/` for tuning and workload logs
+* `analysis_output/` for SQL analysis, candidates, and evaluation results
+* `results/` for diverse-config replay outputs
+
+## Notes
+
+* OLTP workloads are executed through BenchBase configuration files in `oltp_workloads/`.
+* OLAP workloads are stored under `olap_workloads/` and are typically replayed directly against the database.
+* The repository mixes older helper scripts with newer refactored code, so check the script-specific help text before running any command.
