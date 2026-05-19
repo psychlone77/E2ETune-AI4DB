@@ -1,8 +1,0 @@
-{
-  "workload": "job_138",
-  "query_plans": [
-    "Limit(cost=273642.5)(Sort(cost=273649.3)(Aggregate(cost=273583.2)(Sort(cost=273336.3)(Gather(cost=272780.5)(Nested Loop(cost=270957.5)(Nested Loop(cost=267523.2)(Hash Join(cost=242272.6)(Seq Scan(cost=225435.1); Hash(cost=2.4)(Seq Scan(cost=2.4))); Index Scan(cost=0.5)); Index Scan(cost=1.2)))))))",
-    "Limit(cost=79453.0)(Sort(cost=79453.0)(Aggregate(cost=79453.0)(Sort(cost=79452.9)(Nested Loop(cost=79452.7)(Gather(cost=79450.7)(Nested Loop(cost=78449.8)(Nested Loop(cost=78448.0)(Seq Scan(cost=77409.6); Index Scan(cost=1033.5)); Index Scan(cost=0.5))); Materialize(cost=1.1)(Seq Scan(cost=1.1)))))))"
-  ],
-  "count": 2
-}
